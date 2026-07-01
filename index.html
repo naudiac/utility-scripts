@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>utility-scripts — naudiac</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    padding: 0 20px 60px;
+  }
+
+  /* Header */
+  header {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .repo-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .repo-owner { color: var(--muted); font-size: 18px; font-weight: 400; }
+  .repo-owner a { color: var(--muted); text-decoration: none; }
+  .repo-owner a:hover { color: var(--accent); }
+  .repo-slash { color: var(--border); font-size: 18px; }
+  .repo-name { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .repo-desc { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--muted);
+    margin-top: 12px;
+  }
+  .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+
+  /* Main layout */
+  .layout {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+  }
+
+  /* File tree */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px; font-weight: 500;
+  }
+  .card-header span { color: var(--muted); font-size: 12px; }
+
+  .tree { padding: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .tree-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 16px;
+    border-bottom: 1px solid rgba(48,54,61,.4);
+    transition: background .1s;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .tree-row:last-child { border-bottom: none; }
+  .tree-row:hover { background: rgba(88,166,255,.06); }
+  .tree-row.folder { color: var(--accent); }
+  .tree-row.indent { padding-left: 36px; }
+  .tree-row.indent2 { padding-left: 56px; }
+  .icon { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
+  .file-name { flex: 1; }
+  .file-desc { font-size: 11px; color: var(--muted); font-family: 'Inter', sans-serif; }
+  .file-badge {
+    font-size: 10px; padding: 1px 7px; border-radius: 10px; font-family: 'Inter', sans-serif;
+    font-weight: 600; letter-spacing: .03em;
+  }
+  .badge-ps { background: rgba(88,166,255,.15); color: var(--accent); }
+  .badge-md { background: rgba(63,185,80,.15); color: var(--green); }
+  .badge-html { background: rgba(210,153,34,.15); color: var(--yellow); }
+  .badge-vbs { background: rgba(188,140,255,.15); color: var(--purple); }
+
+  /* Sidebar */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .info-card h3 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+  .info-row:last-child { margin-bottom: 0; }
+  .info-label { color: var(--muted); }
+  .info-value { color: var(--text); font-weight: 500; }
+  .info-value.green { color: var(--green); }
+
+  .link-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .link-card h3 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--muted); padding: 12px 16px; border-bottom: 1px solid var(--border);
+  }
+  .link-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(48,54,61,.5);
+    text-decoration: none; color: var(--text); font-size: 13px;
+    transition: background .1s;
+  }
+  .link-item:last-child { border-bottom: none; }
+  .link-item:hover { background: rgba(88,166,255,.06); color: var(--accent); }
+  .link-icon { font-size: 15px; flex-shrink: 0; }
+
+  footer {
+    max-width: 860px; margin: 40px auto 0;
+    font-size: 12px; color: var(--muted);
+    text-align: center; border-top: 1px solid var(--border); padding-top: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="repo-meta">
+    <span class="repo-owner"><a href="https://github.com/naudiac">naudiac</a></span>
+    <span class="repo-slash">/</span>
+    <span class="repo-name">utility-scripts</span>
+  </div>
+  <div class="repo-desc">Personal collection of Windows utility scripts and automation tools.</div>
+  <div class="badge"><span class="dot"></span> Public</div>
+</header>
+
+<div class="layout">
+
+  <!-- File Tree -->
+  <div>
+    <div class="card">
+      <div class="card-header">
+        📁 Repository Structure
+        <span>main branch</span>
+      </div>
+      <div class="tree">
+
+        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/README.md" target="_blank">
+          <span class="icon">📄</span>
+          <span class="file-name">README.md</span>
+          <span class="file-badge badge-md">MD</span>
+        </a>
+
+        <div class="tree-row folder" style="cursor:default;">
+          <span class="icon">📂</span>
+          <span class="file-name">TimestampHotkey/</span>
+          <span class="file-desc">Ctrl+Alt+D → clipboard timestamp</span>
+        </div>
+
+        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank">
+          <span class="icon">⚡</span>
+          <span class="file-name">Install-TimestampHotkey.ps1</span>
+          <span class="file-badge badge-ps">PS1</span>
+        </a>
+
+        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/TimestampHotkey/README.md" target="_blank">
+          <span class="icon">📄</span>
+          <span class="file-name">README.md</span>
+          <span class="file-badge badge-md">MD</span>
+        </a>
+
+        <div class="tree-row indent folder" style="cursor:default;">
+          <span class="icon">📂</span>
+          <span class="file-name">documentation/</span>
+        </div>
+
+        <a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank">
+          <span class="icon">📋</span>
+          <span class="file-name">session_documentation.html</span>
+          <span class="file-badge badge-html">HTML</span>
+        </a>
+        <a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html#preamble" target="_blank" style="border-top:1px solid rgba(210,153,34,.25);background:rgba(210,153,34,.04);">
+          <span class="icon">✨</span>
+          <span class="file-name">↳ Gemini Preamble — Origin Story</span>
+          <span class="file-badge" style="background:rgba(210,153,34,.2);color:var(--yellow);">ORIGIN</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Runtime files note -->
+    <div class="card" style="margin-top:16px;">
+      <div class="card-header">
+        🖥️ Files Installed on Machine (not in repo)
+        <span>runtime only</span>
+      </div>
+      <div class="tree">
+        <div class="tree-row" style="cursor:default;">
+          <span class="icon">📜</span>
+          <span class="file-name">Documents\Scripts\SilentTime.vbs</span>
+          <span class="file-badge badge-vbs">VBS</span>
+        </div>
+        <div class="tree-row" style="cursor:default;">
+          <span class="icon">🔗</span>
+          <span class="file-name">%APPDATA%\...\Start Menu\Programs\SilentTime.lnk</span>
+          <span class="file-badge" style="background:rgba(255,166,87,.15);color:var(--orange);">LNK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <div class="info-card">
+      <h3>TimestampHotkey</h3>
+      <div class="info-row">
+        <span class="info-label">Hotkey</span>
+        <span class="info-value">Ctrl+Alt+D</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Output format</span>
+        <span class="info-value" style="font-family:'JetBrains Mono',monospace;font-size:11px;">yyyy-MM-dd_HH-mm-ss</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Background processes</span>
+        <span class="info-value green">Zero</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Admin required</span>
+        <span class="info-value green">No</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Live test</span>
+        <span class="info-value green">PASS ✓</span>
+      </div>
+    </div>
+
+    <div class="link-card">
+      <h3>Quick Links</h3>
+      <a class="link-item" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank">
+        <span class="link-icon">⬇️</span> Download Installer
+      </a>
+      <a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html#preamble" target="_blank" style="border-left:3px solid var(--yellow);">
+        <span class="link-icon">✨</span> Origin Story (Gemini Preamble)
+      </a>
+      <a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank">
+        <span class="link-icon">📋</span> Full Session Documentation
+      </a>
+      <a class="link-item" href="https://github.com/naudiac/utility-scripts" target="_blank">
+        <span class="link-icon">🐙</span> GitHub Repository
+      </a>
+    </div>
+
+    <div class="info-card">
+      <h3>About</h3>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;">
+        Built on 2026-07-01. Zero-bloat philosophy — each utility in its own
+        subfolder, one installer script, no dependencies, no background daemons.
+        Designed to grow as new automations are added.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  naudiac/utility-scripts &mdash; Generated 2026-07-01 08:35 UTC
+</footer>
+
+</body>
+</html>
