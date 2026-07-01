@@ -10,7 +10,7 @@
     Uninstall: .\Install-TimestampHotkey.ps1 -Uninstall
 
 .NOTES
-    Author : William Hanusiewicz (packaged by Antigravity)
+    Author : ubc-naudiac
     Created: 2026-07-01
     Version: 1.0
 #>
