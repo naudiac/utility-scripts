@@ -1,5 +1,7 @@
 # Agent Brainstorming List (Top 100)
 
+> **Preamble**: This document serves as our central repository for future agent development ideas. It acts as a long-term roadmap for constructing specialized, autonomous agents that can be integrated into our workflows. When looking for the next automation project, we can refer to this list for inspiration spanning basic scripting tasks to complex, multi-modal workflows.
+
 Here is a curated list of 100 autonomous agent frameworks, academic architectures, and practical industry use cases.
 
 ### 🟢 Phase 1: Open Source Agent Frameworks (GitHub)
