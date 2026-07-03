@@ -3,9 +3,9 @@
 > **Preamble**: This document serves as our central repository for future agent development ideas. It acts as a long-term roadmap for constructing specialized, autonomous agents that can be integrated into our workflows. When looking for the next automation project, we can refer to this list for inspiration spanning basic scripting tasks to complex, multi-modal workflows.
 
 ### ✅ Completed & Deployed Agents
-1. **`release_engineer`** - Automates project finalization: generates documentation, handles Git/GitHub pushes, configures GitHub Pages, and archives backups to Google Drive.
-2. **`agent_developer`** - The Agent Architect (Me!). Researches, designs, scopes out safety constraints, and builds blueprints for new autonomous agents.
-3. **`agent_sandbox_suite`** - *(Newly Added)* A modular 2-stage testing and approval toolkit. Intercepts dry-runs or executes live mock tests in a quarantined directory to battle-test new agents before deployment.
+1. **[`release_engineer`](./agents/release_engineer.md)** - Automates project finalization: generates documentation, handles Git/GitHub pushes, configures GitHub Pages, and archives backups to Google Drive.
+2. **[`agent_developer`](./agents/agent_developer.md)** - The Agent Architect (Me!). Researches, designs, scopes out safety constraints, and builds blueprints for new autonomous agents.
+3. **[`agent_sandbox_suite`](./agents/agent_sandbox_suite.md)** - *(Newly Added)* A modular 2-stage testing and approval toolkit. Intercepts dry-runs or executes live mock tests in a quarantined directory to battle-test new agents before deployment.
 
 ---
 
