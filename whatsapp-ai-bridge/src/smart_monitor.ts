@@ -7,6 +7,24 @@ const app = express();
 app.use(express.json());
 
 const ID_FILE = path.join(process.cwd(), 'last_processed_msg_id.txt');
+const MEMORY_LOG_FILE = path.join(process.cwd(), 'chat_history.txt');
+const TRIPWIRE_FILE = path.join(process.cwd(), 'tripwire.txt');
+
+function appendToMemoryLog(logString: string) {
+    try {
+        fs.appendFileSync(MEMORY_LOG_FILE, logString + '\n');
+    } catch (e) {
+        console.error("Error writing to memory log:", e);
+    }
+}
+
+function triggerTripwire() {
+    try {
+        fs.writeFileSync(TRIPWIRE_FILE, 'TRIGGERED');
+    } catch (e) {
+        console.error("Error writing to tripwire:", e);
+    }
+}
 
 async function getSavedMsgId(): Promise<string | null> {
     try {
@@ -53,6 +71,80 @@ app.post('/send', async (req, res) => {
     }
 });
 
+const contactCache = new Map<string, string>();
+const messageBodyCache = new Map<string, string>();
+
+function isBotTrigger(body: string): boolean {
+    if (!body) return false;
+    const lower = body.trim().toLowerCase();
+    return lower.startsWith('agy') || lower.startsWith('@agy') || lower.startsWith('/');
+}
+
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+const adminWhitelistRaw = process.env.ADMIN_WHITELIST || "";
+const ADMIN_WHITELIST = adminWhitelistRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+function isAdmin(sender: string, contactName: string): boolean {
+    if (ADMIN_WHITELIST.includes(contactName)) return true;
+    
+    let baseId = sender;
+    if (sender.includes('@lid')) {
+        baseId = sender.split('@')[0].split(':')[0];
+    } else if (sender.includes(':')) {
+        baseId = sender.split(':')[0];
+    } else {
+        baseId = sender.split('@')[0];
+    }
+    
+    if (ADMIN_WHITELIST.includes(baseId)) return true;
+    
+    const lowerName = contactName.toLowerCase();
+    for (const admin of ADMIN_WHITELIST) {
+        if (lowerName.includes(admin.toLowerCase())) return true;
+    }
+    
+    return false;
+}
+
+function cacheMessage(msgId: string, body: string) {
+    if (!body) return;
+    messageBodyCache.set(msgId, body);
+    if (messageBodyCache.size > 50) {
+        const firstKey = messageBodyCache.keys().next().value;
+        if (firstKey) messageBodyCache.delete(firstKey);
+    }
+}
+
+async function resolveContactName(client: any, msg: any, sender: string): Promise<string> {
+    let baseId = sender;
+    if (sender.includes('@lid')) {
+        baseId = sender.split('@')[0].split(':')[0] + '@lid';
+    } else if (sender.includes(':')) {
+        baseId = sender.replace(/:\d+/, '');
+    }
+
+    if (contactCache.has(baseId)) {
+        return contactCache.get(baseId)!;
+    }
+
+    let contactName = sender;
+    try {
+        let contact = await msg.getContact();
+        if (!contact.name && !contact.pushname) {
+            contact = await client.getContactById(baseId);
+        }
+        contactName = contact.name || contact.pushname || sender;
+
+        if (contactName !== sender && contactName !== baseId) {
+            contactCache.set(baseId, contactName);
+        }
+    } catch(e) {}
+    
+    return contactName;
+}
+
 async function run() {
     console.log("Initializing WhatsApp Client...");
     await waManager.initialize();
@@ -77,6 +169,15 @@ async function run() {
                 console.log(`Checking for messages after ID: ${lastMsgId}`);
                 
                 const messages = await chat.fetchMessages({ limit: 50 });
+                
+                // Pre-warm the caches silently with the history
+                for (let i = 0; i < messages.length; i++) {
+                    const msg = messages[i];
+                    const sender = msg.author || msg.from;
+                    await resolveContactName(client, msg, sender);
+                    cacheMessage(msg.id._serialized, msg.body);
+                }
+                
                 let missedCount = 0;
                 
                 let startIndex = 0;
@@ -93,7 +194,14 @@ async function run() {
                     const msg = messages[i];
                     missedCount++;
                     const sender = msg.author || msg.from;
-                    console.log(`[BACKLOG] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${sender} (ID: ${msg.id._serialized}): ${msg.body}`);
+                    const contactName = await resolveContactName(client, msg, sender);
+                    cacheMessage(msg.id._serialized, msg.body);
+                    const logStr = `[BACKLOG] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): ${msg.body}`;
+                    appendToMemoryLog(logStr);
+                    if (isBotTrigger(msg.body) && isAdmin(sender, contactName)) {
+                        console.log(logStr);
+                        triggerTripwire();
+                    }
                 }
                 
                 console.log(`Processed ${missedCount} missed messages.`);
@@ -102,7 +210,49 @@ async function run() {
                 client.on('message_create', async (msg: any) => {
                     if (msg.from === targetChatId || msg.to === targetChatId) {
                         const sender = msg.author || msg.from;
-                        console.log(`[LIVE] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${sender} (ID: ${msg.id._serialized}): ${msg.body}`);
+                        const contactName = await resolveContactName(client, msg, sender);
+                        cacheMessage(msg.id._serialized, msg.body);
+                        const logStr = `[LIVE] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): ${msg.body}`;
+                        appendToMemoryLog(logStr);
+                        if (isBotTrigger(msg.body) && isAdmin(sender, contactName)) {
+                            console.log(logStr);
+                            triggerTripwire();
+                        }
+                    }
+                });
+                
+                client.on('message_edit', async (msg: any, newBody: string, prevBody: string) => {
+                    if (msg.from === targetChatId || msg.to === targetChatId) {
+                        const sender = msg.author || msg.from;
+                        const contactName = await resolveContactName(client, msg, sender);
+                        cacheMessage(msg.id._serialized, newBody);
+                        const logStr = `[EDIT] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): changed "${prevBody}" to "${newBody}"`;
+                        appendToMemoryLog(logStr);
+                        if ((isBotTrigger(prevBody) || isBotTrigger(newBody)) && isAdmin(sender, contactName)) {
+                            console.log(logStr);
+                            triggerTripwire();
+                        }
+                    }
+                });
+                
+                client.on('message_revoke_everyone', async (after: any, before: any) => {
+                    const revokedMsgId = after?.id?._serialized || before?.id?._serialized;
+                    const sender = after?.author || after?.from || before?.author || before?.from;
+                    
+                    if (!revokedMsgId || !sender) return;
+                    
+                    const from = after?.from || before?.from;
+                    const to = after?.to || before?.to;
+                    if (from !== targetChatId && to !== targetChatId) return;
+
+                    const originalBody = messageBodyCache.get(revokedMsgId) || before?.body || "";
+                    const contactName = await resolveContactName(client, after || before, sender);
+                    
+                    const logStr = `[DELETED] [${new Date().toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${revokedMsgId}): deleted "${originalBody}"`;
+                    appendToMemoryLog(logStr);
+                    if (isBotTrigger(originalBody) && isAdmin(sender, contactName)) {
+                        console.log(logStr);
+                        triggerTripwire();
                     }
                 });
                 
