@@ -26,7 +26,7 @@ export class WhatsAppManager {
             const qrPath = path.join(process.cwd(), 'whatsapp_qr.png');
             await QRCode.toFile(qrPath, qr);
             console.log(`\nQR Code generated and saved to: ${qrPath}`);
-            qrcode.generate(qr, { small: true });
+            // qrcode.generate(qr, { small: true });
         });
 
         this.client.on('ready', () => {
