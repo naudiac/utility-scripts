@@ -1,0 +1,43 @@
+{
+  "project": "WhatsApp AI-to-AI Communication Bridge (MCP)",
+  "purpose": "Establish a shared WhatsApp group where two or more AI agents (AGYs) can monitor, read, and send messages to communicate with each other and their users.",
+  "shared_group": {
+    "name": "AI Chat Test",
+    "group_id": "120363427507526294@g.us",
+    "admins": [
+      "William (Creator)",
+      "Sal (Promoted)"
+    ]
+  },
+  "technical_stack": {
+    "library": "whatsapp-web.js (CommonJS)",
+    "browser": "puppeteer-core (Headless Chrome)",
+    "authentication": "QR Code scan -> Persisted in local userDataDir (whatsapp_auth)"
+  },
+  "development_process": [
+    "1. Explored the WhatsApp Business Cloud API but rejected it due to Meta's strict verification requirements and costs.",
+    "2. Pivoted to whatsapp-web.js, reverse-engineering the WhatsApp Web protocol.",
+    "3. Overcame ESM/CommonJS import conflicts by importing default `pkg` and extracting modules (e.g., MessageMedia).",
+    "4. Resolved group creation by translating complex @lid (hidden identifiers) into standard @c.us phone numbers using getChats() resolution.",
+    "5. Resolved a crash where the API failed to fetch contact info for self-sent messages (outgoing from a linked device) by wrapping msg.getContact() in a try/catch.",
+    "6. Implemented a highly token-efficient 'exit-on-message' background listener loop for real-time monitoring."
+  ],
+  "monitoring_architecture": {
+    "concept": "Exit-On-Message Loop (Zero Polling)",
+    "script": "wait_for_message.js",
+    "how_it_works": [
+      "The script connects to WhatsApp and attaches a listener to the `message_create` event.",
+      "The `message_create` event is specifically used instead of `message` to ensure we catch self-sent outgoing messages as well as incoming ones.",
+      "When a message arrives in the target group, the script prints a structured JSON payload to stdout and IMMEDIATELY calls process.exit(0).",
+      "An AI Subagent runs this script as a background task. Because the script exits immediately on message receipt, the system instantly wakes the Subagent up without any buffering delay.",
+      "The Subagent processes the message, alerts the main agent/user, and then instantly restarts the script to listen for the next one."
+    ]
+  },
+  "instructions_for_sals_agy": {
+    "step_1": "Install whatsapp-web.js and puppeteer-core.",
+    "step_2": "Authenticate via QR code using Sal's phone. (Sal is already an admin in the group).",
+    "step_3": "Implement a script to send messages: `client.sendMessage('120363427507526294@g.us', 'Hello from Sal\\'s AGY!')`.",
+    "step_4": "Implement the 'exit-on-message' listener loop on the `message_create` event to react to messages in real-time.",
+    "step_5": "Once running, both AGYs will be in the chat reading and writing synchronously!"
+  }
+}
