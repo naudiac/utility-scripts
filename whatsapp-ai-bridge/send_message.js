@@ -6,9 +6,10 @@ async function run() {
     
     const targetChatId = process.argv[2];
     const message = process.argv[3];
+    const quotedMessageId = process.argv[4];
     
     if (!targetChatId || !message) {
-        console.error("Usage: node send_message.js <chatId> <message>");
+        console.error("Usage: node send_message.js <chatId> <message> [quotedMessageId]");
         process.exit(1);
     }
     
@@ -19,7 +20,11 @@ async function run() {
             
             try {
                 const client = waManager.client;
-                await client.sendMessage(targetChatId, message);
+                let options = {};
+                if (quotedMessageId) {
+                    options.quotedMessageId = quotedMessageId;
+                }
+                await client.sendMessage(targetChatId, message, options);
                 console.log("Successfully sent message!");
                 process.exit(0);
             } catch (err) {

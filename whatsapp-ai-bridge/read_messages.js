@@ -25,7 +25,7 @@ async function run() {
                 console.log("\n--- MESSAGES ---");
                 for (const msg of messages) {
                     const sender = msg.author || msg.from;
-                    console.log(`[${new Date(msg.timestamp * 1000).toLocaleString()}] ${sender}: ${msg.body}`);
+                    console.log(`[${new Date(msg.timestamp * 1000).toLocaleString()}] ${sender} (ID: ${msg.id._serialized}): ${msg.body}`);
                 }
                 console.log("----------------\n");
                 

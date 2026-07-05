@@ -22,3 +22,6 @@ To monitor the chat in real-time without wasting AI tokens on continuous polling
 - An autonomous AI Subagent (`whatsapp_chat_monitor`) runs this script as a background task.
 - Because the script exits immediately, the system instantly wakes the Subagent up without buffering delays.
 - The Subagent processes the message, alerts the parent agent, and instantly restarts the script to listen for the next one.
+  
+### 4. Message Quoting  
+To reply to specific messages as quotes, we updated wait_for_message.ts to include msg.id._serialized in its output payload. The send_message.js script was expanded to accept a third argument (quotedMessageId), passing it to sendMessage(targetChatId, message, { quotedMessageId }). This allows the agent to read historical message IDs and programmatically reply directly to specific questions. 
