@@ -71,6 +71,26 @@ app.post('/send', async (req, res) => {
     }
 });
 
+app.post('/set-icon', async (req, res) => {
+    try {
+        const { chatId, mediaPath } = req.body;
+        // @ts-ignore
+        const client = waManager.client;
+        const chat = await client.getChatById(chatId);
+        
+        if (chat.isGroup) {
+            const media = MessageMedia.fromFilePath(mediaPath);
+            await chat.setPicture(media);
+            res.status(200).json({ success: true });
+        } else {
+            res.status(400).json({ error: "Not a group chat" });
+        }
+    } catch (err: any) {
+        console.error("Error setting icon:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 const contactCache = new Map<string, string>();
 const messageBodyCache = new Map<string, string>();
 
@@ -196,7 +216,18 @@ async function run() {
                     const sender = msg.author || msg.from;
                     const contactName = await resolveContactName(client, msg, sender);
                     cacheMessage(msg.id._serialized, msg.body);
-                    const logStr = `[BACKLOG] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): ${msg.body}`;
+                    let quoteStr = "";
+                    if (msg.hasQuotedMsg) {
+                        try {
+                            const quotedMsg = await msg.getQuotedMessage();
+                            if (quotedMsg) {
+                                const quotedSender = quotedMsg.author || quotedMsg.from;
+                                const quotedContact = await resolveContactName(client, quotedMsg, quotedSender);
+                                quoteStr = ` [Quoting ${quotedContact}: "${quotedMsg.body}"]`;
+                            }
+                        } catch(e) {}
+                    }
+                    const logStr = `[BACKLOG] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized})${quoteStr}: ${msg.body}`;
                     appendToMemoryLog(logStr);
                     if (isBotTrigger(msg.body) && isAdmin(sender, contactName)) {
                         console.log(logStr);
@@ -212,7 +243,18 @@ async function run() {
                         const sender = msg.author || msg.from;
                         const contactName = await resolveContactName(client, msg, sender);
                         cacheMessage(msg.id._serialized, msg.body);
-                        const logStr = `[LIVE] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): ${msg.body}`;
+                        let quoteStr = "";
+                        if (msg.hasQuotedMsg) {
+                            try {
+                                const quotedMsg = await msg.getQuotedMessage();
+                                if (quotedMsg) {
+                                    const quotedSender = quotedMsg.author || quotedMsg.from;
+                                    const quotedContact = await resolveContactName(client, quotedMsg, quotedSender);
+                                    quoteStr = ` [Quoting ${quotedContact}: "${quotedMsg.body}"]`;
+                                }
+                            } catch(e) {}
+                        }
+                        const logStr = `[LIVE] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized})${quoteStr}: ${msg.body}`;
                         appendToMemoryLog(logStr);
                         if (isBotTrigger(msg.body) && isAdmin(sender, contactName)) {
                             console.log(logStr);
@@ -226,7 +268,18 @@ async function run() {
                         const sender = msg.author || msg.from;
                         const contactName = await resolveContactName(client, msg, sender);
                         cacheMessage(msg.id._serialized, newBody);
-                        const logStr = `[EDIT] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized}): changed "${prevBody}" to "${newBody}"`;
+                        let quoteStr = "";
+                        if (msg.hasQuotedMsg) {
+                            try {
+                                const quotedMsg = await msg.getQuotedMessage();
+                                if (quotedMsg) {
+                                    const quotedSender = quotedMsg.author || quotedMsg.from;
+                                    const quotedContact = await resolveContactName(client, quotedMsg, quotedSender);
+                                    quoteStr = ` [Quoting ${quotedContact}: "${quotedMsg.body}"]`;
+                                }
+                            } catch(e) {}
+                        }
+                        const logStr = `[EDIT] [${new Date(msg.timestamp * 1000).toLocaleString()}] ${contactName} (ID: ${sender}) (MsgID: ${msg.id._serialized})${quoteStr}: changed "${prevBody}" to "${newBody}"`;
                         appendToMemoryLog(logStr);
                         if ((isBotTrigger(prevBody) || isBotTrigger(newBody)) && isAdmin(sender, contactName)) {
                             console.log(logStr);
