@@ -2,3 +2,10 @@ node_modules/
 whatsapp_auth/
 .env
 dist/
+
+chat_history.txt
+tripwire.txt
+last_processed_msg_id.txt
+.wwebjs_cache/
+.env
+
