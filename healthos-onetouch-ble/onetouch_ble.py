@@ -26,7 +26,7 @@ def parse_glucose_values(raw_bytes: bytearray) -> list[int]:
     """Parse glucose readings from ASCII stream or LifeScan @-O nibble encoding."""
     readings = []
     
-    # 1. Direct ASCII digits (e.g. '134', '219')
+    # 1. Direct ASCII digits (e.g. '170', '219')
     ascii_str = ''.join(chr(b & 0x7F) for b in raw_bytes)
     for match in re.findall(r'\b(\d{2,3})\b', ascii_str):
         val = int(match)
@@ -34,9 +34,10 @@ def parse_glucose_values(raw_bytes: bytearray) -> list[int]:
             readings.append(val)
 
     # 2. LifeScan hex-nibble encoding ('@'.. 'O' mapping 0..15)
+    # Nibble 'J' = 0xA (10), paired 'J'+'J' = 0xAA = 170 mg/dL
     chars = [chr(b & 0x7F) for b in raw_bytes]
     nibbles = [ord(c) - ord('@') for c in chars if '@' <= c <= 'O']
-    for i in range(0, len(nibbles) - 1, 2):
+    for i in range(0, len(nibbles) - 1, 1):
         val = (nibbles[i] << 4) | nibbles[i+1]
         if 40 <= val <= 500:
             readings.append(val)
