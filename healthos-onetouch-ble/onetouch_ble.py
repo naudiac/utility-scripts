@@ -20,7 +20,8 @@ JSON_PATH = BASE_DIR / "data" / "glucose_log.json"
 RX_CHAR = "2dd10011-1c37-452d-8979-d1b4a787d0a4"
 NT_CHAR = "2dd10013-1c37-452d-8979-d1b4a787d0a4"
 
-TARGET_DEVICES = ["1JM-US-TBA3961A", "1JM-US-TBA4290A"]
+TARGET_DEVICES = ["1JM-US-TBA3961A"]
+TARGET_ADDRESSES = ["44:6F:F8:43:D7:3A"]
 
 def parse_glucose_values(raw_bytes: bytearray) -> list[int]:
     """Parse glucose readings from ASCII stream or LifeScan @-O nibble encoding."""
@@ -52,16 +53,15 @@ def parse_glucose_values(raw_bytes: bytearray) -> list[int]:
     return readings
 
 async def find_all_onetouch_meters():
-    """Scan and return all advertising OneTouch meters."""
+    """Scan and return William's active OneTouch meter (1JM-US-TBA3961A)."""
     if not BleakScanner:
         return []
     devices = await BleakScanner.discover(timeout=5.0, return_adv=True)
     found = []
     for addr, (d, adv) in devices.items():
         name = d.name or adv.local_name or ""
-        if any(target in name for target in TARGET_DEVICES) or "1JM-" in name or "OneTouch" in name:
-            found.append((addr, name))
-    found.sort(key=lambda item: next((i for i, t in enumerate(TARGET_DEVICES) if t in item[1]), 99))
+        if "1JM-US-TBA3961A" in name or addr.upper() == "44:6F:F8:43:D7:3A":
+            found.append((addr, name or "1JM-US-TBA3961A"))
     return found
 
 async def sync_onetouch_ble(address: str = None) -> dict:
@@ -73,7 +73,7 @@ async def sync_onetouch_ble(address: str = None) -> dict:
         meters = await find_all_onetouch_meters()
 
     if not meters:
-        return {"ok": False, "error": "No OneTouch meter found advertising. Ensure Bluetooth is ON on your meter."}
+        return {"ok": False, "error": "Active OneTouch meter (1JM-US-TBA3961A) not found advertising. Ensure Bluetooth is ON on your meter."}
 
     last_err = None
     for addr, meter_name in meters:
@@ -142,7 +142,7 @@ async def sync_onetouch_ble(address: str = None) -> dict:
             last_err = str(e)
             continue
 
-    return {"ok": False, "error": last_err or "Meters connected but no valid glucose value stream received."}
+    return {"ok": False, "error": last_err or "Meter connected but no valid glucose value stream received."}
 
 if __name__ == "__main__":
     res = asyncio.run(sync_onetouch_ble())
