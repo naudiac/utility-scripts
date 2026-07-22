@@ -16,4 +16,6 @@ Documentation for the direct PC Bluetooth LE sync integration for William's **On
    - `DMP\r` (Dump Records)
 2. **Notification Stream Decoding**:
    - **ASCII Streams**: Mask bytes with `0x7F` and regex parse 2-3 digit integers in the range `40..500`.
-   - **Nibble Encodings**: Map characters between `@` and `O` to nibbles `0..15` (`ord(c) - ord('@')`), combine pairs into bytes `(high << 4) | low`, and extract valid glucose values.
+   - **Nibble Encodings**: Map characters between `@` and `O` to nibbles `0..15` (`ord(c) - ord('@')`).
+     - **8-bit paired nibbles**: `(n0 << 4) | n1` (e.g. `'J'+'J'` = `0xAA` = **170 mg/dL**).
+     - **16-bit 4-nibble big-endian integers**: `(n0 << 12) | (n1 << 8) | (n2 << 4) | n3` (e.g. `'@'+'@'+'L'+'F'` = `0x00C5` = **197 mg/dL**).
