@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>utility-scripts — naudiac</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -65,131 +66,101 @@
   .discovery-content p { font-size: 13px; color: var(--text); line-height: 1.5; }
   .discovery-content a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .discovery-content a:hover { text-decoration: underline; }
+
+  .controls { display: flex; justify-content: flex-end; padding: 0 16px 12px; gap: 8px; font-size: 12px; }
+  .controls select { background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-family: inherit; font-size: 12px; outline: none; }
+  .date-meta { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; display: flex; gap: 8px; flex-shrink: 0; margin-left: auto; align-items: center; }
+  .date-meta span { background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; }
+  .utility-group { display: flex; flex-direction: column; }
 </style>
 </head>
 <body>
-
 <header>
-  <div class="repo-meta">
-    <span class="repo-owner"><a href="https://github.com/naudiac">naudiac</a></span>
-    <span class="repo-slash">/</span>
-    <span class="repo-name">utility-scripts</span>
-  </div>
-  <div class="repo-desc">Personal collection of Windows utility scripts, automation tools, and planning documents.</div>
-  <div class="badge"><span class="dot"></span> Public</div>
+<div class="repo-meta">
+<span class="repo-owner"><a href="https://github.com/naudiac">naudiac</a></span>
+<span class="repo-slash">/</span>
+<span class="repo-name">utility-scripts</span>
+</div>
+<div class="repo-desc">Personal collection of Windows utility scripts, automation tools, and planning documents.</div>
+<div class="badge"><span class="dot"></span> Public</div>
 </header>
-
 <div class="discovery-callout">
-  <div class="icon">💡</div>
-  <div class="discovery-content">
-    <h3>Latest Discovery <span class="new-badge">New</span></h3>
-    <p><strong>Chrome Zombie Process Deadlock:</strong> Uncovered a critical edge-case where severe DNS crashes (via NordVPN Threat Protection) cause hidden browser processes to permanently deadlock. If Chrome refuses to launch visually, you must hard-kill all zombie background processes before Windows will spawn new ones. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank">Read the full diagnostic guide →</a></p>
-  </div>
+<div class="icon">💡</div>
+<div class="discovery-content">
+<h3>Latest Discovery <span class="new-badge">New</span></h3>
+<p><strong>Chrome Zombie Process Deadlock:</strong> Uncovered a critical edge-case where severe DNS crashes (via NordVPN Threat Protection) cause hidden browser processes to permanently deadlock. If Chrome refuses to launch visually, you must hard-kill all zombie background processes before Windows will spawn new ones. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank">Read the full diagnostic guide →</a></p>
 </div>
-
+</div>
 <div class="layout">
-  <div>
-    <div class="card">
-      <div class="card-header">📁 Repository Structure <span>main branch</span></div>
-      <div class="tree">
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">TimestampHotkey/</span><span class="file-desc">Ctrl+Alt+D → clipboard timestamp</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Install-TimestampHotkey.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/TimestampHotkey/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">healthos-onetouch-ble/</span><span class="file-desc">OneTouch Verio Reflect BLE Direct Sync</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/healthos-onetouch-ble/onetouch_ble.py" target="_blank"><span class="icon">📜</span><span class="file-name">onetouch_ble.py</span><span class="file-badge badge-ps">PY</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/healthos-onetouch-ble/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">nordvpn-automation/</span><span class="file-desc">NordVPN UI automation &amp; DNS fix</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/nordvpn-automation/nord-full-reconnect.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">nord-full-reconnect.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/nordvpn-automation/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">whatsapp-ai-bridge/</span><span class="file-desc">WhatsApp MCP &amp; AI monitoring bridge</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/tree/main/whatsapp-ai-bridge" target="_blank"><span class="icon">💻</span><span class="file-name">Source Code</span><span class="file-badge badge-md">CODE</span></a>
-        <a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/run_tripwire.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">run_tripwire.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/src/smart_monitor.ts" target="_blank"><span class="icon">📜</span><span class="file-name">smart_monitor.ts</span><span class="file-badge badge-ps">TS</span></a>
-        <a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/src/whatsappClient.ts" target="_blank"><span class="icon">📜</span><span class="file-name">whatsappClient.ts</span><span class="file-badge badge-ps">TS</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">pc-cleaner/</span><span class="file-desc">Automated system optimization &amp; monitoring</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/pc-cleaner/Clean-PC.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Clean-PC.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/pc-cleaner/Performance-Monitor.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Performance-Monitor.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">galaxy-watch-optimizer/</span><span class="file-desc">Samsung Galaxy Watch (Wear OS) ADB Optimizer</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/galaxy-watch-optimizer/Optimize-GalaxyWatch.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Optimize-GalaxyWatch.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/galaxy-watch-optimizer/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">projectm-phone-watch-sync/</span><span class="file-desc">10k+ Preset Sync &amp; Wear OS Pro-Unlock Patcher</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/projectm-phone-watch-sync/Sync-ProjectM.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Sync-ProjectM.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/projectm-phone-watch-sync/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">&#128269;</span><span class="file-name">agysearch/</span><span class="file-desc">Antigravity conversation search &#8212; terminal + chat</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/agysearch/search_conversations.ps1" target="_blank"><span class="icon">&#9889;</span><span class="file-name">search_conversations.ps1</span><span class="file-badge badge-ps">PS1</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/agysearch/README.md" target="_blank"><span class="icon">&#128196;</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">🤖</span><span class="file-name">puppeteer_automator/</span><span class="file-desc">Edge/Chrome Automation Scripts (CDP + Bypasses)</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/tree/main/puppeteer_automator" target="_blank"><span class="icon">💻</span><span class="file-name">Source Code (.js)</span><span class="file-badge badge-md">CODE</span></a>
-        <div class="tree-row indent folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">documentation/</span></div>
-        <a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank"><span class="icon">📋</span><span class="file-name">session_documentation.html</span><span class="file-badge badge-html">HTML</span></a>
-        <a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html#preamble" target="_blank" style="border-top:1px solid rgba(210,153,34,.25);background:rgba(210,153,34,.04);"><span class="icon">✨</span><span class="file-name">↳ Gemini Preamble — Origin Story</span><span class="file-badge" style="background:rgba(210,153,34,.2);color:var(--yellow);">ORIGIN</span></a>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="card-header">📚 Knowledge Base <span>concepts &amp; plans</span></div>
-      <div class="tree">
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/project-checkpoint-generator-skill.md" target="_blank"><span class="icon">💾</span><span class="file-name">project-checkpoint-generator-skill.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank"><span class="icon">🛠️</span><span class="file-name">chrome-https-diagnostic-order.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/project_checkpoint_phase3_start.md" target="_blank"><span class="icon">🤖</span><span class="file-name">project_checkpoint_phase3_start.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/projectm_wearos_pro_patch.md" target="_blank"><span class="icon">⌚</span><span class="file-name">projectm_wearos_pro_patch.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/healthos_onetouch_bs_import.md" target="_blank"><span class="icon">🩸</span><span class="file-name">healthos_onetouch_bs_import.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/whatsapp_ai_bridge.md" target="_blank"><span class="icon">💬</span><span class="file-name">whatsapp_ai_bridge.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/Hybrid_Local_Cloud_AI_Cost_Optimization.md" target="_blank"><span class="icon">💡</span><span class="file-name">Hybrid_Local_Cloud_AI_Cost_Optimization.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="./reports/gemini_conversation_analysis.html" target="_blank"><span class="icon">🔬</span><span class="file-name">gemini_conversation_analysis.html</span><span class="file-badge badge-html">HTML</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/agent_brainstorm_list.md" target="_blank"><span class="icon">🧠</span><span class="file-name">agent_brainstorm_list.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/puppeteer_automator.md" target="_blank"><span class="icon">🕷️</span><span class="file-name">puppeteer_automator.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/puppeteer_test_taker.md" target="_blank"><span class="icon">🎯</span><span class="file-name">puppeteer_test_taker.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">audio/</span><span class="file-desc">Home &amp; DJ audio system plans</span></div>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_sound_plan.md" target="_blank"><span class="icon">🔊</span><span class="file-name">living_room_sound_plan.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_car_audio_plan.md" target="_blank"><span class="icon">🚗</span><span class="file-name">living_room_car_audio_plan.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/dj_rig_plan.md" target="_blank"><span class="icon">🎛️</span><span class="file-name">dj_rig_plan.md</span><span class="file-badge badge-md">MD</span></a>
-        <div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">performance_reviews/</span><span class="file-desc">PC health diagnostics reports</span></div>
-        <a class="tree-row indent" href="./knowledge_base/performance_reviews/daily_report.md" target="_blank"><span class="icon">📈</span><span class="file-name">daily_report.md</span><span class="file-badge badge-md">MD</span></a>
-        <a class="tree-row indent" href="./knowledge_base/performance_reviews/weekly_report.md" target="_blank"><span class="icon">📊</span><span class="file-name">weekly_report.md</span><span class="file-badge badge-md">MD</span></a>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="card-header">🖥️ Files Installed on Machine <span>runtime only</span></div>
-      <div class="tree">
-        <div class="tree-row" style="cursor:default;"><span class="icon">📜</span><span class="file-name">Documents\Scripts\SilentTime.vbs</span><span class="file-badge badge-vbs">VBS</span></div>
-        <div class="tree-row" style="cursor:default;"><span class="icon">🔗</span><span class="file-name">%APPDATA%\...\Start Menu\Programs\SilentTime.lnk</span><span class="file-badge" style="background:rgba(255,166,87,.15);color:var(--orange);">LNK</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sidebar">
-    <div class="info-card">
-      <h3>TimestampHotkey</h3>
-      <div class="info-row"><span class="info-label">Hotkey</span><span class="info-value">Ctrl+Alt+D</span></div>
-      <div class="info-row"><span class="info-label">Output format</span><span class="info-value" style="font-family:'JetBrains Mono',monospace;font-size:11px;">yyyy-MM-dd_HH-mm-ss</span></div>
-      <div class="info-row"><span class="info-label">Background processes</span><span class="info-value green">Zero</span></div>
-      <div class="info-row"><span class="info-label">Admin required</span><span class="info-value green">No</span></div>
-      <div class="info-row"><span class="info-label">Live test</span><span class="info-value green">PASS ✓</span></div>
-    </div>
-    <div class="link-card">
-      <h3>Quick Links</h3>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank"><span class="link-icon">⬇️</span> Download Installer</a>
-      <a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html#preamble" target="_blank" style="border-left:3px solid var(--yellow);"><span class="link-icon">✨</span> Origin Story (Gemini Preamble)</a>
-      <a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank"><span class="link-icon">📋</span> Full Session Documentation</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/whatsapp_ai_bridge.md" target="_blank"><span class="link-icon">🤖</span> WhatsApp AI Bridge</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/nordvpn-automation/README.md" target="_blank"><span class="link-icon">🛡️</span> NordVPN Automation</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/dj_rig_plan.md" target="_blank"><span class="link-icon">🎛️</span> DJ Rig Plan</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_car_audio_plan.md" target="_blank"><span class="link-icon">🔊</span> Living Room Audio Plan</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/agysearch/README.md" target="_blank"><span class="link-icon">&#128269;</span> agysearch (Conversation Search)</a>
-      <a class="link-item" href="https://github.com/naudiac/utility-scripts" target="_blank"><span class="link-icon">🐙</span> GitHub Repository</a>
-    </div>
-    <div class="info-card">
-      <h3>About</h3>
-      <p style="font-size:12px;color:var(--muted);line-height:1.6;">Built on 2026-07-01. Zero-bloat philosophy — each utility in its own subfolder, one installer script, no dependencies, no background daemons. Designed to grow as new automations are added.</p>
-    </div>
-  </div>
+<div>
+<div class="card">
+<div class="card-header">📁 Repository Structure <span>main branch</span></div><div class="controls"><span style="align-self: center; color: var(--muted);">Sort by:</span><select onchange="sortTree(this)"><option value="name">Name (A-Z)</option><option value="updated_desc">Recently Updated</option><option value="created_asc">Oldest First</option></select></div>
+<div class="tree"><div class="utility-group" data-created="2026-07-01" data-name="readme.md" data-updated="2026-07-01"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-01</span><span>Upd: 2026-07-01</span></div></a></div><div class="utility-group" data-created="2026-07-01" data-name="timestamphotkey" data-updated="2026-07-01"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">TimestampHotkey/</span><span class="file-desc">Ctrl+Alt+D → clipboard timestamp</span><div class="date-meta"><span>Est: 2026-07-01</span><span>Upd: 2026-07-01</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Install-TimestampHotkey.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/TimestampHotkey/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-21" data-name="healthos-onetouch-ble" data-updated="2026-07-21"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">healthos-onetouch-ble/</span><span class="file-desc">OneTouch Verio Reflect BLE Direct Sync</span><div class="date-meta"><span>Est: 2026-07-21</span><span>Upd: 2026-07-21</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/healthos-onetouch-ble/onetouch_ble.py" target="_blank"><span class="icon">📜</span><span class="file-name">onetouch_ble.py</span><span class="file-badge badge-ps">PY</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/healthos-onetouch-ble/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-10" data-name="nordvpn-automation" data-updated="2026-07-10"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">nordvpn-automation/</span><span class="file-desc">NordVPN UI automation &amp; DNS fix</span><div class="date-meta"><span>Est: 2026-07-10</span><span>Upd: 2026-07-10</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/nordvpn-automation/nord-full-reconnect.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">nord-full-reconnect.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/nordvpn-automation/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-05" data-name="whatsapp-ai-bridge" data-updated="2026-07-05"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">whatsapp-ai-bridge/</span><span class="file-desc">WhatsApp MCP &amp; AI monitoring bridge</span><div class="date-meta"><span>Est: 2026-07-05</span><span>Upd: 2026-07-05</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/tree/main/whatsapp-ai-bridge" target="_blank"><span class="icon">💻</span><span class="file-name">Source Code</span><span class="file-badge badge-md">CODE</span></a><a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a><a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/run_tripwire.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">run_tripwire.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/src/smart_monitor.ts" target="_blank"><span class="icon">📜</span><span class="file-name">smart_monitor.ts</span><span class="file-badge badge-ps">TS</span></a><a class="tree-row indent2" href="https://github.com/naudiac/utility-scripts/blob/main/whatsapp-ai-bridge/src/whatsappClient.ts" target="_blank"><span class="icon">📜</span><span class="file-name">whatsappClient.ts</span><span class="file-badge badge-ps">TS</span></a></div><div class="utility-group" data-created="2026-07-23" data-name="pc-cleaner" data-updated="2026-07-23"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">pc-cleaner/</span><span class="file-desc">Automated system optimization &amp; monitoring</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/pc-cleaner/Clean-PC.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Clean-PC.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/pc-cleaner/Performance-Monitor.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Performance-Monitor.ps1</span><span class="file-badge badge-ps">PS1</span></a></div><div class="utility-group" data-created="2026-07-23" data-name="galaxy-watch-optimizer" data-updated="2026-07-23"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">galaxy-watch-optimizer/</span><span class="file-desc">Samsung Galaxy Watch (Wear OS) ADB Optimizer</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/galaxy-watch-optimizer/Optimize-GalaxyWatch.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Optimize-GalaxyWatch.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/galaxy-watch-optimizer/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-23" data-name="projectm-phone-watch-sync" data-updated="2026-07-23"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">projectm-phone-watch-sync/</span><span class="file-desc">10k+ Preset Sync &amp; Wear OS Pro-Unlock Patcher</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/projectm-phone-watch-sync/Sync-ProjectM.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">Sync-ProjectM.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/projectm-phone-watch-sync/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-23" data-name="agysearch" data-updated="2026-07-23"><div class="tree-row folder" style="cursor:default;"><span class="icon">🔍</span><span class="file-name">agysearch/</span><span class="file-desc">Antigravity conversation search — terminal + chat</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/raw/main/agysearch/search_conversations.ps1" target="_blank"><span class="icon">⚡</span><span class="file-name">search_conversations.ps1</span><span class="file-badge badge-ps">PS1</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/agysearch/README.md" target="_blank"><span class="icon">📄</span><span class="file-name">README.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-26" data-name="puppeteer_automator" data-updated="2026-07-26"><div class="tree-row folder" style="cursor:default;"><span class="icon">🤖</span><span class="file-name">puppeteer_automator/</span><span class="file-desc">Edge/Chrome Automation Scripts (CDP + Bypasses)</span><div class="date-meta"><span>Est: 2026-07-26</span><span>Upd: 2026-07-26</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/tree/main/puppeteer_automator" target="_blank"><span class="icon">💻</span><span class="file-name">Source Code (.js)</span><span class="file-badge badge-md">CODE</span></a><div class="tree-row indent folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">documentation/</span></div><a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank"><span class="icon">📋</span><span class="file-name">session_documentation.html</span><span class="file-badge badge-html">HTML</span></a><a class="tree-row indent2" href="./TimestampHotkey/documentation/session_documentation.html#preamble" style="border-top:1px solid rgba(210,153,34,.25);background:rgba(210,153,34,.04);" target="_blank"><span class="icon">✨</span><span class="file-name">↳ Gemini Preamble — Origin Story</span><span class="file-badge" style="background:rgba(210,153,34,.2);color:var(--yellow);">ORIGIN</span></a></div></div>
 </div>
+<div class="card" style="margin-top:16px;">
+<div class="card-header">📚 Knowledge Base <span>concepts &amp; plans</span></div><div class="controls"><span style="align-self: center; color: var(--muted);">Sort by:</span><select onchange="sortTree(this)"><option value="name">Name (A-Z)</option><option value="updated_desc">Recently Updated</option><option value="created_asc">Oldest First</option></select></div>
+<div class="tree"><div class="utility-group" data-created="2026-07-26" data-name="project-checkpoint-generator-skill.md" data-updated="2026-07-26"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/project-checkpoint-generator-skill.md" target="_blank"><span class="icon">💾</span><span class="file-name">project-checkpoint-generator-skill.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-26</span><span>Upd: 2026-07-26</span></div></a></div><div class="utility-group" data-created="2026-07-26" data-name="chrome-https-diagnostic-order.md" data-updated="2026-07-26"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank"><span class="icon">🛠️</span><span class="file-name">chrome-https-diagnostic-order.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-26</span><span>Upd: 2026-07-26</span></div></a></div><div class="utility-group" data-created="2026-07-25" data-name="project_checkpoint_phase3_start.md" data-updated="2026-07-25"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/project_checkpoint_phase3_start.md" target="_blank"><span class="icon">🤖</span><span class="file-name">project_checkpoint_phase3_start.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-25</span><span>Upd: 2026-07-25</span></div></a></div><div class="utility-group" data-created="2026-07-23" data-name="projectm_wearos_pro_patch.md" data-updated="2026-07-23"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/projectm_wearos_pro_patch.md" target="_blank"><span class="icon">⌚</span><span class="file-name">projectm_wearos_pro_patch.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></a></div><div class="utility-group" data-created="2026-07-21" data-name="healthos_onetouch_bs_import.md" data-updated="2026-07-21"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/healthos_onetouch_bs_import.md" target="_blank"><span class="icon">🩸</span><span class="file-name">healthos_onetouch_bs_import.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-21</span><span>Upd: 2026-07-21</span></div></a></div><div class="utility-group" data-created="2026-07-05" data-name="whatsapp_ai_bridge.md" data-updated="2026-07-05"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/whatsapp_ai_bridge.md" target="_blank"><span class="icon">💬</span><span class="file-name">whatsapp_ai_bridge.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-05</span><span>Upd: 2026-07-05</span></div></a></div><div class="utility-group" data-created="2026-07-03" data-name="hybrid_local_cloud_ai_cost_optimization.md" data-updated="2026-07-03"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/Hybrid_Local_Cloud_AI_Cost_Optimization.md" target="_blank"><span class="icon">💡</span><span class="file-name">Hybrid_Local_Cloud_AI_Cost_Optimization.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-03</span><span>Upd: 2026-07-03</span></div></a></div><div class="utility-group" data-created="2026-07-08" data-name="gemini_conversation_analysis.html" data-updated="2026-07-08"><a class="tree-row" href="./reports/gemini_conversation_analysis.html" target="_blank"><span class="icon">🔬</span><span class="file-name">gemini_conversation_analysis.html</span><span class="file-badge badge-html">HTML</span><div class="date-meta"><span>Est: 2026-07-08</span><span>Upd: 2026-07-08</span></div></a></div><div class="utility-group" data-created="2026-07-03" data-name="agent_brainstorm_list.md" data-updated="2026-07-03"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/agent_brainstorm_list.md" target="_blank"><span class="icon">🧠</span><span class="file-name">agent_brainstorm_list.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-03</span><span>Upd: 2026-07-03</span></div></a></div><div class="utility-group" data-created="2026-07-26" data-name="puppeteer_automator.md" data-updated="2026-07-26"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/puppeteer_automator.md" target="_blank"><span class="icon">🕷️</span><span class="file-name">puppeteer_automator.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-26</span><span>Upd: 2026-07-26</span></div></a></div><div class="utility-group" data-created="2026-07-26" data-name="puppeteer_test_taker.md" data-updated="2026-07-26"><a class="tree-row" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/puppeteer_test_taker.md" target="_blank"><span class="icon">🎯</span><span class="file-name">puppeteer_test_taker.md</span><span class="file-badge badge-md">MD</span><div class="date-meta"><span>Est: 2026-07-26</span><span>Upd: 2026-07-26</span></div></a></div><div class="utility-group" data-created="2026-07-08" data-name="audio" data-updated="2026-07-08"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">audio/</span><span class="file-desc">Home &amp; DJ audio system plans</span><div class="date-meta"><span>Est: 2026-07-08</span><span>Upd: 2026-07-08</span></div></div><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_sound_plan.md" target="_blank"><span class="icon">🔊</span><span class="file-name">living_room_sound_plan.md</span><span class="file-badge badge-md">MD</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_car_audio_plan.md" target="_blank"><span class="icon">🚗</span><span class="file-name">living_room_car_audio_plan.md</span><span class="file-badge badge-md">MD</span></a><a class="tree-row indent" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/dj_rig_plan.md" target="_blank"><span class="icon">🎛️</span><span class="file-name">dj_rig_plan.md</span><span class="file-badge badge-md">MD</span></a></div><div class="utility-group" data-created="2026-07-23" data-name="performance_reviews" data-updated="2026-07-23"><div class="tree-row folder" style="cursor:default;"><span class="icon">📂</span><span class="file-name">performance_reviews/</span><span class="file-desc">PC health diagnostics reports</span><div class="date-meta"><span>Est: 2026-07-23</span><span>Upd: 2026-07-23</span></div></div><a class="tree-row indent" href="./knowledge_base/performance_reviews/daily_report.md" target="_blank"><span class="icon">📈</span><span class="file-name">daily_report.md</span><span class="file-badge badge-md">MD</span></a><a class="tree-row indent" href="./knowledge_base/performance_reviews/weekly_report.md" target="_blank"><span class="icon">📊</span><span class="file-name">weekly_report.md</span><span class="file-badge badge-md">MD</span></a></div></div>
+</div>
+<div class="card" style="margin-top:16px;">
+<div class="card-header">🖥️ Files Installed on Machine <span>runtime only</span></div>
+<div class="tree">
+<div class="tree-row" style="cursor:default;"><span class="icon">📜</span><span class="file-name">Documents\Scripts\SilentTime.vbs</span><span class="file-badge badge-vbs">VBS</span></div>
+<div class="tree-row" style="cursor:default;"><span class="icon">🔗</span><span class="file-name">%APPDATA%\...\Start Menu\Programs\SilentTime.lnk</span><span class="file-badge" style="background:rgba(255,166,87,.15);color:var(--orange);">LNK</span></div>
+</div>
+</div>
+</div>
+<div class="sidebar">
+<div class="info-card">
+<h3>TimestampHotkey</h3>
+<div class="info-row"><span class="info-label">Hotkey</span><span class="info-value">Ctrl+Alt+D</span></div>
+<div class="info-row"><span class="info-label">Output format</span><span class="info-value" style="font-family:'JetBrains Mono',monospace;font-size:11px;">yyyy-MM-dd_HH-mm-ss</span></div>
+<div class="info-row"><span class="info-label">Background processes</span><span class="info-value green">Zero</span></div>
+<div class="info-row"><span class="info-label">Admin required</span><span class="info-value green">No</span></div>
+<div class="info-row"><span class="info-label">Live test</span><span class="info-value green">PASS ✓</span></div>
+</div>
+<div class="link-card">
+<h3>Quick Links</h3>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/raw/main/TimestampHotkey/Install-TimestampHotkey.ps1" target="_blank"><span class="link-icon">⬇️</span> Download Installer</a>
+<a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html#preamble" style="border-left:3px solid var(--yellow);" target="_blank"><span class="link-icon">✨</span> Origin Story (Gemini Preamble)</a>
+<a class="link-item" href="./TimestampHotkey/documentation/session_documentation.html" target="_blank"><span class="link-icon">📋</span> Full Session Documentation</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/whatsapp_ai_bridge.md" target="_blank"><span class="link-icon">🤖</span> WhatsApp AI Bridge</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/nordvpn-automation/README.md" target="_blank"><span class="link-icon">🛡️</span> NordVPN Automation</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/dj_rig_plan.md" target="_blank"><span class="link-icon">🎛️</span> DJ Rig Plan</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/audio/living_room_car_audio_plan.md" target="_blank"><span class="link-icon">🔊</span> Living Room Audio Plan</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts/blob/main/agysearch/README.md" target="_blank"><span class="link-icon">🔍</span> agysearch (Conversation Search)</a>
+<a class="link-item" href="https://github.com/naudiac/utility-scripts" target="_blank"><span class="link-icon">🐙</span> GitHub Repository</a>
+</div>
+<div class="info-card">
+<h3>About</h3>
+<p style="font-size:12px;color:var(--muted);line-height:1.6;">Built on 2026-07-01. Zero-bloat philosophy — each utility in its own subfolder, one installer script, no dependencies, no background daemons. Designed to grow as new automations are added.</p>
+</div>
+</div>
+</div>
+<footer>naudiac/utility-scripts — Updated 2026-07-26</footer>
+<script>
+function sortTree(selectElement) {
+    const card = selectElement.closest('.card');
+    const tree = card.querySelector('.tree');
+    const groups = Array.from(tree.querySelectorAll('.utility-group'));
+    const sortType = selectElement.value;
+    
+    groups.sort((a, b) => {
+        if (sortType === 'name') {
+            return a.dataset.name.localeCompare(b.dataset.name);
+        } else if (sortType === 'updated_desc') {
+            return b.dataset.updated.localeCompare(a.dataset.updated);
+        } else if (sortType === 'created_asc') {
+            return a.dataset.created.localeCompare(b.dataset.created);
+        }
+    });
+    
+    groups.forEach(group => tree.appendChild(group));
+}
 
-<footer>naudiac/utility-scripts &mdash; Updated 2026-07-26</footer>
-
-</body>
+// Initial sort for both
+document.querySelectorAll('.controls select').forEach(s => {
+    s.value = 'updated_desc';
+    sortTree(s);
+});
+</script></body>
 </html>
