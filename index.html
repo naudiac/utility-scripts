@@ -58,6 +58,13 @@
   .link-icon { font-size: 15px; flex-shrink: 0; }
   footer { max-width: 860px; margin: 40px auto 0; font-size: 12px; color: var(--muted); text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
   @media (max-width: 700px) { .layout { grid-template-columns: 1fr; } }
+  .discovery-callout { max-width: 860px; margin: -16px auto 32px; background: rgba(88, 166, 255, 0.08); border: 1px solid rgba(88, 166, 255, 0.3); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px; display: flex; align-items: flex-start; gap: 12px; }
+  .discovery-callout .icon { font-size: 20px; margin-top: 2px; }
+  .discovery-content h3 { color: var(--accent); font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .discovery-content h3 .new-badge { background: var(--accent); color: #000; font-size: 10px; padding: 2px 6px; border-radius: 12px; font-weight: 700; text-transform: uppercase; }
+  .discovery-content p { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .discovery-content a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .discovery-content a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -71,6 +78,14 @@
   <div class="repo-desc">Personal collection of Windows utility scripts, automation tools, and planning documents.</div>
   <div class="badge"><span class="dot"></span> Public</div>
 </header>
+
+<div class="discovery-callout">
+  <div class="icon">💡</div>
+  <div class="discovery-content">
+    <h3>Latest Discovery <span class="new-badge">New</span></h3>
+    <p><strong>Chrome Zombie Process Deadlock:</strong> Uncovered a critical edge-case where severe DNS crashes (via NordVPN Threat Protection) cause hidden browser processes to permanently deadlock. If Chrome refuses to launch visually, you must hard-kill all zombie background processes before Windows will spawn new ones. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank">Read the full diagnostic guide →</a></p>
+  </div>
+</div>
 
 <div class="layout">
   <div>
