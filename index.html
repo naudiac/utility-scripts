@@ -66,6 +66,12 @@
   .discovery-content p { font-size: 13px; color: var(--text); line-height: 1.5; }
   .discovery-content a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .discovery-content a:hover { text-decoration: underline; }
+  .achievement-list { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
+  .achievement-list li { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; border: 1px solid rgba(88,166,255,0.15); }
+  .ach-title { font-size: 13px; color: var(--accent); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .ach-desc { font-size: 12px; color: var(--text); line-height: 1.5; }
+  .ach-desc a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .ach-desc a:hover { text-decoration: underline; }
 
   .controls { display: flex; justify-content: flex-end; padding: 0 16px 12px; gap: 8px; font-size: 12px; }
   .controls select { background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-family: inherit; font-size: 12px; outline: none; }
@@ -85,10 +91,31 @@
 <div class="badge"><span class="dot"></span> Public</div>
 </header>
 <div class="discovery-callout">
-<div class="icon">💡</div>
+<div class="icon">🏆</div>
 <div class="discovery-content">
-<h3>Latest Discovery <span class="new-badge">New</span></h3>
-<p><strong>Chrome Zombie Process Deadlock:</strong> Uncovered a critical edge-case where severe DNS crashes (via NordVPN Threat Protection) cause hidden browser processes to permanently deadlock. If Chrome refuses to launch visually, you must hard-kill all zombie background processes before Windows will spawn new ones. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank">Read the full diagnostic guide →</a></p>
+<h3>Recent Discoveries &amp; Achievements <span class="new-badge">Updated</span></h3>
+<ul class="achievement-list">
+  <li>
+    <div class="ach-title"><strong>Chrome Zombie Process Deadlock</strong> <span class="new-badge">New</span></div>
+    <div class="ach-desc">Uncovered a critical edge-case where severe DNS crashes (via NordVPN Threat Protection) cause hidden browser processes to permanently deadlock. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/chrome-https-diagnostic-order.md" target="_blank">Read the full diagnostic guide →</a></div>
+  </li>
+  <li>
+    <div class="ach-title"><strong>Project Checkpoint Generator</strong></div>
+    <div class="ach-desc">Created a resilient state management skill that anchors complex project contexts across multi-session AI workflows to prevent hallucination. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/project-checkpoint-generator-skill.md" target="_blank">View Skill →</a></div>
+  </li>
+  <li>
+    <div class="ach-title"><strong>ThinkAutomation Pristine Copy UI</strong></div>
+    <div class="ach-desc">Implemented a CSS overlay strategy (<code>user-select: none</code>) over internal routing IDs to ensure end-users can seamlessly copy tracking numbers without highlighting hidden system tags.</div>
+  </li>
+  <li>
+    <div class="ach-title"><strong>WhatsApp AI Bridge</strong></div>
+    <div class="ach-desc">Engineered a real-time monitor and MCP bridge to allow Antigravity to observe WhatsApp chats and orchestrate automated interactions. <a href="https://github.com/naudiac/utility-scripts/blob/main/knowledge_base/whatsapp_ai_bridge.md" target="_blank">View Architecture →</a></div>
+  </li>
+  <li>
+    <div class="ach-title"><strong>NordVPN Threat Protection Automated Flush</strong></div>
+    <div class="ach-desc">Automated a forced sequence of UI interactions to fully flush the WFP driver when NordVPN corrupts network DNS routing. <a href="https://github.com/naudiac/utility-scripts/blob/main/nordvpn-automation/README.md" target="_blank">View Script →</a></div>
+  </li>
+</ul>
 </div>
 </div>
 <div class="layout">
