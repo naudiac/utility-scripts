@@ -1,0 +1,12 @@
+{
+  "python.languageServer": "Default",
+  "workbench.colorTheme": "Default Dark+",
+  "git.autofetch": true,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "workbench.iconTheme": "material-icon-theme",
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "security.promptForLocalFileProtocolHandling": false,
+  "editor.minimap.enabled": false
+}

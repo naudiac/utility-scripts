@@ -1,0 +1,9 @@
+ms-python.python
+ms-python.debugpy
+golang.go
+redhat.java
+shopify.ruby-lsp
+ms-azuretools.vscode-docker
+llvm-vs-code-extensions.vscode-clangd
+eamodio.gitlens
+PKief.material-icon-theme
