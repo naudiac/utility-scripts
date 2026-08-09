@@ -1,0 +1,6 @@
+node_modules/
+sys-ws-92a/
+__pycache__/
+*.pyc
+*.log
+.DS_Store

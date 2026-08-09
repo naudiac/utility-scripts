@@ -1,0 +1,1 @@
+{"error": "Database connection or query error. Please ensure your VPN is ACTIVATED, as the database requires a whitelisted dedicated IP.", "details": "('ODBC SQL type -155 is not yet supported.  column-index=126  type=-155', 'HY106')"}

@@ -1,11 +1,90 @@
-﻿{
-    "Timestamp":  "2026-07-23 08:15:19",
-    "CPU":  48,
-    "RAM_Total":  31.85,
-    "RAM_Used":  11.92,
-    "RAM_Free":  19.93,
-    "RAM_Pct":  37.43,
-    "Anomalies":  [
+﻿[
+    {
+        "Timestamp":  "2026-07-23 08:15:19",
+        "CPU":  48,
+        "RAM_Total":  31.85,
+        "RAM_Used":  11.92,
+        "RAM_Free":  19.93,
+        "RAM_Pct":  37.43,
+        "Anomalies":  [
 
-                  ]
-}
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-02 18:00:11",
+        "CPU":  35,
+        "RAM_Total":  31.85,
+        "RAM_Used":  18.9,
+        "RAM_Free":  12.95,
+        "RAM_Pct":  59.34,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-03 18:00:08",
+        "CPU":  0,
+        "RAM_Total":  31.85,
+        "RAM_Used":  14.33,
+        "RAM_Free":  17.52,
+        "RAM_Pct":  44.99,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-04 18:00:09",
+        "CPU":  10,
+        "RAM_Total":  31.85,
+        "RAM_Used":  13.92,
+        "RAM_Free":  17.93,
+        "RAM_Pct":  43.7,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-05 18:00:22",
+        "CPU":  46,
+        "RAM_Total":  31.85,
+        "RAM_Used":  19.2,
+        "RAM_Free":  12.65,
+        "RAM_Pct":  60.28,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-06 18:00:11",
+        "CPU":  39,
+        "RAM_Total":  31.85,
+        "RAM_Used":  12.2,
+        "RAM_Free":  19.65,
+        "RAM_Pct":  38.3,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-07 18:00:08",
+        "CPU":  31,
+        "RAM_Total":  31.85,
+        "RAM_Used":  15.29,
+        "RAM_Free":  16.56,
+        "RAM_Pct":  48.01,
+        "Anomalies":  [
+
+                      ]
+    },
+    {
+        "Timestamp":  "2026-08-08 18:00:09",
+        "CPU":  15,
+        "RAM_Total":  31.85,
+        "RAM_Used":  18.34,
+        "RAM_Free":  13.51,
+        "RAM_Pct":  57.58,
+        "Anomalies":  [
+
+                      ]
+    }
+]
