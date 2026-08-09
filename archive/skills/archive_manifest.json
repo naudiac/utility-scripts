@@ -1,0 +1,409 @@
+{
+  "agy-screenshot-cleaner": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.453018",
+        "hash": "dced8583aa732e423ec0cc4fc6b51b8cc23d469dc2a46e635c6284d7f1cf1cfa",
+        "path": "archive/skills/agy-screenshot-cleaner/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "cargowise-database-query": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.470435",
+        "hash": "f635b6e6320ed1411ecf1764029e92307d6f871378c571d8304e3e4d509ec039",
+        "path": "archive/skills/cargowise-database-query/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "cargowise-schema-librarian": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.475707",
+        "hash": "c7b618788a3796aeb96663e99eae2f4694942390b6793d9b55bae4cf25c171c3",
+        "path": "archive/skills/cargowise-schema-librarian/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "desktop-screenshot": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.478720",
+        "hash": "e35d063d01956c26b9e04f5562d8548ad7e616d382f36b89b5753115a05b6112",
+        "path": "archive/skills/desktop-screenshot/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "firetv-dev-setup": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.482707",
+        "hash": "3b2b83d87238b54eb3b96ac5c0529fe52efd02538f9454eb04d4650dd6b7338a",
+        "path": "archive/skills/firetv-dev-setup/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "github-remote-explorer": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.488837",
+        "hash": "dfb3052b8d5941f11d284952fc4e2fe4329467ff88b1ff7a8880268461be943e",
+        "path": "archive/skills/github-remote-explorer/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "google-drive-upload": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.491872",
+        "hash": "7151ebee0ec607b7780b76830ee13a15b011974ec74ae80a2cbfaa94529227e6",
+        "path": "archive/skills/google-drive-upload/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "google-workspace-ops": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.499109",
+        "hash": "a9b29abaa3c9a591f1a818f20497de0f6cbebf2dd1ea2e5a4b520fb6ca205f8a",
+        "path": "archive/skills/google-workspace-ops/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "google-workspaceMCP-setup": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.503652",
+        "hash": "8c37b35931d15b9dfc17bb113d4c1c5af1f3dbb39659c63843905a1477ca1aef",
+        "path": "archive/skills/google-workspaceMCP-setup/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "google-workspaceMCP-usage": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.507673",
+        "hash": "3e7df883d5a3fadb6469531f140147ce9affa14c2dae55fae43dcf37422fa9e0",
+        "path": "archive/skills/google-workspaceMCP-usage/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "healthos-diet-log-importer": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.511672",
+        "hash": "5fcada774dd85d54daddcab2b18296b5df875bbae194b3671cea97cc76b736aa",
+        "path": "archive/skills/healthos-diet-log-importer/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "healthos-ihealth-bp-import": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.515908",
+        "hash": "e7fab1639546914dc8f278f106447df8186c3daeec3359f3d92b938d851f5e58",
+        "path": "archive/skills/healthos-ihealth-bp-import/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "healthos-onetouch-bs-import": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.521477",
+        "hash": "413c05044c58f1496b84b246366fe13d52552bbfc1f680df847a2d29ac80e6e9",
+        "path": "archive/skills/healthos-onetouch-bs-import/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "healthos-stats-dashboard": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.524726",
+        "hash": "e0173a489bb6b400c669389e597c6d19f95f7669fafbdfaab3b51603f88171b3",
+        "path": "archive/skills/healthos-stats-dashboard/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "image-grid-overlay": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.531058",
+        "hash": "b8882f8db26613ed61dc60371b474c976b2216fa7a08ab6b47c9653edc9a60c0",
+        "path": "archive/skills/image-grid-overlay/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "mobile-linkedin-navigator": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.535892",
+        "hash": "2f3d0b9253a15b669dcc2feae8005fdc845fdf2f2a226d3d73ccbf95fa962df6",
+        "path": "archive/skills/mobile-linkedin-navigator/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "phone-control-note9": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.539917",
+        "hash": "fe578142098682760e1732e1a123e1f90190d173d1f79ca525702772690d4605",
+        "path": "archive/skills/phone-control-note9/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "phone-control-s24": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.549115",
+        "hash": "b23ef7a3706c1508ddb1bb520b474a1a67239a3e36156f77defd90c81805afc9",
+        "path": "archive/skills/phone-control-s24/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "phone-mirror": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.553882",
+        "hash": "a772bcc0786c564b949f6275c296e9a75b37d091dead61a5a687d4604e861201",
+        "path": "archive/skills/phone-mirror/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "powershell-image-clipboard": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.559889",
+        "hash": "6edb0b0d6cd72582310706540792931e965dd6cb0bc252f2a469df70511eebef",
+        "path": "archive/skills/powershell-image-clipboard/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "project-checkpoint-generator": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.563139",
+        "hash": "7aaf01caf6e2e8e6353516fb0f3b7e26b11e25dbef06c407b1988a6aac99d21a",
+        "path": "archive/skills/project-checkpoint-generator/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "samsung-tv-smartthings": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.567096",
+        "hash": "1df9f7b10d1abe9f71d537b3c1067ee73a7972a857e5ae9a732aa0456b1a3456",
+        "path": "archive/skills/samsung-tv-smartthings/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "skill-graveyard-retirement": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.571612",
+        "hash": "06c939aa1187769163c790bbe5d98e9062ac2a984009bc5c3a63d3282b6ff6d7",
+        "path": "archive/skills/skill-graveyard-retirement/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "thinkautomation-iteration-guide": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.574921",
+        "hash": "786dd54950fd6ca40170c96997f25b47e8802e2cf2704e5e666c9120cbe5c00c",
+        "path": "archive/skills/thinkautomation-iteration-guide/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "watch-control-g5pro": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.578882",
+        "hash": "cc0b894546f272709b07908b0593f148a11783cedcf991acaf5554b9b1f2130a",
+        "path": "archive/skills/watch-control-g5pro/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wbr-congestion-update": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.586828",
+        "hash": "436b858e24e319c31eecd7cae8bb9a3a1dd75fdf917e2e333fbfdf312486b06d",
+        "path": "archive/skills/wbr-congestion-update/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "william-dual-monitor-wallpaper": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.591823",
+        "hash": "8edc2983536a7640e444e89364644a2b16b262125e0d520f112f06e11fb9dfaa",
+        "path": "archive/skills/william-dual-monitor-wallpaper/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-active-shipment-roller": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.598094",
+        "hash": "5828d3e95932f90f72bb2555bb94978a000495d498ad44383dd4ccedad650a58",
+        "path": "archive/skills/wina-active-shipment-roller/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-air-report-update": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.602574",
+        "hash": "ec76cd48602f975260c5f3aefe16b8f7bf026ae2d631c81751e5e80480281e73",
+        "path": "archive/skills/wina-air-report-update/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-delay-notification": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.611583",
+        "hash": "822e3443a59363a8809ea8c8ce6270bbe1797c9ab70a98c1e8f09777f9a29af2",
+        "path": "archive/skills/wina-delay-notification/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-header-comments-restorer": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.622381",
+        "hash": "75801418acd867a73f355022b3fbb9de145d7e9679393724daec64e4a83da9fd",
+        "path": "archive/skills/wina-header-comments-restorer/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-kenvue-cli-rebuild": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.626602",
+        "hash": "6cd80aafa038fe25bb417a5ddfb01cecf4ba4f9da18bff8598981eede0689c33",
+        "path": "archive/skills/wina-kenvue-cli-rebuild/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-missing-data-filler": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.632871",
+        "hash": "c5c7ab61b150c8275c66181ae135867d0c5d5f52bbdde50ee4de1c9da4247111",
+        "path": "archive/skills/wina-missing-data-filler/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-ocean-report-update": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.639406",
+        "hash": "6b26003b9f1a96ebe1f93b20e3ace56e57c5a5238696ce4fac104d61132d2724",
+        "path": "archive/skills/wina-ocean-report-update/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wina-report-ops": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.646655",
+        "hash": "e5a610e25baee8e723f26c1b2a069fcf94bf9ba162296b8d10b8b4aa6cdca10a",
+        "path": "archive/skills/wina-report-ops/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "windows-browser-automation": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.650663",
+        "hash": "845a65af50653b48e3936ff90df2f8cdb31e6595c647c0b897b930604b69ecc4",
+        "path": "archive/skills/windows-browser-automation/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  },
+  "wisetech-heist-crew": {
+    "versions": [
+      {
+        "date": "2026-08-09",
+        "timestamp": "2026-08-09T10:29:11.656001",
+        "hash": "b73f83dad68531291a1651face575ad45b0fb78a70fc70187823e30a98750935",
+        "path": "archive/skills/wisetech-heist-crew/2026-08-09/SKILL.md"
+      }
+    ],
+    "last_updated": "2026-08-09"
+  }
+}

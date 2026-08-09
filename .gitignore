@@ -3,4 +3,5 @@ sys-ws-92a/
 __pycache__/
 *.pyc
 *.log
-.DS_Store
+.env
+*.env
