@@ -13,7 +13,7 @@ description: >
 
 | Field | Value |
 |---|---|
-| SmartThings PAT | `6caef106-075a-4822-87bd-ce91a28e1057` |
+| SmartThings PAT | `<REDACTED_SMARTTHINGS_PAT>` |
 | Device ID | `cc6c7a3a-74cc-16eb-14eb-83267b2b27a2` |
 | Device Name | Living room television |
 | Model | Samsung UN65TU7000BXZA (65" 4K TU7000, 2020) |
@@ -30,7 +30,7 @@ SmartThings allows **~10 commands per minute** per token.
 ## Quick Control (PowerShell)
 
 ```powershell
-$h = @{ Authorization = "Bearer 6caef106-075a-4822-87bd-ce91a28e1057"; "Content-Type" = "application/json" }
+$h = @{ Authorization = "Bearer <REDACTED_BEARER_TOKEN>"; "Content-Type" = "application/json" }
 $d = "cc6c7a3a-74cc-16eb-14eb-83267b2b27a2"
 $api = "https://api.smartthings.com/v1/devices/$d/commands"
 

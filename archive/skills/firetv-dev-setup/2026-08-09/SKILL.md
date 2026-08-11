@@ -37,7 +37,7 @@ Father is using the TV — identify when it's free.
 ### Step 1a: Identify which stick is on HDMI1
 ```powershell
 # Switch TV to HDMI1 via SmartThings and observe
-$h = @{ Authorization = "Bearer 6caef106-075a-4822-87bd-ce91a28e1057"; "Content-Type" = "application/json" }
+$h = @{ Authorization = "Bearer <REDACTED_BEARER_TOKEN>"; "Content-Type" = "application/json" }
 Invoke-RestMethod "https://api.smartthings.com/v1/devices/cc6c7a3a-74cc-16eb-14eb-83267b2b27a2/commands" `
   -Method Post -Headers $h `
   -Body '{"commands":[{"component":"main","capability":"samsungvd.mediaInputSource","command":"setInputSource","arguments":["HDMI1"]}]}'
@@ -178,5 +178,5 @@ $tv  = "192.168.4.39:5555"
 
 ## SmartThings Reference (already complete)
 See: `samsung-tv-smartthings` skill for full TV control commands.
-Token: `6caef106-075a-4822-87bd-ce91a28e1057`
+Token: `<REDACTED_TOKEN>`
 Device ID: `cc6c7a3a-74cc-16eb-14eb-83267b2b27a2`

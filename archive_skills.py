@@ -31,6 +31,11 @@ SENSITIVE_PATTERNS = [
     (re.compile(r'734063060374-[a-z0-9]{32}\.apps\.googleusercontent\.com'), '<YOUR_CLIENT_ID>'),
     (re.compile(r'sk-[A-Za-z0-9]{32,}'), '<REDACTED_OPENAI_KEY>'),
     (re.compile(r'CW_DB_PASS=[^\r\n]+'), 'CW_DB_PASS=<YOUR_DB_PASSWORD>'),
+    (re.compile(r'Bearer\s+[A-Za-z0-9\-_]{20,}'), 'Bearer <REDACTED_BEARER_TOKEN>'),
+    (re.compile(r'Bearer\s+[0-9a-fA-F-]{36}'), 'Bearer <REDACTED_BEARER_TOKEN>'),
+    (re.compile(r'SmartThings PAT\s*\|\s*[`\'"]?[0-9a-fA-F-]{36}[`\'"]?'), 'SmartThings PAT | `<REDACTED_SMARTTHINGS_PAT>`'),
+    (re.compile(r'Token:\s*[`\'"]?[0-9a-fA-F-]{36}[`\'"]?'), 'Token: `<REDACTED_TOKEN>`'),
+    (re.compile(r'6caef106-075a-4822-87bd-ce91a28e1057'), '<REDACTED_SMARTTHINGS_PAT>'),
 ]
 
 def sanitize_content(content: str) -> str:
