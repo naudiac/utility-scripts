@@ -22,7 +22,7 @@ The sovereign node operates as a decentralized, non-blocking asynchronous event 
 │• rtl_433  │ │• pyserial LoRa bridge │ │• SLA Liquor scraper   │ │• Temporal Vector Graph│
 │• dump1090 │ │• CBOR / Binary Parser │ │• DOB Permit monitor   │ │• Psycholinguistic Twin│
 │• op25 P25 │ │• CRDT Sync Engine     │ │• MapPLUTO GIS Spatial │ │• CoreML Whisper ASR   │
-│• CoreML   │ │• Zero-Knowledge Auth  │ │• Resy / SevenRooms    │ │• Capital / MEV Sniper │
+│• CoreML   │ │• Zero-Knowledge Auth  │ │• Resy / SevenRooms    │ │• Taste / Music Oracle │
 │  YAMNet   │ │• Ephemeral Dead-Drop  │ │• Asset Arbitrage Feed │ │• Multi-Channel Gateway│
 └─────┬─────┘ └───────────┬───────────┘ └───────────┬───────────┘ └───────────┬───────────┘
       │                   │                         │                         │
@@ -73,30 +73,9 @@ To delegate communication without sounding artificial, OpenClaw calculates the *
 
 $$\vec{\Psi}_{\text{style}} = \begin{bmatrix} \text{Lexical Diversity (TTR)} \\ \text{Formality Index (F-score)} \\ \text{Emoji Density} \\ \text{Average Sentence Length} \\ \text{Humor / Sarcasm Coefficient} \end{bmatrix}$$
 
-```
-                          PSYCHOLINGUISTIC PIPELINE
-                          
-  [Incoming Message from Contact] ──► [Stylistic Feature Extractor] ──► Vector Ψ
-                                                                          │
-  [Operator Baseline Persona]     ──► [Few-Shot Persona Matrix]    ───────┤
-                                                                          ▼
-                                                         ┌─────────────────────────┐
-                                                         │  DYNAMIC STYLE TRANSFER │
-                                                         │   (Local MLX 4-bit LLM) │
-                                                         └────────────┬────────────┘
-                                                                      │
-                                                                      ▼
-                                                         [Simulated Multi-Branch]
-                                                         • Branch A: Witty Banter
-                                                         • Branch B: Direct Alpha
-                                                         • Branch C: Graceful Pivot
-```
-
 ---
 
 ## 4. Multi-Spectrum SIGINT & Acoustic Telemetry
-
-In high-density urban environments (e.g., Manhattan), the air is filled with open telemetry:
 
 1. **RF Spectrum Ingestion:**
    - **ADS-B / ACARS (1090 MHz / 131.55 MHz):** Captures flight transponders, private helicopter routes (Blade/Hamptons shuttles), and digital pilot teletype messages over NYC airspace.
@@ -104,7 +83,7 @@ In high-density urban environments (e.g., Manhattan), the air is filled with ope
    - **P25 Emergency Trunking + CoreML Whisper:** Streams unencrypted NYPD/FDNY dispatch directly through local Whisper on the Apple Neural Engine in $<300\text{ms}$.
 2. **Acoustic Signature Detection (CoreML YAMNet / CLAP):**
    - Listens via calibrated boundary microphones on the terrace/window sill.
-   - Runs on-device acoustic event classification detecting emergency sirens, gunshots, glass breakage, or anomalous vehicle screeching, timestamping urban events before public notification.
+   - Runs on-device acoustic event classification detecting emergency sirens, gunshots, glass breakage, or anomalous vehicle screeching.
 3. **Counter-Surveillance & Electronic Defense:**
    - **Rogue IMSI Catcher / Stingray Detection:** Monitors cellular BCCH channels for forced 2G downgrades and power spikes.
    - **Stalker Tracker Detection:** Tracks persistent rotating Apple Find My / AirTag cryptographic beacons.
@@ -113,51 +92,25 @@ In high-density urban environments (e.g., Manhattan), the air is filled with ope
 
 ## 5. Off-Grid Cryptographic Mesh & CRDT Logistics (*Survivalist Squads*)
 
-### 5.1 Protocol Stack Specification
 * **Physical Layer:** 915 MHz US ISM Band (Chirp Spread Spectrum, SF7–SF12, CR 4/5, BW 125/250 kHz).
 * **Network & Crypto Layer:** Reticulum Network Stack (RNS) using **Ed25519** digital signatures and **X25519** ECDH key exchange with **AES-256-GCM** encryption.
 * **Payload Serialization:** Concise Binary Object Representation (CBOR) with Byte-Pair Token Compression.
-
-```
-                CRDT SQUAD LOGISTICS STATE SYNCHRONIZATION
-                
-    [Squad Node Alpha]                               [Squad Node Beta]
-  (Has: 50gal Water / Ham Radio)                   (Has: Trauma Kit / Solar)
-          │                                                │
-          │ 915 MHz Encrypted CBOR Packet                  │ 915 MHz Encrypted CBOR Packet
-          ▼                                                ▼
-  ┌────────────────────────────────────────────────────────────────┐
-  │                 MAC MINI SOVEREIGN HUB NODE                    │
-  │                                                                │
-  │ • State Matrix: Conflict-Free Replicated Data Type (LWW-Set)   │
-  │ • Cryptographic Verification: Ed25519 Identity Signature Valid │
-  │ • Automated Offline Allocation Optimizer                       │
-  └────────────────────────────────────────────────────────────────┘
-```
-
-### 5.2 Conflict-Free Resource Tracking (CRDTs over Radio)
-To synchronize medical, fuel, water, and radio assets across squads without central servers, OpenClaw implements a **Last-Write-Wins Element-Set (LWW-Element-Set) CRDT**:
-* Each asset mutation is cryptographically signed with the squad member's Ed25519 private key.
-* The Mac Mini acts as an eventual consistency state accumulator, reconciling inventory changes across intermittent, asynchronous radio hops.
+* **CRDT Logistics:** Last-Write-Wins Element-Set (LWW-Element-Set) CRDT synchronizes distributed squad resources across intermittent radio hops.
 
 ---
 
 ## 6. Autonomous Economic & Secondary Asset Arbitrage
 
 1. **Secondary Luxury Asset Arbitrage:**
-   - OpenClaw runs headless scrapers against secondary watch exchanges (Chrono24, WatchCharts), rare art auction catalogs (Sotheby's/Christie's), and domain drops.
-   - Flags mispriced luxury assets (e.g., Rolex Daytona / Patek Philippe spreads) or distressed commercial equipment.
+   - Scrapes Chrono24 and WatchCharts, flagging underpriced references (Rolex Daytona / Patek Philippe spreads) falling below 30-day moving averages.
 2. **Access & Hospitality Sniping:**
-   - Continuously monitors Resy, SevenRooms, and OpenTable cancellation drop APIs for prime 8:00 PM tables (4 Charles, Torrisi, Polo Bar, Semma) to provide frictionless access for guests.
+   - Monitors Resy, SevenRooms, and OpenTable cancellation drop APIs for prime 8:00 PM tables (4 Charles, Torrisi, Polo Bar, Semma) to provide frictionless access.
 3. **NYC Municipal Alpha Engine:**
-   - Parses daily State Liquor Authority (SLA) license filings and Department of Buildings (DOB) architectural alteration permits (> \$250k).
-   - Calculates the **Launch Velocity Index (LVI)** to predict new speakeasies, private members' clubs, and luxury dining spaces 3 to 9 months before opening.
+   - Parses daily State Liquor Authority (SLA) license filings and Department of Buildings (DOB) architectural alteration permits (> \$250k) to predict exclusive venues 3–9 months before opening.
 
 ---
 
 ## 7. Full `launchd` Service Configuration (macOS Deployment)
-
-To ensure high availability, processes run as sandboxed system daemons managed by macOS `launchd`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -198,140 +151,84 @@ To ensure high availability, processes run as sandboxed system daemons managed b
 
 ## 8. HAM Radio, Online Nets & Dual-Path Alerting (Cellular + LoRa)
 
-An always-on Apple Silicon Mac Mini can continuously listen to amateur radio nets, emergency repeater traffic, and online public safety audio streams, using the Apple Neural Engine to detect critical incidents and dispatch alerts over both **Cellular** and **Off-Grid LoRa Mesh**.
-
-```
-                   HAM RADIO & ONLINE NET MONITORING TOPOLOGY
-                   
-  ┌─────────────────────────┐               ┌─────────────────────────┐
-  │   PHYSICAL HAM RADIO    │               │  ONLINE NETS & SCANNERS │
-  │ • VHF/UHF Analog (2m/70cm)│             │ • Broadcastify API Live │
-  │ • APRS (144.390 via Direwolf)           │ • WebSDR / OpenWebRX    │
-  │ • Digirig USB Audio     │               │ • BrandMeister DMR Nets │
-  └────────────┬────────────┘               └────────────┬────────────┘
-               │                                         │
-               └────────────────────┬────────────────────┘
-                                    ▼
-                     ┌─────────────────────────────┐
-                     │ VOICE ACTIVITY DETECTOR(VAD)│
-                     │ (Silero-VAD / WebRTC Squelch)│
-                     └──────────────┬──────────────┘
-                                    │ (Active Audio Slices)
-                                    ▼
-                     ┌─────────────────────────────┐
-                     │  COREML WHISPER ASR ON ANE  │
-                     │  (<250ms Audio-to-Text)     │
-                     └──────────────┬──────────────┘
-                                    │ (Transcribed Stream)
-                                    ▼
-                     ┌─────────────────────────────┐
-                     │ OPENCLAW SEMANTIC REASONER  │
-                     │ • 10-Code Decoder (10-75/13)│
-                     │ • Geo-Bounding / Address    │
-                     │ • Severity Scoring (1-5)    │
-                     └──────────────┬──────────────┘
-                                    │
-         ┌──────────────────────────┴──────────────────────────┐
-         ▼                                                     ▼
-┌───────────────────────────────┐             ┌───────────────────────────────┐
-│     PATH A: CELLULAR / IP     │             │     PATH B: OFF-GRID LORA     │
-│ (WhatsApp / Telegram / Signal)│             │  (915 MHz Meshtastic Mesh)    │
-├───────────────────────────────┤             ├───────────────────────────────┤
-│ • Full transcript + Audio clip│             │ • Compressed 240-byte packet  │
-│ • Geocoded Google Maps pin    │             │ • Beamed to pocket radio miles│
-│ • Unit IDs & Call sign decode │             │   away with ZERO internet     │
-└───────────────────────────────┘             └───────────────────────────────┘
-```
+* **Physical Ingestion:** Baofeng / Yaesu HAM radio connected via Digirig USB sound card or RTL-SDR.
+* **Neural VAD & Whisper:** Silero-VAD triggers CoreML Whisper ($<250\text{ms}$ latency on ANE), translating 10-codes (`10-75`, `10-13`, `10-53`) and geolocating cross-streets.
+* **Dual Dispatch:** Pushes rich alerts to Telegram (with audio clips and Google Maps pins) when online, or beams compressed 240-byte binary packets over 915 MHz LoRa mesh to pocket radios when offline.
 
 ---
 
 ## 9. Spycraft, Tradecraft & Sovereign Intelligence Operations
 
-```
-                         SOVEREIGN SPYCRAFT ENGINE
-                         
-  ┌────────────────────────────────────────────────────────────────────────┐
-  │                         OPENCLAW SPYCRAFT CORE                         │
-  ├───────────────────┬────────────────────┬───────────────────────────────┤
-  │ OSINT & RECON     │ HUMINT ELICITATION │ TSCM & DEFENSE                │
-  ├───────────────────┼────────────────────┼───────────────────────────────┤
-  │• Court Dockets    │• Elicitation script│• Ultrasonic beacon detector   │
-  │• Corporate SEC    │• Micro-debrief AAR │• Broad-spectrum RF bug sweeps │
-  │• Property Deeds   │• Leverage mapping  │• Chaperone tail correlation   │
-  │• Pattern-of-Life  │• Persona watermarks│• Canary leak attribution      │
-  └───────────────────┴────────────────────┴───────────────────────────────┘
-```
+* **Autonomous Red Files:** Automated OSINT scraping court dockets (RECAP/CourtListener), SEC EDGAR filings, and property deeds (ACRIS).
+* **HUMINT Elicitation Playbooks:** Pre-computes conversational elicitation scripts (Provocative Falsehoods, Mutual Grievances, Feigned Naivety).
+* **Canary Trap Watermarking:** Embeds zero-width unicode watermarks to identify sources of leaked documents.
+* **Chaperone Tail Detection:** Cross-correlates Bluetooth probe requests near home with probe requests logged in other neighborhoods to detect surveillance tails.
 
 ---
 
-## 10. The Den Environment: AI Parlor Tricks, Vision & Ambient Magic
+## 10. The Den Environment: AI Parlor Tricks & Subliminal Lighting
 
-In an intimate entertainment space or after-party "den", an always-on Mac Mini with an ambient room camera and Alexa-connected smart lighting becomes an **invisible interactive mentalist and atmosphere engine**.
-
-```
-                        DEN INTERACTIVE PARLOR ENGINE
-                        
-  ┌─────────────────────────┐               ┌─────────────────────────┐
-  │   ROOM IP/RTSP CAMERA   │               │   ALEXA / SMART LIGHTS  │
-  │ • Sub-second Vision VLM │               │ • Subliminal trigger cues│
-  │ • Remote rPPG Pulse     │               │ • Dynamic mood morphing │
-  └────────────┬────────────┘               └────────────┬────────────┘
-               │                                         │
-               └────────────────────┬────────────────────┘
-                                    ▼
-                     ┌─────────────────────────────┐
-                     │ OPENCLAW DEN ORCHESTRATOR   │
-                     │ • Story-Driven Lighting Cues│
-                     │ • Apple Watch "Cold Read"   │
-                     │ • Vision-Based Lie Detector │
-                     │ • The Cocktail Oracle       │
-                     └──────────────┬──────────────┘
-                                    ▼
-                     ┌─────────────────────────────┐
-                     │ DISCREET HAPTIC & AUDIO CUE │
-                     │ (Apple Watch / Single AirPod│
-                     └─────────────────────────────┘
-```
-
-### 10.1 The "Mentalist" Cold-Reading Trick (Vision + Secret Haptic Whisper)
-* **The Play:** A guest sits on the sofa or holds up an object (a playing card, a book, a watch, or an ID).
-* **The Pipeline:** 
-  1. The room camera stream is processed locally on Apple Silicon GPU by a fast vision-language model (e.g., Llama-3.2-Vision / Moondream).
-  2. The agent identifies the item, extracts text, or performs a sub-second search on the guest's subtle biographical cues.
-  3. OpenClaw pushes the exact revelation directly to the Operator's **Apple Watch screen or a single discrete AirPod**:
-     > *"Watch Whisper: She's wearing a 1998 Omega Speedmaster Reduced; her hometown tattoo says 'Austin 512'."*
-* **The Effect:** He casually looks into the guest's eyes and does an impossible, jaw-dropping "cold read" with zero visible tech interaction.
-
-### 10.2 Subliminal Voice-Coded Lighting Magic (Story-Driven Lighting)
-* **The Play:** The Operator is telling an engaging late-night story or welcoming people to the den. No one touches an app, and no one says "Alexa, turn on the lights."
-* **The Pipeline:**
-  1. The room microphone streams speech to the local Whisper model running on the Neural Engine.
-  2. OpenClaw scans for natural linguistic trigger phrases woven into his stories (e.g., *"and then everything went pitch black"*, *"let's take it into the vault"*, or *"welcome to the inner circle"*).
-  3. The moment the phrase is spoken, OpenClaw fires an API call to the Alexa/HomeKit bridge, seamlessly shifting the lighting to deep velvet red, amber 2200K, or sudden blackout.
-* **The Effect:** It feels as if the physical room responds directly to his presence and voice.
-
-### 10.3 The Remote Vision "Lie Detector" Parlor Game
-* **The Play:** During late-night party games (*Two Truths and a Lie* or provocative questions), the host claims to have a biological lie detector.
-* **The Pipeline:**
-  1. The camera feed tracks the subject's face using **Remote Photoplethysmography (rPPG)**—analyzing microscopic skin color fluctuations caused by blood flow pulses under ambient light.
-  2. The Mac Mini computes real-time heart rate spikes, blink frequency, and micro-saccades.
-  3. OpenClaw sends a discreet tap pattern to his Apple Watch: *Double tap = Heart rate spiked +50 BPM (High Probability Lie).*
-* **The Effect:** He calls out the exact lie in real time to the amazement of everyone in the room.
-
-### 10.4 The "Cocktail Oracle" & Tangible Object Triggers
-* **The Play:** A guest places a random bottle, a vinyl record, or an object onto the coffee table.
-* **The Pipeline:**
-  1. YOLO/Vision models detect the object placement.
-  2. OpenClaw speaks through the room sound system in a witty, bespoke persona (e.g., an omniscient British butler): *"I see Marcus has placed mezcal on the altar. Commencing the Obsidian Smoke protocol."*
-  3. The smart lighting morphs to match the drink's theme, and the exact bespoke recipe is pushed to his phone.
+* **Vision Cold-Reading:** RTSP camera identifies objects/watches/cards and whispers details to Apple Watch.
+* **Story-Driven Lighting:** Whisper triggers seamless Alexa lighting scene shifts based on conversational phrases.
+* **rPPG Lie Detector:** Camera detects microscopic facial blood flow pulses and alerts watch on pulse spikes during games.
+* **The Cocktail Oracle:** Table object detection triggers bespoke recipes over Sonos in an omniscient butler persona.
 
 ---
 
-## 11. Operational Quick-Reference Matrix
+## 11. Real-Time Identity Handshake & The Cultural Taste Oracle
+
+When meeting contacts in public or hosting in the den, OpenClaw operates a low-friction **Identity Handshake & Cultural Taste Engine**:
+
+```
+                  IDENTITY CONFIRMATION & TASTE ORACLE
+                  
+   [ Proximity / Location Match / BLE Detected ]
+                         │
+                         ▼
+   [ Haptic / Audio Query ]: "Meeting detected with Julian? [Yes/Tap]"
+                         │
+                         ▼ (Operator Confirms: "Yes" / Watch Tap)
+   ┌─────────────────────────────────────────────────────────────┐
+   │            OPENCLAW CULTURAL TASTE ORACLE                   │
+   │                                                             │
+   │ • Musical Fingerprint: 90s Deep Vinyl Jazz / Nicolas Jaar   │
+   │ • Drink / Palate: Smoky Mezcal Negronis / Natural Orange    │
+   │ • Cultural Anchor: Lived in Kyoto; Collector of Mid-Century │
+   │ • Conversational Landmines: Avoid crypto fund questions     │
+   └─────────────────────────────┬───────────────────────────────┘
+                                 │
+         ┌───────────────────────┴───────────────────────┐
+         ▼                                               ▼
+┌───────────────────────────────┐               ┌───────────────────────────────┐
+│     IN-EAR AIRPOD BRIEFING    │               │    AMBIENT DEN ORCHESTRATION  │
+│ (15-Second Taste Dossier)     │               │ (Auto-Seed Sonos Queue)       │
+└───────────────────────────────┘               └───────────────────────────────┘
+```
+
+### 11.1 The Low-Friction Identity Handshake
+1. **Proximity Trigger:** Geofence match (e.g. Soho House), Bluetooth beacon co-location, or conversational name mention triggers OpenClaw.
+2. **Sub-Audible Check-In:** OpenClaw pings your AirPods or Apple Watch: *"Meeting with Julian? [Tap/Yes]"*
+3. **Frictionless Verification:** You say *"Yes"*, squeeze your AirPod stem, or tap the watch screen.
+
+### 11.2 The 15-Second Cultural & Aesthetic Debrief
+Once confirmed, OpenClaw synthesizes a hyper-condensed briefing spoken into your AirPods or glanceable on your watch:
+* **Palate & Beverage Spec:** *"Drinks: Loves smoky mezcal Negronis; hates sweet cocktails. Prefers mineral-heavy natural whites."*
+* **Musical & Aesthetic Taste:** *"Music: Heavy into 90s Japanese ambient jazz (Ryo Fukui) and subtle deep vinyl house."*
+* **Conversational High-Ground:** *"Recent Hook: Tweeted 2 days ago about a trip to Kyoto's vintage audio bars. Mention vintage rotary mixers."*
+
+### 11.3 Ambient Den Sonos Seeding (The Invisible DJ)
+* If the meeting transitions to your den, OpenClaw **silently seeds 3 to 4 tracks** matching their subtle musical fingerprint into your Sonos/Spotify queue.
+* The guest casually remarks: *"How do you have this track playing right now?"*
+* You smile and casually let the vibe speak for itself.
+
+---
+
+## 12. Operational Quick-Reference Matrix
 
 | Subsystem | Hardware Required | Local Software / Models | Latency | Strategic Value |
 | :--- | :--- | :--- | :--- | :--- |
 | **Relational Arbitrage** | Apple Silicon Mac Mini | `sqlite-vec` + `bge-large-en` + MLX Llama 3 | $<50\text{ms}$ | High-yield social power brokering & deal flow |
+| **Identity & Taste Oracle** | AirPods / Apple Watch + Mac | OpenClaw Context Engine + Spotify API | $<1\text{s}$ | Instant cultural rapport & ambient music seeding |
 | **Emergency SIGINT** | USB RTL-SDR (\$30) | `op25` + CoreML `whisper.cpp` | $<300\text{ms}$ | 15-minute early warning on urban incidents |
 | **HAM / Emergency Nets** | Digirig USB / Baofeng / SDR | `direwolf` + Silero-VAD + Whisper | $<250\text{ms}$ | Police/Fire triage over Cellular & LoRa |
 | **Aviation / Maritime** | 1090/131 MHz Antennas | `dump1090` + `acarsdec` | $<10\text{ms}$ | Real-time private corridor & airspace tracking |
@@ -342,4 +239,3 @@ In an intimate entertainment space or after-party "den", an always-on Mac Mini w
 | **Autonomous OSINT Dossier** | Standard Mac Mini | RECAP + ACRIS + EDGAR scrapers | $<60\text{s}$ | On-demand target intelligence & leverage profiles |
 | **Den Vision & Cold Reading** | Room Camera + Watch | Moondream / Llama-3.2-Vision | $<500\text{ms}$ | Impossible mentalist parlor tricks & cold-reads |
 | **Vision rPPG Lie Detector** | Room Camera | OpenCV rPPG + Micro-expression net | Real-time | Biometric party parlor trick (pulse & lie cue) |
-| **Story-Coded Light Magic** | Alexa Lights + Mic | CoreML Whisper keyword parser | $<200\text{ms}$ | Cinematic, hands-free parlor room control |
