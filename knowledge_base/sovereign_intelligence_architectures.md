@@ -196,12 +196,80 @@ To ensure high availability, processes run as sandboxed system daemons managed b
 
 ---
 
-## 8. Operational Quick-Reference Matrix
+## 8. HAM Radio, Online Nets & Dual-Path Alerting (Cellular + LoRa)
+
+An always-on Apple Silicon Mac Mini can continuously listen to amateur radio nets, emergency repeater traffic, and online public safety audio streams, using the Apple Neural Engine to detect critical incidents and dispatch alerts over both **Cellular** and **Off-Grid LoRa Mesh**.
+
+```
+                   HAM RADIO & ONLINE NET MONITORING TOPOLOGY
+                   
+  ┌─────────────────────────┐               ┌─────────────────────────┐
+  │   PHYSICAL HAM RADIO    │               │  ONLINE NETS & SCANNERS │
+  │ • VHF/UHF Analog (2m/70cm)│             │ • Broadcastify API Live │
+  │ • APRS (144.390 via Direwolf)           │ • WebSDR / OpenWebRX    │
+  │ • Digirig USB Audio     │               │ • BrandMeister DMR Nets │
+  └────────────┬────────────┘               └────────────┬────────────┘
+               │                                         │
+               └────────────────────┬────────────────────┘
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │ VOICE ACTIVITY DETECTOR(VAD)│
+                     │ (Silero-VAD / WebRTC Squelch)│
+                     └──────────────┬──────────────┘
+                                    │ (Active Audio Slices)
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │  COREML WHISPER ASR ON ANE  │
+                     │  (<250ms Audio-to-Text)     │
+                     └──────────────┬──────────────┘
+                                    │ (Transcribed Stream)
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │ OPENCLAW SEMANTIC REASONER  │
+                     │ • 10-Code Decoder (10-75/13)│
+                     │ • Geo-Bounding / Address    │
+                     │ • Severity Scoring (1-5)    │
+                     └──────────────┬──────────────┘
+                                    │
+         ┌──────────────────────────┴──────────────────────────┐
+         ▼                                                     ▼
+┌───────────────────────────────┐             ┌───────────────────────────────┐
+│     PATH A: CELLULAR / IP     │             │     PATH B: OFF-GRID LORA     │
+│ (WhatsApp / Telegram / Signal)│             │  (915 MHz Meshtastic Mesh)    │
+├───────────────────────────────┤             ├───────────────────────────────┤
+│ • Full transcript + Audio clip│             │ • Compressed 240-byte packet  │
+│ • Geocoded Google Maps pin    │             │ • Beamed to pocket radio miles│
+│ • Unit IDs & Call sign decode │             │   away with ZERO internet     │
+└───────────────────────────────┘             └───────────────────────────────┘
+```
+
+### 8.1 Ingestion Channels:
+1. **Physical HAM Transceiver Connection:**
+   - A standard dual-band HAM radio (e.g., Yaesu FTM-300, Baofeng, or ICOM IC-705) connects to the Mac Mini via a **Digirig Mobile** or **SignaLink USB** audio interface.
+   - Squelch-triggered audio feeds into `direwolf` for APRS digital packet decoding (144.390 MHz) and local repeater audio capture.
+2. **Online HAM Nets & Digital Talkgroups:**
+   - Subscribes to local **ARES/RACES emergency amateur nets**, **BrandMeister DMR talkgroups**, and **Broadcastify Calls live streams** for NYC Police/Fire precincts.
+3. **Automated Incident Triage & 10-Code Translation:**
+   - CoreML `whisper.cpp` transcribes speech on the Apple Neural Engine.
+   - OpenClaw’s local LLM translates emergency jargon:
+     - `10-75` -> Working Structure Fire
+     - `10-13` -> Officer Needs Immediate Assistance
+     - `10-53` -> Vehicle Collision with Entrapment
+     - `Signals 7-5 / 2nd Alarm` -> Major Multi-Unit Fire Response
+   - It geolocates cross streets (e.g. "Broad & Wall St") and checks if the event is within the Operator's custom radius.
+4. **Autonomous Dual-Path Dispatch:**
+   - **Cellular Active:** Sends a rich Telegram/WhatsApp alert with the audio recording snippet, transcribed text, and a map pin.
+   - **Cellular Down / Grid Outage:** Pushes a compact binary alarm packet via USB to the **Meshtastic/LoRa transceiver**, beaming the alert directly to the Operator's handheld pocket radio up to 10 miles away.
+
+---
+
+## 9. Operational Quick-Reference Matrix
 
 | Subsystem | Hardware Required | Local Software / Models | Latency | Strategic Value |
 | :--- | :--- | :--- | :--- | :--- |
 | **Relational Arbitrage** | Apple Silicon Mac Mini | `sqlite-vec` + `bge-large-en` + MLX Llama 3 | $<50\text{ms}$ | High-yield social power brokering & deal flow |
 | **Emergency SIGINT** | USB RTL-SDR (\$30) | `op25` + CoreML `whisper.cpp` | $<300\text{ms}$ | 15-minute early warning on urban incidents |
+| **HAM / Emergency Nets** | Digirig USB / Baofeng / SDR | `direwolf` + Silero-VAD + Whisper | $<250\text{ms}$ | Police/Fire triage over Cellular & LoRa |
 | **Aviation / Maritime** | 1090/131 MHz Antennas | `dump1090` + `acarsdec` | $<10\text{ms}$ | Real-time private corridor & airspace tracking |
 | **Off-Grid $C^4I$ Mesh** | 915 MHz LoRa Node (\$25) | Reticulum (RNS) + Kiwix + MLX | $<2\text{s}$ | 100% internet-independent tactical survival AI |
 | **Municipal Alpha** | Standard Mac Mini | DuckDB Spatial + NYC OpenData APIs | Batch/Live | 6-month advance notice on luxury venue openings |
