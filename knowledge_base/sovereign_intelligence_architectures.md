@@ -247,8 +247,6 @@ An always-on Apple Silicon Mac Mini can continuously listen to amateur radio net
 
 ## 9. Spycraft, Tradecraft & Sovereign Intelligence Operations
 
-In professional intelligence operations, information advantage is achieved by fusing **OSINT (Open Source Intelligence)**, **HUMINT (Human Intelligence Elicitation)**, **SOCMINT (Social Media Intelligence)**, and **TSCM (Technical Surveillance Counter-Measures)**.
-
 ```
                          SOVEREIGN SPYCRAFT ENGINE
                          
@@ -260,39 +258,76 @@ In professional intelligence operations, information advantage is achieved by fu
   │• Court Dockets    │• Elicitation script│• Ultrasonic beacon detector   │
   │• Corporate SEC    │• Micro-debrief AAR │• Broad-spectrum RF bug sweeps │
   │• Property Deeds   │• Leverage mapping  │• Chaperone tail correlation   │
-  │• Pattern-of-Life  │• Persona watermarks│• Laser mic counter-vibration  │
+  │• Pattern-of-Life  │• Persona watermarks│• Canary leak attribution      │
   └───────────────────┴────────────────────┴───────────────────────────────┘
 ```
 
-### 9.1 Autonomous Target Dossiers ("The Red File")
-When given a target name, entity, or social handle, OpenClaw executes an automated recursive OSINT pipeline:
-1. **Corporate & Asset Registries:** Queries SEC EDGAR Form D (fundraising), Delaware DOS / OpenCorporates (holding structures), and NYC ACRIS (property mortgages and deed transfers).
-2. **Litigation & Legal Risk:** Queries RECAP / CourtListener API for active or historical federal/state litigation, bankruptcy filings, and regulatory actions.
-3. **Pattern-of-Life (POL) Analysis:** Analyzes public posting timestamps, GitHub commits, and public transit correlations to model the target's cognitive peak hours, sleep schedules, and travel cadence.
-4. **Leverage & Vulnerability Matrix:** Generates an executive briefing highlighting current cash-flow pressures, active competitors, key mentors, and conversational entry vectors.
+---
 
-### 9.2 HUMINT Elicitation Strategies (Social Engineering Playbooks)
-Before entering a dinner, negotiation, or private salon, OpenClaw prepares conversational elicitation scripts tailored to the target's psychological profile:
-* **The Provocative Falsehood:** Staging a slightly incorrect industry assertion to trigger the target's impulse to correct and reveal non-public insider context.
-* **The Mutual Grievance:** Framing a shared operational bottleneck to prompt the target to disclose internal vendor relationships or proprietary pricing.
-* **The Feigned Naivety:** Guiding high-status targets to explain complex organizational dynamics, exposing structural weaknesses or key decision-makers.
+## 10. The Den Environment: AI Parlor Tricks, Vision & Ambient Magic
 
-### 9.3 Canary Traps & Cryptographic Leak Attribution
-When distributing confidential documents, deal terms, or squad logistics:
-* OpenClaw embeds **zero-width unicode characters**, microscopic whitespace permutations, or customized synthetic synonyms unique to each recipient.
-* If a document is shared, screenshotted, or leaked, the agent parses the leaked excerpt and computes the unique attribution hash, definitively identifying the source of the leak.
+In an intimate entertainment space or after-party "den", an always-on Mac Mini with an ambient room camera and Alexa-connected smart lighting becomes an **invisible interactive mentalist and atmosphere engine**.
 
-### 9.4 TSCM (Technical Surveillance Counter-Measures) & Chaperone Tail Detection
-1. **Ultrasonic Cross-Device Tracking Detection:**
-   - Calibrated boundary mics continuously sample the 18 kHz – 22 kHz ultrasonic frequency band.
-   - Alerts the Operator if malicious web beacons or apps are broadcasting sub-audible tracking chirps designed to bridge mobile devices to local laptops.
-2. **Chaperone Tail Correlation (Physical Counter-Surveillance):**
-   - Correlates BLE / Wi-Fi probe request clusters recorded at the Manhattan residence with probe clusters recorded while the Operator is at a restaurant, hotel, or meeting in another borough.
-   - If an unassociated device MAC/signature persistently co-occurs across multiple disparate physical locations at matching timestamps, OpenClaw warns of a potential physical surveillance tail.
+```
+                        DEN INTERACTIVE PARLOR ENGINE
+                        
+  ┌─────────────────────────┐               ┌─────────────────────────┐
+  │   ROOM IP/RTSP CAMERA   │               │   ALEXA / SMART LIGHTS  │
+  │ • Sub-second Vision VLM │               │ • Subliminal trigger cues│
+  │ • Remote rPPG Pulse     │               │ • Dynamic mood morphing │
+  └────────────┬────────────┘               └────────────┬────────────┘
+               │                                         │
+               └────────────────────┬────────────────────┘
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │ OPENCLAW DEN ORCHESTRATOR   │
+                     │ • Story-Driven Lighting Cues│
+                     │ • Apple Watch "Cold Read"   │
+                     │ • Vision-Based Lie Detector │
+                     │ • The Cocktail Oracle       │
+                     └──────────────┬──────────────┘
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │ DISCREET HAPTIC & AUDIO CUE │
+                     │ (Apple Watch / Single AirPod│
+                     └─────────────────────────────┘
+```
+
+### 10.1 The "Mentalist" Cold-Reading Trick (Vision + Secret Haptic Whisper)
+* **The Play:** A guest sits on the sofa or holds up an object (a playing card, a book, a watch, or an ID).
+* **The Pipeline:** 
+  1. The room camera stream is processed locally on Apple Silicon GPU by a fast vision-language model (e.g., Llama-3.2-Vision / Moondream).
+  2. The agent identifies the item, extracts text, or performs a sub-second search on the guest's subtle biographical cues.
+  3. OpenClaw pushes the exact revelation directly to the Operator's **Apple Watch screen or a single discrete AirPod**:
+     > *"Watch Whisper: She's wearing a 1998 Omega Speedmaster Reduced; her hometown tattoo says 'Austin 512'."*
+* **The Effect:** He casually looks into the guest's eyes and does an impossible, jaw-dropping "cold read" with zero visible tech interaction.
+
+### 10.2 Subliminal Voice-Coded Lighting Magic (Story-Driven Lighting)
+* **The Play:** The Operator is telling an engaging late-night story or welcoming people to the den. No one touches an app, and no one says "Alexa, turn on the lights."
+* **The Pipeline:**
+  1. The room microphone streams speech to the local Whisper model running on the Neural Engine.
+  2. OpenClaw scans for natural linguistic trigger phrases woven into his stories (e.g., *"and then everything went pitch black"*, *"let's take it into the vault"*, or *"welcome to the inner circle"*).
+  3. The moment the phrase is spoken, OpenClaw fires an API call to the Alexa/HomeKit bridge, seamlessly shifting the lighting to deep velvet red, amber 2200K, or sudden blackout.
+* **The Effect:** It feels as if the physical room responds directly to his presence and voice.
+
+### 10.3 The Remote Vision "Lie Detector" Parlor Game
+* **The Play:** During late-night party games (*Two Truths and a Lie* or provocative questions), the host claims to have a biological lie detector.
+* **The Pipeline:**
+  1. The camera feed tracks the subject's face using **Remote Photoplethysmography (rPPG)**—analyzing microscopic skin color fluctuations caused by blood flow pulses under ambient light.
+  2. The Mac Mini computes real-time heart rate spikes, blink frequency, and micro-saccades.
+  3. OpenClaw sends a discreet tap pattern to his Apple Watch: *Double tap = Heart rate spiked +50 BPM (High Probability Lie).*
+* **The Effect:** He calls out the exact lie in real time to the amazement of everyone in the room.
+
+### 10.4 The "Cocktail Oracle" & Tangible Object Triggers
+* **The Play:** A guest places a random bottle, a vinyl record, or an object onto the coffee table.
+* **The Pipeline:**
+  1. YOLO/Vision models detect the object placement.
+  2. OpenClaw speaks through the room sound system in a witty, bespoke persona (e.g., an omniscient British butler): *"I see Marcus has placed mezcal on the altar. Commencing the Obsidian Smoke protocol."*
+  3. The smart lighting morphs to match the drink's theme, and the exact bespoke recipe is pushed to his phone.
 
 ---
 
-## 10. Operational Quick-Reference Matrix
+## 11. Operational Quick-Reference Matrix
 
 | Subsystem | Hardware Required | Local Software / Models | Latency | Strategic Value |
 | :--- | :--- | :--- | :--- | :--- |
@@ -305,5 +340,6 @@ When distributing confidential documents, deal terms, or squad logistics:
 | **Counter-Surveillance** | RTL-SDR + BLE Interface | `gr-gsm` + Kismet BLE sniffer | Real-time | Rogue IMSI catcher & stalking tracker defense |
 | **Acoustic Telemetry** | Window Boundary Mic | CoreML YAMNet / CLAP Audio Classifier | $<100\text{ms}$ | Real-time audio hazard & siren triangulation |
 | **Autonomous OSINT Dossier** | Standard Mac Mini | RECAP + ACRIS + EDGAR scrapers | $<60\text{s}$ | On-demand target intelligence & leverage profiles |
-| **Canary Leak Detection** | Standard Mac Mini | Unicode Steganography / Hash Engine | Instant | Definite cryptographic source attribution on leaks |
-| **Chaperone Tail Detector** | Mobile + Mac Mini BLE logs | Spatial Probe Request Correlator | Real-time | Detects physical tracking & co-occurring devices |
+| **Den Vision & Cold Reading** | Room Camera + Watch | Moondream / Llama-3.2-Vision | $<500\text{ms}$ | Impossible mentalist parlor tricks & cold-reads |
+| **Vision rPPG Lie Detector** | Room Camera | OpenCV rPPG + Micro-expression net | Real-time | Biometric party parlor trick (pulse & lie cue) |
+| **Story-Coded Light Magic** | Alexa Lights + Mic | CoreML Whisper keyword parser | $<200\text{ms}$ | Cinematic, hands-free parlor room control |
