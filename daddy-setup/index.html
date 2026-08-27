@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Family Network Setup — Antigravity</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #0d1117; --surface: #161b22; --surface2: #1c2128; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --green: #3fb950;
+    --yellow: #d29922; --purple: #bc8cff; --orange: #ffa657; --red: #f85149;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; padding: 0 20px 60px; }
+  header { max-width: 760px; margin: 0 auto; padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .back-link { color: var(--muted); text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+  .back-link:hover { color: var(--accent); }
+  h1 { font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .main { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .step-header { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  .step-num { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #000; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 16px; font-weight: 600; }
+  .step-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .step-body { padding: 20px; }
+  .step-body p { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+  .step-body p:last-child { margin-bottom: 0; }
+  .code-block { background: #010409; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 14px 0; position: relative; }
+  .code-block code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #79c0ff; white-space: pre-wrap; word-break: break-all; display: block; line-height: 1.6; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all .15s; }
+  .copy-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+  .copy-btn.copied { background: var(--green); color: #000; border-color: var(--green); }
+  .tip { background: rgba(63,185,80,.08); border: 1px solid rgba(63,185,80,.3); border-left: 3px solid var(--green); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13px; color: var(--text); line-height: 1.6; }
+  .tip strong { color: var(--green); }
+  .warn { background: rgba(210,153,34,.08); border: 1px solid rgba(210,153,34,.3); border-left: 3px solid var(--yellow); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13px; color: var(--text); line-height: 1.6; }
+  .warn strong { color: var(--yellow); }
+  .status-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; }
+  .status-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .status-text h3 { font-size: 14px; font-weight: 600; color: var(--green); }
+  .status-text p { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .success-box { background: rgba(63,185,80,.06); border: 1px solid rgba(63,185,80,.25); border-radius: 12px; padding: 24px; text-align: center; }
+  .success-box .emoji { font-size: 40px; margin-bottom: 12px; }
+  .success-box h2 { font-size: 20px; color: var(--green); margin-bottom: 8px; }
+  .success-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  footer { max-width: 760px; margin: 40px auto 0; font-size: 12px; color: var(--muted); text-align: center; border-top: 1px solid var(--border); padding-top: 20px; }
+  @media (max-width: 600px) { h1 { font-size: 22px; } .step-title { font-size: 14px; } }
+</style>
+</head>
+<body>
+<header>
+  <a class="back-link" href="https://naudiac.github.io/utility-scripts/">← naudiac / utility-scripts</a>
+  <h1>📡 Family Network Setup</h1>
+  <p class="subtitle">Connect to the Antigravity home network from anywhere.<br/>
+  Follow these steps on your <strong>Android phone</strong> to join the mesh and get remote-assisted streaming.</p>
+</header>
+<div class="main">
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <div class="status-text">
+      <h3>Home Exit Node: Online</h3>
+      <p>Will's home machine is active and ready to accept connections</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><div class="step-num">1</div><div><div class="step-title">Install Termux</div><div class="step-subtitle">Linux terminal for Android — free, no root needed</div></div></div>
+    <div class="step-body">
+      <p>Install <strong>Termux</strong> from the Google Play Store or Galaxy App Store on your Samsung phone.</p>
+      <div class="tip"><strong>✓ Tip:</strong> Search "Termux" by Fredrik Fornwall in the Play Store.</div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><div class="step-num">2</div><div><div class="step-title">Open Termux and Run Setup</div><div class="step-subtitle">One command does everything automatically</div></div></div>
+    <div class="step-body">
+      <p>Open Termux. First install curl:</p>
+      <div class="code-block"><code>pkg install -y curl</code><button class="copy-btn" onclick="copyCode(this,'pkg install -y curl')">Copy</button></div>
+      <p>Then run the full auto-setup script:</p>
+      <div class="code-block"><code>curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code><button class="copy-btn" onclick="copyCode(this,'curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button></div>
+      <div class="tip"><strong>✓ What it does:</strong> Installs Tailscale, joins the home network automatically (no login needed), installs OpenSSH, starts SSH server. Takes 2-3 minutes.</div>
+      <div class="warn"><strong>⚠ Keep Termux open</strong> in the background while streaming — minimize is fine, don't force-close.</div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><div class="step-num">3</div><div><div class="step-title">Connect Fire TV Cube to Your Hotspot</div><div class="step-subtitle">Standard Wi-Fi connection on the TV</div></div></div>
+    <div class="step-body">
+      <p>On your Samsung: <strong>Settings → Connections → Mobile Hotspot</strong> — turn it on and note the name and password.</p>
+      <p>On the Fire TV Cube remote: <strong>Settings → Network</strong> → connect to your phone's hotspot.</p>
+      <div class="tip"><strong>✓ Placement:</strong> Phone near a window = strongest 5G. Keep it in the same room as the TV.</div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><div class="step-num">4</div><div><div class="step-title">Install Tailscale on the Fire TV Cube</div><div class="step-subtitle">Routes streaming through Will's home connection — bypasses carrier throttling</div></div></div>
+    <div class="step-body">
+      <p>Open <strong>Downloader</strong> app on the Fire TV Cube. In the URL bar enter:</p>
+      <div class="code-block"><code>https://pkgs.tailscale.com/stable/tailscale-latest.apk</code><button class="copy-btn" onclick="copyCode(this,'https://pkgs.tailscale.com/stable/tailscale-latest.apk')">Copy</button></div>
+      <p>Install, open Tailscale, log in with the account Will shares with you. Then:</p>
+      <ul style="padding-left:20px;font-size:14px;line-height:2;color:var(--text);">
+        <li>Tap <strong>Exit Nodes</strong></li>
+        <li>Select <strong>wit01467</strong> (Will's home PC)</li>
+        <li>Enable <strong>"Allow Local Network Access"</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><div class="step-num">5</div><div><div class="step-title">Set Video Resolution to 720p</div><div class="step-subtitle">Prevents buffering on mobile data</div></div></div>
+    <div class="step-body">
+      <p>Fire TV Cube: <strong>Settings → Display &amp; Sounds → Display → Video Resolution → 720p 60Hz</strong></p>
+      <p>This reduces bandwidth needs and eliminates the gray loading screen hang.</p>
+    </div>
+  </div>
+  <div class="success-box">
+    <div class="emoji">🎉</div>
+    <h2>You're All Set!</h2>
+    <p>Once Termux is running and Tailscale is active on the Fire TV Cube,<br/>
+    Will can remotely monitor and assist your connection from home.<br/><br/>
+    Open Prime Video and enjoy the stream!</p>
+  </div>
+</div>
+<footer>naudiac / utility-scripts — Antigravity Family Setup</footer>
+<script>
+function copyCode(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
