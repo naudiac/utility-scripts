@@ -243,27 +243,56 @@ An always-on Apple Silicon Mac Mini can continuously listen to amateur radio net
 └───────────────────────────────┘             └───────────────────────────────┘
 ```
 
-### 8.1 Ingestion Channels:
-1. **Physical HAM Transceiver Connection:**
-   - A standard dual-band HAM radio (e.g., Yaesu FTM-300, Baofeng, or ICOM IC-705) connects to the Mac Mini via a **Digirig Mobile** or **SignaLink USB** audio interface.
-   - Squelch-triggered audio feeds into `direwolf` for APRS digital packet decoding (144.390 MHz) and local repeater audio capture.
-2. **Online HAM Nets & Digital Talkgroups:**
-   - Subscribes to local **ARES/RACES emergency amateur nets**, **BrandMeister DMR talkgroups**, and **Broadcastify Calls live streams** for NYC Police/Fire precincts.
-3. **Automated Incident Triage & 10-Code Translation:**
-   - CoreML `whisper.cpp` transcribes speech on the Apple Neural Engine.
-   - OpenClaw’s local LLM translates emergency jargon:
-     - `10-75` -> Working Structure Fire
-     - `10-13` -> Officer Needs Immediate Assistance
-     - `10-53` -> Vehicle Collision with Entrapment
-     - `Signals 7-5 / 2nd Alarm` -> Major Multi-Unit Fire Response
-   - It geolocates cross streets (e.g. "Broad & Wall St") and checks if the event is within the Operator's custom radius.
-4. **Autonomous Dual-Path Dispatch:**
-   - **Cellular Active:** Sends a rich Telegram/WhatsApp alert with the audio recording snippet, transcribed text, and a map pin.
-   - **Cellular Down / Grid Outage:** Pushes a compact binary alarm packet via USB to the **Meshtastic/LoRa transceiver**, beaming the alert directly to the Operator's handheld pocket radio up to 10 miles away.
+---
+
+## 9. Spycraft, Tradecraft & Sovereign Intelligence Operations
+
+In professional intelligence operations, information advantage is achieved by fusing **OSINT (Open Source Intelligence)**, **HUMINT (Human Intelligence Elicitation)**, **SOCMINT (Social Media Intelligence)**, and **TSCM (Technical Surveillance Counter-Measures)**.
+
+```
+                         SOVEREIGN SPYCRAFT ENGINE
+                         
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                         OPENCLAW SPYCRAFT CORE                         │
+  ├───────────────────┬────────────────────┬───────────────────────────────┤
+  │ OSINT & RECON     │ HUMINT ELICITATION │ TSCM & DEFENSE                │
+  ├───────────────────┼────────────────────┼───────────────────────────────┤
+  │• Court Dockets    │• Elicitation script│• Ultrasonic beacon detector   │
+  │• Corporate SEC    │• Micro-debrief AAR │• Broad-spectrum RF bug sweeps │
+  │• Property Deeds   │• Leverage mapping  │• Chaperone tail correlation   │
+  │• Pattern-of-Life  │• Persona watermarks│• Laser mic counter-vibration  │
+  └───────────────────┴────────────────────┴───────────────────────────────┘
+```
+
+### 9.1 Autonomous Target Dossiers ("The Red File")
+When given a target name, entity, or social handle, OpenClaw executes an automated recursive OSINT pipeline:
+1. **Corporate & Asset Registries:** Queries SEC EDGAR Form D (fundraising), Delaware DOS / OpenCorporates (holding structures), and NYC ACRIS (property mortgages and deed transfers).
+2. **Litigation & Legal Risk:** Queries RECAP / CourtListener API for active or historical federal/state litigation, bankruptcy filings, and regulatory actions.
+3. **Pattern-of-Life (POL) Analysis:** Analyzes public posting timestamps, GitHub commits, and public transit correlations to model the target's cognitive peak hours, sleep schedules, and travel cadence.
+4. **Leverage & Vulnerability Matrix:** Generates an executive briefing highlighting current cash-flow pressures, active competitors, key mentors, and conversational entry vectors.
+
+### 9.2 HUMINT Elicitation Strategies (Social Engineering Playbooks)
+Before entering a dinner, negotiation, or private salon, OpenClaw prepares conversational elicitation scripts tailored to the target's psychological profile:
+* **The Provocative Falsehood:** Staging a slightly incorrect industry assertion to trigger the target's impulse to correct and reveal non-public insider context.
+* **The Mutual Grievance:** Framing a shared operational bottleneck to prompt the target to disclose internal vendor relationships or proprietary pricing.
+* **The Feigned Naivety:** Guiding high-status targets to explain complex organizational dynamics, exposing structural weaknesses or key decision-makers.
+
+### 9.3 Canary Traps & Cryptographic Leak Attribution
+When distributing confidential documents, deal terms, or squad logistics:
+* OpenClaw embeds **zero-width unicode characters**, microscopic whitespace permutations, or customized synthetic synonyms unique to each recipient.
+* If a document is shared, screenshotted, or leaked, the agent parses the leaked excerpt and computes the unique attribution hash, definitively identifying the source of the leak.
+
+### 9.4 TSCM (Technical Surveillance Counter-Measures) & Chaperone Tail Detection
+1. **Ultrasonic Cross-Device Tracking Detection:**
+   - Calibrated boundary mics continuously sample the 18 kHz – 22 kHz ultrasonic frequency band.
+   - Alerts the Operator if malicious web beacons or apps are broadcasting sub-audible tracking chirps designed to bridge mobile devices to local laptops.
+2. **Chaperone Tail Correlation (Physical Counter-Surveillance):**
+   - Correlates BLE / Wi-Fi probe request clusters recorded at the Manhattan residence with probe clusters recorded while the Operator is at a restaurant, hotel, or meeting in another borough.
+   - If an unassociated device MAC/signature persistently co-occurs across multiple disparate physical locations at matching timestamps, OpenClaw warns of a potential physical surveillance tail.
 
 ---
 
-## 9. Operational Quick-Reference Matrix
+## 10. Operational Quick-Reference Matrix
 
 | Subsystem | Hardware Required | Local Software / Models | Latency | Strategic Value |
 | :--- | :--- | :--- | :--- | :--- |
@@ -275,3 +304,6 @@ An always-on Apple Silicon Mac Mini can continuously listen to amateur radio net
 | **Municipal Alpha** | Standard Mac Mini | DuckDB Spatial + NYC OpenData APIs | Batch/Live | 6-month advance notice on luxury venue openings |
 | **Counter-Surveillance** | RTL-SDR + BLE Interface | `gr-gsm` + Kismet BLE sniffer | Real-time | Rogue IMSI catcher & stalking tracker defense |
 | **Acoustic Telemetry** | Window Boundary Mic | CoreML YAMNet / CLAP Audio Classifier | $<100\text{ms}$ | Real-time audio hazard & siren triangulation |
+| **Autonomous OSINT Dossier** | Standard Mac Mini | RECAP + ACRIS + EDGAR scrapers | $<60\text{s}$ | On-demand target intelligence & leverage profiles |
+| **Canary Leak Detection** | Standard Mac Mini | Unicode Steganography / Hash Engine | Instant | Definite cryptographic source attribution on leaks |
+| **Chaperone Tail Detector** | Mobile + Mac Mini BLE logs | Spatial Probe Request Correlator | Real-time | Detects physical tracking & co-occurring devices |
