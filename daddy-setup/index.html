@@ -8,75 +8,73 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0d1117; color: #e6edf3; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  .card { max-width: 600px; width: 100%; }
-  .top { text-align: center; margin-bottom: 40px; }
-  .top h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-  .top p { color: #8b949e; font-size: 15px; line-height: 1.6; }
-  .step { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 24px; margin-bottom: 20px; }
-  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: #58a6ff; color: #000; font-weight: 800; font-size: 16px; margin-bottom: 14px; }
-  .step h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .step p { color: #8b949e; font-size: 14px; line-height: 1.7; margin-bottom: 14px; }
-  .step p:last-child { margin-bottom: 0; }
-  .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 18px 16px; margin: 14px 0; position: relative; }
-  .cmd code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 60px; }
-  .copy { position: absolute; top: 12px; right: 12px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
+  .card { max-width: 560px; width: 100%; }
+  .top { text-align: center; margin-bottom: 36px; }
+  .pill { display: inline-block; background: rgba(88,166,255,.12); border: 1px solid rgba(88,166,255,.3); color: #58a6ff; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+  h1 { font-size: 34px; font-weight: 800; margin-bottom: 8px; }
+  .sub { color: #8b949e; font-size: 15px; line-height: 1.6; }
+  .step { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 22px; margin-bottom: 16px; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #58a6ff; color: #000; font-weight: 800; font-size: 15px; margin-bottom: 12px; }
+  .step h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .step p { color: #8b949e; font-size: 14px; line-height: 1.7; }
+  .qr-box { background: #010409; border: 2px solid #58a6ff; border-radius: 14px; padding: 20px; text-align: center; margin: 16px 0; }
+  .qr-box img { width: 220px; height: 220px; image-rendering: pixelated; border-radius: 8px; background: #fff; padding: 8px; }
+  .qr-label { font-size: 12px; color: #8b949e; margin-top: 10px; }
+  .qr-label code { color: #58a6ff; font-family: 'JetBrains Mono', monospace; }
+  .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; margin: 12px 0; position: relative; }
+  .cmd code { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 56px; }
+  .copy { position: absolute; top: 10px; right: 10px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all .15s; }
   .copy:hover { background: #58a6ff; color: #000; border-color: #58a6ff; }
   .copy.ok { background: #3fb950; color: #000; border-color: #3fb950; }
-  .note { background: rgba(210,153,34,.08); border-left: 3px solid #d29922; border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13px; color: #e6edf3; line-height: 1.6; }
+  .note { background: rgba(210,153,34,.08); border-left: 3px solid #d29922; border-radius: 6px; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #e6edf3; line-height: 1.6; }
   .note strong { color: #d29922; }
-  .done { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.3); border-radius: 14px; padding: 28px; text-align: center; margin-top: 8px; }
-  .done .big { font-size: 48px; margin-bottom: 12px; }
-  .done h2 { color: #3fb950; font-size: 22px; margin-bottom: 8px; }
+  .done { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.3); border-radius: 14px; padding: 24px; text-align: center; }
+  .done .big { font-size: 44px; margin-bottom: 10px; }
+  .done h2 { color: #3fb950; font-size: 20px; margin-bottom: 6px; }
   .done p { color: #8b949e; font-size: 14px; line-height: 1.6; }
-  .pill { display: inline-block; background: rgba(88,166,255,.12); border: 1px solid rgba(88,166,255,.3); color: #58a6ff; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+  .divider { text-align: center; color: #30363d; font-size: 12px; margin: 12px 0; letter-spacing: 2px; }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="top">
-    <span class="pill">📡 Antigravity Network Setup</span>
-    <h1>Hey Dad! 👋</h1>
-    <p>Two steps. Will takes over after that.<br/>Just follow exactly what's below.</p>
+    <span class="pill">&#128225; Antigravity Network Setup</span>
+    <h1>Hey Dad! &#128075;</h1>
+    <p class="sub">Two steps. Will handles everything else remotely.</p>
   </div>
 
   <div class="step">
     <div class="step-num">1</div>
-    <h2>Install Termux</h2>
-    <p>Open the <strong>Google Play Store</strong> on your Samsung phone and search for <strong>Termux</strong> — install it. It's free.</p>
-    <p>Then open Termux and copy-paste this first command:</p>
-    <div class="cmd">
-      <code>pkg install -y curl</code>
-      <button class="copy" onclick="copy(this,'pkg install -y curl')">Copy</button>
-    </div>
-    <div class="note"><strong>⚠ It may ask questions</strong> during install — just press <strong>Enter</strong> to accept defaults every time.</div>
+    <h2>Install Termux from Play Store</h2>
+    <p>Search <strong>Termux</strong> in the Google Play Store and install it. Free app, takes 1 minute.</p>
   </div>
 
   <div class="step">
     <div class="step-num">2</div>
-    <h2>Run the Setup</h2>
-    <p>Now paste this command. It connects your phone to Will's home network automatically — no passwords, no logins.</p>
-    <div class="cmd">
-      <code>curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
-      <button class="copy" onclick="copy(this,'curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
+    <h2>Open Termux &amp; Scan This QR</h2>
+    <p>Open Termux, tap the screen once, then use your camera or QR scanner to scan this code. It auto-fills the command.</p>
+    <div class="qr-box">
+      <img src="data:image/png;base64,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" alt="Setup QR Code"/>
+      <div class="qr-label">Scans to: <code>pkg install curl &amp;&amp; curl&#8203;...&#8203; | bash</code></div>
     </div>
-    <div class="note"><strong>⏳ Takes about 2-3 minutes</strong> to run. When you see ✅ SETUP COMPLETE — you're done! Keep Termux open in the background.</div>
+    <div class="divider">&#x2500;&#x2500; OR TYPE IT MANUALLY &#x2500;&#x2500;</div>
+    <div class="cmd">
+      <code>pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
+      <button class="copy" onclick="copy(this,'pkg install -y curl &amp;&amp; curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
+    </div>
+    <div class="note"><strong>&#9203; Takes 2-3 minutes.</strong> When you see &#9989; SETUP COMPLETE &#8212; you're done! Keep Termux open.</div>
   </div>
 
   <div class="done">
-    <div class="big">🎉</div>
+    <div class="big">&#127881;</div>
     <h2>That's it!</h2>
-    <p>Once you see the green checkmark in Termux,<br/>
-    <strong>Will will take over and handle everything else remotely.</strong><br/><br/>
-    You don't need to touch the TV or do anything else.<br/>
-    Just keep the phone plugged in and Termux open!</p>
+    <p>Will takes over remotely the moment the script finishes.<br/>You don't need to touch the TV or do anything else.<br/><br/><strong>Keep the phone plugged in and Termux open!</strong></p>
   </div>
-
 </div>
 <script>
 function copy(btn, text) {
   navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied!';
-    btn.classList.add('ok');
+    btn.textContent = 'Copied!'; btn.classList.add('ok');
     setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2500);
   });
 }
