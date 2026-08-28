@@ -74,7 +74,7 @@
         padding: 16px 20px;
     }
 
-    /* Corporate Document Header (ThinkAutomation Style) */
+    /* Corporate Document Header */
     .doc-header {
         background: var(--bg-card);
         border: 1px solid var(--border-main);
@@ -151,6 +151,8 @@
         color: var(--text-muted);
         letter-spacing: 0.5px;
         margin-bottom: 3px;
+        display: flex;
+        justify-content: space-between;
     }
     .meta-input {
         background: var(--bg-subtle);
@@ -178,6 +180,81 @@
         height: 31px;
     }
     .btn-clear:hover { color: var(--text-main); background: #e2e8f0; }
+
+    /* Optional Custom Details Drawer */
+    .custom-details-toggle {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .btn-toggle-custom {
+        background: none;
+        border: none;
+        color: var(--corporate-accent);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .btn-toggle-custom:hover { text-decoration: underline; }
+
+    .custom-drawer {
+        display: none;
+        margin-top: 12px;
+        padding: 14px;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-subtle);
+        border-radius: 4px;
+    }
+    .custom-drawer.open { display: block; }
+
+    .custom-fields-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .quick-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+    }
+    .chip-btn {
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        color: var(--text-muted);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .chip-btn:hover { border-color: var(--corporate-accent); color: var(--corporate-navy); }
+    .chip-btn.active {
+        background: var(--corporate-navy);
+        border-color: var(--corporate-navy);
+        color: #ffffff;
+    }
+
+    /* Sticky HUD Notes Banner (If rep typed custom notes) */
+    .sticky-note-banner {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-left: 3px solid #d97706;
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 12px;
+        color: #92400e;
+        margin-bottom: 12px;
+        display: none;
+    }
 
     /* Navigation Tabs Bar */
     .tabs-nav {
@@ -302,7 +379,7 @@
         border-radius: 2px;
     }
 
-    /* Response Options Grid (ThinkAutomation Color Tags) */
+    /* Response Options Grid */
     .options-label {
         font-size: 11px;
         font-weight: 700;
@@ -660,7 +737,7 @@
     .toast.show { opacity: 1; }
 
     @media print {
-        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay { display: none !important; }
+        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay, .custom-details-toggle, .custom-drawer { display: none !important; }
         body { background: #fff; color: #000; }
         .doc-header, .section-block { border: 1px solid #ccc; background: #fff; box-shadow: none; }
         .say-box, .copy-block { background: #fafafa; border: 1px solid #ddd; }
@@ -692,18 +769,59 @@
         <div class="lead-grid">
             <div class="meta-cell">
                 <span class="meta-label">Contact / Owner Name</span>
-                <input type="text" id="lead-name" class="meta-input" placeholder="e.g. John" oninput="updatePersonalization()">
+                <input type="text" id="lead-name" class="meta-input" placeholder="e.g. John (Optional)" oninput="updatePersonalization()">
             </div>
             <div class="meta-cell">
                 <span class="meta-label">Merchant / Company Name</span>
-                <input type="text" id="lead-company" class="meta-input" placeholder="e.g. Apex Logistics" oninput="updatePersonalization()">
+                <input type="text" id="lead-company" class="meta-input" placeholder="e.g. Apex Logistics (Optional)" oninput="updatePersonalization()">
             </div>
             <div class="meta-cell">
                 <span class="meta-label">Industry / Operating Niche</span>
-                <input type="text" id="lead-industry" class="meta-input" placeholder="e.g. Trucking / Freight" oninput="updatePersonalization()">
+                <input type="text" id="lead-industry" class="meta-input" placeholder="e.g. Trucking (Optional)" oninput="updatePersonalization()">
             </div>
             <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
         </div>
+
+        <!-- Collapsible Progressive Call Enhancers -->
+        <div class="custom-details-toggle">
+            <button class="btn-toggle-custom" onclick="toggleCustomDrawer()">
+                <span id="drawer-icon">➕</span> <strong>Enhance Script with Extra Call Intel (Optional)</strong>
+            </button>
+            <span style="font-size: 11px; color: var(--text-light);">None required • Use as you speak</span>
+        </div>
+
+        <div class="custom-drawer" id="custom-drawer">
+            <div class="custom-fields-grid">
+                <div class="meta-cell">
+                    <span class="meta-label">Current Lender / Competitor</span>
+                    <input type="text" id="lead-lender" class="meta-input" placeholder="e.g. OnDeck, National Funding" oninput="updatePersonalization()">
+                </div>
+                <div class="meta-cell">
+                    <span class="meta-label">Est. Monthly Revenue</span>
+                    <input type="text" id="lead-rev" class="meta-input" placeholder="e.g. $120K/mo" oninput="updatePersonalization()">
+                </div>
+                <div class="meta-cell">
+                    <span class="meta-label">Current Daily/Weekly Debit</span>
+                    <input type="text" id="lead-debit-str" class="meta-input" placeholder="e.g. $1,200/day" oninput="updatePersonalization()">
+                </div>
+            </div>
+
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">
+                Quick Target Angle / Merchant Pain Point:
+            </div>
+            <div class="quick-chips">
+                <button class="chip-btn" onclick="selectPainPoint('debit_crunch', this)">🔻 Lower High Daily Debits</button>
+                <button class="chip-btn" onclick="selectPainPoint('expansion', this)">🚀 Growth &amp; Expansion Capital</button>
+                <button class="chip-btn" onclick="selectPainPoint('rate_cut', this)">📉 Cut Expensive Factor Rates</button>
+                <button class="chip-btn" onclick="selectPainPoint('refi', this)">🔄 Consolidate Multiple Lenders</button>
+            </div>
+
+            <div class="meta-cell" style="margin-top: 10px;">
+                <span class="meta-label">Sticky Call Notes (Appears in HUD)</span>
+                <input type="text" id="lead-notes" class="meta-input" placeholder="e.g. Owner mentioned his partner Dave is on vacation till Tuesday" oninput="updatePersonalization()">
+            </div>
+        </div>
+
     </div>
 
     <!-- Navigation Tabs -->
@@ -725,6 +843,11 @@
             </div>
 
             <div class="section-body">
+                <!-- Sticky Call Note Banner (If populated) -->
+                <div class="sticky-note-banner" id="sticky-note-box">
+                    <strong>📌 Call Note:</strong> <span id="sticky-note-text"></span>
+                </div>
+
                 <!-- What You Say Out Loud -->
                 <div class="say-box">
                     <div class="say-label">🗣️ What You Say Out Loud (Verbatim)</div>
@@ -1006,19 +1129,49 @@ function triggerNativeShare() {
 }
 
 /* =========================================================================
-   DYNAMIC LEAD PERSONALIZATION
+   DYNAMIC LEAD PERSONALIZATION (PROGRESSIVE & 100% OPTIONAL)
    ========================================================================= */
 let leadState = {
     name: "",
     company: "",
-    industry: ""
+    industry: "",
+    lender: "",
+    revenue: "",
+    debitStr: "",
+    painPoint: "",
+    notes: ""
 };
+
+function toggleCustomDrawer() {
+    const drawer = document.getElementById('custom-drawer');
+    const icon = document.getElementById('drawer-icon');
+    if (drawer) {
+        drawer.classList.toggle('open');
+        icon.innerText = drawer.classList.contains('open') ? "➖" : "➕";
+    }
+}
+
+function selectPainPoint(pointKey, btn) {
+    if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        leadState.painPoint = "";
+    } else {
+        document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        leadState.painPoint = pointKey;
+    }
+    renderCurrentNode();
+}
 
 function getEffectiveTokens() {
     return {
         name: leadState.name.trim() || "John",
         company: leadState.company.trim() || "your company",
-        industry: leadState.industry.trim() || "your industry"
+        industry: leadState.industry.trim() || "your industry",
+        lender: leadState.lender.trim() || "",
+        revenue: leadState.revenue.trim() || "",
+        debitStr: leadState.debitStr.trim() || "",
+        notes: leadState.notes.trim() || ""
     };
 }
 
@@ -1026,22 +1179,41 @@ function formatWithTokens(templateStr, highlight = false) {
     const t = getEffectiveTokens();
     let res = templateStr;
 
+    // Contact Name
     if (highlight && leadState.name.trim()) {
         res = res.replaceAll("[Name]", `<span class="token-highlight">${t.name}</span>`);
     } else {
         res = res.replaceAll("[Name]", t.name);
     }
 
+    // Company Name
     if (highlight && leadState.company.trim()) {
         res = res.replaceAll("[Company]", `<span class="token-highlight">${t.company}</span>`);
     } else {
         res = res.replaceAll("[Company]", t.company);
     }
 
+    // Industry / Niche
     if (highlight && leadState.industry.trim()) {
         res = res.replaceAll("[Industry]", `<span class="token-highlight">${t.industry}</span>`);
     } else {
         res = res.replaceAll("[Industry]", t.industry);
+    }
+
+    // Current Lender (If present)
+    if (leadState.lender.trim()) {
+        const lenderToken = highlight ? `<span class="token-highlight">${t.lender}</span>` : t.lender;
+        res = res.replaceAll("[Lender_Or_Default]", `positions out of lenders like ${lenderToken}`);
+    } else {
+        res = res.replaceAll("[Lender_Or_Default]", "expensive positions in your space");
+    }
+
+    // Monthly Revenue (If present)
+    if (leadState.revenue.trim()) {
+        const revToken = highlight ? `<span class="token-highlight">${t.revenue}</span>` : t.revenue;
+        res = res.replaceAll("[Revenue_Or_Default]", `businesses doing around ${revToken} in volume`);
+    } else {
+        res = res.replaceAll("[Revenue_Or_Default]", "active operators in your space");
     }
 
     return res;
@@ -1051,6 +1223,23 @@ function updatePersonalization() {
     leadState.name = document.getElementById('lead-name').value;
     leadState.company = document.getElementById('lead-company').value;
     leadState.industry = document.getElementById('lead-industry').value;
+    
+    const lenderEl = document.getElementById('lead-lender'); if(lenderEl) leadState.lender = lenderEl.value;
+    const revEl = document.getElementById('lead-rev'); if(revEl) leadState.revenue = revEl.value;
+    const debitEl = document.getElementById('lead-debit-str'); if(debitEl) leadState.debitStr = debitEl.value;
+    const notesEl = document.getElementById('lead-notes'); if(notesEl) leadState.notes = notesEl.value;
+
+    // Sticky Note Box
+    const stickyBox = document.getElementById('sticky-note-box');
+    const stickyText = document.getElementById('sticky-note-text');
+    if (stickyBox && stickyText) {
+        if (leadState.notes.trim()) {
+            stickyBox.style.display = "block";
+            stickyText.innerText = leadState.notes;
+        } else {
+            stickyBox.style.display = "none";
+        }
+    }
 
     renderCurrentNode();
     updateCadenceSnippets();
@@ -1060,7 +1249,15 @@ function clearLeadInputs() {
     document.getElementById('lead-name').value = "";
     document.getElementById('lead-company').value = "";
     document.getElementById('lead-industry').value = "";
-    leadState = { name: "", company: "", industry: "" };
+    
+    const lenderEl = document.getElementById('lead-lender'); if(lenderEl) lenderEl.value = "";
+    const revEl = document.getElementById('lead-rev'); if(revEl) revEl.value = "";
+    const debitEl = document.getElementById('lead-debit-str'); if(debitEl) debitEl.value = "";
+    const notesEl = document.getElementById('lead-notes'); if(notesEl) notesEl.value = "";
+    
+    document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+
+    leadState = { name: "", company: "", industry: "", lender: "", revenue: "", debitStr: "", painPoint: "", notes: "" };
     updatePersonalization();
 }
 
@@ -1108,14 +1305,14 @@ Let me send you a secure request link right now. What's the best email?"`;
 }
 
 /* =========================================================================
-   CALL FLOW TREE (WITH TEMPLATE TOKENS)
+   CALL FLOW TREE (WITH PROGRESSIVE TEMPLATE TOKENS)
    ========================================================================= */
 const CALL_FLOW = {
     "root": {
         stage: "Stage 1: Opening (0-5s)",
         verbatim: `"Hey [Name], I will be brief. I know I am calling out of the blue.
 
-I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up expensive debt."`,
+I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up [Lender_Or_Default]."`,
         tactical: "Speak with calm authority, like an underwriting auditor checking figures.",
         options: [
             { text: `"Who is this / What company?"`, key: "1", next: "who_is_this", type: "pos" },
@@ -1131,7 +1328,7 @@ I work on the commercial capital placement side, and the reason for the call is 
         stage: "Stage 2: Identity & Disarm (6-15s)",
         verbatim: `"I'm Michael Qin with Capital Placement Advisory. We specialize in commercial working capital and restructuring high-cost merchant debt.
 
-The reason I reached out directly to [Company] is because we just restructured financing for a business in [Industry], cutting their monthly debt payment by 40%.
+The reason I reached out directly to [Company] is because we just restructured financing for [Revenue_Or_Default] in [Industry], cutting their monthly debt payment by 40%.
 
 I'm not asking for your business today—I just want to run a free debt audit against your last 3 statements to show you what you could save.
 
