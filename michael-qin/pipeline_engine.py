@@ -770,7 +770,7 @@ class SalesPipelineSystem:
                 <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
                 <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
                 <button class="tone-chip" onclick="setTone('conservative', this)">🤝 Conservative</button>
-                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban</button>
+                <button class="tone-chip" onclick="setTone('blue_collar', this)">🛠️ Blue-Collar</button>
             </div>
             <button class="extra-intel-btn" onclick="toggleIntelDrawer()">➕ Intel</button>
         </div>
@@ -1176,34 +1176,34 @@ Which banking institution handles your primary operations?"`,
         tactical: "Patient, dignified, polite, privacy-first framing. Reassure security and zero pressure."
     }},
 
-    "urban_modern": {{
-        name: "Urban Modern",
-        opener: `"Yo [Name], Michael Qin with Capital Advisory. Keeping it 100% brief since I'm catching you on the fly.
+    "blue_collar": {{
+        name: "Blue-Collar",
+        opener: `"Hey [Name], Michael Qin with Capital Advisory. Look, I know you're busy running jobs today, so I'll keep this short.
 
-We're in the market right now cleaning up expensive financing for operators in [Industry] getting squeezed by high-rate lenders like [Lender_Or_Default]."`,
-        who_is_this: `"Michael Qin, Capital Advisory. We restructure high-cost commercial debt and MCA positions so business owners actually keep their profits.
+We work directly with commercial operators in [Industry] to get rid of daily bank debits and clean up high-interest loan payments out of [Lender_Or_Default]."`,
+        who_is_this: `"I'm Michael Qin with Capital Advisory. We help business owners restructure heavy short-term debt so you're not getting drained by daily withdrawals every morning.
 
-Just took a company in [Industry] doing [Revenue_Or_Default] and freed up \$10K a month in pure cash flow.
+We just helped an operator in [Industry] doing [Revenue_Or_Default] free up about \$6,000 a month in cash flow that was going straight to lender fees.
 
-No games, no hard sell—just want to look at your 3 statements and show you what you're leaving on the table.
+I'm not trying to sell you a loan you don't need—I just want to look at your last 3 bank statements and see if we can cut your payments down.
 
-What's the best email to shoot the numbers over?"`,
-        hook: `"Here's the deal [Name]: I only win if I put serious money back into [Company].
+Where should I send a quick breakdown?"`,
+        hook: `"I'm not asking for your business today [Name]. If you send me your 3 bank statements, my team runs the numbers.
 
-Send over 3 months of bank statements, and I'll have a clean side-by-side comparison on your phone by tomorrow.
+If your current financing is solid, I'll tell you straight up to keep it. But if you're overpaying on fees or daily debits, I'll show you how much cash we can put back in your business.
 
-Where should I send the link?"`,
-        dont_need_money: `"Respect that [Name], good to hear [Company] is moving strong. I'm definitely not trying to sell you loans you don't need.
+What email works best for you?"`,
+        dont_need_money: `"Understood [Name], glad business is running steady. I'm actually not calling to sell you new money.
 
-I'm talking about stopping cash drain on positions you already have. If your current lenders are treating you right, keep them. If they're taxing you, let's fix it.
+Most guys we work with don't want more debt—they just want to stop getting hit with daily withdrawals on positions they already took out.
 
-What's your best email to check?"`,
-        just_email_me: `"Already on it [Name]. But listen—pop open your banking app on your phone right now while we're talking.
+Takes 2 minutes to check. If we can save you a couple grand a month on payroll and materials, it's worth a look. Fair enough to send a 1-page check?"`,
+        just_email_me: `"I'll send it right over [Name]. But if you're near a computer or on your phone, you can pull up your last 3 bank PDFs in about 45 seconds.
 
-Download the last 3 PDFs and email them over. 45 seconds and you're good for the week.
+Forward them to my email and I'll have the exact savings numbers back to you by tomorrow so you don't have to deal with paperwork tonight.
 
-You with Chase or BoA?"`,
-        tactical: "Authentic, relatable, zero-BS energy. Talk like a sharp business partner in the trenches."
+Who do you bank with—Chase or Bank of America?"`,
+        tactical: "Grounded, practical, plain English. Focus on protecting operating cash for payroll, materials, and job expenses without corporate jargon."
     }}
 }};
 
@@ -1679,7 +1679,7 @@ function renderToneChips() {{
         <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
         <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
         <button class="tone-chip ${{currentToneKey === 'conservative' ? 'active' : ''}}" onclick="setTone('conservative', this)">🤝 Conservative</button>
-        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban</button>
+        <button class="tone-chip ${{currentToneKey === 'blue_collar' ? 'active' : ''}}" onclick="setTone('blue_collar', this)">🛠️ Blue-Collar</button>
     `;
 
     const customChips = customDecks.map(d => `
