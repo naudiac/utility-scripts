@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-ThinkAutomation Corporate Navy & Executive Slate Edition with Optional Progressive Call Enhancers.
-Allows 100% optional on-the-fly customization (Competitor Lender, Revenue, Debits, Pain Points, Notes).
+Wall Street Institutional Edition with Instant Persona Tone Switching & Custom Deck Builder.
+Features:
+- Wall Street Senior Syndication Openers (High-Status, Zero Sales Breath)
+- 6 Instant Persona & Demographic Tone Profiles (Wall Street, High-Tempo, Straight-Shooter, CFO Analytical, Conservative, Urban Modern)
+- Interactive Custom Deck Builder & LocalStorage Persistence
 """
 
 import os
@@ -69,7 +72,7 @@ class SalesPipelineSystem:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Walker Advisory — {self.rep_name} Sales Flight Deck & Statement Engine</title>
+<title>Walker Advisory — {self.rep_name} Wall Street Syndication &amp; Sales Flight Deck</title>
 <style>
     :root {{
         /* ThinkAutomation v83 Corporate Palette */
@@ -247,11 +250,56 @@ class SalesPipelineSystem:
     }}
     .btn-clear:hover {{ color: var(--text-main); background: #e2e8f0; }}
 
+    /* Persona & Tone Switcher Bar */
+    .tone-bar {{
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border-subtle);
+    }}
+    .tone-header {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }}
+    .tone-title {{
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--corporate-navy);
+        letter-spacing: 0.5px;
+    }}
+    .tone-chips {{
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }}
+    .tone-chip {{
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        color: var(--text-muted);
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.1s;
+    }}
+    .tone-chip:hover {{ color: var(--corporate-navy); border-color: var(--corporate-accent); }}
+    .tone-chip.active {{
+        background: var(--corporate-navy);
+        border-color: var(--corporate-navy);
+        color: #ffffff;
+        font-weight: 700;
+    }}
+
     /* Optional Custom Details Drawer */
     .custom-details-toggle {{
-        margin-top: 12px;
-        padding-top: 10px;
-        border-top: 1px dashed var(--border-subtle);
+        margin-top: 10px;
+        padding-top: 8px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -260,7 +308,7 @@ class SalesPipelineSystem:
         background: none;
         border: none;
         color: var(--corporate-accent);
-        font-size: 12px;
+        font-size: 11.5px;
         font-weight: 700;
         cursor: pointer;
         display: inline-flex;
@@ -271,8 +319,8 @@ class SalesPipelineSystem:
 
     .custom-drawer {{
         display: none;
-        margin-top: 12px;
-        padding: 14px;
+        margin-top: 10px;
+        padding: 12px;
         background: var(--bg-subtle);
         border: 1px solid var(--border-subtle);
         border-radius: 4px;
@@ -283,33 +331,10 @@ class SalesPipelineSystem:
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }}
 
-    .quick-chips {{
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-top: 6px;
-    }}
-    .chip-btn {{
-        background: #ffffff;
-        border: 1px solid var(--border-main);
-        color: var(--text-muted);
-        font-size: 11px;
-        font-weight: 600;
-        padding: 3px 8px;
-        border-radius: 3px;
-        cursor: pointer;
-    }}
-    .chip-btn:hover {{ border-color: var(--corporate-accent); color: var(--corporate-navy); }}
-    .chip-btn.active {{
-        background: var(--corporate-navy);
-        border-color: var(--corporate-navy);
-        color: #ffffff;
-    }}
-
-    /* Sticky HUD Notes Banner (If rep typed custom notes) */
+    /* Sticky HUD Notes Banner */
     .sticky-note-banner {{
         background: #fffbeb;
         border: 1px solid #fde68a;
@@ -397,7 +422,7 @@ class SalesPipelineSystem:
         padding: 18px;
     }}
 
-    /* Verbatim Script Box (What You Say) */
+    /* Verbatim Script Box */
     .say-box {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
@@ -406,6 +431,12 @@ class SalesPipelineSystem:
         margin-bottom: 16px;
         border-radius: 2px;
     }}
+    .say-header-row {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }}
     .say-label {{
         display: inline-block;
         font-size: 10px;
@@ -413,17 +444,25 @@ class SalesPipelineSystem:
         text-transform: uppercase;
         color: var(--corporate-accent);
         letter-spacing: 0.5px;
-        margin-bottom: 6px;
+    }}
+    .active-tone-indicator {{
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+        background: #e2e8f0;
+        padding: 2px 7px;
+        border-radius: 3px;
+        font-family: var(--font-mono);
     }}
     .say-text {{
-        font-size: 17px;
+        font-size: 16.5px;
         font-weight: 600;
         color: var(--corporate-navy);
-        line-height: 1.45;
+        line-height: 1.5;
         white-space: pre-wrap;
     }}
     @media (max-width: 600px) {{
-        .say-text {{ font-size: 15px; }}
+        .say-text {{ font-size: 14.5px; }}
     }}
     .say-text .token-highlight {{
         background: #fef3c7;
@@ -481,41 +520,30 @@ class SalesPipelineSystem:
         align-items: center;
         transition: border-color 0.1s, box-shadow 0.1s;
     }}
-    .opt-btn:hover {{
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }}
+    .opt-btn:hover {{ box-shadow: 0 1px 3px rgba(0,0,0,0.06); }}
     .opt-btn:active {{ transform: scale(0.99); }}
 
-    /* Colors */
+    /* Option Colors */
     .opt-btn.pos {{
         background: var(--color-success-bg);
         border-color: var(--color-success-border);
         color: var(--color-success);
     }}
-    .opt-btn.pos .key-pill {{
-        background: var(--color-success);
-        color: #ffffff;
-    }}
+    .opt-btn.pos .key-pill {{ background: var(--color-success); color: #ffffff; }}
 
     .opt-btn.neg {{
         background: var(--color-danger-bg);
         border-color: var(--color-danger-border);
         color: var(--color-danger);
     }}
-    .opt-btn.neg .key-pill {{
-        background: var(--color-danger);
-        color: #ffffff;
-    }}
+    .opt-btn.neg .key-pill {{ background: var(--color-danger); color: #ffffff; }}
 
     .opt-btn.amber {{
         background: var(--color-warning-bg);
         border-color: var(--color-warning-border);
         color: var(--color-warning);
     }}
-    .opt-btn.amber .key-pill {{
-        background: var(--color-warning);
-        color: #ffffff;
-    }}
+    .opt-btn.amber .key-pill {{ background: var(--color-warning); color: #ffffff; }}
 
     .key-pill {{
         font-family: var(--font-mono);
@@ -581,6 +609,50 @@ class SalesPipelineSystem:
         cursor: pointer;
     }}
     .btn-copy:hover {{ color: var(--corporate-navy); border-color: var(--corporate-accent); }}
+
+    /* Custom Deck Studio */
+    .deck-builder-box {{
+        background: #f8fafc;
+        border: 1px solid var(--border-main);
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }}
+    .deck-builder-grid {{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }}
+    .deck-input-area {{
+        width: 100%;
+        min-height: 70px;
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        border-radius: 4px;
+        padding: 8px 10px;
+        font-family: var(--font-family);
+        font-size: 13px;
+        color: var(--corporate-navy);
+        resize: vertical;
+        outline: none;
+    }}
+    .deck-input-area:focus {{ border-color: var(--corporate-accent); }}
+
+    .custom-deck-list {{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 14px;
+    }}
+    .custom-deck-card {{
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        border-radius: 4px;
+        padding: 12px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }}
 
     /* Bank Selector Chips */
     .bank-chips {{
@@ -803,7 +875,7 @@ class SalesPipelineSystem:
     .toast.show {{ opacity: 1; }}
 
     @media print {{
-        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay, .custom-details-toggle, .custom-drawer {{ display: none !important; }}
+        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay, .tone-bar, .custom-details-toggle, .custom-drawer {{ display: none !important; }}
         body {{ background: #fff; color: #000; }}
         .doc-header, .section-block {{ border: 1px solid #ccc; background: #fff; box-shadow: none; }}
         .say-box, .copy-block {{ background: #fafafa; border: 1px solid #ddd; }}
@@ -823,7 +895,7 @@ class SalesPipelineSystem:
                     Walker Advisory <span class="status-tag">Live System</span>
                 </div>
                 <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">
-                    {self.rep_name} — Merchant Statement Extraction &amp; Sales Mastery Flight Deck
+                    {self.rep_name} — Wall Street Syndication &amp; Sales Closer Flight Deck
                 </div>
             </div>
             <div>
@@ -848,12 +920,28 @@ class SalesPipelineSystem:
             <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
         </div>
 
+        <!-- Persona & Tone Gear Switcher -->
+        <div class="tone-bar">
+            <div class="tone-header">
+                <span class="tone-title">🎭 Instant Persona Tone Selector:</span>
+                <span style="font-size: 11px; color: var(--text-muted);">1-Click Re-gear Pitch Vocabulary &amp; Tempo</span>
+            </div>
+            <div class="tone-chips" id="tone-chips-container">
+                <button class="tone-chip active" onclick="setTone('wall_street', this)">🏛️ Wall Street Pro</button>
+                <button class="tone-chip" onclick="setTone('high_tempo', this)">⚡ High-Tempo / Executive</button>
+                <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Grounded / Straight-Shooter</button>
+                <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO / Financial Auditor</button>
+                <button class="tone-chip" onclick="setTone('conservative', this)">🤝 Senior / Conservative</button>
+                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban / Street-Smart</button>
+            </div>
+        </div>
+
         <!-- Collapsible Progressive Call Enhancers -->
         <div class="custom-details-toggle">
             <button class="btn-toggle-custom" onclick="toggleCustomDrawer()">
-                <span id="drawer-icon">➕</span> <strong>Enhance Script with Extra Call Intel (Optional)</strong>
+                <span id="drawer-icon">➕</span> <strong>Add Extra Call Intel (Lender, Revenue, Debit, Notes)</strong>
             </button>
-            <span style="font-size: 11px; color: var(--text-light);">None required • Use as you speak</span>
+            <span style="font-size: 11px; color: var(--text-light);">100% Optional • Use as needed</span>
         </div>
 
         <div class="custom-drawer" id="custom-drawer">
@@ -872,19 +960,9 @@ class SalesPipelineSystem:
                 </div>
             </div>
 
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">
-                Quick Target Angle / Merchant Pain Point:
-            </div>
-            <div class="quick-chips">
-                <button class="chip-btn" onclick="selectPainPoint('debit_crunch', this)">🔻 Lower High Daily Debits</button>
-                <button class="chip-btn" onclick="selectPainPoint('expansion', this)">🚀 Growth &amp; Expansion Capital</button>
-                <button class="chip-btn" onclick="selectPainPoint('rate_cut', this)">📉 Cut Expensive Factor Rates</button>
-                <button class="chip-btn" onclick="selectPainPoint('refi', this)">🔄 Consolidate Multiple Lenders</button>
-            </div>
-
-            <div class="meta-cell" style="margin-top: 10px;">
+            <div class="meta-cell">
                 <span class="meta-label">Sticky Call Notes (Appears in HUD)</span>
-                <input type="text" id="lead-notes" class="meta-input" placeholder="e.g. Owner mentioned his partner Dave is on vacation till Tuesday" oninput="updatePersonalization()">
+                <input type="text" id="lead-notes" class="meta-input" placeholder="e.g. Partner Dave is in the yard until 2 PM" oninput="updatePersonalization()">
             </div>
         </div>
 
@@ -893,6 +971,7 @@ class SalesPipelineSystem:
     <!-- Navigation Tabs -->
     <div class="tabs-nav">
         <button class="tab-item active" onclick="switchTab('tab-hud')">🎙️ Dialer Copilot</button>
+        <button class="tab-item" onclick="switchTab('tab-custom-decks')">🛠️ Custom Deck Studio</button>
         <button class="tab-item" onclick="switchTab('tab-statement')">📄 Statement Extraction</button>
         <button class="tab-item" onclick="switchTab('tab-calc')">💰 Savings Calculator</button>
         <button class="tab-item" onclick="switchTab('tab-objections')">🛡️ Pushbacks</button>
@@ -916,12 +995,13 @@ class SalesPipelineSystem:
 
                 <!-- What You Say Out Loud -->
                 <div class="say-box">
-                    <div class="say-label">🗣️ What You Say Out Loud (Verbatim)</div>
-                    <div class="say-text" id="hud-verbatim">"Hey [Name], I will be brief. I know I am calling out of the blue.
-
-I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up expensive debt."</div>
+                    <div class="say-header-row">
+                        <span class="say-label">🗣️ What You Say Out Loud (Verbatim)</span>
+                        <span class="active-tone-indicator" id="active-tone-label">Tone: Wall Street Pro</span>
+                    </div>
+                    <div class="say-text" id="hud-verbatim"></div>
                     <div class="tactical-bar" id="hud-bar">
-                        <strong>Tactical Principle:</strong> <span id="hud-tactical">Speak with calm authority, like an underwriting auditor checking figures.</span>
+                        <strong>Tactical Execution:</strong> <span id="hud-tactical"></span>
                     </div>
                 </div>
 
@@ -946,7 +1026,50 @@ I work on the commercial capital placement side, and the reason for the call is 
         </div>
     </div>
 
-    <!-- TAB 2: STATEMENT EXTRACTION -->
+    <!-- TAB 2: CUSTOM DECK STUDIO -->
+    <div id="tab-custom-decks" class="tab-pane">
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">🛠️ Custom Deck Studio &amp; Pitch Builder</span>
+                <span class="section-meta">Create and save your own personalized pitch decks</span>
+            </div>
+            <div class="section-body">
+                <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
+                    Build your own custom decks tailored to your favorite niches, closing styles, or local markets. Saved decks are stored in your browser and accessible instantly in the Dialer Copilot.
+                </p>
+
+                <div class="deck-builder-box">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 10px;">➕ Create New Custom Deck</div>
+                    <div class="deck-builder-grid">
+                        <div>
+                            <span class="meta-label">Deck Name / Identifier</span>
+                            <input type="text" id="new-deck-name" class="meta-input" placeholder="e.g. My Heavy Equipment Closer, Florida Contractors Opener">
+                        </div>
+                        <div>
+                            <span class="meta-label">Stage 1: Opener Line (Use [Name], [Company], [Industry])</span>
+                            <textarea id="new-deck-opener" class="deck-input-area" placeholder="Hey [Name], Michael Qin on the syndication desk..."></textarea>
+                        </div>
+                        <div>
+                            <span class="meta-label">Stage 2: Core Value Hook &amp; Disarm Line</span>
+                            <textarea id="new-deck-hook" class="deck-input-area" placeholder="I'm not asking for your business today—I just want to run an underwriting audit..."></textarea>
+                        </div>
+                        <div>
+                            <span class="meta-label">Tactical Principle / Delivery Note</span>
+                            <input type="text" id="new-deck-note" class="meta-input" placeholder="e.g. Unhurried, consultative auditor tone.">
+                        </div>
+                        <button class="btn-share-hdr" style="justify-content: center; padding: 8px 16px;" onclick="saveCustomDeck()">💾 Save Custom Deck to My System</button>
+                    </div>
+                </div>
+
+                <div style="font-size: 13px; font-weight: 700; color: var(--corporate-navy); margin: 18px 0 8px;">Saved Custom Decks:</div>
+                <div id="custom-decks-container" class="custom-deck-list">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: STATEMENT EXTRACTION -->
     <div id="tab-statement" class="tab-pane">
         <div class="section-block">
             <div class="section-header">
@@ -1004,7 +1127,7 @@ Let me send you a secure request link right now. What's the best email?"</div>
         </div>
     </div>
 
-    <!-- TAB 3: SAVINGS CALCULATOR -->
+    <!-- TAB 4: SAVINGS CALCULATOR -->
     <div id="tab-calc" class="tab-pane">
         <div class="section-block">
             <div class="section-header">
@@ -1049,7 +1172,7 @@ Let me send you a secure request link right now. What's the best email?"</div>
         </div>
     </div>
 
-    <!-- TAB 4: PUSHBACK MATRIX -->
+    <!-- TAB 5: PUSHBACK MATRIX -->
     <div id="tab-objections" class="tab-pane">
         <div class="section-block">
             <div class="section-header">
@@ -1059,7 +1182,7 @@ Let me send you a secure request link right now. What's the best email?"</div>
         </div>
     </div>
 
-    <!-- TAB 5: CADENCE -->
+    <!-- TAB 6: CADENCE -->
     <div id="tab-cadence" class="tab-pane">
         <div class="section-block">
             <div class="section-header">
@@ -1107,7 +1230,7 @@ Michael Qin</div>
         </div>
     </div>
 
-    <!-- TAB 6: PIPELINE STAGES -->
+    <!-- TAB 7: PIPELINE STAGES -->
     <div id="tab-pipeline" class="tab-pane">
         <div class="section-block">
             <div class="section-header">
@@ -1164,6 +1287,211 @@ const STAGES = {stages_json};
 const OBJECTIONS = {objections_json};
 
 /* =========================================================================
+   6 INSTANT PERSONA TONE PROFILES (WALL STREET TO BLUE-COLLAR GROUNDED)
+   ========================================================================= */
+const TONE_PROFILES = {{
+    "wall_street": {{
+        name: "Wall Street Pro",
+        tag: "🏛️ Wall Street Pro",
+        description: "Institutional senior syndication desk authority. Zero sales breath, calm auditor frame.",
+        opener: `"Hey [Name], Michael Qin on the institutional syndication desk at Capital Advisory. Look, I'll be direct—I know this call wasn't on your calendar today.
+
+The reason for the outreach is specific: our credit committee is actively restructuring secondary tier debt for mid-market operators in [Industry], moving companies out of [Lender_Or_Default] to cut monthly debit debt service by 40%."`,
+        who_is_this: `"I'm Michael Qin with Capital Placement Advisory. We specialize in senior debt restructuring and balance-sheet recapitalization.
+
+The reason I reached out directly to [Company] is that we just completed a placement for [Revenue_Or_Default] in [Industry], cutting their daily debit outflow in half.
+
+I'm not asking for your business today—I just want to run an underwriting audit against your last 3 statements to benchmark whether your current paper is optimal.
+
+Where should I send the benchmark comparison?"`,
+        hook: `"I'm not asking you to commit to anything today [Name]. Our desk operates on a strictly contingent placement model—we only earn an advisory fee if we deliver binding terms that substantially outperform what you have at [Company].
+
+If you send over your last 3 monthly statements, I'll return an institutional debt schedule within 24 hours. Where should I route that breakdown?"`,
+        dont_need_money: `"Completely understand [Name], and I'm glad [Company] is operating from a position of strength. We actually don't place speculative debt.
+
+Our mandate is balance-sheet optimization—stopping cash bleed on high-factor positions and holding incumbent lenders accountable to senior-tier rates.
+
+If our audit shows your capital structure is already optimal, you keep your lenders honest at zero cost. If we find \$2,500/month in leakage, you recapture that cash.
+
+What's the best email for that 1-page check?"`,
+        just_email_me: `"Happy to route that over [Name]. Rather than sending a generic deck that sits in your inbox, are you in front of your computer or looking at your phone right now?
+
+Stay on with me for literally 45 seconds while you export your last 3 monthly PDFs from your portal. I'll confirm receipt on the line so you don't have this lingering on your desk tonight.
+
+Which institution does [Company] bank with—Chase, BoA, or Wells?"`,
+        tactical: "Unhurried, authoritative institutional auditor tone. Frame as balance-sheet protection, not a loan sale."
+    }},
+
+    "high_tempo": {{
+        name: "High-Tempo Executive",
+        tag: "⚡ High-Tempo",
+        description: "Ultra-concise, fast-paced NYC/Chicago tempo. 10-second disarm for busy CEOs.",
+        opener: `"Hey [Name], Michael Qin with Capital Advisory. I'll give you the 10-second version because I know you're running a business.
+
+We're cutting monthly loan debits by 40% for [Industry] companies right now by clearing out [Lender_Or_Default].
+
+Have you looked at consolidating your current debt positions this quarter?"`,
+        who_is_this: `"Michael Qin, Capital Advisory. We recapitalize commercial debt for companies like [Company].
+
+Just cut debt payments for [Revenue_Or_Default] in [Industry] from daily debits down to a clean monthly schedule.
+
+Zero cost to check the numbers. What's your direct email so I can send the 1-page breakdown?"`,
+        hook: `"Takes 2 minutes [Name]. Shoot me your last 3 bank PDFs, and my team runs the numbers today. If we beat your current rates, you save money. If we don't, you lose nothing.
+
+What email should I ping?"`,
+        dont_need_money: `"Got it [Name], glad cash flow is good. Not calling to borrow—I'm calling to stop expensive daily ACH debits on money you've already taken.
+
+Takes 5 minutes to audit. If you're overpaying, we fix it. If not, at least you know.
+
+Fair enough to send a quick email?"`,
+        just_email_me: `"I'll email it right now [Name], but while I have you for 30 seconds—pull up your banking app on your phone.
+
+Download the last 3 statement PDFs and forward them over. Takes 45 seconds and you're done for the day.
+
+You using Chase or BoA?"`,
+        tactical: "Brisk, respectful of their time, punchy cadence. Keep tempo high and decisive."
+    }},
+
+    "southern_direct": {{
+        name: "Grounded Straight-Shooter",
+        tag: "🤠 Straight-Shooter",
+        description: "Warm, respectful, zero-BS plain English. Great for blue-collar, construction, trucking.",
+        opener: `"Hey [Name], hope you're having a good day. Michael Qin here with Capital Advisory. I know I caught you out of the blue, so I'll shoot straight with you.
+
+We work directly with owners in [Industry] to get them out from under high daily debits and expensive lenders like [Lender_Or_Default]."`,
+        who_is_this: `"I'm Michael Qin with Capital Placement Advisory. We help honest business owners restructure heavy short-term debt so they can keep more cash in their business.
+
+We just helped an operator in [Industry] doing [Revenue_Or_Default] free up over \$8,000 a month in cash.
+
+I don't play broker games. I just want to look at your last 3 statements and tell you honestly if you're getting a fair shake.
+
+Where's the best place to send that info?"`,
+        hook: `"Look [Name], I treat owners the way I'd want to be treated. If you send me your 3 bank statements, I'll look them over myself.
+
+If your current lenders are giving you a fair deal, I'll tell you to stick with them. But if they're taking you for a ride on rates, I'll show you how to fix it.
+
+What email works best for you?"`,
+        dont_need_money: `"Completely understand [Name], and I respect a man who runs a clean ship without needing to borrow.
+
+I'm not asking you to take out a nickel of new debt. I just hate seeing good operators lose hard-earned cash to sneaky daily fees.
+
+Let me send you a simple 1-page check. If you ever need it, you have it. What email should I use?"`,
+        just_email_me: `"Happy to do that [Name]. Tell you what—if you're near your desk or looking at your phone right now, take 45 seconds and forward those 3 bank statements over.
+
+That way you don't have to think about it when you get home to your family tonight.
+
+Which bank do you all use down there?"`,
+        tactical: "Warm, honest, unhurried, peer-to-peer tone. Establish trust through direct transparency."
+    }},
+
+    "cfo_analytical": {{
+        name: "CFO Financial Auditor",
+        tag: "📊 CFO / Analytical",
+        description: "Numbers-heavy, balance sheet, basis points, cash flow margin expansion.",
+        opener: `"Good morning [Name]. Michael Qin from Capital Advisory's debt syndicate.
+
+We are currently conducting financial efficiency reviews for mid-sized operators in [Industry], specifically analyzing effective annual percentage rates across [Lender_Or_Default] and senior mezzanine positions."`,
+        who_is_this: `"Capital Placement Advisory. We specialize in senior debt placement and cost-of-capital compression for mid-market enterprises.
+
+Recent underwriting benchmarks in [Industry] for entities generating [Revenue_Or_Default] demonstrate a 400 to 650 basis point reduction in effective cost of capital through structured consolidation.
+
+May I verify your primary financial email to transmit our current rate index?"`,
+        hook: `"Our credit desk provides a comprehensive debt diagnostic at no upfront expense. We benchmark your current daily debits against senior institutional facilities.
+
+Transmitting your trailing 90-day statements allows us to model your exact net margin recapture within 24 hours.
+
+What is the optimal routing email for this analysis?"`,
+        dont_need_money: `"Understood [Name]. Our engagement is non-dilutive and focused strictly on expense mitigation rather than balance-sheet expansion.
+
+Confirming whether your current capital structure reflects optimal tier-1 pricing creates governance value regardless of whether refinancing is executed.
+
+Shall I route our debt efficiency model to your desk?"`,
+        just_email_me: `"Understood [Name]. To ensure the financial model is calibrated to [Company]'s exact revenue velocity, are you able to download your last 3 monthly statement PDFs from your portal now?
+
+It requires approximately 45 seconds and allows our credit desk to prioritize your file for tomorrow morning's placement cycle.
+
+Which commercial depository do you utilize?"`,
+        tactical: "Precision vocabulary, institutional metrics, basis points, margin recapture. Speak as a peer auditor."
+    }},
+
+    "conservative": {{
+        name: "Senior Conservative",
+        tag: "🤝 Senior / Conservative",
+        description: "Deeply respectful, unhurried, fiduciary tone, privacy and capital preservation first.",
+        opener: `"Good day [Name]. My name is Michael Qin with Capital Placement Advisory. I apologize for interrupting your afternoon without an appointment.
+
+We specialize in conservative debt restructuring for established operators in [Industry], helping protect business equity from aggressive lenders like [Lender_Or_Default]."`,
+        who_is_this: `"I represent Capital Placement Advisory, a private working capital advisory firm.
+
+We work with established companies like [Company] to consolidate obligations into stable, manageable monthly structures with complete transparency.
+
+We never shop client files publicly. We conduct an in-house review of 3 bank statements to ensure your business is protected.
+
+May I send you our executive overview?"`,
+        hook: `"We work strictly as fiduciaries on your behalf [Name]. There are no upfront fees, no obligation, and your financial information is held in strict institutional confidence.
+
+If our analysis demonstrates tangible monthly cash savings for [Company], we proceed at your discretion.
+
+What address may I send our formal introduction to?"`,
+        dont_need_money: `"I completely respect that [Name]. Maintaining low leverage is the hallmark of a well-run enterprise.
+
+Our audit simply acts as a second opinion to verify that no hidden fees or excessive debits are quietly draining your operating account.
+
+May I provide you with my direct office contact information for your records?"`,
+        just_email_me: `"I would be pleased to do so [Name]. If you happen to be at your desk now, we can complete the document intake in under a minute so you need not spend your personal evening on paperwork.
+
+Which banking institution handles your primary operations?"`,
+        tactical: "Patient, dignified, polite, privacy-first framing. Reassure security and zero pressure."
+    }},
+
+    "urban_modern": {{
+        name: "Urban Modern Entrepreneur",
+        tag: "🏙️ Urban / Modern",
+        description: "Sharp, relatable, street-smart commercial fluency. Cuts through corporate fluff.",
+        opener: `"Yo [Name], Michael Qin with Capital Advisory. Keeping it 100% brief since I'm catching you on the fly.
+
+We're in the market right now cleaning up expensive financing for operators in [Industry] getting squeezed by high-rate lenders like [Lender_Or_Default]."`,
+        who_is_this: `"Michael Qin, Capital Advisory. We restructure high-cost commercial debt and MCA positions so business owners actually keep their profits.
+
+Just took a company in [Industry] doing [Revenue_Or_Default] and freed up \$10K a month in pure cash flow.
+
+No games, no hard sell—just want to look at your 3 statements and show you what you're leaving on the table.
+
+What's the best email to shoot the numbers over?"`,
+        hook: `"Here's the deal [Name]: I only win if I put serious money back into [Company].
+
+Send over 3 months of bank statements, and I'll have a clean side-by-side comparison on your phone by tomorrow.
+
+Where should I send the link?"`,
+        dont_need_money: `"Respect that [Name], good to hear [Company] is moving strong. I'm definitely not trying to sell you loans you don't need.
+
+I'm talking about stopping cash drain on positions you already have. If your current lenders are treating you right, keep them. If they're taxing you, let's fix it.
+
+What's your best email to check?"`,
+        just_email_me: `"Already on it [Name]. But listen—pop open your banking app on your phone right now while we're talking.
+
+Download the last 3 PDFs and email them over. 45 seconds and you're good for the week.
+
+You with Chase or BoA?"`,
+        tactical: "Authentic, relatable, zero-BS energy. Talk like a sharp business partner in the trenches."
+    }}
+}};
+
+let currentToneKey = "wall_street";
+
+function setTone(toneKey, btn) {{
+    currentToneKey = toneKey;
+    document.querySelectorAll('.tone-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    
+    const profile = TONE_PROFILES[toneKey] || TONE_PROFILES["wall_street"];
+    const labelEl = document.getElementById('active-tone-label');
+    if (labelEl) labelEl.innerText = `Tone: ${{profile.name}}`;
+
+    renderCurrentNode();
+}}
+
+/* =========================================================================
    SHARE MODAL LOGIC
    ========================================================================= */
 function openShareModal() {{
@@ -1204,7 +1532,6 @@ let leadState = {{
     lender: "",
     revenue: "",
     debitStr: "",
-    painPoint: "",
     notes: ""
 }};
 
@@ -1215,18 +1542,6 @@ function toggleCustomDrawer() {{
         drawer.classList.toggle('open');
         icon.innerText = drawer.classList.contains('open') ? "➖" : "➕";
     }}
-}}
-
-function selectPainPoint(pointKey, btn) {{
-    if (btn.classList.contains('active')) {{
-        btn.classList.remove('active');
-        leadState.painPoint = "";
-    }} else {{
-        document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        leadState.painPoint = pointKey;
-    }}
-    renderCurrentNode();
 }}
 
 function getEffectiveTokens() {{
@@ -1271,15 +1586,15 @@ function formatWithTokens(templateStr, highlight = false) {{
         const lenderToken = highlight ? `<span class="token-highlight">${{t.lender}}</span>` : t.lender;
         res = res.replaceAll("[Lender_Or_Default]", `positions out of lenders like ${{lenderToken}}`);
     }} else {{
-        res = res.replaceAll("[Lender_Or_Default]", "expensive positions in your space");
+        res = res.replaceAll("[Lender_Or_Default]", "expensive daily debt positions in your space");
     }}
 
     // Monthly Revenue (If present)
     if (leadState.revenue.trim()) {{
         const revToken = highlight ? `<span class="token-highlight">${{t.revenue}}</span>` : t.revenue;
-        res = res.replaceAll("[Revenue_Or_Default]", `businesses doing around ${{revToken}} in volume`);
+        res = res.replaceAll("[Revenue_Or_Default]", `businesses generating ${{revToken}} in volume`);
     }} else {{
-        res = res.replaceAll("[Revenue_Or_Default]", "active operators in your space");
+        res = res.replaceAll("[Revenue_Or_Default]", "commercial operators in your sector");
     }}
 
     return res;
@@ -1320,10 +1635,8 @@ function clearLeadInputs() {{
     const revEl = document.getElementById('lead-rev'); if(revEl) revEl.value = "";
     const debitEl = document.getElementById('lead-debit-str'); if(debitEl) debitEl.value = "";
     const notesEl = document.getElementById('lead-notes'); if(notesEl) notesEl.value = "";
-    
-    document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
 
-    leadState = {{ name: "", company: "", industry: "", lender: "", revenue: "", debitStr: "", painPoint: "", notes: "" }};
+    leadState = {{ name: "", company: "", industry: "", lender: "", revenue: "", debitStr: "", notes: "" }};
     updatePersonalization();
 }}
 
@@ -1343,176 +1656,160 @@ function updateCadenceSnippets() {{
 }}
 
 /* =========================================================================
-   CALL FLOW TREE (WITH PROGRESSIVE TEMPLATE TOKENS)
+   DYNAMIC CALL FLOW ROUTING (FEEDS FROM ACTIVE TONE PROFILE)
    ========================================================================= */
-const CALL_FLOW = {{
-    "root": {{
-        stage: "Stage 1: Opening (0-5s)",
-        verbatim: `"Hey [Name], I will be brief. I know I am calling out of the blue.
+function getActiveNodeData(nodeKey) {{
+    const profile = TONE_PROFILES[currentToneKey] || TONE_PROFILES["wall_street"];
 
-I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up [Lender_Or_Default]."`,
-        tactical: "Speak with calm authority, like an underwriting auditor checking figures.",
-        options: [
-            {{ text: `"Who is this / What company?"`, key: "1", next: "who_is_this", type: "pos" }},
-            {{ text: `[Listened / Silence / "Okay..."]`, key: "2", next: "aligned_hook", type: "pos" }},
-            {{ text: `"We don't need money / We're all set"`, key: "3", next: "dont_need_money", type: "neg" }},
-            {{ text: `"Just email me info / I'm busy"`, key: "4", next: "just_email_me", type: "amber" }},
-            {{ text: `"What are your rates / factor rates?"`, key: "5", next: "what_rates", type: "amber" }},
-            {{ text: `"I don't send bank statements"`, key: "6", next: "statement_pushback", type: "neg" }}
-        ]
-    }},
+    const baseMap = {{
+        "root": {{
+            stage: "Stage 1: Opening (0-5s)",
+            verbatim: profile.opener,
+            tactical: profile.tactical,
+            options: [
+                {{ text: `"Who is this / What company?"`, key: "1", next: "who_is_this", type: "pos" }},
+                {{ text: `[Listened / Silence / "Okay..."]`, key: "2", next: "aligned_hook", type: "pos" }},
+                {{ text: `"We don't need money / We're all set"`, key: "3", next: "dont_need_money", type: "neg" }},
+                {{ text: `"Just email me info / I'm busy"`, key: "4", next: "just_email_me", type: "amber" }},
+                {{ text: `"What are your rates / factor rates?"`, key: "5", next: "what_rates", type: "amber" }},
+                {{ text: `"I don't send bank statements"`, key: "6", next: "statement_pushback", type: "neg" }}
+            ]
+        }},
 
-    "who_is_this": {{
-        stage: "Stage 2: Identity & Disarm (6-15s)",
-        verbatim: `"I'm Michael Qin with Capital Placement Advisory. We specialize in commercial working capital and restructuring high-cost merchant debt.
+        "who_is_this": {{
+            stage: "Stage 2: Identity & Disarm (6-15s)",
+            verbatim: profile.who_is_this,
+            tactical: "State your niche, reference peer results, and close for their direct email.",
+            options: [
+                {{ text: `"Sure, send to [Email]"`, key: "1", next: "win_extract_statements", type: "pos" }},
+                {{ text: `"We don't need any funding"`, key: "2", next: "dont_need_money", type: "neg" }},
+                {{ text: `"What are your rates?"`, key: "3", next: "what_rates", type: "amber" }}
+            ]
+        }},
 
-The reason I reached out directly to [Company] is because we just restructured financing for [Revenue_Or_Default] in [Industry], cutting their monthly debt payment by 40%.
+        "aligned_hook": {{
+            stage: "Stage 2: Core Value & Risk Reversal",
+            verbatim: profile.hook,
+            tactical: "Highlight zero downside risk and contingent success representation.",
+            options: [
+                {{ text: `Merchant gave email address`, key: "1", next: "win_extract_statements", type: "pos" }},
+                {{ text: `"We already have a lender"`, key: "2", next: "dont_need_money", type: "neg" }},
+                {{ text: `"I don't have time right now"`, key: "3", next: "just_email_me", type: "amber" }}
+            ]
+        }},
 
-I'm not asking for your business today—I just want to run a free debt audit against your last 3 statements to show you what you could save.
+        "dont_need_money": {{
+            stage: "Pivot: No Borrowing Needed",
+            verbatim: profile.dont_need_money,
+            tactical: "Reframe from borrowing to expense reduction and cash recovery.",
+            options: [
+                {{ text: `"Fair enough, send to [Email]"`, key: "1", next: "win_extract_statements", type: "pos" }},
+                {{ text: `"Not interested / Hard No"`, key: "2", next: "hard_no", type: "neg" }}
+            ]
+        }},
 
-Where should I email the benchmark sheet?"`,
-        tactical: "State your niche, reference peer results, and close for their direct email.",
-        options: [
-            {{ text: `"Sure, send to [Email]"`, key: "1", next: "win_extract_statements", type: "pos" }},
-            {{ text: `"We don't need any funding"`, key: "2", next: "dont_need_money", type: "neg" }},
-            {{ text: `"What are your rates?"`, key: "3", next: "what_rates", type: "amber" }}
-        ]
-    }},
+        "just_email_me": {{
+            stage: "Pivot: 'Send Info' Deflection",
+            verbatim: profile.just_email_me,
+            tactical: "Never let them off the phone without asking for the 45-second on-call download.",
+            options: [
+                {{ text: `"I'm on my computer now / Exporting"`, key: "1", next: "win_on_call_download", type: "pos" }},
+                {{ text: `"I'm driving / really busy"`, key: "2", next: "send_sms_link", type: "amber" }}
+            ]
+        }},
 
-    "aligned_hook": {{
-        stage: "Stage 2: Core Value & Risk Reversal",
-        verbatim: `"I'm not asking you to commit to anything today. My model is simple: I only get paid if we actually deliver terms and lower payments that beat what you currently have at [Company].
-
-If you shoot over your last 3 monthly statements, I will run a side-by-side comparison within 24 hours showing your exact monthly cash flow savings.
-
-What is the best email to send that breakdown to?"`,
-        tactical: "Highlight zero downside risk for the business owner.",
-        options: [
-            {{ text: `Merchant gave email address`, key: "1", next: "win_extract_statements", type: "pos" }},
-            {{ text: `"We already have a lender"`, key: "2", next: "dont_need_money", type: "neg" }},
-            {{ text: `"I don't have time right now"`, key: "3", next: "just_email_me", type: "amber" }}
-        ]
-    }},
-
-    "dont_need_money": {{
-        stage: "Pivot: No Borrowing Needed",
-        verbatim: `"Completely understand [Name], and I'm glad [Company] is running strong. I'm actually not calling to sell you new debt.
-
-Most successful operators we work with aren't looking to borrow—they just want to stop getting squeezed by high fees and daily debits on existing positions.
-
-If our audit shows your current setup is optimal, at least you keep your lenders honest. If we find \$2,000 a month in leakage, you keep the cash.
-
-What's the best email for that 1-page check?"`,
-        tactical: "Reframe from borrowing to expense reduction and cash recovery.",
-        options: [
-            {{ text: `"Fair enough, send to [Email]"`, key: "1", next: "win_extract_statements", type: "pos" }},
-            {{ text: `"Not interested / Hard No"`, key: "2", next: "hard_no", type: "neg" }}
-        ]
-    }},
-
-    "just_email_me": {{
-        stage: "Pivot: 'Send Info' Deflection",
-        verbatim: `"Happy to do that [Name]. Rather than sending a generic PDF deck that will sit in your spam, are you in front of your computer or on your phone right now?
-
-Stay with me for 45 seconds while you click 'Download Statements' on your bank portal. I will confirm receipt on the line so you don't have this on your to-do list tonight.
-
-Which bank do you use for [Company]—Chase, BoA, or Wells?"`,
-        tactical: "Never let them off the phone without asking for the 45-second on-call download.",
-        options: [
-            {{ text: `"I'm on my computer now / Exporting"`, key: "1", next: "win_on_call_download", type: "pos" }},
-            {{ text: `"I'm driving / really busy"`, key: "2", next: "send_sms_link", type: "amber" }}
-        ]
-    }},
-
-    "what_rates": {{
-        stage: "Pricing Hook & Trade-Off",
-        verbatim: `"Rates depend entirely on monthly revenue and cash flow for [Company], but we are consistently placing capital at terms that cut daily debits in half.
+        "what_rates": {{
+            stage: "Pricing Hook & Trade-Off",
+            verbatim: `"Rates depend entirely on monthly revenue and cash flow for [Company], but we are consistently placing capital at terms that cut daily debits in half.
 
 To give you an exact rate card rather than a misleading ballpark, shoot over your last 3 monthly statements and I'll deliver your exact terms in 3 hours.
 
 What address should I send the doc request to?"`,
-        tactical: "Never quote a blind number; trade rate clarity for statements.",
-        options: [
-            {{ text: `Merchant agreed / gave email`, key: "1", next: "win_extract_statements", type: "pos" }},
-            {{ text: `"Why do you need statements?"`, key: "2", next: "statement_pushback", type: "neg" }}
-        ]
-    }},
+            tactical: "Never quote a blind number; trade rate clarity for statements.",
+            options: [
+                {{ text: `Merchant agreed / gave email`, key: "1", next: "win_extract_statements", type: "pos" }},
+                {{ text: `"Why do you need statements?"`, key: "2", next: "statement_pushback", type: "neg" }}
+            ]
+        }},
 
-    "statement_pushback": {{
-        stage: "Statement Hesitation Rebuttal",
-        verbatim: `"Totally understand the caution [Name]—your company financials are sensitive. 
+        "statement_pushback": {{
+            stage: "Statement Hesitation Rebuttal",
+            verbatim: `"Totally understand the caution [Name]—your company financials are sensitive. 
 
 We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on behalf of [Company].
 
 You can redact your account numbers if you prefer. What is the best email to send the secure link to?"`,
-        tactical: "Offer account number redaction to instantly eliminate security friction.",
-        options: [
-            {{ text: `"Okay, send the email"`, key: "1", next: "win_extract_statements", type: "pos" }}
-        ]
-    }},
+            tactical: "Offer account number redaction to instantly eliminate security friction.",
+            options: [
+                {{ text: `"Okay, send the email"`, key: "1", next: "win_extract_statements", type: "pos" }}
+            ]
+        }},
 
-    "win_extract_statements": {{
-        stage: "🎉 Win: Email Captured & Live Statement Ask",
-        verbatim: `"Got that down. I just sent the direct link to [Email].
+        "win_extract_statements": {{
+            stage: "🎉 Win: Email Captured & Live Statement Ask",
+            verbatim: `"Got that down. I just sent the direct link to [Email].
 
 While I have you for 30 seconds [Name], are you able to click 'Forward' on your last 3 monthly PDFs right now so I can prioritize [Company] for tomorrow morning's underwriting committee?"`,
-        tactical: "Strike immediately while you have their attention on the phone.",
-        options: [
-            {{ text: `"Doing it right now on the phone"`, key: "1", next: "win_on_call_download", type: "pos" }},
-            {{ text: `"I'll do it by 4 PM today"`, key: "2", next: "win_deadline_set", type: "amber" }}
-        ]
-    }},
+            tactical: "Strike immediately while you have their attention on the phone.",
+            options: [
+                {{ text: `"Doing it right now on the phone"`, key: "1", next: "win_on_call_download", type: "pos" }},
+                {{ text: `"I'll do it by 4 PM today"`, key: "2", next: "win_deadline_set", type: "amber" }}
+            ]
+        }},
 
-    "win_on_call_download": {{
-        stage: "🏆 Complete Win: Statements Received Live",
-        verbatim: `"Boom, I see the 3 PDFs for [Company] in my inbox right now.
+        "win_on_call_download": {{
+            stage: "🏆 Complete Win: Statements Received Live",
+            verbatim: `"Boom, I see the 3 PDFs for [Company] in my inbox right now.
 
 I will personally run the cash flow model and have your benchmark savings breakdown in your inbox by tomorrow morning.
 
 Thank you [Name], speak tomorrow!"`,
-        tactical: "Confirm receipt and close the call on a high note.",
-        options: [
-            {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
-        ]
-    }},
+            tactical: "Confirm receipt and close the call on a high note.",
+            options: [
+                {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
+            ]
+        }},
 
-    "win_deadline_set": {{
-        stage: "⏰ Win: 4 PM Underwriting Deadline Locked",
-        verbatim: `"Perfect [Name]. I will hold a spot with our credit desk for 4 PM today. As soon as you email those 3 PDFs, I will get [Company] to the front of the queue.
+        "win_deadline_set": {{
+            stage: "⏰ Win: 4 PM Underwriting Deadline Locked",
+            verbatim: `"Perfect [Name]. I will hold a spot with our credit desk for 4 PM today. As soon as you email those 3 PDFs, I will get [Company] to the front of the queue.
 
 Look out for my text message with the direct upload email. Have a great day!"`,
-        tactical: "Send Day 1 SMS within 60 seconds.",
-        options: [
-            {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
-        ]
-    }},
+            tactical: "Send Day 1 SMS within 60 seconds.",
+            options: [
+                {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
+            ]
+        }},
 
-    "send_sms_link": {{
-        stage: "Mobile Fallback: Direct 1-Click SMS",
-        verbatim: `"Understood [Name], drive safe. I am texting my direct email and a 2-click statement link to this mobile number right now.
+        "send_sms_link": {{
+            stage: "Mobile Fallback: Direct 1-Click SMS",
+            verbatim: `"Understood [Name], drive safe. I am texting my direct email and a 2-click statement link to this mobile number right now.
 
 Reply with the 3 PDFs when you're back at your desk and I'll jump on it immediately."`,
-        tactical: "Send SMS immediately while your voice is fresh in their head.",
-        options: [
-            {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
-        ]
-    }},
+            tactical: "Send SMS immediately while your voice is fresh in their head.",
+            options: [
+                {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
+            ]
+        }},
 
-    "hard_no": {{
-        stage: "Graceful Exit & Long-Term Seed",
-        verbatim: `"Totally respect that [Name]. I'll leave you to your day. If cash flow ever gets tight down the road, you have my number. Have a great week!"`,
-        tactical: "Never show frustration. Elite closers always leave the door wide open.",
-        options: [
-            {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
-        ]
-    }}
-}};
+        "hard_no": {{
+            stage: "Graceful Exit & Long-Term Seed",
+            verbatim: `"Totally respect that [Name]. I'll leave you to your day. If cash flow ever gets tight down the road, you have my number. Have a great week!"`,
+            tactical: "Never show frustration. Elite closers always leave the door wide open.",
+            options: [
+                {{ text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }}
+            ]
+        }}
+    }};
+
+    return baseMap[nodeKey] || baseMap["root"];
+}}
 
 let historyStack = ["root"];
 
 function renderCurrentNode() {{
     const key = historyStack[historyStack.length - 1];
-    const node = CALL_FLOW[key] || CALL_FLOW["root"];
+    const node = getActiveNodeData(key);
 
     document.getElementById('hud-stage').innerText = node.stage;
     document.getElementById('hud-verbatim').innerHTML = formatWithTokens(node.verbatim, true);
@@ -1532,7 +1829,7 @@ function renderCurrentNode() {{
 
 function getCleanScriptText() {{
     const key = historyStack[historyStack.length - 1];
-    const node = CALL_FLOW[key] || CALL_FLOW["root"];
+    const node = getActiveNodeData(key);
     return formatWithTokens(node.verbatim, false);
 }}
 
@@ -1557,11 +1854,11 @@ function resetFlow() {{
 window.addEventListener('keydown', (e) => {{
     const hudTab = document.getElementById('tab-hud');
     if (!hudTab.classList.contains('active')) return;
-    if (e.target.tagName === 'INPUT') return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
     if (e.key >= '1' && e.key <= '6') {{
         const key = historyStack[historyStack.length - 1];
-        const node = CALL_FLOW[key] || CALL_FLOW["root"];
+        const node = getActiveNodeData(key);
         const opt = node.options.find(o => o.key === e.key);
         if (opt) pickNext(opt.next);
     }} else if (e.key === 'Backspace') {{
@@ -1573,6 +1870,122 @@ window.addEventListener('keydown', (e) => {{
         copyText(getCleanScriptText());
     }}
 }});
+
+/* =========================================================================
+   CUSTOM DECK BUILDER (LOCALSTORAGE PERSISTENCE)
+   ========================================================================= */
+let customDecks = [];
+
+function loadCustomDecks() {{
+    try {{
+        const saved = localStorage.getItem('mq_custom_decks');
+        customDecks = saved ? JSON.parse(saved) : [];
+    }} catch(e) {{
+        customDecks = [];
+    }}
+    renderCustomDeckList();
+}}
+
+function saveCustomDeck() {{
+    const name = document.getElementById('new-deck-name').value.trim();
+    const opener = document.getElementById('new-deck-opener').value.trim();
+    const hook = document.getElementById('new-deck-hook').value.trim();
+    const note = document.getElementById('new-deck-note').value.trim();
+
+    if (!name || !opener) {{
+        alert("Please provide at least a Deck Name and an Opener Line.");
+        return;
+    }}
+
+    const deckId = 'custom_' + Date.now();
+    const newDeck = {{
+        id: deckId,
+        name: name,
+        tag: `⭐ ${{name}}`,
+        description: note || "Custom user deck",
+        opener: opener,
+        who_is_this: hook || opener,
+        hook: hook || opener,
+        dont_need_money: `Completely understand [Name]. I'm not calling to sell you new debt—I'm calling to stop cash leakage on positions you already have. What's the best email for a 1-page check?`,
+        just_email_me: `Happy to do that [Name]. But while I have you for 45 seconds, download your last 3 monthly statement PDFs from your portal so this is off your plate tonight. Which bank do you use?`,
+        tactical: note || "Deliver with conviction and focus on merchant cash savings."
+    }};
+
+    customDecks.push(newDeck);
+    localStorage.setItem('mq_custom_decks', JSON.stringify(customDecks));
+
+    // Register into active TONE_PROFILES
+    TONE_PROFILES[deckId] = newDeck;
+
+    // Reset inputs
+    document.getElementById('new-deck-name').value = "";
+    document.getElementById('new-deck-opener').value = "";
+    document.getElementById('new-deck-hook').value = "";
+    document.getElementById('new-deck-note').value = "";
+
+    renderCustomDeckList();
+    renderToneChips();
+    setTone(deckId);
+    switchTab('tab-hud');
+
+    const toast = document.getElementById('toast');
+    toast.innerText = `Deck "${{name}}" Saved & Activated!`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}}
+
+function deleteCustomDeck(id, e) {{
+    e.stopPropagation();
+    customDecks = customDecks.filter(d => d.id !== id);
+    delete TONE_PROFILES[id];
+    localStorage.setItem('mq_custom_decks', JSON.stringify(customDecks));
+    renderCustomDeckList();
+    renderToneChips();
+    if (currentToneKey === id) setTone('wall_street');
+}}
+
+function renderCustomDeckList() {{
+    const container = document.getElementById('custom-decks-container');
+    if (!container) return;
+
+    if (customDecks.length === 0) {{
+        container.innerHTML = `<div style="font-size: 12px; color: var(--text-muted); padding: 10px; background: #fff; border: 1px dashed var(--border-main); border-radius: 4px;">No custom decks created yet. Build your first custom deck above!</div>`;
+        return;
+    }}
+
+    container.innerHTML = customDecks.map(d => `
+        <div class="custom-deck-card">
+            <div>
+                <div style="font-weight: 700; color: var(--corporate-navy); font-size: 13px;">${{d.name}}</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">${{d.description}}</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+                <button class="btn-ctrl" onclick="setTone('${{d.id}}'); switchTab('tab-hud');">⚡ Use in Dialer</button>
+                <button class="btn-ctrl" style="color:var(--color-danger);" onclick="deleteCustomDeck('${{d.id}}', event)">🗑️ Delete</button>
+            </div>
+        </div>
+    `).join('');
+}}
+
+function renderToneChips() {{
+    const container = document.getElementById('tone-chips-container');
+    if (!container) return;
+
+    const baseChips = `
+        <button class="tone-chip ${{currentToneKey === 'wall_street' ? 'active' : ''}}" onclick="setTone('wall_street', this)">🏛️ Wall Street Pro</button>
+        <button class="tone-chip ${{currentToneKey === 'high_tempo' ? 'active' : ''}}" onclick="setTone('high_tempo', this)">⚡ High-Tempo / Executive</button>
+        <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Grounded / Straight-Shooter</button>
+        <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO / Financial Auditor</button>
+        <button class="tone-chip ${{currentToneKey === 'conservative' ? 'active' : ''}}" onclick="setTone('conservative', this)">🤝 Senior / Conservative</button>
+        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban / Street-Smart</button>
+    `;
+
+    const customChips = customDecks.map(d => `
+        <button class="tone-chip ${{currentToneKey === d.id ? 'active' : ''}}" onclick="setTone('${{d.id}}', this)">⭐ ${{d.name}}</button>
+    `).join('');
+
+    container.innerHTML = baseChips + customChips;
+}}
 
 /* =========================================================================
    BANK SELECTION
@@ -1613,6 +2026,7 @@ function switchTab(tabId) {{
 function copyText(text) {{
     navigator.clipboard.writeText(text.trim()).then(() => {{
         const toast = document.getElementById('toast');
+        toast.innerText = "Copied to clipboard";
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 1500);
     }});
@@ -1665,7 +2079,9 @@ function renderPipeline() {{
 }}
 
 window.addEventListener('DOMContentLoaded', () => {{
-    renderCurrentNode();
+    loadCustomDecks();
+    renderToneChips();
+    setTone('wall_street');
     renderObjections();
     renderPipeline();
     runCalc();
@@ -1845,7 +2261,7 @@ def main():
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[+] Successfully generated ThinkAutomation-styled portal with Call Intel: {portal_html_path}")
+    print(f"[+] Successfully generated Wall Street Multi-Tone portal: {portal_html_path}")
 
     # Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
