@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-Features 1-Click "Create Link / Share to Any Device" with QR Code, Native Share Sheet, and PWA shortcuts.
+Balanced Twilight Slate Edition (Zero Glare, Easy on the Eyes) + 1-Click Theme Switcher.
 """
 
 import os
@@ -69,28 +69,66 @@ class SalesPipelineSystem:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>{self.rep_name} | Sales Flight Deck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
+    /* Default: Twilight Slate Theme (Balanced, soothing, zero-glare) */
     :root {{
-        --bg-base: #f8fafc;
+        --bg-base: #131720;
+        --bg-surface: #1a202c;
+        --bg-card: #222938;
+        --bg-input: #0f131a;
+        
+        --border: #2d3748;
+        --border-light: #3f4d66;
+        --border-focus: #38bdf8;
+
+        --text-heading: #f8fafc;
+        --text-body: #cbd5e1;
+        --text-muted: #94a3b8;
+
+        --c-blue: #38bdf8;
+        --c-blue-bg: rgba(56, 189, 248, 0.12);
+        --c-blue-border: #0284c7;
+
+        --c-green: #34d399;
+        --c-green-bg: rgba(52, 211, 153, 0.12);
+        --c-green-border: #059669;
+
+        --c-red: #f87171;
+        --c-red-bg: rgba(248, 113, 113, 0.12);
+        --c-red-border: #dc2626;
+
+        --c-yellow: #fbbf24;
+        --c-yellow-bg: rgba(251, 191, 36, 0.12);
+        --c-yellow-border: #d97706;
+
+        --c-purple: #c084fc;
+        --c-purple-bg: rgba(192, 132, 252, 0.12);
+        --c-purple-border: #9333ea;
+
+        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+    }}
+
+    /* Light Theme Variation (Soft Off-White) */
+    body.theme-light {{
+        --bg-base: #f1f5f9;
         --bg-surface: #ffffff;
-        --bg-card: #f1f5f9;
+        --bg-card: #e2e8f0;
         --bg-input: #ffffff;
         
-        --border: #e2e8f0;
-        --border-dark: #cbd5e1;
-        --border-focus: #3b82f6;
+        --border: #cbd5e1;
+        --border-light: #94a3b8;
+        --border-focus: #2563eb;
 
         --text-heading: #0f172a;
         --text-body: #334155;
         --text-muted: #64748b;
-        --text-sub: #94a3b8;
 
-        /* Semantic Colors */
         --c-blue: #2563eb;
         --c-blue-bg: #eff6ff;
         --c-blue-border: #93c5fd;
@@ -110,9 +148,16 @@ class SalesPipelineSystem:
         --c-purple: #7c3aed;
         --c-purple-bg: #f5f3ff;
         --c-purple-border: #c4b5fd;
+    }}
 
-        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
+    /* OLED Pure Dark Theme Variation */
+    body.theme-oled {{
+        --bg-base: #060709;
+        --bg-surface: #0e1015;
+        --bg-card: #151820;
+        --bg-input: #000000;
+        --border: #1e222d;
+        --border-light: #2c3242;
     }}
 
     * {{
@@ -130,9 +175,10 @@ class SalesPipelineSystem:
         line-height: 1.5;
         padding-bottom: env(safe-area-inset-bottom, 30px);
         min-height: 100vh;
+        transition: background-color 0.15s, color 0.15s;
     }}
 
-    /* Top Navigation Header */
+    /* Header */
     header {{
         background: var(--bg-surface);
         border-bottom: 1px solid var(--border);
@@ -140,7 +186,6 @@ class SalesPipelineSystem:
         position: sticky;
         top: 0;
         z-index: 50;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }}
     .header-inner {{
         max-width: 980px;
@@ -155,15 +200,14 @@ class SalesPipelineSystem:
         gap: 8px;
     }}
     .brand-tag {{
-        background: #0f172a;
-        color: #ffffff;
+        background: var(--c-blue);
+        color: #000;
         font-size: 11px;
-        font-weight: 800;
+        font-weight: 900;
         padding: 3px 8px;
         border-radius: 6px;
         font-family: var(--font-mono);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }}
     .rep-name {{
         font-size: 15px;
@@ -175,11 +219,11 @@ class SalesPipelineSystem:
         align-items: center;
         gap: 6px;
     }}
-    .btn-share-main {{
-        background: #0f172a;
-        color: #ffffff;
-        border: none;
-        padding: 6px 12px;
+    .btn-hdr {{
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-heading);
+        padding: 6px 11px;
         border-radius: 6px;
         font-size: 12px;
         font-weight: 700;
@@ -187,10 +231,8 @@ class SalesPipelineSystem:
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        transition: background 0.15s, transform 0.05s;
     }}
-    .btn-share-main:hover {{ background: #1e293b; }}
-    .btn-share-main:active {{ transform: scale(0.97); }}
+    .btn-hdr:hover {{ border-color: var(--c-blue); }}
 
     /* Quick Lead Input Bar */
     .lead-bar {{
@@ -219,23 +261,21 @@ class SalesPipelineSystem:
         letter-spacing: 0.3px;
     }}
     .lead-input {{
-        background: var(--bg-card);
-        border: 1px solid var(--border-dark);
+        background: var(--bg-input);
+        border: 1px solid var(--border);
         color: var(--text-heading);
         padding: 6px 10px;
         border-radius: 6px;
         font-size: 13px;
         font-weight: 600;
         outline: none;
-        transition: border-color 0.15s, background 0.15s;
     }}
     .lead-input:focus {{
         border-color: var(--c-blue);
-        background: #ffffff;
     }}
     .btn-clear {{
         background: var(--bg-card);
-        border: 1px solid var(--border-dark);
+        border: 1px solid var(--border);
         color: var(--text-muted);
         padding: 6px 12px;
         border-radius: 6px;
@@ -245,7 +285,7 @@ class SalesPipelineSystem:
         align-self: flex-end;
         height: 31px;
     }}
-    .btn-clear:hover {{ color: var(--text-heading); background: #e2e8f0; }}
+    .btn-clear:hover {{ color: var(--text-heading); }}
 
     /* Tabs Navigation */
     .nav-tabs {{
@@ -273,7 +313,6 @@ class SalesPipelineSystem:
         display: flex;
         align-items: center;
         gap: 6px;
-        transition: all 0.1s ease;
     }}
     .tab-btn:hover {{ color: var(--text-heading); }}
     .tab-btn.active {{
@@ -282,7 +321,6 @@ class SalesPipelineSystem:
         border-color: var(--border);
         border-top: 2px solid var(--c-blue);
         border-bottom: 2px solid var(--bg-surface);
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.02);
     }}
 
     /* Main Container */
@@ -296,15 +334,14 @@ class SalesPipelineSystem:
     .tab-pane.active {{ display: block; }}
 
     /* =========================================================================
-       DIALER COPILOT HUD (LIGHT THEME)
+       DIALER COPILOT HUD (TWILIGHT SLATE)
        ========================================================================= */
     .hud-box {{
         background: var(--bg-surface);
-        border: 1px solid var(--border-dark);
+        border: 1px solid var(--border-light);
         border-radius: 10px;
         padding: 18px;
         margin-bottom: 14px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }}
     @media (min-width: 640px) {{
         .hud-box {{ padding: 22px; }}
@@ -337,7 +374,7 @@ class SalesPipelineSystem:
 
     /* What You Say Out Loud */
     .say-box {{
-        background: #f8fafc;
+        background: var(--bg-input);
         border: 2px solid var(--c-blue-border);
         border-radius: 8px;
         padding: 18px;
@@ -349,9 +386,9 @@ class SalesPipelineSystem:
         align-items: center;
         gap: 5px;
         background: var(--c-blue);
-        color: #ffffff;
+        color: #000;
         font-size: 10.5px;
-        font-weight: 800;
+        font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         padding: 2px 8px;
@@ -361,10 +398,11 @@ class SalesPipelineSystem:
     .say-text {{
         font-size: 18px;
         font-weight: 700;
-        color: #0f172a;
+        color: #ffffff;
         line-height: 1.5;
         white-space: pre-wrap;
     }}
+    body.theme-light .say-text {{ color: #0f172a; }}
     @media (max-width: 600px) {{
         .say-text {{ font-size: 15px; line-height: 1.4; }}
     }}
@@ -384,7 +422,7 @@ class SalesPipelineSystem:
         padding: 7px 12px;
         margin-top: 12px;
         font-size: 12px;
-        color: #581c87;
+        color: var(--c-purple);
         font-weight: 600;
         display: flex;
         align-items: center;
@@ -414,7 +452,7 @@ class SalesPipelineSystem:
     }}
 
     .opt-btn {{
-        background: var(--bg-surface);
+        background: var(--bg-card);
         border: 2px solid var(--border);
         padding: 12px 14px;
         border-radius: 8px;
@@ -425,46 +463,45 @@ class SalesPipelineSystem:
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: transform 0.05s, box-shadow 0.1s;
+        transition: transform 0.05s;
     }}
-    .opt-btn:hover {{ box-shadow: 0 2px 5px rgba(0,0,0,0.05); }}
     .opt-btn:active {{ transform: scale(0.98); }}
 
-    /* Colors on Light Theme */
+    /* Colors */
     .opt-btn.pos {{
         background: var(--c-green-bg);
         border-color: var(--c-green-border);
-        color: #065f46;
+        color: var(--c-green);
     }}
     .opt-btn.pos .key-pill {{
         background: var(--c-green);
-        color: #ffffff;
+        color: #000;
     }}
 
     .opt-btn.neg {{
         background: var(--c-red-bg);
         border-color: var(--c-red-border);
-        color: #991b1b;
+        color: var(--c-red);
     }}
     .opt-btn.neg .key-pill {{
         background: var(--c-red);
-        color: #ffffff;
+        color: #000;
     }}
 
     .opt-btn.amber {{
         background: var(--c-yellow-bg);
         border-color: var(--c-yellow-border);
-        color: #92400e;
+        color: var(--c-yellow);
     }}
     .opt-btn.amber .key-pill {{
         background: var(--c-yellow);
-        color: #ffffff;
+        color: #000;
     }}
 
     .key-pill {{
         font-family: var(--font-mono);
         font-size: 11px;
-        font-weight: 800;
+        font-weight: 900;
         padding: 2px 7px;
         border-radius: 4px;
         margin-left: 8px;
@@ -481,26 +518,25 @@ class SalesPipelineSystem:
     }}
     .btn-nav {{
         background: var(--bg-card);
-        border: 1px solid var(--border-dark);
-        color: var(--text-body);
+        border: 1px solid var(--border-light);
+        color: var(--text-heading);
         padding: 7px 12px;
         border-radius: 6px;
         font-size: 12px;
         font-weight: 700;
         cursor: pointer;
     }}
-    .btn-nav:hover {{ background: #e2e8f0; color: var(--text-heading); }}
+    .btn-nav:hover {{ border-color: var(--c-blue); }}
 
     /* =========================================================================
-       CARDS & UTILITIES (LIGHT THEME)
+       CARDS & UTILITIES
        ========================================================================= */
     .card {{
         background: var(--bg-surface);
-        border: 1px solid var(--border-dark);
+        border: 1px solid var(--border);
         border-radius: 10px;
         padding: 18px;
         margin-bottom: 14px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }}
     .card-title {{
         font-size: 14px;
@@ -530,27 +566,27 @@ class SalesPipelineSystem:
     }}
     .bank-chip.active.chase {{
         background: #1e40af;
-        border-color: #1e3a8a;
+        border-color: #3b82f6;
         color: #ffffff;
     }}
     .bank-chip.active.boa {{
-        background: #b91c1c;
-        border-color: #991b1b;
+        background: #991b1b;
+        border-color: #ef4444;
         color: #ffffff;
     }}
     .bank-chip.active.wells {{
-        background: #b45309;
-        border-color: #92400e;
+        background: #92400e;
+        border-color: #f59e0b;
         color: #ffffff;
     }}
     .bank-chip.active.universal {{
-        background: #6d28d9;
-        border-color: #5b21b6;
+        background: #5b21b6;
+        border-color: #a855f7;
         color: #ffffff;
     }}
 
     .copy-box {{
-        background: #f8fafc;
+        background: var(--bg-input);
         border: 1px solid var(--border);
         border-left: 4px solid var(--c-blue);
         border-radius: 6px;
@@ -558,13 +594,13 @@ class SalesPipelineSystem:
         margin: 8px 0;
         position: relative;
     }}
-    .copy-box.green-box {{ border-left-color: var(--c-green); background: #f0fdf4; }}
-    .copy-box.red-box {{ border-left-color: var(--c-red); background: #fef2f2; }}
-    .copy-box.yellow-box {{ border-left-color: var(--c-yellow); background: #fffbeb; }}
+    .copy-box.green-box {{ border-left-color: var(--c-green); background: var(--c-green-bg); }}
+    .copy-box.red-box {{ border-left-color: var(--c-red); background: var(--c-red-bg); }}
+    .copy-box.yellow-box {{ border-left-color: var(--c-yellow); background: var(--c-yellow-bg); }}
 
     .copy-text {{
         font-size: 13px;
-        color: #1e293b;
+        color: var(--text-heading);
         white-space: pre-wrap;
         line-height: 1.55;
     }}
@@ -572,8 +608,8 @@ class SalesPipelineSystem:
         position: absolute;
         top: 8px;
         right: 8px;
-        background: #ffffff;
-        border: 1px solid var(--border-dark);
+        background: var(--bg-card);
+        border: 1px solid var(--border-light);
         color: var(--text-muted);
         font-size: 11px;
         font-weight: 700;
@@ -600,8 +636,8 @@ class SalesPipelineSystem:
     }}
     .calc-box input {{
         width: 100%;
-        background: #ffffff;
-        border: 1.5px solid var(--border-dark);
+        background: var(--bg-input);
+        border: 1.5px solid var(--border);
         color: var(--text-heading);
         padding: 8px 10px;
         border-radius: 6px;
@@ -612,8 +648,8 @@ class SalesPipelineSystem:
     .calc-box input:focus {{ outline: none; border-color: var(--c-blue); }}
 
     .calc-metrics {{
-        background: #f8fafc;
-        border: 1.5px solid var(--border-dark);
+        background: var(--bg-input);
+        border: 1.5px solid var(--border);
         border-radius: 8px;
         padding: 16px;
         display: grid;
@@ -643,7 +679,7 @@ class SalesPipelineSystem:
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(15, 23, 42, 0.6);
+        background: rgba(0, 0, 0, 0.75);
         backdrop-filter: blur(4px);
         z-index: 1000;
         display: none;
@@ -654,19 +690,19 @@ class SalesPipelineSystem:
     .modal-overlay.open {{ display: flex; }}
     
     .modal-content {{
-        background: #ffffff;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-light);
         border-radius: 12px;
         max-width: 480px;
         width: 100%;
         padding: 24px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         position: relative;
     }}
     .modal-close {{
         position: absolute;
         top: 14px;
         right: 14px;
-        background: #f1f5f9;
+        background: var(--bg-card);
         border: none;
         font-size: 16px;
         font-weight: 700;
@@ -679,7 +715,7 @@ class SalesPipelineSystem:
         align-items: center;
         justify-content: center;
     }}
-    .modal-close:hover {{ background: #e2e8f0; color: #000; }}
+    .modal-close:hover {{ color: var(--text-heading); }}
     .modal-title {{
         font-size: 16px;
         font-weight: 800;
@@ -693,7 +729,7 @@ class SalesPipelineSystem:
     }}
 
     .qr-container {{
-        background: #f8fafc;
+        background: #ffffff;
         border: 1px solid var(--border);
         border-radius: 8px;
         padding: 16px;
@@ -707,9 +743,6 @@ class SalesPipelineSystem:
         width: 160px;
         height: 160px;
         border-radius: 6px;
-        background: #fff;
-        padding: 6px;
-        border: 1px solid var(--border);
     }}
 
     .link-copy-group {{
@@ -719,8 +752,8 @@ class SalesPipelineSystem:
     }}
     .link-input {{
         flex: 1;
-        background: #f8fafc;
-        border: 1px solid var(--border-dark);
+        background: var(--bg-input);
+        border: 1px solid var(--border);
         color: var(--text-heading);
         padding: 8px 12px;
         border-radius: 6px;
@@ -730,16 +763,15 @@ class SalesPipelineSystem:
     }}
     .btn-copy-url {{
         background: var(--c-blue);
-        color: #ffffff;
+        color: #000;
         border: none;
         padding: 8px 14px;
         border-radius: 6px;
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 800;
         cursor: pointer;
         white-space: nowrap;
     }}
-    .btn-copy-url:hover {{ background: #1d4ed8; }}
 
     .device-guide-grid {{
         display: grid;
@@ -747,7 +779,7 @@ class SalesPipelineSystem:
         gap: 8px;
     }}
     .device-guide-item {{
-        background: #f8fafc;
+        background: var(--bg-card);
         border: 1px solid var(--border);
         padding: 10px;
         border-radius: 6px;
@@ -771,9 +803,9 @@ class SalesPipelineSystem:
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: #0f172a;
-        color: #ffffff;
-        font-weight: 700;
+        background: var(--c-green);
+        color: #000;
+        font-weight: 800;
         font-size: 12px;
         padding: 7px 16px;
         border-radius: 6px;
@@ -781,12 +813,12 @@ class SalesPipelineSystem:
         pointer-events: none;
         transition: opacity 0.15s ease;
         z-index: 2000;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }}
     .toast.show {{ opacity: 1; }}
 
     @media print {{
-        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear, .btn-share-main, .modal-overlay {{ display: none !important; }}
+        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear, .btn-hdr, .modal-overlay {{ display: none !important; }}
         body {{ background: #fff; color: #000; }}
         .hud-box, .card {{ border: 1px solid #ccc; background: #fff; box-shadow: none; }}
         .say-box, .copy-box {{ background: #fafafa; border: 1px solid #ddd; }}
@@ -803,7 +835,8 @@ class SalesPipelineSystem:
             <span class="rep-name">Sales Closer Flight Deck</span>
         </div>
         <div class="header-actions">
-            <button class="btn-share-main" onclick="openShareModal()">🔗 Create Link / Add to Device</button>
+            <button class="btn-hdr" onclick="cycleTheme()" id="theme-btn">🎨 Theme: Slate</button>
+            <button class="btn-hdr" onclick="openShareModal()">🔗 Create Link</button>
         </div>
     </div>
 </header>
@@ -1039,7 +1072,7 @@ Michael Qin</div>
 
         <div class="qr-container">
             <img class="qr-img" id="qr-code-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://naudiac.github.io/utility-scripts/michael-qin/">
-            <span style="font-size: 11.5px; font-weight: 700; color: var(--text-heading);">📷 Scan with Phone Camera to Open</span>
+            <span style="font-size: 11.5px; font-weight: 800; color: #000;">📷 Scan with Phone Camera to Open</span>
         </div>
 
         <div class="link-copy-group">
@@ -1073,6 +1106,32 @@ Michael Qin</div>
 <script>
 const STAGES = {stages_json};
 const OBJECTIONS = {objections_json};
+
+/* =========================================================================
+   THEME SWITCHER (SLATE -> OLED -> LIGHT)
+   ========================================================================= */
+const THEMES = ["slate", "oled", "light"];
+let currentThemeIdx = 0;
+
+function cycleTheme() {{
+    currentThemeIdx = (currentThemeIdx + 1) % THEMES.length;
+    applyTheme(THEMES[currentThemeIdx]);
+}}
+
+function applyTheme(name) {{
+    document.body.classList.remove('theme-light', 'theme-oled');
+    const btn = document.getElementById('theme-btn');
+    if (name === 'light') {{
+        document.body.classList.add('theme-light');
+        btn.innerText = "☀️ Theme: Daylight";
+    }} else if (name === 'oled') {{
+        document.body.classList.add('theme-oled');
+        btn.innerText = "🌙 Theme: OLED Dark";
+    }} else {{
+        btn.innerText = "🎨 Theme: Slate";
+    }}
+    localStorage.setItem('mq_theme', name);
+}}
 
 /* =========================================================================
    SHARE MODAL LOGIC
@@ -1502,6 +1561,8 @@ function renderPipeline() {{
 }}
 
 window.addEventListener('DOMContentLoaded', () => {{
+    const savedTheme = localStorage.getItem('mq_theme') || 'slate';
+    applyTheme(savedTheme);
     renderCurrentNode();
     renderObjections();
     renderPipeline();
@@ -1682,7 +1743,7 @@ def main():
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[+] Successfully generated portal with Create Link modal: {portal_html_path}")
+    print(f"[+] Successfully generated Twilight Slate portal: {portal_html_path}")
 
     # Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
