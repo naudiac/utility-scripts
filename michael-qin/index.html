@@ -970,41 +970,70 @@ const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
                    /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows PC';
 
 const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
-let isSupervisorUser = false;
-let userIpInfo = { ip: '', city: '', region: '' };
+let isSupervisorUser = (
+    window.location.protocol === 'file:' ||
+    window.location.search.includes('supervisor=') ||
+    window.location.search.includes('admin=true') ||
+    localStorage.getItem('ccs_is_supervisor') === 'true'
+);
 
-// Check query param or persistent supervisor token
-if (window.location.search.includes('supervisor=') || window.location.search.includes('admin=true') || localStorage.getItem('ccs_is_supervisor') === 'true') {
-    isSupervisorUser = true;
-    localStorage.setItem('ccs_is_supervisor', 'true');
-}
+let userIpResolved = false;
+let userIpInfo = { ip: 'Pending', city: '', region: '' };
+let telemetryQueue = [];
 
-// Asynchronously resolve IP & GeoLocation
+// Resolve IP and verify exclusion
 fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
     if (data && data.ip) {
         userIpInfo = { ip: data.ip, city: data.city || '', region: data.region_code || '' };
+        userIpResolved = true;
         if (SUPERVISOR_IPS.includes(data.ip)) {
             isSupervisorUser = true;
             localStorage.setItem('ccs_is_supervisor', 'true');
+            telemetryQueue = []; // drop all queued events
+            return;
         }
+        flushTelemetryQueue();
     }
 }).catch(() => {
     fetch('https://api.ipify.org?format=json').then(r => r.json()).then(data => {
         if (data && data.ip) {
             userIpInfo.ip = data.ip;
+            userIpResolved = true;
             if (SUPERVISOR_IPS.includes(data.ip)) {
                 isSupervisorUser = true;
                 localStorage.setItem('ccs_is_supervisor', 'true');
+                telemetryQueue = [];
+                return;
             }
+            flushTelemetryQueue();
         }
-    }).catch(() => {});
+    }).catch(() => {
+        userIpResolved = true;
+        flushTelemetryQueue();
+    });
 });
 
+function flushTelemetryQueue() {
+    if (isSupervisorUser) return;
+    while (telemetryQueue.length > 0) {
+        const item = telemetryQueue.shift();
+        sendBeacon(item.actionType, item.title, item.details);
+    }
+}
+
 function trackTelemetry(actionType, title, details = {}) {
-    // Suppress telemetry on local file runs (build/PDF rendering) and for Supervisor
-    if (window.location.protocol === 'file:' || isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') {
+    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') return;
+
+    if (!userIpResolved) {
+        telemetryQueue.push({ actionType, title, details });
         return;
     }
+
+    sendBeacon(actionType, title, details);
+}
+
+function sendBeacon(actionType, title, details) {
+    if (isSupervisorUser) return;
 
     const payload = {
         rep: "Michael Qin",
@@ -1035,14 +1064,12 @@ function trackTelemetry(actionType, title, details = {}) {
     } catch(e) {}
 }
 
-// Initial session beacon (slight delay to let IP resolve)
+// Initial session beacon
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
-            screen: `${window.innerWidth}x${window.innerHeight}`,
-            referrer: document.referrer || 'direct'
-        });
-    }, 400);
+    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
+        screen: `${window.innerWidth}x${window.innerHeight}`,
+        referrer: document.referrer || 'direct'
+    });
 });
 
 // Heartbeat every 2 minutes
