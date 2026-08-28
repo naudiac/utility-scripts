@@ -3,101 +3,109 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dad Setup — Antigravity</title>
+<title>Dad Setup — Antigravity Network</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0d1117; color: #e6edf3; font-family: Inter, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  .card { max-width: 580px; width: 100%; }
-  .top { text-align: center; margin-bottom: 32px; }
-  .pill { display: inline-block; background: rgba(88,166,255,.12); border: 1px solid rgba(88,166,255,.3); color: #58a6ff; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
-  h1 { font-size: 32px; font-weight: 800; margin-bottom: 6px; }
-  .sub { color: #8b949e; font-size: 14px; line-height: 1.6; }
-  .step { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 20px; margin-bottom: 14px; }
-  .badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #58a6ff; color: #000; font-weight: 800; font-size: 14px; margin-bottom: 10px; }
-  .step h2 { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
-  .step p { color: #8b949e; font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+  body { background: #0d1117; color: #e6edf3; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card { max-width: 600px; width: 100%; }
+  .top { text-align: center; margin-bottom: 30px; }
+  .top h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+  .top p { color: #8b949e; font-size: 15px; line-height: 1.6; }
+  
+  /* APK Banner */
+  .apk-card { background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%); border: 2px solid #3b82f6; border-radius: 16px; padding: 24px; margin-bottom: 28px; text-align: center; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3); }
+  .apk-badge { display: inline-block; background: #3b82f6; color: #ffffff; font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .apk-card h2 { font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+  .apk-card p { font-size: 14px; color: #bfdbfe; margin-bottom: 18px; line-height: 1.5; }
+  .btn-download { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #10b981; color: #ffffff; text-decoration: none; font-size: 17px; font-weight: 800; padding: 14px 28px; border-radius: 12px; transition: all .2s ease; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); width: 100%; max-width: 400px; }
+  .btn-download:hover { background: #059669; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5); }
+  .apk-subnote { font-size: 12px; color: #93c5fd; margin-top: 12px; margin-bottom: 0; }
+
+  .divider { display: flex; align-items: center; text-align: center; margin: 24px 0; color: #8b949e; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #30363d; }
+  .divider::before { margin-right: 12px; }
+  .divider::after { margin-left: 12px; }
+
+  .step { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: #58a6ff; color: #000; font-weight: 800; font-size: 16px; margin-bottom: 14px; }
+  .step h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .step p { color: #8b949e; font-size: 14px; line-height: 1.7; margin-bottom: 14px; }
   .step p:last-child { margin-bottom: 0; }
-  .store-btn { display: flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 10px; padding: 13px 20px; font-size: 14px; font-weight: 700; margin: 8px 0; transition: opacity .15s; justify-content: center; }
-  .btn-play { background: #01875f; color: #fff; }
-  .store-btn:hover { opacity: .85; }
-  .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; margin: 10px 0; position: relative; }
-  .cmd code { font-family: "JetBrains Mono", monospace; font-size: 11px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 60px; }
-  .copy { position: absolute; top: 9px; right: 9px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
+  .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 18px 16px; margin: 14px 0; position: relative; }
+  .cmd code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 60px; }
+  .copy { position: absolute; top: 12px; right: 12px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
   .copy:hover { background: #58a6ff; color: #000; border-color: #58a6ff; }
   .copy.ok { background: #3fb950; color: #000; border-color: #3fb950; }
-  .tip { background: rgba(88,166,255,.06); border-left: 3px solid #58a6ff; border-radius: 6px; padding: 9px 13px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
-  .warn { background: rgba(210,153,34,.08); border-left: 3px solid #d29922; border-radius: 6px; padding: 9px 13px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
-  .warn strong { color: #d29922; }
-  .no { background: rgba(248,81,73,.08); border-left: 3px solid #f85149; border-radius: 6px; padding: 9px 13px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
-  .no strong { color: #f85149; }
-  .done { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.3); border-radius: 14px; padding: 22px; text-align: center; }
-  .done .big { font-size: 40px; margin-bottom: 8px; }
-  .done h2 { color: #3fb950; font-size: 19px; margin-bottom: 5px; }
-  .done p { color: #8b949e; font-size: 13px; line-height: 1.7; }
+  .note { background: rgba(210,153,34,.08); border-left: 3px solid #d29922; border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13px; color: #e6edf3; line-height: 1.6; }
+  .note strong { color: #d29922; }
+  .done { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.3); border-radius: 14px; padding: 28px; text-align: center; margin-top: 8px; }
+  .done .big { font-size: 48px; margin-bottom: 12px; }
+  .done h2 { color: #3fb950; font-size: 22px; margin-bottom: 8px; }
+  .done p { color: #8b949e; font-size: 14px; line-height: 1.6; }
+  .pill { display: inline-block; background: rgba(88,166,255,.12); border: 1px solid rgba(88,166,255,.3); color: #58a6ff; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="top">
-    <span class="pill">&#128225; Antigravity Network Setup</span>
-    <h1>Hey Dad! &#128075;</h1>
-    <p class="sub">Four steps and Will takes over completely.</p>
+    <span class="pill">📡 Antigravity Network Setup</span>
+    <h1>Hey Dad! 👋</h1>
+    <p>Get connected to Will's home network in one tap.</p>
   </div>
 
+  <!-- Primary Option: One-Click Android APK -->
+  <div class="apk-card">
+    <span class="apk-badge">Easiest Method</span>
+    <h2>📲 1-Tap Android App</h2>
+    <p>Download the dedicated setup app for Mom's Samsung Galaxy phone.<br/>Just open it, tap "Run Setup", and you're done!</p>
+    <a href="https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/DaddySetup.apk" class="btn-download">
+      <span>⬇️ Download APK (Recommended)</span>
+    </a>
+    <p class="apk-subnote">Supports Samsung Galaxy A15 5G &amp; all Android 8+ devices. Tap 'Open' &amp; allow install.</p>
+  </div>
+
+  <div class="divider">OR USE MANUAL TERMINAL STEPS</div>
+
   <div class="step">
-    <div class="badge">1</div>
+    <div class="step-num">1</div>
     <h2>Install Termux</h2>
-    <p>Tap to open Termux in the Play Store and install it.</p>
-    <a class="store-btn btn-play" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">&#9654; Get Termux on Google Play</a>
-    <div class="tip">&#9989; After installing, open Termux. Black screen with blinking cursor = correct.</div>
+    <p>Open the <strong>Google Play Store</strong> on your Samsung phone and search for <strong>Termux</strong> — install it. It's free.</p>
+    <p>Then open Termux and copy-paste this first command:</p>
+    <div class="cmd">
+      <code>pkg install -y curl</code>
+      <button class="copy" onclick="copy(this,'pkg install -y curl')">Copy</button>
+    </div>
+    <div class="note"><strong>⚠ It may ask questions</strong> during install — just press <strong>Enter</strong> to accept defaults every time.</div>
   </div>
 
   <div class="step">
-    <div class="badge">2</div>
-    <h2>Run the Setup Command</h2>
-    <p>Tap <strong>Copy</strong>, switch to Termux, long-press &rarr; Paste &rarr; Enter.</p>
+    <div class="step-num">2</div>
+    <h2>Run the Setup</h2>
+    <p>Now paste this command. It connects your phone to Will's home network automatically — no passwords, no logins.</p>
     <div class="cmd">
-      <code>pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
-      <button class="copy" onclick="cp(this,'pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
+      <code>curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
+      <button class="copy" onclick="copy(this,'curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
     </div>
-    <div class="warn"><strong>&#9203; 2&ndash;3 minutes.</strong> Press Enter on any questions. Wait for &#9989; SETUP COMPLETE before continuing.</div>
-  </div>
-
-  <div class="step">
-    <div class="badge">3</div>
-    <h2>Install Tailscale</h2>
-    <p>In Termux, paste this to download and open the Tailscale installer:</p>
-    <div class="cmd">
-      <code>am start -a android.intent.action.VIEW -d 'https://play.google.com/store/apps/details?id=com.tailscale.ipn.android'</code>
-      <button class="copy" onclick="cp(this,&quot;am start -a android.intent.action.VIEW -d 'https://play.google.com/store/apps/details?id=com.tailscale.ipn.android'&quot;)">Copy</button>
-    </div>
-    <div class="tip">Play Store opens to Tailscale. Install it, then open it and come back here for Step 4.</div>
-  </div>
-
-  <div class="step">
-    <div class="badge">4</div>
-    <h2>Connect Tailscale — Skip the Login Screen</h2>
-    <div class="no"><strong>&#10060; Do NOT tap Passkey or any login button.</strong> Go back to Termux instead.</div>
-    <p>Paste this in Termux. It connects Tailscale automatically &mdash; no account needed:</p>
-    <div class="cmd">
-      <code>am start -a android.intent.action.VIEW -d 'tailscale://login/auth-key?key=tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3'</code>
-      <button class="copy" onclick="cp(this,&quot;am start -a android.intent.action.VIEW -d 'tailscale://login/auth-key?key=tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3'&quot;)">Copy</button>
-    </div>
-    <div class="tip">&#9989; Tailscale will open and show <strong>Connected</strong>. Will&rsquo;s system takes over instantly. Done!</div>
+    <div class="note"><strong>⏳ Takes about 2-3 minutes</strong> to run. When you see ✅ SETUP COMPLETE — you're done! Keep Termux open in the background.</div>
   </div>
 
   <div class="done">
-    <div class="big">&#127881;</div>
-    <h2>That&rsquo;s it, Dad!</h2>
-    <p>Keep Termux open and the phone plugged in.<br/><strong>You don&rsquo;t need to touch the TV.</strong></p>
+    <div class="big">🎉</div>
+    <h2>That's it!</h2>
+    <p>Once you see the green checkmark,<br/>
+    <strong>Will will take over and handle everything else remotely.</strong><br/><br/>
+    You don't need to touch the TV or do anything else.<br/>
+    Just keep the phone plugged in and the app open!</p>
   </div>
+
 </div>
 <script>
-function cp(btn, text) {
+function copy(btn, text) {
   navigator.clipboard.writeText(text).then(() => {
-    const o = btn.textContent; btn.textContent = 'Copied!'; btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = o; btn.classList.remove('ok'); }, 3000);
+    btn.textContent = 'Copied!';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2500);
   });
 }
 </script>
