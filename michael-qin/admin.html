@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Creative Capital Solutions — Supervisor Live Cockpit</title>
+<style>
+    :root {
+        --navy: #0f2744;
+        --steel: #1b4b72;
+        --blue: #2563eb;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #cbd5e1;
+        --text: #1e293b;
+        --muted: #64748b;
+        --green: #166534;
+        --green-bg: #dcfce7;
+        --green-border: #bbf7d0;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        line-height: 1.4;
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .admin-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .admin-header {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-top: 4px solid var(--navy);
+        padding: 12px 16px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .title-area h1 {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--navy);
+    }
+    .title-area p {
+        font-size: 11px;
+        color: var(--muted);
+    }
+
+    .pulse-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #94a3b8;
+    }
+    .pulse-dot.online {
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+        animation: pulseAnim 1.8s infinite;
+    }
+    @keyframes pulseAnim {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .pulse-status {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--navy);
+    }
+
+    /* KPI Summary Cards */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    .kpi-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 12px;
+        border-radius: 4px;
+        text-align: center;
+    }
+    .kpi-num {
+        font-family: var(--mono);
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--navy);
+    }
+    .kpi-lbl {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        gap: 8px;
+    }
+    .btn-action {
+        background: var(--navy);
+        color: #ffffff;
+        border: 1px solid var(--navy);
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .btn-action:hover { background: var(--steel); }
+
+    /* Live Feed Container */
+    .feed-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 14px;
+    }
+    .feed-header {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--navy);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .event-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .event-item {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-left: 3.5px solid var(--blue);
+        padding: 8px 12px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .event-item.open { border-left-color: #22c55e; background: #f0fdf4; }
+    .event-item.reaction { border-left-color: #3b82f6; background: #eff6ff; }
+    .event-item.copy { border-left-color: #8b5cf6; background: #faf5ff; }
+    .event-item.tone { border-left-color: #f59e0b; background: #fffbeb; }
+    .event-item.heartbeat { border-left-color: #94a3b8; opacity: 0.75; }
+
+    .event-main {
+        flex: 1;
+    }
+    .event-title {
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+    .event-details {
+        font-size: 11px;
+        color: var(--muted);
+        font-family: var(--mono);
+    }
+    .event-meta {
+        font-size: 10px;
+        color: var(--muted);
+        font-family: var(--mono);
+        text-align: right;
+        white-space: nowrap;
+    }
+    .device-pill {
+        background: #e2e8f0;
+        color: var(--navy);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 3px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 2px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 30px;
+        color: var(--muted);
+        font-size: 12px;
+    }
+</style>
+</head>
+<body>
+
+<div class="admin-wrap">
+
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="title-area">
+            <h1>Creative Capital Solutions — Supervisor Cockpit</h1>
+            <p>Live Real-Time Rep Usage &amp; Call Telemetry for Michael Qin</p>
+        </div>
+
+        <div class="pulse-box">
+            <div class="pulse-dot" id="live-dot"></div>
+            <span class="pulse-status" id="live-status">Connecting to Feed...</span>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-opens">0</div>
+            <div class="kpi-lbl">App Sessions</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-reactions" style="color: var(--blue);">0</div>
+            <div class="kpi-lbl">Reactions &amp; Turns</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-copies" style="color: #8b5cf6;">0</div>
+            <div class="kpi-lbl">Scripts Copied</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-last-active" style="font-size: 14px; padding-top: 7px;">--</div>
+            <div class="kpi-lbl">Last Heartbeat</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+        <div style="font-size: 11.5px; color: var(--muted);">
+            📡 Real-Time Telemetry Topic: <code style="font-family: var(--mono); background: #e2e8f0; padding: 2px 4px; border-radius: 2px;">ccs_michael_qin_telemetry_wh_2026</code>
+        </div>
+        <div style="display: flex; gap: 6px;">
+            <button class="btn-action" onclick="fetchRecentEvents()">🔄 Refresh Log</button>
+            <a href="https://ntfy.sh/ccs_michael_qin_telemetry_wh_2026" target="_blank" class="btn-action" style="text-decoration:none;">📲 Open Live Channel</a>
+        </div>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="feed-card">
+        <div class="feed-header">
+            <span>⚡ Live Telemetry Event Stream</span>
+            <span id="event-count-badge" style="font-size: 11px; font-family: var(--mono); color: var(--muted);">0 events</span>
+        </div>
+        <div class="event-list" id="event-list">
+            <div class="empty-state">Listening for real-time telemetry from Michael's device...</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const TELEMETRY_TOPIC = "ccs_michael_qin_telemetry_wh_2026";
+const SSE_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/sse";
+const POLL_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/json?poll=1&since=all";
+
+let events = [];
+let lastSeenTimestamp = null;
+let counters = {
+    opens: 0,
+    reactions: 0,
+    copies: 0
+};
+
+function formatTime(isoStr) {
+    try {
+        const d = new Date(isoStr);
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch(e) {
+        return isoStr || '';
+    }
+}
+
+function getRelativeTime(isoStr) {
+    if (!isoStr) return '--';
+    const diffSec = Math.floor((Date.now() - new Date(isoStr).getTime()) / 1000);
+    if (diffSec < 45) return 'Active Just Now';
+    if (diffSec < 120) return '1 min ago';
+    if (diffSec < 3600) return `${Math.floor(diffSec / 60)} mins ago`;
+    return `${Math.floor(diffSec / 3600)} hours ago`;
+}
+
+function processEventData(data) {
+    if (!data || !data.action) return;
+
+    events.unshift(data);
+    lastSeenTimestamp = data.ts;
+
+    if (data.action === 'OPEN') counters.opens++;
+    if (data.action === 'REACTION') counters.reactions++;
+    if (data.action === 'SCRIPT_COPIED') counters.copies++;
+
+    updateUI();
+}
+
+function updateUI() {
+    document.getElementById('kpi-opens').innerText = counters.opens;
+    document.getElementById('kpi-reactions').innerText = counters.reactions;
+    document.getElementById('kpi-copies').innerText = counters.copies;
+    document.getElementById('kpi-last-active').innerText = getRelativeTime(lastSeenTimestamp);
+
+    // Live status
+    const isOnline = lastSeenTimestamp && (Date.now() - new Date(lastSeenTimestamp).getTime()) < 150000;
+    const dot = document.getElementById('live-dot');
+    const status = document.getElementById('live-status');
+
+    if (isOnline) {
+        dot.className = 'pulse-dot online';
+        status.innerText = `🟢 Michael Active Now (${events[0]?.device || 'Online'})`;
+    } else if (lastSeenTimestamp) {
+        dot.className = 'pulse-dot';
+        status.innerText = `⚪ Last Seen: ${getRelativeTime(lastSeenTimestamp)}`;
+    } else {
+        dot.className = 'pulse-dot';
+        status.innerText = `⚪ Waiting for First Session`;
+    }
+
+    document.getElementById('event-count-badge').innerText = `${events.length} events recorded`;
+
+    // Render Event Items
+    const list = document.getElementById('event-list');
+    if (events.length === 0) {
+        list.innerHTML = `<div class="empty-state">No events received yet. When Michael opens or uses the tool, live telemetry appears here automatically.</div>`;
+        return;
+    }
+
+    list.innerHTML = events.map(e => {
+        let cls = 'event-item';
+        if (e.action === 'OPEN') cls += ' open';
+        else if (e.action === 'REACTION') cls += ' reaction';
+        else if (e.action === 'SCRIPT_COPIED') cls += ' copy';
+        else if (e.action === 'TONE_CHANGE') cls += ' tone';
+        else if (e.action === 'HEARTBEAT') cls += ' heartbeat';
+
+        const detailStr = e.details ? Object.entries(e.details).map(([k,v]) => `${k}: <strong>${v}</strong>`).join(' | ') : '';
+
+        return `
+            <div class="${cls}">
+                <div class="event-main">
+                    <div class="event-title">${e.title || e.action}</div>
+                    <div class="event-details">${detailStr}</div>
+                </div>
+                <div class="event-meta">
+                    <span class="device-pill">${e.device || 'Desktop'}</span><br>
+                    ${formatTime(e.ts)}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Fetch historical cache on load
+async function fetchRecentEvents() {
+    try {
+        const res = await fetch(POLL_URL);
+        const text = await res.text();
+        const lines = text.trim().split('\n');
+        
+        events = [];
+        counters = { opens: 0, reactions: 0, copies: 0 };
+
+        lines.forEach(line => {
+            try {
+                const msg = JSON.parse(line);
+                if (msg.message) {
+                    const payload = JSON.parse(msg.message);
+                    processEventData(payload);
+                }
+            } catch(err) {}
+        });
+        updateUI();
+    } catch(e) {
+        console.error("Poll error:", e);
+    }
+}
+
+// Connect to Live SSE Stream
+function connectSSE() {
+    const eventSource = new EventSource(SSE_URL);
+    
+    eventSource.onopen = () => {
+        document.getElementById('live-status').innerText = 'Connected • Live Telemetry Active';
+    };
+
+    eventSource.onmessage = (event) => {
+        try {
+            const msg = JSON.parse(event.data);
+            if (msg.message) {
+                const payload = JSON.parse(msg.message);
+                processEventData(payload);
+            }
+        } catch(e) {}
+    };
+
+    eventSource.onerror = () => {
+        document.getElementById('live-status').innerText = 'Reconnecting...';
+        setTimeout(connectSSE, 5000);
+    };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    fetchRecentEvents();
+    connectSSE();
+    setInterval(updateUI, 15000);
+});
+</script>
+</body>
+</html>

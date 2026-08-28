@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-Zero-Scroll Mobile & Desktop Responsive Architecture.
-Features:
-- Desktop: 2-Column Cockpit (Script on Left, 6 Options on Right).
-- Mobile (Cell Phone): Compact Header + 2-Column Button Grid for 100% Zero-Scroll Viewport Fit.
+Zero-Scroll Mobile & Desktop Responsive Architecture with Live Supervisor Telemetry.
+Generates:
+1. index.html: Rep Flight Deck with silent real-time telemetry dispatch.
+2. admin.html: William's Live Supervisor Cockpit with Real-Time Event Stream, Activity Feed, and Session Status.
 """
 
 import os
@@ -14,6 +14,10 @@ import subprocess
 import shutil
 from dataclasses import dataclass, field
 from typing import List, Dict, Any
+
+
+TELEMETRY_TOPIC = "ccs_michael_qin_telemetry_wh_2026"
+TELEMETRY_ENDPOINT = f"https://ntfy.sh/{TELEMETRY_TOPIC}"
 
 
 @dataclass
@@ -1027,6 +1031,62 @@ class SalesPipelineSystem:
 <script>
 const STAGES = {stages_json};
 const OBJECTIONS = {objections_json};
+const TELEMETRY_URL = "{TELEMETRY_ENDPOINT}";
+
+/* =========================================================================
+   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC)
+   ========================================================================= */
+const repSessionId = 'rep_' + Math.random().toString(36).substring(2, 9);
+const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
+                   /Android/i.test(navigator.userAgent) ? 'Android' :
+                   /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows PC';
+
+function trackTelemetry(actionType, title, details = {{}}) {{
+    // Don't track if in admin mode
+    if (window.location.search.includes('admin=true')) return;
+
+    const payload = {{
+        rep: "{self.rep_name}",
+        company: "Creative Capital Solutions",
+        sessionId: repSessionId,
+        device: deviceType,
+        action: actionType,
+        title: title,
+        details: details,
+        url: window.location.href,
+        ts: new Date().toISOString(),
+        localTime: new Date().toLocaleTimeString()
+    }};
+
+    try {{
+        fetch(TELEMETRY_URL, {{
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {{
+                'Title': `[${{deviceType}}] ${{title}}`,
+                'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
+            }},
+            mode: 'no-cors',
+            keepalive: true
+        }}).catch(() => {{}});
+    }} catch(e) {{}}
+}}
+
+// Initial session beacon
+window.addEventListener('load', () => {{
+    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {{
+        screen: `${{window.innerWidth}}x${{window.innerHeight}}`,
+        referrer: document.referrer || 'direct'
+    }});
+}});
+
+// Heartbeat every 2 minutes
+setInterval(() => {{
+    trackTelemetry('HEARTBEAT', 'Active Session Heartbeat', {{
+        currentStage: historyStack[historyStack.length - 1],
+        currentTone: currentToneKey
+    }});
+}}, 120000);
 
 /* =========================================================================
    6 INSTANT PERSONA TONE PROFILES
@@ -1218,6 +1278,7 @@ function setTone(toneKey, btn) {{
     const labelEl = document.getElementById('active-tone-label');
     if (labelEl) labelEl.innerText = profile.name;
 
+    trackTelemetry('TONE_CHANGE', `Switched Tone: ${{profile.name}}`, {{ toneKey: toneKey }});
     renderCurrentNode();
 }}
 
@@ -1227,6 +1288,7 @@ function setTone(toneKey, btn) {{
 function openShareModal() {{
     const modal = document.getElementById('share-modal');
     if (modal) modal.classList.add('open');
+    trackTelemetry('SHARE_MODAL', 'Opened Share Modal');
 }}
 
 function closeShareModal(e) {{
@@ -1237,11 +1299,15 @@ function closeShareModal(e) {{
 function copyToolUrl() {{
     const box = document.getElementById('share-url-box');
     copyText(box.value);
+    trackTelemetry('SHARE_COPY', 'Copied Tool Share URL');
 }}
 
 function toggleIntelDrawer() {{
     const drawer = document.getElementById('intel-drawer');
-    if (drawer) drawer.classList.toggle('open');
+    if (drawer) {{
+        drawer.classList.toggle('open');
+        trackTelemetry('INTEL_DRAWER', 'Toggled Intel Drawer');
+    }}
 }}
 
 /* =========================================================================
@@ -1525,7 +1591,7 @@ function renderCurrentNode() {{
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
-        <button class="opt-btn ${{opt.type}}" onclick="pickNext('${{opt.next}}')">
+        <button class="opt-btn ${{opt.type}}" onclick="pickNext('${{opt.next}}', '${{opt.text.replace(/'/g, "\\\\'")}}')">
             <span>${{formatWithTokens(opt.text)}}</span>
             <span class="key-pill">${{opt.key}}</span>
         </button>
@@ -1540,8 +1606,15 @@ function getCleanScriptText() {{
     return formatWithTokens(node.verbatim, false);
 }}
 
-function pickNext(key) {{
+function pickNext(key, optLabel = '') {{
     historyStack.push(key);
+    trackTelemetry('REACTION', `Reaction Chosen: ${{key}}`, {{
+        nextStage: key,
+        optionClicked: optLabel,
+        leadName: leadState.name || 'Anonymous',
+        leadCompany: leadState.company || 'Unknown',
+        tone: currentToneKey
+    }});
     renderCurrentNode();
 }}
 
@@ -1554,6 +1627,7 @@ function goBack() {{
 
 function resetFlow() {{
     historyStack = ["root"];
+    trackTelemetry('RESET', 'Reset Call Script for Next Lead');
     renderCurrentNode();
 }}
 
@@ -1567,7 +1641,7 @@ window.addEventListener('keydown', (e) => {{
         const key = historyStack[historyStack.length - 1];
         const node = getActiveNodeData(key);
         const opt = node.options.find(o => o.key === e.key);
-        if (opt) pickNext(opt.next);
+        if (opt) pickNext(opt.next, opt.text);
     }} else if (e.key === 'Backspace') {{
         goBack();
     }} else if (e.key === 'r' || e.key === 'R' || e.key === 'Escape') {{
@@ -1620,6 +1694,8 @@ function saveCustomDeck() {{
     localStorage.setItem('mq_custom_decks', JSON.stringify(customDecks));
 
     TONE_PROFILES[deckId] = newDeck;
+
+    trackTelemetry('CUSTOM_DECK_SAVED', `Created Custom Deck: "${{name}}"`);
 
     document.getElementById('new-deck-name').value = "";
     document.getElementById('new-deck-opener').value = "";
@@ -1711,6 +1787,7 @@ function selectBank(bankKey, btn) {{
     document.querySelectorAll('.bank-chip').forEach(el => el.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('bank-guide-text').innerText = BANK_SCRIPTS[bankKey];
+    trackTelemetry('BANK_GUIDE_CLICK', `Viewed Bank Guide: ${{bankKey}}`);
 }}
 
 /* =========================================================================
@@ -1723,6 +1800,8 @@ function switchTab(tabId) {{
     if (target) target.classList.add('active');
     const btn = Array.from(document.querySelectorAll('.tab-item')).find(b => b.getAttribute('onclick').includes(tabId));
     if (btn) btn.classList.add('active');
+
+    trackTelemetry('TAB_SWITCH', `Switched to tab: ${{tabId}}`);
 }}
 
 function copyText(text) {{
@@ -1731,6 +1810,7 @@ function copyText(text) {{
         toast.innerText = "Copied to clipboard";
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 1500);
+        trackTelemetry('SCRIPT_COPIED', 'Copied script to clipboard', {{ textSnippet: text.substring(0, 60) + '...' }});
     }});
 }}
 
@@ -1788,6 +1868,464 @@ window.addEventListener('DOMContentLoaded', () => {{
     renderPipeline();
     runCalc();
     updateCadenceSnippets();
+}});
+</script>
+</body>
+</html>"""
+
+    def render_admin_html(self) -> str:
+        """
+        William's Live Supervisor Cockpit (admin.html).
+        Streams real-time events via Server-Sent Events (SSE) from the ntfy channel.
+        Shows Online status, Device type, Call reactions, Script copies, and historical event log.
+        """
+        return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Creative Capital Solutions — Supervisor Live Cockpit</title>
+<style>
+    :root {{
+        --navy: #0f2744;
+        --steel: #1b4b72;
+        --blue: #2563eb;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #cbd5e1;
+        --text: #1e293b;
+        --muted: #64748b;
+        --green: #166534;
+        --green-bg: #dcfce7;
+        --green-border: #bbf7d0;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }}
+
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        line-height: 1.4;
+        font-size: 13px;
+        padding: 10px;
+    }}
+
+    .admin-wrap {{
+        max-width: 1080px;
+        margin: 0 auto;
+    }}
+
+    /* Header */
+    .admin-header {{
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-top: 4px solid var(--navy);
+        padding: 12px 16px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        flex-wrap: wrap;
+        gap: 8px;
+    }}
+    .title-area h1 {{
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--navy);
+    }}
+    .title-area p {{
+        font-size: 11px;
+        color: var(--muted);
+    }}
+
+    .pulse-box {{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        border-radius: 20px;
+    }}
+    .pulse-dot {{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #94a3b8;
+    }}
+    .pulse-dot.online {{
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+        animation: pulseAnim 1.8s infinite;
+    }}
+    @keyframes pulseAnim {{
+        0% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }}
+        70% {{ transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }}
+        100% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }}
+    }}
+    .pulse-status {{
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--navy);
+    }}
+
+    /* KPI Summary Cards */
+    .kpi-grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+    }}
+    .kpi-card {{
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 12px;
+        border-radius: 4px;
+        text-align: center;
+    }}
+    .kpi-num {{
+        font-family: var(--mono);
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--navy);
+    }}
+    .kpi-lbl {{
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }}
+
+    /* Controls Bar */
+    .controls-bar {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        gap: 8px;
+    }}
+    .btn-action {{
+        background: var(--navy);
+        color: #ffffff;
+        border: 1px solid var(--navy);
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }}
+    .btn-action:hover {{ background: var(--steel); }}
+
+    /* Live Feed Container */
+    .feed-card {{
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 14px;
+    }}
+    .feed-header {{
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--navy);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+    }}
+
+    .event-list {{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 600px;
+        overflow-y: auto;
+    }}
+
+    .event-item {{
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-left: 3.5px solid var(--blue);
+        padding: 8px 12px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        animation: fadeIn 0.2s ease;
+    }}
+    @keyframes fadeIn {{ from {{ opacity: 0; transform: translateY(-4px); }} to {{ opacity: 1; transform: translateY(0); }} }}
+
+    .event-item.open {{ border-left-color: #22c55e; background: #f0fdf4; }}
+    .event-item.reaction {{ border-left-color: #3b82f6; background: #eff6ff; }}
+    .event-item.copy {{ border-left-color: #8b5cf6; background: #faf5ff; }}
+    .event-item.tone {{ border-left-color: #f59e0b; background: #fffbeb; }}
+    .event-item.heartbeat {{ border-left-color: #94a3b8; opacity: 0.75; }}
+
+    .event-main {{
+        flex: 1;
+    }}
+    .event-title {{
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 12px;
+        margin-bottom: 2px;
+    }}
+    .event-details {{
+        font-size: 11px;
+        color: var(--muted);
+        font-family: var(--mono);
+    }}
+    .event-meta {{
+        font-size: 10px;
+        color: var(--muted);
+        font-family: var(--mono);
+        text-align: right;
+        white-space: nowrap;
+    }}
+    .device-pill {{
+        background: #e2e8f0;
+        color: var(--navy);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 3px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 2px;
+    }}
+
+    .empty-state {{
+        text-align: center;
+        padding: 30px;
+        color: var(--muted);
+        font-size: 12px;
+    }}
+</style>
+</head>
+<body>
+
+<div class="admin-wrap">
+
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="title-area">
+            <h1>Creative Capital Solutions — Supervisor Cockpit</h1>
+            <p>Live Real-Time Rep Usage &amp; Call Telemetry for Michael Qin</p>
+        </div>
+
+        <div class="pulse-box">
+            <div class="pulse-dot" id="live-dot"></div>
+            <span class="pulse-status" id="live-status">Connecting to Feed...</span>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-opens">0</div>
+            <div class="kpi-lbl">App Sessions</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-reactions" style="color: var(--blue);">0</div>
+            <div class="kpi-lbl">Reactions &amp; Turns</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-copies" style="color: #8b5cf6;">0</div>
+            <div class="kpi-lbl">Scripts Copied</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-last-active" style="font-size: 14px; padding-top: 7px;">--</div>
+            <div class="kpi-lbl">Last Heartbeat</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+        <div style="font-size: 11.5px; color: var(--muted);">
+            📡 Real-Time Telemetry Topic: <code style="font-family: var(--mono); background: #e2e8f0; padding: 2px 4px; border-radius: 2px;">{TELEMETRY_TOPIC}</code>
+        </div>
+        <div style="display: flex; gap: 6px;">
+            <button class="btn-action" onclick="fetchRecentEvents()">🔄 Refresh Log</button>
+            <a href="https://ntfy.sh/{TELEMETRY_TOPIC}" target="_blank" class="btn-action" style="text-decoration:none;">📲 Open Live Channel</a>
+        </div>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="feed-card">
+        <div class="feed-header">
+            <span>⚡ Live Telemetry Event Stream</span>
+            <span id="event-count-badge" style="font-size: 11px; font-family: var(--mono); color: var(--muted);">0 events</span>
+        </div>
+        <div class="event-list" id="event-list">
+            <div class="empty-state">Listening for real-time telemetry from Michael's device...</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const TELEMETRY_TOPIC = "{TELEMETRY_TOPIC}";
+const SSE_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/sse";
+const POLL_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/json?poll=1&since=all";
+
+let events = [];
+let lastSeenTimestamp = null;
+let counters = {{
+    opens: 0,
+    reactions: 0,
+    copies: 0
+}};
+
+function formatTime(isoStr) {{
+    try {{
+        const d = new Date(isoStr);
+        return d.toLocaleTimeString([], {{ hour: '2-digit', minute: '2-digit', second: '2-digit' }});
+    }} catch(e) {{
+        return isoStr || '';
+    }}
+}}
+
+function getRelativeTime(isoStr) {{
+    if (!isoStr) return '--';
+    const diffSec = Math.floor((Date.now() - new Date(isoStr).getTime()) / 1000);
+    if (diffSec < 45) return 'Active Just Now';
+    if (diffSec < 120) return '1 min ago';
+    if (diffSec < 3600) return `${{Math.floor(diffSec / 60)}} mins ago`;
+    return `${{Math.floor(diffSec / 3600)}} hours ago`;
+}}
+
+function processEventData(data) {{
+    if (!data || !data.action) return;
+
+    events.unshift(data);
+    lastSeenTimestamp = data.ts;
+
+    if (data.action === 'OPEN') counters.opens++;
+    if (data.action === 'REACTION') counters.reactions++;
+    if (data.action === 'SCRIPT_COPIED') counters.copies++;
+
+    updateUI();
+}}
+
+function updateUI() {{
+    document.getElementById('kpi-opens').innerText = counters.opens;
+    document.getElementById('kpi-reactions').innerText = counters.reactions;
+    document.getElementById('kpi-copies').innerText = counters.copies;
+    document.getElementById('kpi-last-active').innerText = getRelativeTime(lastSeenTimestamp);
+
+    // Live status
+    const isOnline = lastSeenTimestamp && (Date.now() - new Date(lastSeenTimestamp).getTime()) < 150000;
+    const dot = document.getElementById('live-dot');
+    const status = document.getElementById('live-status');
+
+    if (isOnline) {{
+        dot.className = 'pulse-dot online';
+        status.innerText = `🟢 Michael Active Now (${{events[0]?.device || 'Online'}})`;
+    }} else if (lastSeenTimestamp) {{
+        dot.className = 'pulse-dot';
+        status.innerText = `⚪ Last Seen: ${{getRelativeTime(lastSeenTimestamp)}}`;
+    }} else {{
+        dot.className = 'pulse-dot';
+        status.innerText = `⚪ Waiting for First Session`;
+    }}
+
+    document.getElementById('event-count-badge').innerText = `${{events.length}} events recorded`;
+
+    // Render Event Items
+    const list = document.getElementById('event-list');
+    if (events.length === 0) {{
+        list.innerHTML = `<div class="empty-state">No events received yet. When Michael opens or uses the tool, live telemetry appears here automatically.</div>`;
+        return;
+    }}
+
+    list.innerHTML = events.map(e => {{
+        let cls = 'event-item';
+        if (e.action === 'OPEN') cls += ' open';
+        else if (e.action === 'REACTION') cls += ' reaction';
+        else if (e.action === 'SCRIPT_COPIED') cls += ' copy';
+        else if (e.action === 'TONE_CHANGE') cls += ' tone';
+        else if (e.action === 'HEARTBEAT') cls += ' heartbeat';
+
+        const detailStr = e.details ? Object.entries(e.details).map(([k,v]) => `${{k}}: <strong>${{v}}</strong>`).join(' | ') : '';
+
+        return `
+            <div class="${{cls}}">
+                <div class="event-main">
+                    <div class="event-title">${{e.title || e.action}}</div>
+                    <div class="event-details">${{detailStr}}</div>
+                </div>
+                <div class="event-meta">
+                    <span class="device-pill">${{e.device || 'Desktop'}}</span><br>
+                    ${{formatTime(e.ts)}}
+                </div>
+            </div>
+        `;
+    }}).join('');
+}}
+
+// Fetch historical cache on load
+async function fetchRecentEvents() {{
+    try {{
+        const res = await fetch(POLL_URL);
+        const text = await res.text();
+        const lines = text.trim().split('\\n');
+        
+        events = [];
+        counters = {{ opens: 0, reactions: 0, copies: 0 }};
+
+        lines.forEach(line => {{
+            try {{
+                const msg = JSON.parse(line);
+                if (msg.message) {{
+                    const payload = JSON.parse(msg.message);
+                    processEventData(payload);
+                }}
+            }} catch(err) {{}}
+        }});
+        updateUI();
+    }} catch(e) {{
+        console.error("Poll error:", e);
+    }}
+}}
+
+// Connect to Live SSE Stream
+function connectSSE() {{
+    const eventSource = new EventSource(SSE_URL);
+    
+    eventSource.onopen = () => {{
+        document.getElementById('live-status').innerText = 'Connected • Live Telemetry Active';
+    }};
+
+    eventSource.onmessage = (event) => {{
+        try {{
+            const msg = JSON.parse(event.data);
+            if (msg.message) {{
+                const payload = JSON.parse(msg.message);
+                processEventData(payload);
+            }}
+        }} catch(e) {{}}
+    }};
+
+    eventSource.onerror = () => {{
+        document.getElementById('live-status').innerText = 'Reconnecting...';
+        setTimeout(connectSSE, 5000);
+    }};
+}}
+
+window.addEventListener('DOMContentLoaded', () => {{
+    fetchRecentEvents();
+    connectSSE();
+    setInterval(updateUI, 15000);
 }});
 </script>
 </body>
@@ -1958,14 +2496,22 @@ def build_complete_pipeline() -> SalesPipelineSystem:
 
 def main():
     pipeline_sys = build_complete_pipeline()
-    html_content = pipeline_sys.render_portal_html()
-
+    
+    # 1. Rep Portal (index.html)
+    portal_html_content = pipeline_sys.render_portal_html()
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
-        f.write(html_content)
-    print(f"[+] Successfully generated Zero-Scroll Mobile & Desktop portal: {portal_html_path}")
+        f.write(portal_html_content)
+    print(f"[+] Successfully generated Rep portal: {portal_html_path}")
 
-    # Generate PDF
+    # 2. William's Live Supervisor Cockpit (admin.html)
+    admin_html_content = pipeline_sys.render_admin_html()
+    admin_html_path = "admin.html"
+    with open(admin_html_path, "w", encoding="utf-8") as f:
+        f.write(admin_html_content)
+    print(f"[+] Successfully generated Supervisor Cockpit: {admin_html_path}")
+
+    # 3. Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
     abs_html = os.path.abspath(portal_html_path)
     abs_pdf = os.path.abspath(pdf_out)

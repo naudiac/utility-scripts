@@ -959,6 +959,62 @@
 <script>
 const STAGES = [{"number": 1, "title": "Lead Sourcing & Merchant Discovery", "phase": "Targeting & Enrichment", "objective": "Identify active commercial operators with daily/weekly MCA positions, high processing volume, or upcoming refinancing events.", "duration": "Daily Continuous", "actions": ["Target merchants doing $50K+/month in revenue with active daily debits or merchant processing statements.", "Verify direct owner cell number to bypass gatekeeper loops.", "Score leads on 3 points: Monthly Volume ($50K+), Active Debt/Debits present, Owner reachability."], "scripts": {"Pre-Call Sourcing Rule": "Always verify business name, state of filing, and approximate monthly volume before dialing."}, "metrics": ["50+ direct dials per hour", "15%+ live connection rate"], "pitfalls": ["Calling generic landlines instead of verified owner direct lines."]}, {"number": 2, "title": "The 30-Second Disarm & Hook", "phase": "First Touch & Framing", "objective": "Disarm the merchant in 5 seconds, frame call as expense reduction, and establish high-status authority.", "duration": "Days 1\u20135", "actions": ["Execute the 30-second verbatim opening.", "Pitch debt expense reduction, not new borrowing.", "Position yourself as an institutional diagnostic auditor."], "scripts": {"30-Second Opener": "Hey [Name], I will be brief. I know I am calling out of the blue. I work on the commercial capital side, and the reason for the call is simple: we are working with merchants in your industry right now to lower their daily/weekly debits and clean up expensive debt."}, "metrics": ["35%+ engagement rate on live connections"], "pitfalls": ["Sounding like a telemarketer asking for a favor instead of an institutional auditor."]}, {"number": 3, "title": "45-Second On-Call Statement Extraction", "phase": "Intake & Statement Capture", "objective": "Keep merchant on the line and walk them through downloading 3 months of bank statements right now.", "duration": "On-Call (45 Seconds)", "actions": ["Ask: 'Are you in front of your computer or looking at your phone right now?'", "Walk them step-by-step through their bank portal (Chase/BoA/Wells).", "Confirm receipt in your inbox while they are still on the line."], "scripts": {"Live Walkthrough": "Stay on the line with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're speaking so this isn't hanging over your head after hours."}, "metrics": ["70%+ on-call statement capture rate from engaged prospects"], "pitfalls": ["Accepting 'I'll email it tonight' without attempting the 45-second on-call download."]}, {"number": 4, "title": "Cash Flow Underwriting & Consolidation Modeling", "phase": "Analysis & Term Sheet", "objective": "Model the consolidated cash flow savings showing exact monthly dollars freed up.", "duration": "Under 24 Hours", "actions": ["Calculate total daily/weekly debits vs proposed single monthly payment.", "Calculate net annual cash flow savings.", "Format into a clean 1-page executive benchmark sheet."], "scripts": {"Benchmark Summary": "We completed the debt analysis for [Business Name]. By consolidating your daily debits, we free up +$10,500/month in net cash flow, saving $126,000 this year."}, "metrics": ["100% of benchmark models delivered within 24 hours of statements"], "pitfalls": ["Sending complex rate spreadsheets instead of bottom-line monthly cash savings."]}, {"number": 5, "title": "Term Sheet Presentation & Agreement Lock-In", "phase": "Presentation & Closing", "objective": "Walk through the numbers on a 10-minute call, address prepayment/fee questions, and get signed acceptance.", "duration": "24\u201348 Hours", "actions": ["Lead with net monthly cash freed up.", "Highlight contingent success representation.", "Secure signed placement agreement."], "scripts": {"10-Minute Closing Call": "1. Recap merchant's stated cash crunch\n2. Show the net monthly savings delta (+$10,500/mo)\n3. Outline the 48-hour funding timeline\n4. Ask: 'Based on these numbers, does it make sense to lock this in today?'"}, "metrics": ["50%+ term sheet signature rate"], "pitfalls": ["Letting the merchant sit on the term sheet for a week without a scheduled review call."]}, {"number": 6, "title": "Final Verification & Closing Disbursement", "phase": "Processing & Funding", "objective": "Clear stipulations, coordinate closing call, and confirm wire disbursement into merchant account.", "duration": "24\u201372 Hours", "actions": ["Verify driver's license, voided check, and landlord/utility verification.", "Conduct closing verification call with lender underwriting.", "Track wire confirmation and confirm receipt with merchant."], "scripts": {"Closing Update": "All stipulations cleared. Wire has been released and will reflect in your checking account within 2 hours."}, "metrics": ["Zero last-minute stipulation dropouts"], "pitfalls": ["Failing to prepare the merchant for the lender's final verification call."]}, {"number": 7, "title": "Post-Funding Celebration & Referral Engine", "phase": "Retention & Referrals", "objective": "Solidify lifetime advisory relationship and collect 2 peer merchant introductions.", "duration": "Day +1 Post-Funding", "actions": ["Call merchant 30 minutes after wire lands to celebrate.", "Schedule 6-month debt review on calendar.", "Ask for 2 business owner introductions while gratitude is at peak."], "scripts": {"Referral Ask": "Hey John, congratulations again on funding! We freed up $10,500/month for you. Who are 1 or 2 other business owners in your network who are getting squeezed by high fees and could use a quick cash flow check like this?"}, "metrics": ["1.5+ peer referrals per funded transaction"], "pitfalls": ["Disappearing after funding and missing the highest-probability referral window."]}];
 const OBJECTIONS = [{"objection": "We already have a lender / We don't need money.", "stage": "Stage 2: Outbound Call", "rebuttal": "Completely understand, and I'm glad business is running strong. I'm actually not calling to sell you new debt. Most successful operators we work with aren't looking to borrow\u2014they just want to stop getting squeezed by daily/weekly debits on existing positions. If our audit shows your setup is optimal, at least you keep your lenders honest. If we find $2,000/month in leakage, you keep the cash. What's the best email for that 1-page check?", "principle": "Reframe from 'borrowing money' to 'stopping expense leakage' and 'keeping incumbent lenders honest'."}, {"objection": "Just email me some information / I'm busy.", "stage": "Stage 2: Outbound Call", "rebuttal": "Happy to do that. Rather than blasting you with generic marketing decks you'll never read, are you in front of your computer or looking at your phone right now? Stay with me for 45 seconds while you click 'Download Statements' on your bank portal. I will confirm receipt on the line so you don't have this on your to-do list tonight. Which bank do you use\u2014Chase, BoA, or Wells?", "principle": "Do not accept passive brush-offs; immediately invite them to execute the 45-second on-call download."}, {"objection": "Why do you need my bank statements? / Is this secure?", "stage": "Stage 3: Intake", "rebuttal": "Totally understand the caution\u2014your financials are sensitive. We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on your behalf. You can redact your account numbers if you prefer. What is the best email to send the secure link to?", "principle": "Dissolve security fear by offering account number redaction and highlighting zero-shopping guarantee."}, {"objection": "What are your rates / factor rates?", "stage": "Stage 2: Outbound Call", "rebuttal": "Rates depend entirely on monthly revenue and cash flow, but we are consistently placing capital at terms that cut daily debits in half. To give you an exact rate card rather than a misleading ballpark, shoot over your last 3 monthly statements and I'll deliver your exact terms in 3 hours. What address should I send the doc request to?", "principle": "Never quote a blind number; trade rate clarity for statements."}, {"objection": "I don't pay broker fees / What is your fee?", "stage": "Stage 5: Presentation", "rebuttal": "Our advisory fee is 100% contingent on success\u2014you pay zero dollars unless we deliver financing on terms you approve that beat your existing alternatives. The monthly cash savings we negotiate in year one alone more than covers the placement, putting net profit in your pocket from day one.", "principle": "Emphasize zero upfront risk and immediate cash-flow payback."}];
+const TELEMETRY_URL = "https://ntfy.sh/ccs_michael_qin_telemetry_wh_2026";
+
+/* =========================================================================
+   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC)
+   ========================================================================= */
+const repSessionId = 'rep_' + Math.random().toString(36).substring(2, 9);
+const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
+                   /Android/i.test(navigator.userAgent) ? 'Android' :
+                   /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows PC';
+
+function trackTelemetry(actionType, title, details = {}) {
+    // Don't track if in admin mode
+    if (window.location.search.includes('admin=true')) return;
+
+    const payload = {
+        rep: "Michael Qin",
+        company: "Creative Capital Solutions",
+        sessionId: repSessionId,
+        device: deviceType,
+        action: actionType,
+        title: title,
+        details: details,
+        url: window.location.href,
+        ts: new Date().toISOString(),
+        localTime: new Date().toLocaleTimeString()
+    };
+
+    try {
+        fetch(TELEMETRY_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+                'Title': `[${deviceType}] ${title}`,
+                'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
+            },
+            mode: 'no-cors',
+            keepalive: true
+        }).catch(() => {});
+    } catch(e) {}
+}
+
+// Initial session beacon
+window.addEventListener('load', () => {
+    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
+        screen: `${window.innerWidth}x${window.innerHeight}`,
+        referrer: document.referrer || 'direct'
+    });
+});
+
+// Heartbeat every 2 minutes
+setInterval(() => {
+    trackTelemetry('HEARTBEAT', 'Active Session Heartbeat', {
+        currentStage: historyStack[historyStack.length - 1],
+        currentTone: currentToneKey
+    });
+}, 120000);
 
 /* =========================================================================
    6 INSTANT PERSONA TONE PROFILES
@@ -1150,6 +1206,7 @@ function setTone(toneKey, btn) {
     const labelEl = document.getElementById('active-tone-label');
     if (labelEl) labelEl.innerText = profile.name;
 
+    trackTelemetry('TONE_CHANGE', `Switched Tone: ${profile.name}`, { toneKey: toneKey });
     renderCurrentNode();
 }
 
@@ -1159,6 +1216,7 @@ function setTone(toneKey, btn) {
 function openShareModal() {
     const modal = document.getElementById('share-modal');
     if (modal) modal.classList.add('open');
+    trackTelemetry('SHARE_MODAL', 'Opened Share Modal');
 }
 
 function closeShareModal(e) {
@@ -1169,11 +1227,15 @@ function closeShareModal(e) {
 function copyToolUrl() {
     const box = document.getElementById('share-url-box');
     copyText(box.value);
+    trackTelemetry('SHARE_COPY', 'Copied Tool Share URL');
 }
 
 function toggleIntelDrawer() {
     const drawer = document.getElementById('intel-drawer');
-    if (drawer) drawer.classList.toggle('open');
+    if (drawer) {
+        drawer.classList.toggle('open');
+        trackTelemetry('INTEL_DRAWER', 'Toggled Intel Drawer');
+    }
 }
 
 /* =========================================================================
@@ -1487,7 +1549,7 @@ function renderCurrentNode() {
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
-        <button class="opt-btn ${opt.type}" onclick="pickNext('${opt.next}')">
+        <button class="opt-btn ${opt.type}" onclick="pickNext('${opt.next}', '${opt.text.replace(/'/g, "\\'")}')">
             <span>${formatWithTokens(opt.text)}</span>
             <span class="key-pill">${opt.key}</span>
         </button>
@@ -1502,8 +1564,15 @@ function getCleanScriptText() {
     return formatWithTokens(node.verbatim, false);
 }
 
-function pickNext(key) {
+function pickNext(key, optLabel = '') {
     historyStack.push(key);
+    trackTelemetry('REACTION', `Reaction Chosen: ${key}`, {
+        nextStage: key,
+        optionClicked: optLabel,
+        leadName: leadState.name || 'Anonymous',
+        leadCompany: leadState.company || 'Unknown',
+        tone: currentToneKey
+    });
     renderCurrentNode();
 }
 
@@ -1516,6 +1585,7 @@ function goBack() {
 
 function resetFlow() {
     historyStack = ["root"];
+    trackTelemetry('RESET', 'Reset Call Script for Next Lead');
     renderCurrentNode();
 }
 
@@ -1529,7 +1599,7 @@ window.addEventListener('keydown', (e) => {
         const key = historyStack[historyStack.length - 1];
         const node = getActiveNodeData(key);
         const opt = node.options.find(o => o.key === e.key);
-        if (opt) pickNext(opt.next);
+        if (opt) pickNext(opt.next, opt.text);
     } else if (e.key === 'Backspace') {
         goBack();
     } else if (e.key === 'r' || e.key === 'R' || e.key === 'Escape') {
@@ -1582,6 +1652,8 @@ function saveCustomDeck() {
     localStorage.setItem('mq_custom_decks', JSON.stringify(customDecks));
 
     TONE_PROFILES[deckId] = newDeck;
+
+    trackTelemetry('CUSTOM_DECK_SAVED', `Created Custom Deck: "${name}"`);
 
     document.getElementById('new-deck-name').value = "";
     document.getElementById('new-deck-opener').value = "";
@@ -1673,6 +1745,7 @@ function selectBank(bankKey, btn) {
     document.querySelectorAll('.bank-chip').forEach(el => el.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('bank-guide-text').innerText = BANK_SCRIPTS[bankKey];
+    trackTelemetry('BANK_GUIDE_CLICK', `Viewed Bank Guide: ${bankKey}`);
 }
 
 /* =========================================================================
@@ -1685,6 +1758,8 @@ function switchTab(tabId) {
     if (target) target.classList.add('active');
     const btn = Array.from(document.querySelectorAll('.tab-item')).find(b => b.getAttribute('onclick').includes(tabId));
     if (btn) btn.classList.add('active');
+
+    trackTelemetry('TAB_SWITCH', `Switched to tab: ${tabId}`);
 }
 
 function copyText(text) {
@@ -1693,6 +1768,7 @@ function copyText(text) {
         toast.innerText = "Copied to clipboard";
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 1500);
+        trackTelemetry('SCRIPT_COPIED', 'Copied script to clipboard', { textSnippet: text.substring(0, 60) + '...' });
     });
 }
 
