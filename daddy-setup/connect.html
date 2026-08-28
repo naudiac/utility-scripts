@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tailscale Connect</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #e6edf3; font-family: -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card { max-width: 500px; width: 100%; text-align: center; }
+  h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .sub { color: #8b949e; font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
+  .box { background: #010409; border: 1px solid #30363d; border-radius: 12px; padding: 18px; margin-bottom: 16px; text-align: left; }
+  .box code { font-family: "Courier New", monospace; font-size: 12px; color: #79c0ff; display: block; line-height: 1.8; white-space: pre-wrap; word-break: break-all; }
+  .btn { display: block; width: 100%; background: #1565c0; color: #fff; border: none; border-radius: 12px; padding: 18px; font-size: 18px; font-weight: 800; cursor: pointer; transition: background .15s; }
+  .btn:hover { background: #1976d2; }
+  .btn.ok { background: #3fb950; }
+  .note { color: #8b949e; font-size: 12px; margin-top: 16px; line-height: 1.6; }
+  .note strong { color: #e6edf3; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>&#128225; Step 4 — Connect Tailscale</h1>
+  <p class="sub">Go to Termux, paste this command, press Enter.<br/>Tailscale connects automatically — no login needed.</p>
+  <div class="box">
+    <code>am start -a android.intent.action.VIEW -d 'tailscale://login/auth-key?key=tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3'</code>
+  </div>
+  <button class="btn" id="btn" onclick="copyIt()">&#128203; TAP TO COPY</button>
+  <p class="note">After pasting in Termux and pressing Enter:<br/><strong>Tailscale will open and show "Connected" — you&rsquo;re done!</strong></p>
+</div>
+<script>
+function copyIt() {
+  const cmd = "am start -a android.intent.action.VIEW -d 'tailscale://login/auth-key?key=tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3'";
+  navigator.clipboard.writeText(cmd).then(() => {
+    const b = document.getElementById('btn');
+    b.textContent = '✅ COPIED — Now paste in Termux!';
+    b.classList.add('ok');
+    setTimeout(() => { b.textContent = '📋 TAP TO COPY'; b.classList.remove('ok'); }, 4000);
+  });
+}
+</script>
+</body>
+</html>
