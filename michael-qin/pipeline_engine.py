@@ -2312,6 +2312,7 @@ window.addEventListener('DOMContentLoaded', () => {{
         <div class="action-group">
             <button class="pill-btn active" id="btn-toggle-sup" onclick="toggleSupervisorView()" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1; font-weight:700;">👤 Show My Activity: ON</button>
             <button class="btn-action secondary" onclick="toggleAudioChime()" id="btn-audio">🔔 Chimes: Off</button>
+            <button class="btn-action secondary" onclick="clearLocalFeed()">🗑️ Clear</button>
             <button class="btn-action" onclick="fetchRecentEvents()">🔄 Refresh</button>
         </div>
     </div>
@@ -2368,6 +2369,14 @@ function toggleSupervisorView() {{
     renderEventList();
 }}
 
+function clearLocalFeed() {{
+    rawEvents = [];
+    counters = {{ opens: 0, reactions: 0, copies: 0 }};
+    michaelLastSeen = null;
+    supervisorLastSeen = null;
+    updateUI();
+}}
+
 function toggleAudioChime() {{
     audioEnabled = !audioEnabled;
     const btn = document.getElementById('btn-audio');
@@ -2421,9 +2430,10 @@ function processEventData(data, isLive = false) {{
     if (!data || !data.action) return;
     if (data.url?.startsWith('file:')) return; // ignore local PDF builds
 
-    // Discard any older mock/diagnostic pings
+    // Discard any older mock/diagnostic pings and pre-deployment test sessions
     const isMock = (
         data.sessionId === 'test_verification' ||
+        data.sessionId === 'rep_a65ncny' ||
         data.sessionId?.startsWith('diag_test') ||
         data.sessionId?.startsWith('test_') ||
         data.device === 'Supervisor Diagnostic' ||
