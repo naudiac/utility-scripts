@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-Light & Clean Pro-Slate Edition with Live Lead Personalization.
-Allows 1-second entry of Contact Name, Company, and Industry with real-time script injection.
+Features 1-Click "Create Link / Share to Any Device" with QR Code, Native Share Sheet, and PWA shortcuts.
 """
 
 import os
@@ -91,7 +90,7 @@ class SalesPipelineSystem:
         --text-muted: #64748b;
         --text-sub: #94a3b8;
 
-        /* High-Legibility Tactical Colors on Light Theme */
+        /* Semantic Colors */
         --c-blue: #2563eb;
         --c-blue-bg: #eff6ff;
         --c-blue-border: #93c5fd;
@@ -171,15 +170,27 @@ class SalesPipelineSystem:
         font-weight: 800;
         color: var(--text-heading);
     }}
-    .hotkey-legend {{
-        font-size: 11px;
-        font-family: var(--font-mono);
-        color: var(--text-muted);
-        display: none;
+    .header-actions {{
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }}
-    @media (min-width: 640px) {{
-        .hotkey-legend {{ display: block; }}
+    .btn-share-main {{
+        background: #0f172a;
+        color: #ffffff;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: background 0.15s, transform 0.05s;
     }}
+    .btn-share-main:hover {{ background: #1e293b; }}
+    .btn-share-main:active {{ transform: scale(0.97); }}
 
     /* Quick Lead Input Bar */
     .lead-bar {{
@@ -623,6 +634,138 @@ class SalesPipelineSystem:
         margin-top: 2px;
     }}
 
+    /* =========================================================================
+       SHARE / ADD TO DEVICE MODAL
+       ========================================================================= */
+    .modal-overlay {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }}
+    .modal-overlay.open {{ display: flex; }}
+    
+    .modal-content {{
+        background: #ffffff;
+        border-radius: 12px;
+        max-width: 480px;
+        width: 100%;
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        position: relative;
+    }}
+    .modal-close {{
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: #f1f5f9;
+        border: none;
+        font-size: 16px;
+        font-weight: 700;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }}
+    .modal-close:hover {{ background: #e2e8f0; color: #000; }}
+    .modal-title {{
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text-heading);
+        margin-bottom: 4px;
+    }}
+    .modal-sub {{
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+    }}
+
+    .qr-container {{
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+    }}
+    .qr-img {{
+        width: 160px;
+        height: 160px;
+        border-radius: 6px;
+        background: #fff;
+        padding: 6px;
+        border: 1px solid var(--border);
+    }}
+
+    .link-copy-group {{
+        display: flex;
+        gap: 6px;
+        margin-bottom: 16px;
+    }}
+    .link-input {{
+        flex: 1;
+        background: #f8fafc;
+        border: 1px solid var(--border-dark);
+        color: var(--text-heading);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        outline: none;
+    }}
+    .btn-copy-url {{
+        background: var(--c-blue);
+        color: #ffffff;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+    }}
+    .btn-copy-url:hover {{ background: #1d4ed8; }}
+
+    .device-guide-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }}
+    .device-guide-item {{
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 11.5px;
+    }}
+    .guide-title {{
+        font-weight: 800;
+        color: var(--text-heading);
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }}
+    .guide-desc {{
+        color: var(--text-muted);
+        line-height: 1.35;
+    }}
+
     /* Toast */
     .toast {{
         position: fixed;
@@ -637,13 +780,13 @@ class SalesPipelineSystem:
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s ease;
-        z-index: 1000;
+        z-index: 2000;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }}
     .toast.show {{ opacity: 1; }}
 
     @media print {{
-        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear {{ display: none !important; }}
+        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear, .btn-share-main, .modal-overlay {{ display: none !important; }}
         body {{ background: #fff; color: #000; }}
         .hud-box, .card {{ border: 1px solid #ccc; background: #fff; box-shadow: none; }}
         .say-box, .copy-box {{ background: #fafafa; border: 1px solid #ddd; }}
@@ -659,8 +802,8 @@ class SalesPipelineSystem:
             <span class="brand-tag">MICHAEL QIN</span>
             <span class="rep-name">Sales Closer Flight Deck</span>
         </div>
-        <div class="hotkey-legend">
-            Keys: [1-6] React | [Space] Copy | [R] Reset Call
+        <div class="header-actions">
+            <button class="btn-share-main" onclick="openShareModal()">🔗 Create Link / Add to Device</button>
         </div>
     </div>
 </header>
@@ -887,11 +1030,80 @@ Michael Qin</div>
 
 </main>
 
+<!-- SHARE / CREATE LINK MODAL -->
+<div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeShareModal()">✕</button>
+        <div class="modal-title">📲 Add to Any Device / Create Link</div>
+        <div class="modal-sub">Open this flight deck instantly on your phone or work computer.</div>
+
+        <div class="qr-container">
+            <img class="qr-img" id="qr-code-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://naudiac.github.io/utility-scripts/michael-qin/">
+            <span style="font-size: 11.5px; font-weight: 700; color: var(--text-heading);">📷 Scan with Phone Camera to Open</span>
+        </div>
+
+        <div class="link-copy-group">
+            <input type="text" id="share-url-box" class="link-input" readonly value="https://naudiac.github.io/utility-scripts/michael-qin/">
+            <button class="btn-copy-url" onclick="copyToolUrl()">📋 Copy Link</button>
+        </div>
+
+        <div class="device-guide-grid">
+            <div class="device-guide-item">
+                <div class="guide-title">📱 iPhone / Safari</div>
+                <div class="guide-desc">Tap <strong>Share ➔ 'Add to Home Screen'</strong> to run as a full-screen app.</div>
+            </div>
+            <div class="device-guide-item">
+                <div class="guide-title">🤖 Android / Chrome</div>
+                <div class="guide-desc">Tap <strong>3-Dots ➔ 'Add to Home Screen'</strong> or 'Install App'.</div>
+            </div>
+            <div class="device-guide-item">
+                <div class="guide-title">💻 Windows / Dialer</div>
+                <div class="guide-desc">Press <strong>Ctrl+D</strong> to bookmark next to your autodialer window.</div>
+            </div>
+            <div class="device-guide-item">
+                <div class="guide-title">⚡ Native Share</div>
+                <div class="guide-desc"><a href="javascript:void(0)" onclick="triggerNativeShare()" style="color:var(--c-blue); font-weight:700; text-decoration:none;">Tap to AirDrop / SMS Link →</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="toast" class="toast">Copied to clipboard</div>
 
 <script>
 const STAGES = {stages_json};
 const OBJECTIONS = {objections_json};
+
+/* =========================================================================
+   SHARE MODAL LOGIC
+   ========================================================================= */
+function openShareModal() {{
+    const modal = document.getElementById('share-modal');
+    if (modal) modal.classList.add('open');
+}}
+
+function closeShareModal(e) {{
+    const modal = document.getElementById('share-modal');
+    if (modal) modal.classList.remove('open');
+}}
+
+function copyToolUrl() {{
+    const box = document.getElementById('share-url-box');
+    copyText(box.value);
+}}
+
+function triggerNativeShare() {{
+    const url = "https://naudiac.github.io/utility-scripts/michael-qin/";
+    if (navigator.share) {{
+        navigator.share({{
+            title: "Michael Qin - Sales Flight Deck",
+            text: "Real-time autodialer copilot & merchant statement extraction tool.",
+            url: url
+        }}).catch(() => {{}});
+    }} else {{
+        copyToolUrl();
+    }}
+}}
 
 /* =========================================================================
    DYNAMIC LEAD PERSONALIZATION
@@ -1470,7 +1682,7 @@ def main():
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[+] Successfully generated personalized light-theme portal: {portal_html_path}")
+    print(f"[+] Successfully generated portal with Create Link modal: {portal_html_path}")
 
     # Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
