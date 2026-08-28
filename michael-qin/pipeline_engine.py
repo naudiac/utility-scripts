@@ -1672,14 +1672,23 @@ function renderCurrentNode() {{
     document.getElementById('hud-step').innerText = `Step ${{historyStack.length}} of 4`;
 
     const btnGrid = document.getElementById('hud-options');
-    btnGrid.innerHTML = node.options.map(opt => `
-        <button class="opt-btn ${{opt.type}}" onclick="pickNext('${{opt.next}}', '${{opt.text.replace(/'/g, "\\\\'")}}')">
+    btnGrid.innerHTML = node.options.map((opt, idx) => `
+        <button class="opt-btn ${{opt.type}}" onclick="handleOptionClick(${{idx}})">
             <span>${{formatWithTokens(opt.text)}}</span>
             <span class="key-pill">${{opt.key}}</span>
         </button>
     `).join('');
 
     document.getElementById('btn-back').style.display = historyStack.length > 1 ? 'inline-block' : 'none';
+}}
+
+function handleOptionClick(idx) {{
+    const key = historyStack[historyStack.length - 1];
+    const node = getActiveNodeData(key);
+    const opt = node.options[idx];
+    if (opt) {{
+        pickNext(opt.next, opt.text);
+    }}
 }}
 
 function getCleanScriptText() {{
