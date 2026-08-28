@@ -4,47 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Michael Qin | Sales Flight Deck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-base: #0a0c10;
-        --bg-surface: #11141c;
-        --bg-card: #161b26;
-        --bg-input: #0b0d13;
-        --border: #232938;
-        --border-light: #323a4e;
+        --bg-base: #f8fafc;
+        --bg-surface: #ffffff;
+        --bg-card: #f1f5f9;
+        --bg-input: #ffffff;
         
-        /* Tactical Semantic Colors */
-        --c-green: #10b981;
-        --c-green-bg: #064e3b25;
-        --c-green-border: #059669;
-        
-        --c-red: #f43f5e;
-        --c-red-bg: #88133725;
-        --c-red-border: #e11d48;
-        
-        --c-yellow: #f59e0b;
-        --c-yellow-bg: #78350f25;
-        --c-yellow-border: #d97706;
-        
-        --c-blue: #38bdf8;
-        --c-blue-bg: #0c4a6e25;
-        --c-blue-border: #0284c7;
+        --border: #e2e8f0;
+        --border-dark: #cbd5e1;
+        --border-focus: #3b82f6;
 
-        --c-purple: #c084fc;
-        --c-purple-bg: #581c8725;
-        --c-purple-border: #9333ea;
-
-        --text-pure: #ffffff;
-        --text-primary: #e2e8f0;
-        --text-secondary: #94a3b8;
+        --text-heading: #0f172a;
+        --text-body: #334155;
         --text-muted: #64748b;
-        
-        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --text-sub: #94a3b8;
+
+        /* High-Legibility Tactical Colors on Light Theme */
+        --c-blue: #2563eb;
+        --c-blue-bg: #eff6ff;
+        --c-blue-border: #93c5fd;
+
+        --c-green: #059669;
+        --c-green-bg: #ecfdf5;
+        --c-green-border: #6ee7b7;
+
+        --c-red: #dc2626;
+        --c-red-bg: #fef2f2;
+        --c-red-border: #fca5a5;
+
+        --c-yellow: #d97706;
+        --c-yellow-bg: #fffbeb;
+        --c-yellow-border: #fcd34d;
+
+        --c-purple: #7c3aed;
+        --c-purple-bg: #f5f3ff;
+        --c-purple-border: #c4b5fd;
+
+        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -57,7 +59,7 @@
 
     body {
         background-color: var(--bg-base);
-        color: var(--text-primary);
+        color: var(--text-body);
         font-family: var(--font-sans);
         font-size: 14px;
         line-height: 1.5;
@@ -65,17 +67,18 @@
         min-height: 100vh;
     }
 
-    /* Top Navigation Bar */
+    /* Top Navigation Header */
     header {
         background: var(--bg-surface);
-        border-bottom: 2px solid var(--border);
+        border-bottom: 1px solid var(--border);
         padding: 10px 16px;
         position: sticky;
         top: 0;
         z-index: 50;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .header-inner {
-        max-width: 960px;
+        max-width: 980px;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -87,37 +90,93 @@
         gap: 8px;
     }
     .brand-tag {
-        background: var(--c-blue);
-        color: #000;
+        background: #0f172a;
+        color: #ffffff;
         font-size: 11px;
         font-weight: 800;
-        padding: 2px 6px;
-        border-radius: 4px;
+        padding: 3px 8px;
+        border-radius: 6px;
         font-family: var(--font-mono);
         text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     .rep-name {
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 800;
-        color: var(--text-pure);
+        color: var(--text-heading);
     }
     .hotkey-legend {
         font-size: 11px;
         font-family: var(--font-mono);
-        color: var(--text-secondary);
+        color: var(--text-muted);
         display: none;
     }
-    @media (min-width: 600px) {
+    @media (min-width: 640px) {
         .hotkey-legend { display: block; }
     }
 
+    /* Quick Lead Input Bar */
+    .lead-bar {
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 16px;
+    }
+    .lead-inner {
+        max-width: 980px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) auto;
+        gap: 8px;
+        align-items: center;
+    }
+    .lead-input-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .lead-label {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 2px;
+        letter-spacing: 0.3px;
+    }
+    .lead-input {
+        background: var(--bg-card);
+        border: 1px solid var(--border-dark);
+        color: var(--text-heading);
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.15s, background 0.15s;
+    }
+    .lead-input:focus {
+        border-color: var(--c-blue);
+        background: #ffffff;
+    }
+    .btn-clear {
+        background: var(--bg-card);
+        border: 1px solid var(--border-dark);
+        color: var(--text-muted);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        align-self: flex-end;
+        height: 31px;
+    }
+    .btn-clear:hover { color: var(--text-heading); background: #e2e8f0; }
+
     /* Tabs Navigation */
     .nav-tabs {
-        max-width: 960px;
+        max-width: 980px;
         margin: 0 auto;
         display: flex;
         gap: 6px;
-        padding: 10px 16px 0;
+        padding: 12px 16px 0;
         overflow-x: auto;
         scrollbar-width: none;
     }
@@ -127,10 +186,10 @@
         background: var(--bg-surface);
         border: 1px solid var(--border);
         border-bottom: none;
-        color: var(--text-secondary);
+        color: var(--text-muted);
         font-size: 12.5px;
         font-weight: 700;
-        padding: 8px 14px;
+        padding: 9px 14px;
         border-radius: 8px 8px 0 0;
         cursor: pointer;
         white-space: nowrap;
@@ -139,17 +198,19 @@
         gap: 6px;
         transition: all 0.1s ease;
     }
-    .tab-btn:hover { color: var(--text-pure); }
+    .tab-btn:hover { color: var(--text-heading); }
     .tab-btn.active {
-        background: var(--bg-card);
+        background: var(--bg-surface);
         color: var(--c-blue);
-        border-color: var(--c-blue-border);
-        border-bottom: 2px solid var(--bg-card);
+        border-color: var(--border);
+        border-top: 2px solid var(--c-blue);
+        border-bottom: 2px solid var(--bg-surface);
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.02);
     }
 
     /* Main Container */
     main {
-        max-width: 960px;
+        max-width: 980px;
         margin: 0 auto;
         padding: 14px 16px;
     }
@@ -158,17 +219,18 @@
     .tab-pane.active { display: block; }
 
     /* =========================================================================
-       COLOR-CODED DIALER HUD
+       DIALER COPILOT HUD (LIGHT THEME)
        ========================================================================= */
     .hud-box {
         background: var(--bg-surface);
-        border: 2px solid var(--border-light);
+        border: 1px solid var(--border-dark);
         border-radius: 10px;
-        padding: 16px;
+        padding: 18px;
         margin-bottom: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     @media (min-width: 640px) {
-        .hud-box { padding: 20px; }
+        .hud-box { padding: 22px; }
     }
 
     .hud-header {
@@ -196,12 +258,12 @@
         color: var(--text-muted);
     }
 
-    /* Verbatim Box (What You Say) */
+    /* What You Say Out Loud */
     .say-box {
-        background: #080b12;
+        background: #f8fafc;
         border: 2px solid var(--c-blue-border);
         border-radius: 8px;
-        padding: 16px;
+        padding: 18px;
         margin-bottom: 16px;
         position: relative;
     }
@@ -210,45 +272,53 @@
         align-items: center;
         gap: 5px;
         background: var(--c-blue);
-        color: #000;
-        font-size: 10px;
-        font-weight: 900;
+        color: #ffffff;
+        font-size: 10.5px;
+        font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        padding: 2px 7px;
+        padding: 2px 8px;
         border-radius: 4px;
         margin-bottom: 10px;
     }
     .say-text {
         font-size: 18px;
         font-weight: 700;
-        color: var(--text-pure);
-        line-height: 1.45;
+        color: #0f172a;
+        line-height: 1.5;
         white-space: pre-wrap;
     }
     @media (max-width: 600px) {
         .say-text { font-size: 15px; line-height: 1.4; }
     }
+    .say-text .token-highlight {
+        background: #fef08a;
+        color: #854d0e;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-weight: 800;
+    }
 
-    /* Tactical Cue Bar */
+    /* Tactical Tip */
     .tactical-bar {
         background: var(--c-purple-bg);
-        border-left: 3px solid var(--c-purple);
+        border-left: 4px solid var(--c-purple);
         border-radius: 0 4px 4px 0;
-        padding: 6px 10px;
+        padding: 7px 12px;
         margin-top: 12px;
-        font-size: 11.5px;
-        color: var(--c-purple);
+        font-size: 12px;
+        color: #581c87;
+        font-weight: 600;
         display: flex;
         align-items: center;
         gap: 6px;
     }
 
-    /* Response Options Grid */
+    /* Reaction Options Grid */
     .options-label {
-        font-size: 11px;
+        font-size: 11.5px;
         font-weight: 800;
-        color: var(--text-secondary);
+        color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 8px;
@@ -267,7 +337,7 @@
     }
 
     .opt-btn {
-        background: var(--bg-card);
+        background: var(--bg-surface);
         border: 2px solid var(--border);
         padding: 12px 14px;
         border-radius: 8px;
@@ -278,52 +348,53 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: transform 0.05s, filter 0.1s;
+        transition: transform 0.05s, box-shadow 0.1s;
     }
+    .opt-btn:hover { box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .opt-btn:active { transform: scale(0.98); }
 
-    /* Color Categories */
+    /* Colors on Light Theme */
     .opt-btn.pos {
         background: var(--c-green-bg);
         border-color: var(--c-green-border);
-        color: #6ee7b7;
+        color: #065f46;
     }
     .opt-btn.pos .key-pill {
         background: var(--c-green);
-        color: #000;
+        color: #ffffff;
     }
 
     .opt-btn.neg {
         background: var(--c-red-bg);
         border-color: var(--c-red-border);
-        color: #fda4af;
+        color: #991b1b;
     }
     .opt-btn.neg .key-pill {
         background: var(--c-red);
-        color: #000;
+        color: #ffffff;
     }
 
     .opt-btn.amber {
         background: var(--c-yellow-bg);
         border-color: var(--c-yellow-border);
-        color: #fcd34d;
+        color: #92400e;
     }
     .opt-btn.amber .key-pill {
         background: var(--c-yellow);
-        color: #000;
+        color: #ffffff;
     }
 
     .key-pill {
         font-family: var(--font-mono);
         font-size: 11px;
-        font-weight: 900;
+        font-weight: 800;
         padding: 2px 7px;
         border-radius: 4px;
         margin-left: 8px;
         flex-shrink: 0;
     }
 
-    /* Bottom HUD Controls */
+    /* Bottom HUD Foot */
     .hud-foot {
         display: flex;
         justify-content: space-between;
@@ -332,31 +403,32 @@
         border-top: 1px solid var(--border);
     }
     .btn-nav {
-        background: #1c2230;
-        border: 1px solid var(--border-light);
-        color: var(--text-primary);
+        background: var(--bg-card);
+        border: 1px solid var(--border-dark);
+        color: var(--text-body);
         padding: 7px 12px;
         border-radius: 6px;
         font-size: 12px;
         font-weight: 700;
         cursor: pointer;
     }
-    .btn-nav:hover { background: #252e42; color: #fff; }
+    .btn-nav:hover { background: #e2e8f0; color: var(--text-heading); }
 
     /* =========================================================================
-       COLOR CODED STATEMENT HUBS & TABS
+       CARDS & UTILITIES (LIGHT THEME)
        ========================================================================= */
     .card {
         background: var(--bg-surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 16px;
+        border: 1px solid var(--border-dark);
+        border-radius: 10px;
+        padding: 18px;
         margin-bottom: 14px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .card-title {
         font-size: 14px;
         font-weight: 800;
-        color: var(--text-pure);
+        color: var(--text-heading);
         margin-bottom: 10px;
         display: flex;
         align-items: center;
@@ -372,7 +444,7 @@
     .bank-chip {
         background: var(--bg-card);
         border: 1.5px solid var(--border);
-        color: var(--text-secondary);
+        color: var(--text-muted);
         padding: 7px 14px;
         border-radius: 6px;
         font-size: 12px;
@@ -380,66 +452,66 @@
         cursor: pointer;
     }
     .bank-chip.active.chase {
-        background: #0b3a75;
-        border-color: #1e6bd6;
-        color: #fff;
+        background: #1e40af;
+        border-color: #1e3a8a;
+        color: #ffffff;
     }
     .bank-chip.active.boa {
-        background: #6e1010;
-        border-color: #e02424;
-        color: #fff;
+        background: #b91c1c;
+        border-color: #991b1b;
+        color: #ffffff;
     }
     .bank-chip.active.wells {
-        background: #6e5005;
-        border-color: #d97706;
-        color: #fff;
+        background: #b45309;
+        border-color: #92400e;
+        color: #ffffff;
     }
     .bank-chip.active.universal {
-        background: #3b1464;
-        border-color: #9333ea;
-        color: #fff;
+        background: #6d28d9;
+        border-color: #5b21b6;
+        color: #ffffff;
     }
 
     .copy-box {
-        background: #080a0f;
+        background: #f8fafc;
         border: 1px solid var(--border);
         border-left: 4px solid var(--c-blue);
         border-radius: 6px;
-        padding: 12px;
+        padding: 14px;
         margin: 8px 0;
         position: relative;
     }
-    .copy-box.green-box { border-left-color: var(--c-green); }
-    .copy-box.red-box { border-left-color: var(--c-red); }
-    .copy-box.yellow-box { border-left-color: var(--c-yellow); }
+    .copy-box.green-box { border-left-color: var(--c-green); background: #f0fdf4; }
+    .copy-box.red-box { border-left-color: var(--c-red); background: #fef2f2; }
+    .copy-box.yellow-box { border-left-color: var(--c-yellow); background: #fffbeb; }
 
     .copy-text {
         font-size: 13px;
-        color: var(--text-primary);
+        color: #1e293b;
         white-space: pre-wrap;
-        line-height: 1.5;
+        line-height: 1.55;
     }
     .btn-copy {
         position: absolute;
         top: 8px;
         right: 8px;
-        background: #1c2230;
-        border: 1px solid var(--border-light);
-        color: var(--text-secondary);
+        background: #ffffff;
+        border: 1px solid var(--border-dark);
+        color: var(--text-muted);
         font-size: 11px;
         font-weight: 700;
-        padding: 2px 7px;
+        padding: 3px 8px;
         border-radius: 4px;
         cursor: pointer;
     }
-    .btn-copy:hover { color: #fff; border-color: var(--c-blue); }
+    .btn-copy:hover { color: var(--text-heading); border-color: var(--c-blue); }
 
-    /* Calculator Grid */
+    /* Calculator */
     .calc-inputs {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 10px;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
     }
     .calc-box label {
         display: block;
@@ -451,34 +523,35 @@
     }
     .calc-box input {
         width: 100%;
-        background: #080a0f;
-        border: 1.5px solid var(--border);
-        color: #fff;
+        background: #ffffff;
+        border: 1.5px solid var(--border-dark);
+        color: var(--text-heading);
         padding: 8px 10px;
         border-radius: 6px;
         font-family: var(--font-mono);
         font-size: 14px;
+        font-weight: 700;
     }
     .calc-box input:focus { outline: none; border-color: var(--c-blue); }
 
     .calc-metrics {
-        background: #080b12;
-        border: 1.5px solid var(--border);
+        background: #f8fafc;
+        border: 1.5px solid var(--border-dark);
         border-radius: 8px;
-        padding: 14px;
+        padding: 16px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
         text-align: center;
     }
     .metric-val {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 900;
         font-family: var(--font-mono);
     }
     .metric-lbl {
         font-size: 10px;
-        font-weight: 700;
+        font-weight: 800;
         color: var(--text-muted);
         text-transform: uppercase;
         margin-top: 2px;
@@ -489,23 +562,24 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: var(--c-green);
-        color: #000;
-        font-weight: 800;
+        background: #0f172a;
+        color: #ffffff;
+        font-weight: 700;
         font-size: 12px;
-        padding: 6px 14px;
+        padding: 7px 16px;
         border-radius: 6px;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s ease;
         z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .toast.show { opacity: 1; }
 
     @media print {
-        header, .nav-tabs, .btn-nav, .btn-copy { display: none !important; }
+        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear { display: none !important; }
         body { background: #fff; color: #000; }
-        .hud-box, .card { border: 1px solid #ccc; background: #fff; }
+        .hud-box, .card { border: 1px solid #ccc; background: #fff; box-shadow: none; }
         .say-box, .copy-box { background: #fafafa; border: 1px solid #ddd; }
         .say-text, .copy-text { color: #000; }
     }
@@ -520,10 +594,29 @@
             <span class="rep-name">Sales Closer Flight Deck</span>
         </div>
         <div class="hotkey-legend">
-            Keys: [1-6] Reactions | [Space] Copy Line | [R] Reset
+            Keys: [1-6] React | [Space] Copy | [R] Reset Call
         </div>
     </div>
 </header>
+
+<!-- Quick Lead Personalization Bar -->
+<div class="lead-bar">
+    <div class="lead-inner">
+        <div class="lead-input-group">
+            <span class="lead-label">Contact / Owner Name</span>
+            <input type="text" id="lead-name" class="lead-input" placeholder="e.g. John" oninput="updatePersonalization()">
+        </div>
+        <div class="lead-input-group">
+            <span class="lead-label">Company / Merchant Name</span>
+            <input type="text" id="lead-company" class="lead-input" placeholder="e.g. Apex Logistics" oninput="updatePersonalization()">
+        </div>
+        <div class="lead-input-group">
+            <span class="lead-label">Industry / Niche</span>
+            <input type="text" id="lead-industry" class="lead-input" placeholder="e.g. Trucking / Logistics" oninput="updatePersonalization()">
+        </div>
+        <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
+    </div>
+</div>
 
 <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('tab-hud')">🎙️ Dialer Copilot</button>
@@ -536,7 +629,7 @@
 
 <main>
 
-    <!-- TAB 1: COLOR-CODED DIALER HUD -->
+    <!-- TAB 1: DIALER COPILOT -->
     <div id="tab-hud" class="tab-pane active">
         <div class="hud-box">
             <div class="hud-header">
@@ -549,14 +642,14 @@
                 <div class="say-label">🗣️ WHAT YOU SAY OUT LOUD</div>
                 <div class="say-text" id="hud-verbatim">"Hey [Name], I will be brief. I know I am calling out of the blue.
 
-I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in your industry right now to lower their daily/weekly debits and clean up expensive debt."</div>
+I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up expensive debt."</div>
                 <div class="tactical-bar" id="hud-bar">
                     <span>💡</span>
                     <span id="hud-tactical">Speak with calm authority, like an underwriting auditor checking figures.</span>
                 </div>
             </div>
 
-            <!-- What They Say (Color-Coded) -->
+            <!-- What They Say -->
             <div class="options-label">
                 <span>👉 WHAT DID THE PROSPECT SAY?</span>
                 <span>(Press Number Key or Tap)</span>
@@ -569,24 +662,24 @@ I work on the commercial capital placement side, and the reason for the call is 
             <div class="hud-foot">
                 <button class="btn-nav" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
                 <div style="display: flex; gap: 6px; margin-left: auto;">
-                    <button class="btn-nav" onclick="copyText(document.getElementById('hud-verbatim').innerText)">📋 Copy Line (Space)</button>
+                    <button class="btn-nav" onclick="copyText(getCleanScriptText())">📋 Copy Line (Space)</button>
                     <button class="btn-nav" onclick="resetFlow()">🔄 Reset Call (R)</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- TAB 2: STATEMENT EXTRACTION HUB -->
+    <!-- TAB 2: STATEMENT EXTRACTION -->
     <div id="tab-statement" class="tab-pane">
         <div class="card">
             <div class="card-title">🚀 45-Second On-Call Statement Extraction Protocol</div>
-            <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 12px;">
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
                 Never let an interested merchant hang up with a vague "I'll do it later." Walk them through exporting their 3 PDF statements while on the phone.
             </p>
 
             <div class="copy-box green-box">
                 <div style="font-size: 11px; font-weight: 800; color: var(--c-green); text-transform: uppercase; margin-bottom: 4px;">The Live Phone Walkthrough Line</div>
-                <div class="copy-text">"John, are you in front of your computer or looking at your phone right now?
+                <div class="copy-text" id="stmt-walkthrough-text">"John, are you in front of your computer or looking at your phone right now?
 
 Stay on with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're on the line so this isn't hanging over your head tonight.
 
@@ -615,7 +708,7 @@ Which bank do you use for operations—Chase, Bank of America, or Wells?"</div>
         <div class="card">
             <div class="card-title">🛡️ The "Loss Aversion" Rebuttal (Chris Voss)</div>
             <div class="copy-box yellow-box">
-                <div class="copy-text">"John, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
+                <div class="copy-text" id="loss-aversion-text">"John, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
 
 If our review shows your current setup is already optimal, I will tell you to keep it. But if you're leaking $2,500 a month in excessive factor fees or daily debits, wouldn't you want to know by tomorrow morning?
 
@@ -680,17 +773,17 @@ Let me send you a secure request link right now. What's the best email?"</div>
             
             <div style="font-size: 11px; font-weight: 800; color: var(--c-green); text-transform: uppercase; margin-top: 10px;">Day 1: Instant Post-Call SMS</div>
             <div class="copy-box green-box">
-                <div class="copy-text">"Hi [Name], Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit, just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."</div>
+                <div class="copy-text" id="cadence-sms1">"Hi [Name], Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for [Company], just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."</div>
                 <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
 
             <div style="font-size: 11px; font-weight: 800; color: var(--c-yellow); text-transform: uppercase; margin-top: 14px;">Day 3: Midday Leakage Check-In</div>
             <div class="copy-box yellow-box">
-                <div class="copy-text">Subject: Quick question regarding [Business Name] cash flow
+                <div class="copy-text" id="cadence-email1">Subject: Quick question regarding [Company] cash flow
 
 Hi [Name],
 
-Following up on our conversation regarding restructuring your operating debt. 
+Following up on our conversation regarding restructuring your operating debt for [Company]. 
 
 Our underwriting desk locks weekly merchant placement tiers every Thursday at 4 PM. If you shoot over your 3 bank statements today, I can have your term sheet approved before the weekend.
 
@@ -703,11 +796,11 @@ Michael Qin</div>
 
             <div style="font-size: 11px; font-weight: 800; color: var(--c-red); text-transform: uppercase; margin-top: 14px;">Day 8: Permission-to-Close Breakup</div>
             <div class="copy-box red-box">
-                <div class="copy-text">Subject: Closing your file / [Business Name]
+                <div class="copy-text" id="cadence-email2">Subject: Closing your file / [Company]
 
 Hi [Name],
 
-I assume restructuring your working capital isn't a priority right now, so I will close out your file.
+I assume restructuring your working capital isn't a priority right now, so I will close out your file for [Company].
 
 If daily debits ever start squeezing your cash flow down the road, feel free to reach out anytime.
 
@@ -735,14 +828,116 @@ const STAGES = [{"number": 1, "title": "Lead Sourcing & Merchant Discovery", "ph
 const OBJECTIONS = [{"objection": "We already have a lender / We don't need money.", "stage": "Stage 2: Outbound Call", "rebuttal": "Completely understand, and I'm glad business is running strong. I'm actually not calling to sell you new debt. Most successful operators we work with aren't looking to borrow\u2014they just want to stop getting squeezed by daily/weekly debits on existing positions. If our audit shows your setup is optimal, at least you keep your lenders honest. If we find $2,000/month in leakage, you keep the cash. What's the best email for that 1-page check?", "principle": "Reframe from 'borrowing money' to 'stopping expense leakage' and 'keeping incumbent lenders honest'."}, {"objection": "Just email me some information / I'm busy.", "stage": "Stage 2: Outbound Call", "rebuttal": "Happy to do that. Rather than blasting you with generic marketing decks you'll never read, are you in front of your computer or looking at your phone right now? Stay with me for 45 seconds while you click 'Download Statements' on your bank portal. I will confirm receipt on the line so you don't have this on your to-do list tonight. Which bank do you use\u2014Chase, BoA, or Wells?", "principle": "Do not accept passive brush-offs; immediately invite them to execute the 45-second on-call download."}, {"objection": "Why do you need my bank statements? / Is this secure?", "stage": "Stage 3: Intake", "rebuttal": "Totally understand the caution\u2014your financials are sensitive. We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on your behalf. You can redact your account numbers if you prefer. What is the best email to send the secure link to?", "principle": "Dissolve security fear by offering account number redaction and highlighting zero-shopping guarantee."}, {"objection": "What are your rates / factor rates?", "stage": "Stage 2: Outbound Call", "rebuttal": "Rates depend entirely on monthly revenue and cash flow, but we are consistently placing capital at terms that cut daily debits in half. To give you an exact rate card rather than a misleading ballpark, shoot over your last 3 monthly statements and I'll deliver your exact terms in 3 hours. What address should I send the doc request to?", "principle": "Never quote a blind number; trade rate clarity for statements."}, {"objection": "I don't pay broker fees / What is your fee?", "stage": "Stage 5: Presentation", "rebuttal": "Our advisory fee is 100% contingent on success\u2014you pay zero dollars unless we deliver financing on terms you approve that beat your existing alternatives. The monthly cash savings we negotiate in year one alone more than covers the placement, putting net profit in your pocket from day one.", "principle": "Emphasize zero upfront risk and immediate cash-flow payback."}];
 
 /* =========================================================================
-   COLOR-CODED CALL TREE ENGINE
+   DYNAMIC LEAD PERSONALIZATION
+   ========================================================================= */
+let leadState = {
+    name: "",
+    company: "",
+    industry: ""
+};
+
+function getEffectiveTokens() {
+    return {
+        name: leadState.name.trim() || "John",
+        company: leadState.company.trim() || "your company",
+        industry: leadState.industry.trim() || "your industry"
+    };
+}
+
+function formatWithTokens(templateStr, highlight = false) {
+    const t = getEffectiveTokens();
+    let res = templateStr;
+
+    if (highlight && leadState.name.trim()) {
+        res = res.replaceAll("[Name]", `<span class="token-highlight">${t.name}</span>`);
+    } else {
+        res = res.replaceAll("[Name]", t.name);
+    }
+
+    if (highlight && leadState.company.trim()) {
+        res = res.replaceAll("[Company]", `<span class="token-highlight">${t.company}</span>`);
+    } else {
+        res = res.replaceAll("[Company]", t.company);
+    }
+
+    if (highlight && leadState.industry.trim()) {
+        res = res.replaceAll("[Industry]", `<span class="token-highlight">${t.industry}</span>`);
+    } else {
+        res = res.replaceAll("[Industry]", t.industry);
+    }
+
+    return res;
+}
+
+function updatePersonalization() {
+    leadState.name = document.getElementById('lead-name').value;
+    leadState.company = document.getElementById('lead-company').value;
+    leadState.industry = document.getElementById('lead-industry').value;
+
+    renderCurrentNode();
+    updateCadenceSnippets();
+}
+
+function clearLeadInputs() {
+    document.getElementById('lead-name').value = "";
+    document.getElementById('lead-company').value = "";
+    document.getElementById('lead-industry').value = "";
+    leadState = { name: "", company: "", industry: "" };
+    updatePersonalization();
+}
+
+function updateCadenceSnippets() {
+    const t = getEffectiveTokens();
+    const sms1 = `"Hi ${t.name}, Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for ${t.company}, just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."`;
+    const email1 = `Subject: Quick question regarding ${t.company} cash flow
+
+Hi ${t.name},
+
+Following up on our conversation regarding restructuring your operating debt for ${t.company}.
+
+Our underwriting desk locks weekly merchant placement tiers every Thursday at 4 PM. If you shoot over your 3 bank statements today, I can have your term sheet approved before the weekend.
+
+Let me know if you need help pulling the PDFs from Chase/BoA.
+
+Best,
+Michael Qin`;
+    const email2 = `Subject: Closing your file / ${t.company}
+
+Hi ${t.name},
+
+I assume restructuring your working capital isn't a priority right now, so I will close out your file for ${t.company}.
+
+If daily debits ever start squeezing your cash flow down the road, feel free to reach out anytime.
+
+Best regards,
+Michael Qin`;
+    const stmtWalk = `"${t.name}, are you in front of your computer or looking at your phone right now?
+
+Stay on with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're on the line so this isn't hanging over your head tonight.
+
+Which bank do you use for operations—Chase, Bank of America, or Wells?"`;
+    const lossAv = `"${t.name}, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
+
+If our review shows your current setup is already optimal, I will tell you to keep it. But if you're leaking $2,500 a month in excessive factor fees or daily debits, wouldn't you want to know by tomorrow morning?
+
+Let me send you a secure request link right now. What's the best email?"`;
+
+    const el1 = document.getElementById('cadence-sms1'); if(el1) el1.innerText = sms1;
+    const el2 = document.getElementById('cadence-email1'); if(el2) el2.innerText = email1;
+    const el3 = document.getElementById('cadence-email2'); if(el3) el3.innerText = email2;
+    const el4 = document.getElementById('stmt-walkthrough-text'); if(el4) el4.innerText = stmtWalk;
+    const el5 = document.getElementById('loss-aversion-text'); if(el5) el5.innerText = lossAv;
+}
+
+/* =========================================================================
+   CALL FLOW TREE (WITH TEMPLATE TOKENS)
    ========================================================================= */
 const CALL_FLOW = {
     "root": {
         stage: "Stage 1: Opening (0-5s)",
         verbatim: `"Hey [Name], I will be brief. I know I am calling out of the blue.
 
-I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in your industry right now to lower their daily/weekly debits and clean up expensive debt."`,
+I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up expensive debt."`,
         tactical: "Speak with calm authority, like an underwriting auditor checking figures.",
         options: [
             { text: `"Who is this / What company?"`, key: "1", next: "who_is_this", type: "pos" },
@@ -758,7 +953,7 @@ I work on the commercial capital placement side, and the reason for the call is 
         stage: "Stage 2: Identity & Disarm (6-15s)",
         verbatim: `"I'm Michael Qin with Capital Placement Advisory. We specialize in commercial working capital and restructuring high-cost merchant debt.
 
-The reason I reached out directly is because we just restructured financing for a business in your exact space, cutting their monthly debt payment by 40%.
+The reason I reached out directly to [Company] is because we just restructured financing for a business in [Industry], cutting their monthly debt payment by 40%.
 
 I'm not asking for your business today—I just want to run a free debt audit against your last 3 statements to show you what you could save.
 
@@ -773,7 +968,7 @@ Where should I email the benchmark sheet?"`,
 
     "aligned_hook": {
         stage: "Stage 2: Core Value & Risk Reversal",
-        verbatim: `"I'm not asking you to commit to anything today. My model is simple: I only get paid if we actually deliver terms and lower payments that beat what you currently have.
+        verbatim: `"I'm not asking you to commit to anything today. My model is simple: I only get paid if we actually deliver terms and lower payments that beat what you currently have at [Company].
 
 If you shoot over your last 3 monthly statements, I will run a side-by-side comparison within 24 hours showing your exact monthly cash flow savings.
 
@@ -788,9 +983,9 @@ What is the best email to send that breakdown to?"`,
 
     "dont_need_money": {
         stage: "Pivot: No Borrowing Needed",
-        verbatim: `"Completely understand, and I'm glad business is healthy. I'm actually not calling to sell you new debt.
+        verbatim: `"Completely understand [Name], and I'm glad [Company] is running strong. I'm actually not calling to sell you new debt.
 
-Most successful merchants we work with aren't looking to borrow—they just want to stop getting squeezed by high fees and daily debits on existing positions.
+Most successful operators we work with aren't looking to borrow—they just want to stop getting squeezed by high fees and daily debits on existing positions.
 
 If our audit shows your current setup is optimal, at least you keep your lenders honest. If we find \$2,000 a month in leakage, you keep the cash.
 
@@ -804,11 +999,11 @@ What's the best email for that 1-page check?"`,
 
     "just_email_me": {
         stage: "Pivot: 'Send Info' Deflection",
-        verbatim: `"Happy to do that. Rather than sending a generic PDF deck that will sit in your spam, are you in front of your computer or on your phone right now?
+        verbatim: `"Happy to do that [Name]. Rather than sending a generic PDF deck that will sit in your spam, are you in front of your computer or on your phone right now?
 
 Stay with me for 45 seconds while you click 'Download Statements' on your bank portal. I will confirm receipt on the line so you don't have this on your to-do list tonight.
 
-Which bank do you use—Chase, BoA, or Wells?"`,
+Which bank do you use for [Company]—Chase, BoA, or Wells?"`,
         tactical: "Never let them off the phone without asking for the 45-second on-call download.",
         options: [
             { text: `"I'm on my computer now / Exporting"`, key: "1", next: "win_on_call_download", type: "pos" },
@@ -818,7 +1013,7 @@ Which bank do you use—Chase, BoA, or Wells?"`,
 
     "what_rates": {
         stage: "Pricing Hook & Trade-Off",
-        verbatim: `"Rates depend entirely on monthly revenue and cash flow, but we are consistently placing capital at single-digit to low-spread terms that cut daily debits in half.
+        verbatim: `"Rates depend entirely on monthly revenue and cash flow for [Company], but we are consistently placing capital at terms that cut daily debits in half.
 
 To give you an exact rate card rather than a misleading ballpark, shoot over your last 3 monthly statements and I'll deliver your exact terms in 3 hours.
 
@@ -832,9 +1027,9 @@ What address should I send the doc request to?"`,
 
     "statement_pushback": {
         stage: "Statement Hesitation Rebuttal",
-        verbatim: `"Totally understand the caution—your financials are sensitive. 
+        verbatim: `"Totally understand the caution [Name]—your company financials are sensitive. 
 
-We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on your behalf.
+We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on behalf of [Company].
 
 You can redact your account numbers if you prefer. What is the best email to send the secure link to?"`,
         tactical: "Offer account number redaction to instantly eliminate security friction.",
@@ -847,7 +1042,7 @@ You can redact your account numbers if you prefer. What is the best email to sen
         stage: "🎉 Win: Email Captured & Live Statement Ask",
         verbatim: `"Got that down. I just sent the direct link to [Email].
 
-While I have you for 30 seconds, are you able to click 'Forward' on your last 3 monthly PDFs right now so I can prioritize your file for tomorrow morning's underwriting committee?"`,
+While I have you for 30 seconds [Name], are you able to click 'Forward' on your last 3 monthly PDFs right now so I can prioritize [Company] for tomorrow morning's underwriting committee?"`,
         tactical: "Strike immediately while you have their attention on the phone.",
         options: [
             { text: `"Doing it right now on the phone"`, key: "1", next: "win_on_call_download", type: "pos" },
@@ -857,11 +1052,11 @@ While I have you for 30 seconds, are you able to click 'Forward' on your last 3 
 
     "win_on_call_download": {
         stage: "🏆 Complete Win: Statements Received Live",
-        verbatim: `"Boom, I see the 3 PDFs in my inbox right now.
+        verbatim: `"Boom, I see the 3 PDFs for [Company] in my inbox right now.
 
 I will personally run the cash flow model and have your benchmark savings breakdown in your inbox by tomorrow morning.
 
-Thank you John, speak tomorrow!"`,
+Thank you [Name], speak tomorrow!"`,
         tactical: "Confirm receipt and close the call on a high note.",
         options: [
             { text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }
@@ -870,7 +1065,7 @@ Thank you John, speak tomorrow!"`,
 
     "win_deadline_set": {
         stage: "⏰ Win: 4 PM Underwriting Deadline Locked",
-        verbatim: `"Perfect John. I will hold a spot with our credit desk for 4 PM today. As soon as you email those 3 PDFs, I will get you to the front of the queue.
+        verbatim: `"Perfect [Name]. I will hold a spot with our credit desk for 4 PM today. As soon as you email those 3 PDFs, I will get [Company] to the front of the queue.
 
 Look out for my text message with the direct upload email. Have a great day!"`,
         tactical: "Send Day 1 SMS within 60 seconds.",
@@ -881,7 +1076,7 @@ Look out for my text message with the direct upload email. Have a great day!"`,
 
     "send_sms_link": {
         stage: "Mobile Fallback: Direct 1-Click SMS",
-        verbatim: `"Understood John, drive safe. I am texting my direct email and a 2-click statement link to this mobile number right now.
+        verbatim: `"Understood [Name], drive safe. I am texting my direct email and a 2-click statement link to this mobile number right now.
 
 Reply with the 3 PDFs when you're back at your desk and I'll jump on it immediately."`,
         tactical: "Send SMS immediately while your voice is fresh in their head.",
@@ -892,7 +1087,7 @@ Reply with the 3 PDFs when you're back at your desk and I'll jump on it immediat
 
     "hard_no": {
         stage: "Graceful Exit & Long-Term Seed",
-        verbatim: `"Totally respect that John. I'll leave you to your day. If cash flow ever gets tight down the road, you have my number. Have a great week!"`,
+        verbatim: `"Totally respect that [Name]. I'll leave you to your day. If cash flow ever gets tight down the road, you have my number. Have a great week!"`,
         tactical: "Never show frustration. Elite closers always leave the door wide open.",
         options: [
             { text: `Reset for Next Call (R)`, key: "1", next: "root", type: "pos" }
@@ -907,19 +1102,25 @@ function renderCurrentNode() {
     const node = CALL_FLOW[key] || CALL_FLOW["root"];
 
     document.getElementById('hud-stage').innerText = node.stage;
-    document.getElementById('hud-verbatim').innerText = node.verbatim;
+    document.getElementById('hud-verbatim').innerHTML = formatWithTokens(node.verbatim, true);
     document.getElementById('hud-tactical').innerText = node.tactical;
     document.getElementById('hud-step').innerText = `Step ${historyStack.length}`;
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
         <button class="opt-btn ${opt.type}" onclick="pickNext('${opt.next}')">
-            <span>${opt.text}</span>
+            <span>${formatWithTokens(opt.text)}</span>
             <span class="key-pill">${opt.key}</span>
         </button>
     `).join('');
 
     document.getElementById('btn-back').style.display = historyStack.length > 1 ? 'inline-block' : 'none';
+}
+
+function getCleanScriptText() {
+    const key = historyStack[historyStack.length - 1];
+    const node = CALL_FLOW[key] || CALL_FLOW["root"];
+    return formatWithTokens(node.verbatim, false);
 }
 
 function pickNext(key) {
@@ -956,7 +1157,7 @@ window.addEventListener('keydown', (e) => {
         resetFlow();
     } else if (e.key === ' ') {
         e.preventDefault();
-        copyText(document.getElementById('hud-verbatim').innerText);
+        copyText(getCleanScriptText());
     }
 });
 
@@ -1041,9 +1242,9 @@ function renderPipeline() {
     container.innerHTML = STAGES.map(s => `
         <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
             <div style="font-size: 13.5px; font-weight: 800; color: var(--c-blue); margin-bottom: 4px;">Stage ${s.number}: ${s.title}</div>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;"><strong>Goal:</strong> ${s.objective}</div>
+            <div style="font-size: 12px; color: var(--text-body); margin-bottom: 8px;"><strong>Goal:</strong> ${s.objective}</div>
             <div style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 6px;"><strong>Key Actions:</strong></div>
-            <ul style="padding-left: 16px; font-size: 12px; color: var(--text-secondary);">
+            <ul style="padding-left: 16px; font-size: 12px; color: var(--text-body);">
                 ${s.actions.map(a => `<li>${a}</li>`).join('')}
             </ul>
         </div>
@@ -1055,6 +1256,7 @@ window.addEventListener('DOMContentLoaded', () => {
     renderObjections();
     renderPipeline();
     runCalc();
+    updateCadenceSnippets();
 });
 </script>
 </body>
