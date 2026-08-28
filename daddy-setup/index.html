@@ -18,6 +18,9 @@
   .step h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
   .step p { color: #8b949e; font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
   .step p:last-child { margin-bottom: 0; }
+  .play-btn { display: inline-flex; align-items: center; gap: 10px; background: #01875f; color: #fff; text-decoration: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 700; margin: 12px 0; transition: background .15s; }
+  .play-btn:hover { background: #017a56; }
+  .play-btn svg { flex-shrink: 0; }
   .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; margin: 12px 0; position: relative; }
   .cmd code { font-family: "JetBrains Mono", monospace; font-size: 13px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 64px; }
   .copy { position: absolute; top: 10px; right: 10px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
@@ -43,14 +46,18 @@
   <div class="step">
     <div class="badge">1</div>
     <h2>Install Termux</h2>
-    <p>Open the <strong>Google Play Store</strong> on your Samsung, search <strong>Termux</strong>, and install it. It&rsquo;s free.</p>
-    <div class="tip">&#9989; Open Termux after installing &mdash; you&rsquo;ll see a black screen with a blinking cursor. That&rsquo;s correct.</div>
+    <p>Tap the button below to open Termux in the Play Store, then install it.</p>
+    <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l13.6-11.96L13.54 7.8 3.18 23.76zM20.7 10.56l-2.9-1.66-4.17 3.66 4.17 3.66 2.93-1.68c.84-.48.84-1.5-.03-1.98zM3.17.25C2.87.42 2.67.76 2.67 1.2v21.6c0 .44.2.77.5.93l13.6-11.74L3.17.25zM17.77 14.04L4.17 26l.01-.01c.3.17.64.2.99.03l13.6-11.96-1-1.02z"/></svg>
+      Get Termux on Google Play
+    </a>
+    <div class="tip">&#9989; After installing, open Termux &mdash; you&rsquo;ll see a black screen with a blinking cursor. That&rsquo;s correct.</div>
   </div>
 
   <div class="step">
     <div class="badge">2</div>
     <h2>Copy &amp; Paste This Command</h2>
-    <p>Tap <strong>Copy</strong> below, then open Termux, long-press the screen and tap <strong>Paste</strong>, then hit Enter.</p>
+    <p>Tap <strong>Copy</strong> below, then switch to Termux, long-press the screen, tap <strong>Paste</strong>, and hit Enter.</p>
     <div class="cmd">
       <code>pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
       <button class="copy" onclick="copyCmd(this)">Copy</button>
