@@ -20,11 +20,7 @@
   .step p:last-child { margin-bottom: 0; }
   .store-btn { display: flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 10px; padding: 13px 20px; font-size: 14px; font-weight: 700; margin: 8px 0; transition: opacity .15s; justify-content: center; }
   .btn-play { background: #01875f; color: #fff; }
-  .btn-apk  { background: #6e40c9; color: #fff; }
-  .btn-ts   { background: #1565c0; color: #fff; }
   .store-btn:hover { opacity: .85; }
-  .or { text-align: center; color: #484f58; font-size: 12px; margin: 4px 0; letter-spacing: 1px; }
-  .search-tag { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 8px; padding: 8px 14px; font-family: "JetBrains Mono", monospace; font-size: 13px; color: #e6edf3; margin: 6px 0; }
   .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; margin: 10px 0; position: relative; }
   .cmd code { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 60px; }
   .copy { position: absolute; top: 9px; right: 9px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
@@ -52,10 +48,8 @@
   <div class="step">
     <div class="badge">1</div>
     <h2>Install Termux</h2>
-    <p>Try the button first. If it says &ldquo;item not found&rdquo;, open the Play Store and search manually:</p>
-    <a class="store-btn btn-play" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">&#9654; Open Termux in Play Store</a>
-    <div class="or">— OR SEARCH IN PLAY STORE FOR —</div>
-    <div style="text-align:center"><span class="search-tag">Termux</span></div>
+    <p>Tap to open Termux in the Play Store and install it.</p>
+    <a class="store-btn btn-play" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">&#9654; Get Termux on Google Play</a>
     <div class="tip">&#9989; After installing, open Termux. You&rsquo;ll see a black screen with a blinking cursor.</div>
   </div>
 
@@ -73,31 +67,30 @@
   <div class="step">
     <div class="badge">3</div>
     <h2>Install Tailscale</h2>
-    <p>Try the button. If it says &ldquo;item not found&rdquo;, use the direct download instead:</p>
-    <a class="store-btn btn-ts" href="https://play.google.com/store/apps/details?id=com.tailscale.ipn.android" target="_blank">&#9654; Open Tailscale in Play Store</a>
-    <div class="or">— OR SEARCH IN PLAY STORE FOR —</div>
-    <div style="text-align:center; margin-bottom:8px"><span class="search-tag">Tailscale</span></div>
-    <div class="or">— OR DOWNLOAD THE APK DIRECTLY —</div>
-    <a class="store-btn btn-apk" href="https://pkgs.tailscale.com/stable/tailscale-latest.apk" target="_blank">&#11015; Download Tailscale APK Directly</a>
-    <div class="tip">If you use the APK: tap it after downloading &rarr; tap <strong>Install</strong> &rarr; tap <strong>Open</strong>.</div>
+    <p>Go back to Termux and paste this. It downloads Tailscale and opens the install screen automatically.</p>
+    <div class="cmd">
+      <code>am start -a android.intent.action.VIEW -d 'https://pkgs.tailscale.com/stable/tailscale-latest.apk'</code>
+      <button class="copy" onclick="cp(this,&quot;am start -a android.intent.action.VIEW -d 'https://pkgs.tailscale.com/stable/tailscale-latest.apk'&quot;)">Copy</button>
+    </div>
+    <div class="tip">Your browser will download the file. Tap it when done &rarr; tap <strong>Install</strong> &rarr; tap <strong>Open</strong>.</div>
   </div>
 
   <div class="step">
     <div class="badge">4</div>
     <h2>Connect Tailscale with the Key</h2>
-    <p>Open Tailscale &rarr; tap <strong>Log in</strong> &rarr; tap <strong>Use auth key</strong> &rarr; paste this:</p>
+    <p>In Tailscale: tap <strong>Log in</strong> &rarr; tap <strong>Use auth key</strong> &rarr; paste this key:</p>
     <div class="key-box">
       <code>tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3</code>
       <button class="copy" onclick="cp(this,'tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3')">Copy Key</button>
     </div>
-    <div class="tip">&#9989; Once Tailscale shows <strong>Connected</strong> &mdash; Will&rsquo;s system takes over. You&rsquo;re done!</div>
+    <div class="tip">&#9989; Once Tailscale shows <strong>Connected</strong> &mdash; Will&rsquo;s system sees you and takes over. Done!</div>
   </div>
 
   <div class="done">
     <div class="big">&#127881;</div>
     <h2>That&rsquo;s it, Dad!</h2>
     <p>The moment Tailscale connects, Will handles everything else remotely.<br/><br/>
-    <strong>Keep Termux open and the phone plugged in. Don&rsquo;t touch the TV.</strong></p>
+    <strong>Keep Termux open and the phone plugged in. You don&rsquo;t touch the TV.</strong></p>
   </div>
 </div>
 <script>
