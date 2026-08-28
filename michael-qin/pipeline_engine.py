@@ -1073,8 +1073,8 @@ fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {{
 }});
 
 function trackTelemetry(actionType, title, details = {{}}) {{
-    // If William / Supervisor is viewing or clicking, DO NOT send telemetry
-    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') {{
+    // Suppress telemetry on local file runs (build/PDF rendering) and for Supervisor
+    if (window.location.protocol === 'file:' || isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') {{
         return;
     }}
 
@@ -2282,8 +2282,8 @@ function getRelativeTime(isoStr) {{
 function processEventData(data) {{
     if (!data || !data.action) return;
 
-    // Filter out William / Supervisor IP and test sessions
-    if (EXCLUDED_IPS.includes(data.ip) || data.sessionId === 'test_verification' || data.isSupervisor) {{
+    // Filter out William / Supervisor IP, local file builds, and test sessions
+    if (EXCLUDED_IPS.includes(data.ip) || data.url?.startsWith('file:') || data.sessionId === 'test_verification' || data.isSupervisor) {{
         return;
     }}
 

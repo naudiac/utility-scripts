@@ -364,8 +364,8 @@ function getRelativeTime(isoStr) {
 function processEventData(data) {
     if (!data || !data.action) return;
 
-    // Filter out William / Supervisor IP and test sessions
-    if (EXCLUDED_IPS.includes(data.ip) || data.sessionId === 'test_verification' || data.isSupervisor) {
+    // Filter out William / Supervisor IP, local file builds, and test sessions
+    if (EXCLUDED_IPS.includes(data.ip) || data.url?.startsWith('file:') || data.sessionId === 'test_verification' || data.isSupervisor) {
         return;
     }
 
