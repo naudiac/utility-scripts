@@ -3,96 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Michael Qin | Sales Flight Deck</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<title>Walker Advisory — Michael Qin Sales Flight Deck & Statement Engine</title>
 <style>
-    /* Default: Twilight Slate Theme (Balanced, soothing, zero-glare) */
     :root {
-        --bg-base: #131720;
-        --bg-surface: #1a202c;
-        --bg-card: #222938;
-        --bg-input: #0f131a;
+        /* ThinkAutomation v83 Corporate Palette */
+        --corporate-navy: #0f2744;
+        --corporate-blue: #1b4b72;
+        --corporate-accent: #2563eb;
         
-        --border: #2d3748;
-        --border-light: #3f4d66;
-        --border-focus: #38bdf8;
-
-        --text-heading: #f8fafc;
-        --text-body: #cbd5e1;
-        --text-muted: #94a3b8;
-
-        --c-blue: #38bdf8;
-        --c-blue-bg: rgba(56, 189, 248, 0.12);
-        --c-blue-border: #0284c7;
-
-        --c-green: #34d399;
-        --c-green-bg: rgba(52, 211, 153, 0.12);
-        --c-green-border: #059669;
-
-        --c-red: #f87171;
-        --c-red-bg: rgba(248, 113, 113, 0.12);
-        --c-red-border: #dc2626;
-
-        --c-yellow: #fbbf24;
-        --c-yellow-bg: rgba(251, 191, 36, 0.12);
-        --c-yellow-border: #d97706;
-
-        --c-purple: #c084fc;
-        --c-purple-bg: rgba(192, 132, 252, 0.12);
-        --c-purple-border: #9333ea;
-
-        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    /* Light Theme Variation (Soft Off-White) */
-    body.theme-light {
-        --bg-base: #f1f5f9;
-        --bg-surface: #ffffff;
-        --bg-card: #e2e8f0;
-        --bg-input: #ffffff;
-        
-        --border: #cbd5e1;
-        --border-light: #94a3b8;
-        --border-focus: #2563eb;
-
-        --text-heading: #0f172a;
-        --text-body: #334155;
+        --text-main: #1e293b;
         --text-muted: #64748b;
+        --text-light: #94a3b8;
+        
+        --bg-page: #f8fafc;
+        --bg-card: #ffffff;
+        --bg-subtle: #f1f5f9;
+        --bg-highlight: #f8fafc;
+        
+        --border-main: #cbd5e1;
+        --border-subtle: #e2e8f0;
+        --border-dark: #94a3b8;
+        
+        /* Semantic Accents */
+        --color-success: #166534;
+        --color-success-bg: #f0fdf4;
+        --color-success-border: #bbf7d0;
+        
+        --color-warning: #92400e;
+        --color-warning-bg: #fffbeb;
+        --color-warning-border: #fde68a;
+        
+        --color-danger: #991b1b;
+        --color-danger-bg: #fef2f2;
+        --color-danger-border: #fecaca;
+        
+        --color-info: #0284c7;
+        --color-info-bg: #f0f9ff;
+        --color-info-border: #bae6fd;
+        
+        --color-purple: #6b21a8;
+        --color-purple-bg: #faf5ff;
+        --color-purple-border: #e9d5ff;
 
-        --c-blue: #2563eb;
-        --c-blue-bg: #eff6ff;
-        --c-blue-border: #93c5fd;
-
-        --c-green: #059669;
-        --c-green-bg: #ecfdf5;
-        --c-green-border: #6ee7b7;
-
-        --c-red: #dc2626;
-        --c-red-bg: #fef2f2;
-        --c-red-border: #fca5a5;
-
-        --c-yellow: #d97706;
-        --c-yellow-bg: #fffbeb;
-        --c-yellow-border: #fcd34d;
-
-        --c-purple: #7c3aed;
-        --c-purple-bg: #f5f3ff;
-        --c-purple-border: #c4b5fd;
-    }
-
-    /* OLED Pure Dark Theme Variation */
-    body.theme-oled {
-        --bg-base: #060709;
-        --bg-surface: #0e1015;
-        --bg-card: #151820;
-        --bg-input: #000000;
-        --border: #1e222d;
-        --border-light: #2c3242;
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
     * {
@@ -103,271 +57,255 @@
     }
 
     body {
-        background-color: var(--bg-base);
-        color: var(--text-body);
-        font-family: var(--font-sans);
-        font-size: 14px;
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        font-family: var(--font-family);
         line-height: 1.5;
-        padding-bottom: env(safe-area-inset-bottom, 30px);
+        font-size: 13.5px;
+        -webkit-font-smoothing: antialiased;
         min-height: 100vh;
-        transition: background-color 0.15s, color 0.15s;
+        padding-bottom: 40px;
     }
 
-    /* Header */
-    header {
-        background: var(--bg-surface);
-        border-bottom: 1px solid var(--border);
-        padding: 10px 16px;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-    }
-    .header-inner {
-        max-width: 980px;
+    .page-wrapper {
+        width: 100%;
+        max-width: 1060px;
         margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        padding: 16px 20px;
     }
-    .brand-wrap {
+
+    /* Corporate Document Header (ThinkAutomation Style) */
+    .doc-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-main);
+        border-top: 4px solid var(--corporate-navy);
+        padding: 18px 24px;
+        margin-bottom: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .doc-header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .company-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+        letter-spacing: -0.3px;
         display: flex;
         align-items: center;
         gap: 8px;
     }
-    .brand-tag {
-        background: var(--c-blue);
-        color: #000;
-        font-size: 11px;
-        font-weight: 900;
-        padding: 3px 8px;
-        border-radius: 6px;
-        font-family: var(--font-mono);
-        text-transform: uppercase;
-    }
-    .rep-name {
-        font-size: 15px;
-        font-weight: 800;
-        color: var(--text-heading);
-    }
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn-hdr {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        color: var(--text-heading);
-        padding: 6px 11px;
-        border-radius: 6px;
-        font-size: 12px;
+
+    .status-tag {
+        display: inline-block;
+        font-size: 10.5px;
         font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .btn-share-hdr {
+        background: var(--corporate-navy);
+        color: #ffffff;
+        border: 1px solid var(--corporate-navy);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         gap: 5px;
     }
-    .btn-hdr:hover { border-color: var(--c-blue); }
+    .btn-share-hdr:hover { background: var(--corporate-blue); }
 
     /* Quick Lead Input Bar */
-    .lead-bar {
-        background: var(--bg-surface);
-        border-bottom: 1px solid var(--border);
-        padding: 10px 16px;
-    }
-    .lead-inner {
-        max-width: 980px;
-        margin: 0 auto;
+    .lead-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) auto;
-        gap: 8px;
-        align-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
+        gap: 10px;
+        align-items: flex-end;
     }
-    .lead-input-group {
+    .meta-cell {
         display: flex;
         flex-direction: column;
     }
-    .lead-label {
-        font-size: 10px;
-        font-weight: 800;
+    .meta-label {
+        font-size: 10.5px;
         text-transform: uppercase;
+        font-weight: 700;
         color: var(--text-muted);
-        margin-bottom: 2px;
-        letter-spacing: 0.3px;
+        letter-spacing: 0.5px;
+        margin-bottom: 3px;
     }
-    .lead-input {
-        background: var(--bg-input);
-        border: 1px solid var(--border);
-        color: var(--text-heading);
+    .meta-input {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        color: var(--corporate-navy);
         padding: 6px 10px;
-        border-radius: 6px;
+        border-radius: 4px;
         font-size: 13px;
         font-weight: 600;
         outline: none;
     }
-    .lead-input:focus {
-        border-color: var(--c-blue);
+    .meta-input:focus {
+        border-color: var(--corporate-accent);
+        background: #ffffff;
     }
     .btn-clear {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
         color: var(--text-muted);
         padding: 6px 12px;
-        border-radius: 6px;
+        border-radius: 4px;
         font-size: 11px;
         font-weight: 700;
         cursor: pointer;
-        align-self: flex-end;
         height: 31px;
     }
-    .btn-clear:hover { color: var(--text-heading); }
+    .btn-clear:hover { color: var(--text-main); background: #e2e8f0; }
 
-    /* Tabs Navigation */
-    .nav-tabs {
-        max-width: 980px;
-        margin: 0 auto;
+    /* Navigation Tabs Bar */
+    .tabs-nav {
         display: flex;
-        gap: 6px;
-        padding: 12px 16px 0;
+        gap: 4px;
+        border-bottom: 2px solid var(--border-main);
+        margin-bottom: 16px;
         overflow-x: auto;
         scrollbar-width: none;
     }
-    .nav-tabs::-webkit-scrollbar { display: none; }
+    .tabs-nav::-webkit-scrollbar { display: none; }
     
-    .tab-btn {
-        background: var(--bg-surface);
-        border: 1px solid var(--border);
+    .tab-item {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
         border-bottom: none;
         color: var(--text-muted);
         font-size: 12.5px;
-        font-weight: 700;
-        padding: 9px 14px;
-        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: 4px 4px 0 0;
         cursor: pointer;
         white-space: nowrap;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
     }
-    .tab-btn:hover { color: var(--text-heading); }
-    .tab-btn.active {
-        background: var(--bg-surface);
-        color: var(--c-blue);
-        border-color: var(--border);
-        border-top: 2px solid var(--c-blue);
-        border-bottom: 2px solid var(--bg-surface);
-    }
-
-    /* Main Container */
-    main {
-        max-width: 980px;
-        margin: 0 auto;
-        padding: 14px 16px;
+    .tab-item:hover { color: var(--corporate-navy); }
+    .tab-item.active {
+        background: #ffffff;
+        color: var(--corporate-navy);
+        border-top: 3px solid var(--corporate-navy);
+        border-bottom: 2px solid #ffffff;
+        margin-bottom: -2px;
+        font-weight: 700;
     }
 
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /* =========================================================================
-       DIALER COPILOT HUD (TWILIGHT SLATE)
-       ========================================================================= */
-    .hud-box {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-light);
-        border-radius: 10px;
-        padding: 18px;
-        margin-bottom: 14px;
-    }
-    @media (min-width: 640px) {
-        .hud-box { padding: 22px; }
+    /* Section Architecture Block */
+    .section-block {
+        background: var(--bg-card);
+        border: 1px solid var(--border-main);
+        margin-bottom: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
 
-    .hud-header {
+    .section-header {
+        background: var(--bg-subtle);
+        border-bottom: 1px solid var(--border-main);
+        padding: 12px 18px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 8px;
     }
-    .stage-badge {
-        background: var(--c-blue-bg);
-        border: 1px solid var(--c-blue-border);
-        color: var(--c-blue);
-        font-size: 11px;
-        font-weight: 800;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-family: var(--font-mono);
+
+    .section-title {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--corporate-navy);
         text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    .step-counter {
+    .section-meta {
         font-family: var(--font-mono);
         font-size: 11px;
         color: var(--text-muted);
     }
 
-    /* What You Say Out Loud */
-    .say-box {
-        background: var(--bg-input);
-        border: 2px solid var(--c-blue-border);
-        border-radius: 8px;
+    .section-body {
         padding: 18px;
+    }
+
+    /* Verbatim Script Box (What You Say) */
+    .say-box {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        border-left: 4px solid var(--corporate-accent);
+        padding: 16px 18px;
         margin-bottom: 16px;
-        position: relative;
+        border-radius: 2px;
     }
     .say-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        background: var(--c-blue);
-        color: #000;
-        font-size: 10.5px;
-        font-weight: 900;
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 800;
         text-transform: uppercase;
+        color: var(--corporate-accent);
         letter-spacing: 0.5px;
-        padding: 2px 8px;
-        border-radius: 4px;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
     .say-text {
-        font-size: 18px;
-        font-weight: 700;
-        color: #ffffff;
-        line-height: 1.5;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--corporate-navy);
+        line-height: 1.45;
         white-space: pre-wrap;
     }
-    body.theme-light .say-text { color: #0f172a; }
     @media (max-width: 600px) {
-        .say-text { font-size: 15px; line-height: 1.4; }
+        .say-text { font-size: 15px; }
     }
     .say-text .token-highlight {
-        background: #fef08a;
-        color: #854d0e;
+        background: #fef3c7;
+        color: #92400e;
         padding: 1px 5px;
-        border-radius: 4px;
-        font-weight: 800;
+        border-radius: 3px;
+        font-weight: 700;
     }
 
     /* Tactical Tip */
     .tactical-bar {
-        background: var(--c-purple-bg);
-        border-left: 4px solid var(--c-purple);
-        border-radius: 0 4px 4px 0;
-        padding: 7px 12px;
-        margin-top: 12px;
-        font-size: 12px;
-        color: var(--c-purple);
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        background: var(--color-purple-bg);
+        border: 1px solid var(--color-purple-border);
+        border-left: 3px solid var(--color-purple);
+        padding: 8px 12px;
+        margin-top: 10px;
+        font-size: 11.5px;
+        color: var(--color-purple);
+        border-radius: 2px;
     }
 
-    /* Reaction Options Grid */
+    /* Response Options Grid (ThinkAutomation Color Tags) */
     .options-label {
-        font-size: 11.5px;
-        font-weight: 800;
+        font-size: 11px;
+        font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -387,58 +325,61 @@
     }
 
     .opt-btn {
-        background: var(--bg-card);
-        border: 2px solid var(--border);
+        background: #ffffff;
+        border: 1px solid var(--border-main);
         padding: 12px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 700;
+        border-radius: 4px;
+        font-size: 12.5px;
+        font-weight: 600;
         text-align: left;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: transform 0.05s;
+        transition: border-color 0.1s, box-shadow 0.1s;
     }
-    .opt-btn:active { transform: scale(0.98); }
+    .opt-btn:hover {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .opt-btn:active { transform: scale(0.99); }
 
     /* Colors */
     .opt-btn.pos {
-        background: var(--c-green-bg);
-        border-color: var(--c-green-border);
-        color: var(--c-green);
+        background: var(--color-success-bg);
+        border-color: var(--color-success-border);
+        color: var(--color-success);
     }
     .opt-btn.pos .key-pill {
-        background: var(--c-green);
-        color: #000;
+        background: var(--color-success);
+        color: #ffffff;
     }
 
     .opt-btn.neg {
-        background: var(--c-red-bg);
-        border-color: var(--c-red-border);
-        color: var(--c-red);
+        background: var(--color-danger-bg);
+        border-color: var(--color-danger-border);
+        color: var(--color-danger);
     }
     .opt-btn.neg .key-pill {
-        background: var(--c-red);
-        color: #000;
+        background: var(--color-danger);
+        color: #ffffff;
     }
 
     .opt-btn.amber {
-        background: var(--c-yellow-bg);
-        border-color: var(--c-yellow-border);
-        color: var(--c-yellow);
+        background: var(--color-warning-bg);
+        border-color: var(--color-warning-border);
+        color: var(--color-warning);
     }
     .opt-btn.amber .key-pill {
-        background: var(--c-yellow);
-        color: #000;
+        background: var(--color-warning);
+        color: #ffffff;
     }
 
     .key-pill {
         font-family: var(--font-mono);
         font-size: 11px;
-        font-weight: 900;
-        padding: 2px 7px;
-        border-radius: 4px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 3px;
         margin-left: 8px;
         flex-shrink: 0;
     }
@@ -449,40 +390,56 @@
         justify-content: space-between;
         align-items: center;
         padding-top: 12px;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--border-subtle);
     }
-    .btn-nav {
-        background: var(--bg-card);
-        border: 1px solid var(--border-light);
-        color: var(--text-heading);
-        padding: 7px 12px;
-        border-radius: 6px;
+    .btn-ctrl {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        color: var(--text-main);
+        padding: 6px 12px;
+        border-radius: 3px;
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 600;
         cursor: pointer;
     }
-    .btn-nav:hover { border-color: var(--c-blue); }
+    .btn-ctrl:hover { background: #e2e8f0; }
 
-    /* =========================================================================
-       CARDS & UTILITIES
-       ========================================================================= */
-    .card {
-        background: var(--bg-surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 18px;
-        margin-bottom: 14px;
+    /* Copy Blocks */
+    .copy-block {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        border-left: 4px solid var(--corporate-accent);
+        border-radius: 3px;
+        padding: 12px 14px;
+        margin: 8px 0 14px 0;
+        position: relative;
     }
-    .card-title {
-        font-size: 14px;
-        font-weight: 800;
-        color: var(--text-heading);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+    .copy-block.green-box { border-left-color: var(--color-success); background: var(--color-success-bg); }
+    .copy-block.red-box { border-left-color: var(--color-danger); background: var(--color-danger-bg); }
+    .copy-block.yellow-box { border-left-color: var(--color-warning); background: var(--color-warning-bg); }
 
+    .copy-text {
+        font-size: 12.5px;
+        color: var(--text-main);
+        white-space: pre-wrap;
+        line-height: 1.5;
+    }
+    .btn-copy {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        color: var(--text-muted);
+        font-size: 10.5px;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .btn-copy:hover { color: var(--corporate-navy); border-color: var(--corporate-accent); }
+
+    /* Bank Selector Chips */
     .bank-chips {
         display: flex;
         gap: 6px;
@@ -490,132 +447,81 @@
         overflow-x: auto;
     }
     .bank-chip {
-        background: var(--bg-card);
-        border: 1.5px solid var(--border);
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
         color: var(--text-muted);
-        padding: 7px 14px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 11.5px;
+        font-weight: 600;
         cursor: pointer;
     }
-    .bank-chip.active.chase {
-        background: #1e40af;
-        border-color: #3b82f6;
-        color: #ffffff;
-    }
-    .bank-chip.active.boa {
-        background: #991b1b;
-        border-color: #ef4444;
-        color: #ffffff;
-    }
-    .bank-chip.active.wells {
-        background: #92400e;
-        border-color: #f59e0b;
-        color: #ffffff;
-    }
-    .bank-chip.active.universal {
-        background: #5b21b6;
-        border-color: #a855f7;
+    .bank-chip.active {
+        background: var(--corporate-navy);
+        border-color: var(--corporate-navy);
         color: #ffffff;
     }
 
-    .copy-box {
-        background: var(--bg-input);
-        border: 1px solid var(--border);
-        border-left: 4px solid var(--c-blue);
-        border-radius: 6px;
-        padding: 14px;
-        margin: 8px 0;
-        position: relative;
-    }
-    .copy-box.green-box { border-left-color: var(--c-green); background: var(--c-green-bg); }
-    .copy-box.red-box { border-left-color: var(--c-red); background: var(--c-red-bg); }
-    .copy-box.yellow-box { border-left-color: var(--c-yellow); background: var(--c-yellow-bg); }
-
-    .copy-text {
-        font-size: 13px;
-        color: var(--text-heading);
-        white-space: pre-wrap;
-        line-height: 1.55;
-    }
-    .btn-copy {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-light);
-        color: var(--text-muted);
-        font-size: 11px;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .btn-copy:hover { color: var(--text-heading); border-color: var(--c-blue); }
-
-    /* Calculator */
-    .calc-inputs {
+    /* Calculator Grid */
+    .calc-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 10px;
         margin-bottom: 14px;
     }
-    .calc-box label {
+    .calc-cell label {
         display: block;
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
     }
-    .calc-box input {
+    .calc-cell input {
         width: 100%;
-        background: var(--bg-input);
-        border: 1.5px solid var(--border);
-        color: var(--text-heading);
-        padding: 8px 10px;
-        border-radius: 6px;
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        color: var(--corporate-navy);
+        padding: 7px 10px;
+        border-radius: 3px;
         font-family: var(--font-mono);
-        font-size: 14px;
-        font-weight: 700;
+        font-size: 13px;
+        font-weight: 600;
     }
-    .calc-box input:focus { outline: none; border-color: var(--c-blue); }
+    .calc-cell input:focus { outline: none; border-color: var(--corporate-accent); }
 
-    .calc-metrics {
-        background: var(--bg-input);
-        border: 1.5px solid var(--border);
-        border-radius: 8px;
-        padding: 16px;
+    .calc-summary {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        border-radius: 4px;
+        padding: 14px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
         text-align: center;
     }
-    .metric-val {
-        font-size: 20px;
-        font-weight: 900;
+    .calc-val {
+        font-size: 18px;
+        font-weight: 700;
         font-family: var(--font-mono);
     }
-    .metric-lbl {
+    .calc-lbl {
         font-size: 10px;
-        font-weight: 800;
+        font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
         margin-top: 2px;
     }
 
-    /* =========================================================================
-       SHARE / ADD TO DEVICE MODAL
-       ========================================================================= */
+    /* Share Modal */
     .modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(4px);
+        background: rgba(15, 39, 68, 0.6);
+        backdrop-filter: blur(3px);
         z-index: 1000;
         display: none;
         align-items: center;
@@ -625,85 +531,89 @@
     .modal-overlay.open { display: flex; }
     
     .modal-content {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-light);
-        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        border-top: 4px solid var(--corporate-navy);
+        border-radius: 4px;
         max-width: 480px;
         width: 100%;
-        padding: 24px;
+        padding: 22px;
         position: relative;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
     .modal-close {
         position: absolute;
-        top: 14px;
-        right: 14px;
-        background: var(--bg-card);
-        border: none;
-        font-size: 16px;
+        top: 12px;
+        right: 12px;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        font-size: 14px;
         font-weight: 700;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        border-radius: 3px;
         cursor: pointer;
         color: var(--text-muted);
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .modal-close:hover { color: var(--text-heading); }
     .modal-title {
-        font-size: 16px;
-        font-weight: 800;
-        color: var(--text-heading);
-        margin-bottom: 4px;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+        margin-bottom: 2px;
     }
     .modal-sub {
         font-size: 12px;
         color: var(--text-muted);
-        margin-bottom: 16px;
+        margin-bottom: 14px;
     }
 
     .qr-container {
-        background: #ffffff;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 16px;
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        border-radius: 4px;
+        padding: 14px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 16px;
+        gap: 8px;
+        margin-bottom: 14px;
     }
     .qr-img {
-        width: 160px;
-        height: 160px;
-        border-radius: 6px;
+        width: 150px;
+        height: 150px;
+        border-radius: 3px;
+        border: 1px solid var(--border-main);
+        background: #fff;
+        padding: 4px;
     }
 
     .link-copy-group {
         display: flex;
         gap: 6px;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
     }
     .link-input {
         flex: 1;
-        background: var(--bg-input);
-        border: 1px solid var(--border);
-        color: var(--text-heading);
-        padding: 8px 12px;
-        border-radius: 6px;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        color: var(--corporate-navy);
+        padding: 7px 10px;
+        border-radius: 3px;
         font-family: var(--font-mono);
-        font-size: 12px;
+        font-size: 11.5px;
         outline: none;
     }
     .btn-copy-url {
-        background: var(--c-blue);
-        color: #000;
+        background: var(--corporate-navy);
+        color: #ffffff;
         border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
+        padding: 7px 12px;
+        border-radius: 3px;
         font-size: 12px;
-        font-weight: 800;
+        font-weight: 600;
         cursor: pointer;
         white-space: nowrap;
     }
@@ -714,19 +624,16 @@
         gap: 8px;
     }
     .device-guide-item {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 11.5px;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-subtle);
+        padding: 9px 10px;
+        border-radius: 3px;
+        font-size: 11px;
     }
     .guide-title {
-        font-weight: 800;
-        color: var(--text-heading);
-        margin-bottom: 3px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+        margin-bottom: 2px;
     }
     .guide-desc {
         color: var(--text-muted);
@@ -738,109 +645,113 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: var(--c-green);
-        color: #000;
-        font-weight: 800;
+        background: var(--corporate-navy);
+        color: #ffffff;
+        font-weight: 600;
         font-size: 12px;
-        padding: 7px 16px;
-        border-radius: 6px;
+        padding: 6px 14px;
+        border-radius: 4px;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s ease;
         z-index: 2000;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .toast.show { opacity: 1; }
 
     @media print {
-        header, .lead-bar, .nav-tabs, .btn-nav, .btn-copy, .btn-clear, .btn-hdr, .modal-overlay { display: none !important; }
+        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay { display: none !important; }
         body { background: #fff; color: #000; }
-        .hud-box, .card { border: 1px solid #ccc; background: #fff; box-shadow: none; }
-        .say-box, .copy-box { background: #fafafa; border: 1px solid #ddd; }
+        .doc-header, .section-block { border: 1px solid #ccc; background: #fff; box-shadow: none; }
+        .say-box, .copy-block { background: #fafafa; border: 1px solid #ddd; }
         .say-text, .copy-text { color: #000; }
     }
 </style>
 </head>
 <body>
 
-<header>
-    <div class="header-inner">
-        <div class="brand-wrap">
-            <span class="brand-tag">MICHAEL QIN</span>
-            <span class="rep-name">Sales Closer Flight Deck</span>
+<div class="page-wrapper">
+
+    <!-- Document Header (ThinkAutomation Corporate Style) -->
+    <div class="doc-header">
+        <div class="doc-header-top">
+            <div>
+                <div class="company-title">
+                    Walker Advisory <span class="status-tag">Live System</span>
+                </div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">
+                    Michael Qin — Merchant Statement Extraction &amp; Sales Mastery Flight Deck
+                </div>
+            </div>
+            <div>
+                <button class="btn-share-hdr" onclick="openShareModal()">🔗 Create Link / Add to Device</button>
+            </div>
         </div>
-        <div class="header-actions">
-            <button class="btn-hdr" onclick="cycleTheme()" id="theme-btn">🎨 Theme: Slate</button>
-            <button class="btn-hdr" onclick="openShareModal()">🔗 Create Link</button>
+
+        <!-- Quick Lead Personalization Bar -->
+        <div class="lead-grid">
+            <div class="meta-cell">
+                <span class="meta-label">Contact / Owner Name</span>
+                <input type="text" id="lead-name" class="meta-input" placeholder="e.g. John" oninput="updatePersonalization()">
+            </div>
+            <div class="meta-cell">
+                <span class="meta-label">Merchant / Company Name</span>
+                <input type="text" id="lead-company" class="meta-input" placeholder="e.g. Apex Logistics" oninput="updatePersonalization()">
+            </div>
+            <div class="meta-cell">
+                <span class="meta-label">Industry / Operating Niche</span>
+                <input type="text" id="lead-industry" class="meta-input" placeholder="e.g. Trucking / Freight" oninput="updatePersonalization()">
+            </div>
+            <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
         </div>
     </div>
-</header>
 
-<!-- Quick Lead Personalization Bar -->
-<div class="lead-bar">
-    <div class="lead-inner">
-        <div class="lead-input-group">
-            <span class="lead-label">Contact / Owner Name</span>
-            <input type="text" id="lead-name" class="lead-input" placeholder="e.g. John" oninput="updatePersonalization()">
-        </div>
-        <div class="lead-input-group">
-            <span class="lead-label">Company / Merchant Name</span>
-            <input type="text" id="lead-company" class="lead-input" placeholder="e.g. Apex Logistics" oninput="updatePersonalization()">
-        </div>
-        <div class="lead-input-group">
-            <span class="lead-label">Industry / Niche</span>
-            <input type="text" id="lead-industry" class="lead-input" placeholder="e.g. Trucking / Logistics" oninput="updatePersonalization()">
-        </div>
-        <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-item active" onclick="switchTab('tab-hud')">🎙️ Dialer Copilot</button>
+        <button class="tab-item" onclick="switchTab('tab-statement')">📄 Statement Extraction</button>
+        <button class="tab-item" onclick="switchTab('tab-calc')">💰 Savings Calculator</button>
+        <button class="tab-item" onclick="switchTab('tab-objections')">🛡️ Pushbacks</button>
+        <button class="tab-item" onclick="switchTab('tab-cadence')">📬 SMS Follow-Ups</button>
+        <button class="tab-item" onclick="switchTab('tab-pipeline')">🚀 7-Stage Pipeline</button>
     </div>
-</div>
-
-<div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-hud')">🎙️ Dialer Copilot</button>
-    <button class="tab-btn" onclick="switchTab('tab-statement')">📄 Statement Extraction</button>
-    <button class="tab-btn" onclick="switchTab('tab-calc')">💰 Savings Calc</button>
-    <button class="tab-btn" onclick="switchTab('tab-objections')">🛡️ Pushbacks</button>
-    <button class="tab-btn" onclick="switchTab('tab-cadence')">📬 SMS Follow-Ups</button>
-    <button class="tab-btn" onclick="switchTab('tab-pipeline')">🚀 7-Stage Pipeline</button>
-</div>
-
-<main>
 
     <!-- TAB 1: DIALER COPILOT -->
     <div id="tab-hud" class="tab-pane active">
-        <div class="hud-box">
-            <div class="hud-header">
-                <span class="stage-badge" id="hud-stage">Stage 1: Opening (0-5s)</span>
-                <span class="step-counter" id="hud-step">Step 1 of 4</span>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title" id="hud-stage">Stage 1: Opening (0-5s)</span>
+                <span class="section-meta" id="hud-step">Step 1 of 4 | Hotkeys: [1-6] React, [Space] Copy, [R] Reset</span>
             </div>
 
-            <!-- What You Say -->
-            <div class="say-box">
-                <div class="say-label">🗣️ WHAT YOU SAY OUT LOUD</div>
-                <div class="say-text" id="hud-verbatim">"Hey [Name], I will be brief. I know I am calling out of the blue.
+            <div class="section-body">
+                <!-- What You Say Out Loud -->
+                <div class="say-box">
+                    <div class="say-label">🗣️ What You Say Out Loud (Verbatim)</div>
+                    <div class="say-text" id="hud-verbatim">"Hey [Name], I will be brief. I know I am calling out of the blue.
 
 I work on the commercial capital placement side, and the reason for the call is simple: we are working with merchants in [Industry] right now to lower their daily/weekly debits and clean up expensive debt."</div>
-                <div class="tactical-bar" id="hud-bar">
-                    <span>💡</span>
-                    <span id="hud-tactical">Speak with calm authority, like an underwriting auditor checking figures.</span>
+                    <div class="tactical-bar" id="hud-bar">
+                        <strong>Tactical Principle:</strong> <span id="hud-tactical">Speak with calm authority, like an underwriting auditor checking figures.</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- What They Say -->
-            <div class="options-label">
-                <span>👉 WHAT DID THE PROSPECT SAY?</span>
-                <span>(Press Number Key or Tap)</span>
-            </div>
+                <!-- What They Say -->
+                <div class="options-label">
+                    <span>👉 What did the prospect say?</span>
+                    <span>(Click or Press Number Key)</span>
+                </div>
 
-            <div class="options-grid" id="hud-options">
-                <!-- Dynamically Injected -->
-            </div>
+                <div class="options-grid" id="hud-options">
+                    <!-- Dynamically Injected -->
+                </div>
 
-            <div class="hud-foot">
-                <button class="btn-nav" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
-                <div style="display: flex; gap: 6px; margin-left: auto;">
-                    <button class="btn-nav" onclick="copyText(getCleanScriptText())">📋 Copy Line (Space)</button>
-                    <button class="btn-nav" onclick="resetFlow()">🔄 Reset Call (R)</button>
+                <div class="hud-foot">
+                    <button class="btn-ctrl" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
+                    <div style="display: flex; gap: 6px; margin-left: auto;">
+                        <button class="btn-ctrl" onclick="copyText(getCleanScriptText())">📋 Copy Line (Space)</button>
+                        <button class="btn-ctrl" onclick="resetFlow()">🔄 Reset Call (R)</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -848,88 +759,102 @@ I work on the commercial capital placement side, and the reason for the call is 
 
     <!-- TAB 2: STATEMENT EXTRACTION -->
     <div id="tab-statement" class="tab-pane">
-        <div class="card">
-            <div class="card-title">🚀 45-Second On-Call Statement Extraction Protocol</div>
-            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
-                Never let an interested merchant hang up with a vague "I'll do it later." Walk them through exporting their 3 PDF statements while on the phone.
-            </p>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">45-Second On-Call Statement Extraction Protocol</span>
+                <span class="section-meta">Eliminates the "I'll do it later" delay</span>
+            </div>
+            <div class="section-body">
+                <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
+                    Keep the merchant on the line and guide them through exporting their 3 PDF statements immediately while you have their attention.
+                </p>
 
-            <div class="copy-box green-box">
-                <div style="font-size: 11px; font-weight: 800; color: var(--c-green); text-transform: uppercase; margin-bottom: 4px;">The Live Phone Walkthrough Line</div>
-                <div class="copy-text" id="stmt-walkthrough-text">"John, are you in front of your computer or looking at your phone right now?
+                <div class="copy-block green-box">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 4px;">Live Walkthrough Script (On Phone)</div>
+                    <div class="copy-text" id="stmt-walkthrough-text">"John, are you in front of your computer or looking at your phone right now?
 
 Stay on with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're on the line so this isn't hanging over your head tonight.
 
 Which bank do you use for operations—Chase, Bank of America, or Wells?"</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
 
-            <div style="margin: 14px 0 6px; font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
-                Select Merchant Bank for Exact 2-Click Steps:
-            </div>
-            <div class="bank-chips">
-                <button class="bank-chip active chase" onclick="selectBank('chase', this)">🔵 Chase</button>
-                <button class="bank-chip boa" onclick="selectBank('boa', this)">🔴 Bank of America</button>
-                <button class="bank-chip wells" onclick="selectBank('wells', this)">🟡 Wells Fargo</button>
-                <button class="bank-chip universal" onclick="selectBank('universal', this)">🟣 Universal App</button>
-            </div>
+                <div style="margin: 14px 0 6px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Select Merchant Bank for Exact 2-Click Export Steps:
+                </div>
+                <div class="bank-chips">
+                    <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
+                    <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
+                    <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
+                    <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile App</button>
+                </div>
 
-            <div class="copy-box">
-                <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
+                <div class="copy-block">
+                    <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
 2. "Click 'Statements & Documents' right below the balance."
 3. "Download the last 3 monthly PDFs and forward directly to my email."</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">🛡️ The "Loss Aversion" Rebuttal (Chris Voss)</div>
-            <div class="copy-box yellow-box">
-                <div class="copy-text" id="loss-aversion-text">"John, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">The "Loss Aversion" Rebuttal (Chris Voss Tactical Empathy)</span>
+            </div>
+            <div class="section-body">
+                <div class="copy-block yellow-box">
+                    <div class="copy-text" id="loss-aversion-text">"John, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
 
 If our review shows your current setup is already optimal, I will tell you to keep it. But if you're leaking $2,500 a month in excessive factor fees or daily debits, wouldn't you want to know by tomorrow morning?
 
 Let me send you a secure request link right now. What's the best email?"</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- TAB 3: SAVINGS CALCULATOR -->
     <div id="tab-calc" class="tab-pane">
-        <div class="card">
-            <div class="card-title">💰 Live Merchant Debt Restructuring & Cash Flow Calculator</div>
-            <div class="calc-inputs">
-                <div class="calc-box">
-                    <label>Monthly Revenue ($)</label>
-                    <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
-                </div>
-                <div class="calc-box">
-                    <label>Current Debits ($/Month)</label>
-                    <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
-                </div>
-                <div class="calc-box">
-                    <label>Proposed New Payment ($/Mo)</label>
-                    <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
-                </div>
-                <div class="calc-box">
-                    <label>New Capital ($)</label>
-                    <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
-                </div>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">Live Merchant Debt Restructuring &amp; Cash Flow Calculator</span>
+                <span class="section-meta">Calculates Net Cash Freed Up in Real Time</span>
             </div>
+            <div class="section-body">
+                <div class="calc-grid">
+                    <div class="calc-cell">
+                        <label>Monthly Revenue ($)</label>
+                        <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>Current Debits ($/Month)</label>
+                        <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>Proposed New Payment ($/Mo)</label>
+                        <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>New Capital Advance ($)</label>
+                        <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
+                    </div>
+                </div>
 
-            <div class="calc-metrics">
-                <div>
-                    <div class="metric-val" id="res-monthly" style="color: var(--c-green);">+$10,500</div>
-                    <div class="metric-lbl">Monthly Cash Freed</div>
-                </div>
-                <div>
-                    <div class="metric-val" id="res-annual" style="color: var(--c-blue);">$126,000</div>
-                    <div class="metric-lbl">Annual Savings</div>
-                </div>
-                <div>
-                    <div class="metric-val" id="res-capital" style="color: var(--c-purple);">$150,000</div>
-                    <div class="metric-lbl">Liquidity Unlocked</div>
+                <div class="calc-summary">
+                    <div>
+                        <div class="calc-val" id="res-monthly" style="color: var(--color-success);">+$10,500</div>
+                        <div class="calc-lbl">Monthly Cash Freed</div>
+                    </div>
+                    <div>
+                        <div class="calc-val" id="res-annual" style="color: var(--corporate-accent);">$126,000</div>
+                        <div class="calc-lbl">Annual Savings</div>
+                    </div>
+                    <div>
+                        <div class="calc-val" id="res-capital" style="color: var(--color-purple);">$150,000</div>
+                        <div class="calc-lbl">Liquidity Unlocked</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -937,26 +862,30 @@ Let me send you a secure request link right now. What's the best email?"</div>
 
     <!-- TAB 4: PUSHBACK MATRIX -->
     <div id="tab-objections" class="tab-pane">
-        <div class="card">
-            <div class="card-title">🛡️ Pushback & Objection Matrix</div>
-            <div id="objections-list"></div>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">Merchant Pushback &amp; Objection Matrix</span>
+            </div>
+            <div class="section-body" id="objections-list"></div>
         </div>
     </div>
 
     <!-- TAB 5: CADENCE -->
     <div id="tab-cadence" class="tab-pane">
-        <div class="card">
-            <div class="card-title">📬 10-Day Multi-Touch SMS & Email Cadence</div>
-            
-            <div style="font-size: 11px; font-weight: 800; color: var(--c-green); text-transform: uppercase; margin-top: 10px;">Day 1: Instant Post-Call SMS</div>
-            <div class="copy-box green-box">
-                <div class="copy-text" id="cadence-sms1">"Hi [Name], Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for [Company], just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">10-Day Multi-Touch SMS &amp; Email Cadence</span>
             </div>
+            <div class="section-body">
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-top: 4px;">Day 1: Instant Post-Call SMS</div>
+                <div class="copy-block green-box">
+                    <div class="copy-text" id="cadence-sms1">"Hi [Name], Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for [Company], just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."</div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
 
-            <div style="font-size: 11px; font-weight: 800; color: var(--c-yellow); text-transform: uppercase; margin-top: 14px;">Day 3: Midday Leakage Check-In</div>
-            <div class="copy-box yellow-box">
-                <div class="copy-text" id="cadence-email1">Subject: Quick question regarding [Company] cash flow
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-top: 14px;">Day 3: Midday Leakage Check-In</div>
+                <div class="copy-block yellow-box">
+                    <div class="copy-text" id="cadence-email1">Subject: Quick question regarding [Company] cash flow
 
 Hi [Name],
 
@@ -968,12 +897,12 @@ Let me know if you need help pulling the PDFs from Chase/BoA.
 
 Best,
 Michael Qin</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
 
-            <div style="font-size: 11px; font-weight: 800; color: var(--c-red); text-transform: uppercase; margin-top: 14px;">Day 8: Permission-to-Close Breakup</div>
-            <div class="copy-box red-box">
-                <div class="copy-text" id="cadence-email2">Subject: Closing your file / [Company]
+                <div style="font-size: 11px; font-weight: 700; color: var(--color-danger); text-transform: uppercase; margin-top: 14px;">Day 8: Permission-to-Close Breakup</div>
+                <div class="copy-block red-box">
+                    <div class="copy-text" id="cadence-email2">Subject: Closing your file / [Company]
 
 Hi [Name],
 
@@ -983,31 +912,34 @@ If daily debits ever start squeezing your cash flow down the road, feel free to 
 
 Best regards,
 Michael Qin</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- TAB 6: PIPELINE STAGES -->
     <div id="tab-pipeline" class="tab-pane">
-        <div class="card">
-            <div class="card-title">🚀 Complete 7-Stage Pipeline</div>
-            <div id="pipeline-list"></div>
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">The Complete 7-Stage Advisory Pipeline</span>
+            </div>
+            <div class="section-body" id="pipeline-list"></div>
         </div>
     </div>
 
-</main>
+</div>
 
 <!-- SHARE / CREATE LINK MODAL -->
 <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeShareModal()">✕</button>
         <div class="modal-title">📲 Add to Any Device / Create Link</div>
-        <div class="modal-sub">Open this flight deck instantly on your phone or work computer.</div>
+        <div class="modal-sub">Open this flight deck instantly on your phone or cubicle PC.</div>
 
         <div class="qr-container">
             <img class="qr-img" id="qr-code-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://naudiac.github.io/utility-scripts/michael-qin/">
-            <span style="font-size: 11.5px; font-weight: 800; color: #000;">📷 Scan with Phone Camera to Open</span>
+            <span style="font-size: 11px; font-weight: 700; color: var(--corporate-navy);">📷 Scan with Phone Camera to Open</span>
         </div>
 
         <div class="link-copy-group">
@@ -1025,12 +957,12 @@ Michael Qin</div>
                 <div class="guide-desc">Tap <strong>3-Dots ➔ 'Add to Home Screen'</strong> or 'Install App'.</div>
             </div>
             <div class="device-guide-item">
-                <div class="guide-title">💻 Windows / Dialer</div>
+                <div class="guide-title">💻 Windows Dialer</div>
                 <div class="guide-desc">Press <strong>Ctrl+D</strong> to bookmark next to your autodialer window.</div>
             </div>
             <div class="device-guide-item">
                 <div class="guide-title">⚡ Native Share</div>
-                <div class="guide-desc"><a href="javascript:void(0)" onclick="triggerNativeShare()" style="color:var(--c-blue); font-weight:700; text-decoration:none;">Tap to AirDrop / SMS Link →</a></div>
+                <div class="guide-desc"><a href="javascript:void(0)" onclick="triggerNativeShare()" style="color:var(--corporate-accent); font-weight:700; text-decoration:none;">Tap to AirDrop / SMS Link →</a></div>
             </div>
         </div>
     </div>
@@ -1041,32 +973,6 @@ Michael Qin</div>
 <script>
 const STAGES = [{"number": 1, "title": "Lead Sourcing & Merchant Discovery", "phase": "Targeting & Enrichment", "objective": "Identify active commercial operators with daily/weekly MCA positions, high processing volume, or upcoming refinancing events.", "duration": "Daily Continuous", "actions": ["Target merchants doing $50K+/month in revenue with active daily debits or merchant processing statements.", "Verify direct owner cell number to bypass gatekeeper loops.", "Score leads on 3 points: Monthly Volume ($50K+), Active Debt/Debits present, Owner reachability."], "scripts": {"Pre-Call Sourcing Rule": "Always verify business name, state of filing, and approximate monthly volume before dialing."}, "metrics": ["50+ direct dials per hour", "15%+ live connection rate"], "pitfalls": ["Calling generic landlines instead of verified owner direct lines."]}, {"number": 2, "title": "The 30-Second Disarm & Hook", "phase": "First Touch & Framing", "objective": "Disarm the merchant in 5 seconds, frame call as expense reduction, and establish high-status authority.", "duration": "Days 1\u20135", "actions": ["Execute the 30-second verbatim opening.", "Pitch debt expense reduction, not new borrowing.", "Position yourself as an institutional diagnostic auditor."], "scripts": {"30-Second Opener": "Hey [Name], I will be brief. I know I am calling out of the blue. I work on the commercial capital side, and the reason for the call is simple: we are working with merchants in your industry right now to lower their daily/weekly debits and clean up expensive debt."}, "metrics": ["35%+ engagement rate on live connections"], "pitfalls": ["Sounding like a telemarketer asking for a favor instead of an institutional auditor."]}, {"number": 3, "title": "45-Second On-Call Statement Extraction", "phase": "Intake & Statement Capture", "objective": "Keep merchant on the line and walk them through downloading 3 months of bank statements right now.", "duration": "On-Call (45 Seconds)", "actions": ["Ask: 'Are you in front of your computer or looking at your phone right now?'", "Walk them step-by-step through their bank portal (Chase/BoA/Wells).", "Confirm receipt in your inbox while they are still on the line."], "scripts": {"Live Walkthrough": "Stay on the line with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're speaking so this isn't hanging over your head after hours."}, "metrics": ["70%+ on-call statement capture rate from engaged prospects"], "pitfalls": ["Accepting 'I'll email it tonight' without attempting the 45-second on-call download."]}, {"number": 4, "title": "Cash Flow Underwriting & Consolidation Modeling", "phase": "Analysis & Term Sheet", "objective": "Model the consolidated cash flow savings showing exact monthly dollars freed up.", "duration": "Under 24 Hours", "actions": ["Calculate total daily/weekly debits vs proposed single monthly payment.", "Calculate net annual cash flow savings.", "Format into a clean 1-page executive benchmark sheet."], "scripts": {"Benchmark Summary": "We completed the debt analysis for [Business Name]. By consolidating your daily debits, we free up +$10,500/month in net cash flow, saving $126,000 this year."}, "metrics": ["100% of benchmark models delivered within 24 hours of statements"], "pitfalls": ["Sending complex rate spreadsheets instead of bottom-line monthly cash savings."]}, {"number": 5, "title": "Term Sheet Presentation & Agreement Lock-In", "phase": "Presentation & Closing", "objective": "Walk through the numbers on a 10-minute call, address prepayment/fee questions, and get signed acceptance.", "duration": "24\u201348 Hours", "actions": ["Lead with net monthly cash freed up.", "Highlight contingent success representation.", "Secure signed placement agreement."], "scripts": {"10-Minute Closing Call": "1. Recap merchant's stated cash crunch\n2. Show the net monthly savings delta (+$10,500/mo)\n3. Outline the 48-hour funding timeline\n4. Ask: 'Based on these numbers, does it make sense to lock this in today?'"}, "metrics": ["50%+ term sheet signature rate"], "pitfalls": ["Letting the merchant sit on the term sheet for a week without a scheduled review call."]}, {"number": 6, "title": "Final Verification & Closing Disbursement", "phase": "Processing & Funding", "objective": "Clear stipulations, coordinate closing call, and confirm wire disbursement into merchant account.", "duration": "24\u201372 Hours", "actions": ["Verify driver's license, voided check, and landlord/utility verification.", "Conduct closing verification call with lender underwriting.", "Track wire confirmation and confirm receipt with merchant."], "scripts": {"Closing Update": "All stipulations cleared. Wire has been released and will reflect in your checking account within 2 hours."}, "metrics": ["Zero last-minute stipulation dropouts"], "pitfalls": ["Failing to prepare the merchant for the lender's final verification call."]}, {"number": 7, "title": "Post-Funding Celebration & Referral Engine", "phase": "Retention & Referrals", "objective": "Solidify lifetime advisory relationship and collect 2 peer merchant introductions.", "duration": "Day +1 Post-Funding", "actions": ["Call merchant 30 minutes after wire lands to celebrate.", "Schedule 6-month debt review on calendar.", "Ask for 2 business owner introductions while gratitude is at peak."], "scripts": {"Referral Ask": "Hey John, congratulations again on funding! We freed up $10,500/month for you. Who are 1 or 2 other business owners in your network who are getting squeezed by high fees and could use a quick cash flow check like this?"}, "metrics": ["1.5+ peer referrals per funded transaction"], "pitfalls": ["Disappearing after funding and missing the highest-probability referral window."]}];
 const OBJECTIONS = [{"objection": "We already have a lender / We don't need money.", "stage": "Stage 2: Outbound Call", "rebuttal": "Completely understand, and I'm glad business is running strong. I'm actually not calling to sell you new debt. Most successful operators we work with aren't looking to borrow\u2014they just want to stop getting squeezed by daily/weekly debits on existing positions. If our audit shows your setup is optimal, at least you keep your lenders honest. If we find $2,000/month in leakage, you keep the cash. What's the best email for that 1-page check?", "principle": "Reframe from 'borrowing money' to 'stopping expense leakage' and 'keeping incumbent lenders honest'."}, {"objection": "Just email me some information / I'm busy.", "stage": "Stage 2: Outbound Call", "rebuttal": "Happy to do that. Rather than blasting you with generic marketing decks you'll never read, are you in front of your computer or looking at your phone right now? Stay with me for 45 seconds while you click 'Download Statements' on your bank portal. I will confirm receipt on the line so you don't have this on your to-do list tonight. Which bank do you use\u2014Chase, BoA, or Wells?", "principle": "Do not accept passive brush-offs; immediately invite them to execute the 45-second on-call download."}, {"objection": "Why do you need my bank statements? / Is this secure?", "stage": "Stage 3: Intake", "rebuttal": "Totally understand the caution\u2014your financials are sensitive. We do not shop your file to 20 brokers. We do a direct, in-house preliminary audit to confirm your true monthly volume so we can negotiate institutional terms on your behalf. You can redact your account numbers if you prefer. What is the best email to send the secure link to?", "principle": "Dissolve security fear by offering account number redaction and highlighting zero-shopping guarantee."}, {"objection": "What are your rates / factor rates?", "stage": "Stage 2: Outbound Call", "rebuttal": "Rates depend entirely on monthly revenue and cash flow, but we are consistently placing capital at terms that cut daily debits in half. To give you an exact rate card rather than a misleading ballpark, shoot over your last 3 monthly statements and I'll deliver your exact terms in 3 hours. What address should I send the doc request to?", "principle": "Never quote a blind number; trade rate clarity for statements."}, {"objection": "I don't pay broker fees / What is your fee?", "stage": "Stage 5: Presentation", "rebuttal": "Our advisory fee is 100% contingent on success\u2014you pay zero dollars unless we deliver financing on terms you approve that beat your existing alternatives. The monthly cash savings we negotiate in year one alone more than covers the placement, putting net profit in your pocket from day one.", "principle": "Emphasize zero upfront risk and immediate cash-flow payback."}];
-
-/* =========================================================================
-   THEME SWITCHER (SLATE -> OLED -> LIGHT)
-   ========================================================================= */
-const THEMES = ["slate", "oled", "light"];
-let currentThemeIdx = 0;
-
-function cycleTheme() {
-    currentThemeIdx = (currentThemeIdx + 1) % THEMES.length;
-    applyTheme(THEMES[currentThemeIdx]);
-}
-
-function applyTheme(name) {
-    document.body.classList.remove('theme-light', 'theme-oled');
-    const btn = document.getElementById('theme-btn');
-    if (name === 'light') {
-        document.body.classList.add('theme-light');
-        btn.innerText = "☀️ Theme: Daylight";
-    } else if (name === 'oled') {
-        document.body.classList.add('theme-oled');
-        btn.innerText = "🌙 Theme: OLED Dark";
-    } else {
-        btn.innerText = "🎨 Theme: Slate";
-    }
-    localStorage.setItem('mq_theme', name);
-}
 
 /* =========================================================================
    SHARE MODAL LOGIC
@@ -1376,7 +1282,7 @@ function renderCurrentNode() {
     document.getElementById('hud-stage').innerText = node.stage;
     document.getElementById('hud-verbatim').innerHTML = formatWithTokens(node.verbatim, true);
     document.getElementById('hud-tactical').innerText = node.tactical;
-    document.getElementById('hud-step').innerText = `Step ${historyStack.length}`;
+    document.getElementById('hud-step').innerText = `Step ${historyStack.length} of 4 | Hotkeys: [1-6] React, [Space] Copy, [R] Reset`;
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
@@ -1462,10 +1368,10 @@ function selectBank(bankKey, btn) {
    ========================================================================= */
 function switchTab(tabId) {
     document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
     const target = document.getElementById(tabId);
     if (target) target.classList.add('active');
-    const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+    const btn = Array.from(document.querySelectorAll('.tab-item')).find(b => b.getAttribute('onclick').includes(tabId));
     if (btn) btn.classList.add('active');
 }
 
@@ -1498,9 +1404,9 @@ function runCalc() {
 function renderObjections() {
     const container = document.getElementById('objections-list');
     container.innerHTML = OBJECTIONS.map(o => `
-        <div style="margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
-            <div style="font-size: 13px; font-weight: 800; color: var(--c-red); margin-bottom: 4px;">⚠️ "${o.objection}"</div>
-            <div class="copy-box red-box">
+        <div style="margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--color-danger); margin-bottom: 4px;">⚠️ "${o.objection}"</div>
+            <div class="copy-block red-box">
                 <div class="copy-text">"${o.rebuttal}"</div>
                 <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
@@ -1512,11 +1418,11 @@ function renderObjections() {
 function renderPipeline() {
     const container = document.getElementById('pipeline-list');
     container.innerHTML = STAGES.map(s => `
-        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
-            <div style="font-size: 13.5px; font-weight: 800; color: var(--c-blue); margin-bottom: 4px;">Stage ${s.number}: ${s.title}</div>
-            <div style="font-size: 12px; color: var(--text-body); margin-bottom: 8px;"><strong>Goal:</strong> ${s.objective}</div>
+        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <div style="font-size: 13.5px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 4px;">Stage ${s.number}: ${s.title}</div>
+            <div style="font-size: 12px; color: var(--text-main); margin-bottom: 8px;"><strong>Goal:</strong> ${s.objective}</div>
             <div style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 6px;"><strong>Key Actions:</strong></div>
-            <ul style="padding-left: 16px; font-size: 12px; color: var(--text-body);">
+            <ul style="padding-left: 16px; font-size: 12px; color: var(--text-main);">
                 ${s.actions.map(a => `<li>${a}</li>`).join('')}
             </ul>
         </div>
@@ -1524,8 +1430,6 @@ function renderPipeline() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('mq_theme') || 'slate';
-    applyTheme(savedTheme);
     renderCurrentNode();
     renderObjections();
     renderPipeline();
