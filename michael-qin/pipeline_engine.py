@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-ThinkAutomation Corporate Navy Edition - Zero-Scroll Ultra-Ergonomic Viewport Fit.
-Designed for 100% visibility on Desktop (Zero-Scroll Call HUD), iPhone, and Android.
+Dual-Column Cockpit Edition - Zero-Scroll Desktop Grid + Fluid Mobile Responsiveness.
+Designed for 100% visibility above the fold on all monitors, iPhone, and Android.
 """
 
 import os
@@ -69,10 +69,10 @@ class SalesPipelineSystem:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Walker Advisory — {self.rep_name} Sales Flight Deck</title>
+<title>Walker Advisory — {self.rep_name} Flight Deck</title>
 <style>
     :root {{
-        /* ThinkAutomation v83 Corporate Palette */
+        /* ThinkAutomation Corporate Navy Palette */
         --corporate-navy: #0f2744;
         --corporate-blue: #1b4b72;
         --corporate-accent: #2563eb;
@@ -119,30 +119,37 @@ class SalesPipelineSystem:
         background-color: var(--bg-page);
         color: var(--text-main);
         font-family: var(--font-family);
-        line-height: 1.4;
-        font-size: 13px;
+        line-height: 1.35;
+        font-size: 12.5px;
         -webkit-font-smoothing: antialiased;
-        min-height: 100vh;
+        height: 100vh;
+        overflow-x: hidden;
     }}
 
     .app-container {{
         width: 100%;
-        max-width: 1240px;
+        max-width: 1320px;
         margin: 0 auto;
-        padding: 8px 12px;
+        padding: 6px 10px;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
     }}
 
-    /* Compact Corporate Header */
+    /* =========================================================================
+       COMPACT EXECUTIVE HEADER (1-LINE DESKTOP)
+       ========================================================================= */
     .top-header {{
         background: var(--bg-card);
         border: 1px solid var(--border-main);
         border-top: 3px solid var(--corporate-navy);
-        padding: 8px 12px;
-        margin-bottom: 8px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        padding: 6px 10px;
+        margin-bottom: 6px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        flex-shrink: 0;
     }}
 
-    .header-main-row {{
+    .header-row-1 {{
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -157,42 +164,47 @@ class SalesPipelineSystem:
         white-space: nowrap;
     }}
     .brand-title {{
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 800;
         color: var(--corporate-navy);
-        letter-spacing: -0.3px;
+        letter-spacing: -0.2px;
     }}
     .status-tag {{
-        font-size: 9.5px;
+        font-size: 9px;
         font-weight: 700;
-        padding: 1px 6px;
-        border-radius: 3px;
+        padding: 1px 5px;
+        border-radius: 2px;
         text-transform: uppercase;
         background: #dcfce7;
         color: #166534;
         border: 1px solid #bbf7d0;
     }}
+    .rep-tag {{
+        font-size: 11px;
+        color: var(--text-muted);
+        font-weight: 600;
+    }}
 
-    /* Horizontal Lead Inputs Bar */
-    .lead-inline-bar {{
+    /* Lead Inputs */
+    .lead-bar-inline {{
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         flex: 1;
         min-width: 280px;
         justify-content: flex-end;
     }}
     .lead-input-wrap {{
         flex: 1;
-        max-width: 180px;
-        min-width: 90px;
+        max-width: 170px;
+        min-width: 80px;
     }}
     .lead-input-compact {{
         width: 100%;
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--corporate-navy);
-        padding: 5px 8px;
+        padding: 4px 7px;
         border-radius: 3px;
         font-size: 11.5px;
         font-weight: 600;
@@ -206,9 +218,9 @@ class SalesPipelineSystem:
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        padding: 5px 8px;
+        padding: 4px 7px;
         border-radius: 3px;
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 700;
         cursor: pointer;
         white-space: nowrap;
@@ -219,33 +231,33 @@ class SalesPipelineSystem:
         background: var(--corporate-navy);
         color: #ffffff;
         border: 1px solid var(--corporate-navy);
-        padding: 5px 10px;
+        padding: 4px 9px;
         border-radius: 3px;
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 700;
         cursor: pointer;
         white-space: nowrap;
         display: inline-flex;
         align-items: center;
-        gap: 4px;
+        gap: 3px;
     }}
     .btn-share-top:hover {{ background: var(--corporate-blue); }}
 
-    /* Compact Tone Bar */
-    .tone-strip {{
+    /* Tone Chips Row */
+    .tone-row {{
         display: flex;
         align-items: center;
-        gap: 6px;
-        margin-top: 6px;
-        padding-top: 6px;
+        gap: 4px;
+        margin-top: 5px;
+        padding-top: 5px;
         border-top: 1px solid var(--border-subtle);
         overflow-x: auto;
         scrollbar-width: none;
     }}
-    .tone-strip::-webkit-scrollbar {{ display: none; }}
+    .tone-row::-webkit-scrollbar {{ display: none; }}
     
-    .tone-strip-lbl {{
-        font-size: 10px;
+    .tone-lbl {{
+        font-size: 9.5px;
         font-weight: 800;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -253,15 +265,15 @@ class SalesPipelineSystem:
     }}
     .tone-chips {{
         display: flex;
-        gap: 4px;
+        gap: 3px;
     }}
     .tone-chip {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 600;
-        padding: 3px 8px;
+        padding: 2px 7px;
         border-radius: 3px;
         cursor: pointer;
         white-space: nowrap;
@@ -274,22 +286,22 @@ class SalesPipelineSystem:
         font-weight: 700;
     }}
 
-    .extra-intel-link {{
+    .extra-intel-btn {{
         margin-left: auto;
         background: none;
         border: none;
         color: var(--corporate-accent);
-        font-size: 10.5px;
+        font-size: 10px;
         font-weight: 700;
         cursor: pointer;
         white-space: nowrap;
     }}
 
-    /* Extra Intel Collapsible Drawer */
+    /* Extra Intel Drawer */
     .intel-drawer {{
         display: none;
-        margin-top: 6px;
-        padding: 8px 10px;
+        margin-top: 5px;
+        padding: 6px 8px;
         background: var(--bg-subtle);
         border: 1px solid var(--border-subtle);
         border-radius: 3px;
@@ -297,18 +309,19 @@ class SalesPipelineSystem:
     .intel-drawer.open {{ display: block; }}
     .intel-grid {{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 6px;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 5px;
     }}
 
     /* Tabs Bar */
     .tabs-nav {{
         display: flex;
-        gap: 3px;
+        gap: 2px;
         border-bottom: 2px solid var(--border-main);
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         overflow-x: auto;
         scrollbar-width: none;
+        flex-shrink: 0;
     }}
     .tabs-nav::-webkit-scrollbar {{ display: none; }}
     
@@ -317,9 +330,9 @@ class SalesPipelineSystem:
         border: 1px solid var(--border-main);
         border-bottom: none;
         color: var(--text-muted);
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 600;
-        padding: 6px 10px;
+        padding: 5px 9px;
         border-radius: 3px 3px 0 0;
         cursor: pointer;
         white-space: nowrap;
@@ -334,54 +347,80 @@ class SalesPipelineSystem:
         font-weight: 700;
     }}
 
-    .tab-pane {{ display: none; }}
-    .tab-pane.active {{ display: block; }}
+    /* Tab Content Area */
+    .tab-container-area {{
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+    }}
+    .tab-pane {{ display: none; height: 100%; }}
+    .tab-pane.active {{ display: flex; flex-direction: column; }}
 
     /* =========================================================================
-       DIALER COPILOT - ZERO SCROLL LAYOUT
+       2-COLUMN COCKPIT LAYOUT FOR DIALER COPILOT
        ========================================================================= */
-    .hud-block {{
+    .cockpit-grid {{
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 8px;
+        height: 100%;
+        align-items: stretch;
+    }}
+    @media (max-width: 860px) {{
+        .cockpit-grid {{
+            grid-template-columns: 1fr;
+            height: auto;
+        }}
+    }}
+
+    .cockpit-left, .cockpit-right {{
         background: var(--bg-card);
         border: 1px solid var(--border-main);
-        padding: 10px 14px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
         box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }}
 
-    .hud-top-meta {{
+    .cockpit-title-row {{
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 6px;
         padding-bottom: 4px;
         border-bottom: 1px solid var(--border-subtle);
+        flex-shrink: 0;
     }}
-    .stage-title {{
-        font-size: 12px;
+    .cockpit-title {{
+        font-size: 11.5px;
         font-weight: 800;
         color: var(--corporate-navy);
         text-transform: uppercase;
         letter-spacing: 0.3px;
     }}
-    .hotkey-hint {{
+    .cockpit-meta {{
         font-family: var(--font-mono);
         font-size: 10px;
         color: var(--text-muted);
     }}
 
-    /* Verbatim Speech Box */
+    /* Speech Box (Left Column) */
     .say-box {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
         border-left: 3.5px solid var(--corporate-accent);
-        padding: 10px 14px;
-        margin-bottom: 10px;
+        padding: 12px 14px;
         border-radius: 2px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }}
     .say-header-row {{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }}
     .say-lbl {{
         font-size: 9.5px;
@@ -391,7 +430,7 @@ class SalesPipelineSystem:
         letter-spacing: 0.5px;
     }}
     .tone-badge {{
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 700;
         color: var(--corporate-navy);
         background: #e2e8f0;
@@ -401,14 +440,15 @@ class SalesPipelineSystem:
     }}
 
     .say-text {{
-        font-size: 15.5px;
+        font-size: 15px;
         font-weight: 600;
         color: var(--corporate-navy);
         line-height: 1.45;
         white-space: pre-wrap;
+        margin-bottom: 8px;
     }}
     @media (max-width: 600px) {{
-        .say-text {{ font-size: 14px; line-height: 1.4; }}
+        .say-text {{ font-size: 13.5px; line-height: 1.4; }}
     }}
     .say-text .token-highlight {{
         background: #fef3c7;
@@ -422,38 +462,50 @@ class SalesPipelineSystem:
         background: var(--color-purple-bg);
         border: 1px solid var(--color-purple-border);
         border-left: 3px solid var(--color-purple);
-        padding: 5px 10px;
-        margin-top: 6px;
-        font-size: 11px;
+        padding: 5px 8px;
+        font-size: 10.5px;
         color: var(--color-purple);
         border-radius: 2px;
+        margin-top: auto;
     }}
 
-    /* Options Label & Grid */
-    .options-row-lbl {{
-        font-size: 10px;
-        font-weight: 800;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-        margin-bottom: 6px;
+    /* Action Toolbar */
+    .cockpit-action-bar {{
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+        padding-top: 6px;
+        border-top: 1px solid var(--border-subtle);
+        flex-shrink: 0;
     }}
+    .btn-ctrl {{
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-main);
+        color: var(--text-main);
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 10.5px;
+        font-weight: 600;
+        cursor: pointer;
+    }}
+    .btn-ctrl:hover {{ background: #e2e8f0; }}
 
-    .options-grid {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 6px;
-        margin-bottom: 8px;
+    /* Reaction Options (Right Column) */
+    .options-stack {{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        flex: 1;
+        justify-content: space-around;
     }}
 
     .opt-btn {{
         background: #ffffff;
         border: 1px solid var(--border-main);
-        padding: 8px 10px;
+        padding: 7px 10px;
         border-radius: 3px;
-        font-size: 12px;
+        font-size: 11.5px;
         font-weight: 600;
         text-align: left;
         cursor: pointer;
@@ -496,39 +548,19 @@ class SalesPipelineSystem:
         flex-shrink: 0;
     }}
 
-    /* Bottom HUD Foot */
-    .hud-foot {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 6px;
-        border-top: 1px solid var(--border-subtle);
-    }}
-    .btn-ctrl {{
-        background: var(--bg-subtle);
-        border: 1px solid var(--border-main);
-        color: var(--text-main);
-        padding: 4px 10px;
-        border-radius: 3px;
-        font-size: 11px;
-        font-weight: 600;
-        cursor: pointer;
-    }}
-    .btn-ctrl:hover {{ background: #e2e8f0; }}
-
-    /* Cards for Other Tabs */
+    /* General Cards for other tabs */
     .section-block {{
         background: var(--bg-card);
         border: 1px solid var(--border-main);
-        padding: 16px;
-        margin-bottom: 12px;
+        padding: 14px;
+        margin-bottom: 10px;
     }}
     .section-header-row {{
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 700;
         color: var(--corporate-navy);
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         display: flex;
         justify-content: space-between;
     }}
@@ -538,8 +570,8 @@ class SalesPipelineSystem:
         border: 1px solid var(--border-subtle);
         border-left: 3.5px solid var(--corporate-accent);
         border-radius: 3px;
-        padding: 10px 12px;
-        margin: 6px 0 10px 0;
+        padding: 8px 10px;
+        margin: 5px 0 8px 0;
         position: relative;
     }}
     .copy-block.green-box {{ border-left-color: var(--color-success); background: var(--color-success-bg); }}
@@ -547,21 +579,21 @@ class SalesPipelineSystem:
     .copy-block.yellow-box {{ border-left-color: var(--color-warning); background: var(--color-warning-bg); }}
 
     .copy-text {{
-        font-size: 12px;
+        font-size: 11.5px;
         color: var(--text-main);
         white-space: pre-wrap;
-        line-height: 1.45;
+        line-height: 1.4;
     }}
     .btn-copy {{
         position: absolute;
-        top: 6px;
-        right: 6px;
+        top: 5px;
+        right: 5px;
         background: #ffffff;
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 600;
-        padding: 1px 6px;
+        padding: 1px 5px;
         border-radius: 2px;
         cursor: pointer;
     }}
@@ -576,9 +608,9 @@ class SalesPipelineSystem:
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        padding: 5px 10px;
+        padding: 4px 8px;
         border-radius: 3px;
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 600;
         cursor: pointer;
     }}
@@ -591,13 +623,13 @@ class SalesPipelineSystem:
     /* Calculator */
     .calc-grid {{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }}
     .calc-cell label {{
         display: block;
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
@@ -608,10 +640,10 @@ class SalesPipelineSystem:
         background: #ffffff;
         border: 1px solid var(--border-main);
         color: var(--corporate-navy);
-        padding: 6px 8px;
+        padding: 5px 7px;
         border-radius: 3px;
         font-family: var(--font-mono);
-        font-size: 12.5px;
+        font-size: 12px;
         font-weight: 600;
     }}
 
@@ -619,19 +651,19 @@ class SalesPipelineSystem:
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         border-radius: 3px;
-        padding: 10px;
+        padding: 8px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 6px;
         text-align: center;
     }}
     .calc-val {{
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 800;
         font-family: var(--font-mono);
     }}
     .calc-lbl {{
-        font-size: 9.5px;
+        font-size: 9px;
         font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
@@ -658,21 +690,21 @@ class SalesPipelineSystem:
         border: 1px solid var(--border-main);
         border-top: 4px solid var(--corporate-navy);
         border-radius: 4px;
-        max-width: 440px;
+        max-width: 420px;
         width: 100%;
-        padding: 18px;
+        padding: 16px;
         position: relative;
     }}
     .modal-close {{
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 8px;
+        right: 8px;
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 700;
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
         border-radius: 3px;
         cursor: pointer;
     }}
@@ -680,16 +712,16 @@ class SalesPipelineSystem:
     .qr-box {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
-        padding: 10px;
+        padding: 8px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 6px;
-        margin: 10px 0;
+        gap: 4px;
+        margin: 8px 0;
     }}
     .qr-img {{
-        width: 140px;
-        height: 140px;
+        width: 130px;
+        height: 130px;
         background: #fff;
         padding: 4px;
         border: 1px solid var(--border-main);
@@ -698,13 +730,13 @@ class SalesPipelineSystem:
     /* Toast */
     .toast {{
         position: fixed;
-        bottom: 16px;
-        right: 16px;
+        bottom: 14px;
+        right: 14px;
         background: var(--corporate-navy);
         color: #ffffff;
         font-weight: 600;
-        font-size: 11.5px;
-        padding: 5px 12px;
+        font-size: 11px;
+        padding: 5px 10px;
         border-radius: 3px;
         opacity: 0;
         pointer-events: none;
@@ -714,9 +746,9 @@ class SalesPipelineSystem:
     .toast.show {{ opacity: 1; }}
 
     @media print {{
-        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear-compact, .btn-share-top, .modal-overlay, .tone-strip {{ display: none !important; }}
-        body {{ background: #fff; color: #000; }}
-        .hud-block, .section-block {{ border: 1px solid #ccc; background: #fff; }}
+        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear-compact, .btn-share-top, .modal-overlay, .tone-row {{ display: none !important; }}
+        body {{ background: #fff; color: #000; height: auto; }}
+        .cockpit-grid {{ display: block; }}
     }}
 </style>
 </head>
@@ -724,17 +756,17 @@ class SalesPipelineSystem:
 
 <div class="app-container">
 
-    <!-- Compact Corporate Header -->
+    <!-- Compact Executive Header -->
     <div class="top-header">
-        <div class="header-main-row">
+        <div class="header-row-1">
             <div class="brand-block">
                 <span class="brand-title">Walker Advisory</span>
-                <span class="status-tag">Live System</span>
-                <span style="font-size: 11px; color: var(--text-muted); margin-left: 4px;">{self.rep_name}</span>
+                <span class="status-tag">Live</span>
+                <span class="rep-tag">{self.rep_name}</span>
             </div>
 
             <!-- Horizontal Inline Lead Inputs -->
-            <div class="lead-inline-bar">
+            <div class="lead-bar-inline">
                 <div class="lead-input-wrap">
                     <input type="text" id="lead-name" class="lead-input-compact" placeholder="Contact Name" oninput="updatePersonalization()">
                 </div>
@@ -745,22 +777,22 @@ class SalesPipelineSystem:
                     <input type="text" id="lead-industry" class="lead-input-compact" placeholder="Industry / Niche" oninput="updatePersonalization()">
                 </div>
                 <button class="btn-clear-compact" onclick="clearLeadInputs()">✕</button>
-                <button class="btn-share-top" onclick="openShareModal()">🔗 Share / Link</button>
+                <button class="btn-share-top" onclick="openShareModal()">🔗 Share</button>
             </div>
         </div>
 
-        <!-- Compact Tone Selector Strip -->
-        <div class="tone-strip">
-            <span class="tone-strip-lbl">🎭 Tone:</span>
+        <!-- Tone Selector Row -->
+        <div class="tone-row">
+            <span class="tone-lbl">🎭 Tone:</span>
             <div class="tone-chips" id="tone-chips-container">
                 <button class="tone-chip active" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
                 <button class="tone-chip" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
                 <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
-                <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO Analytical</button>
+                <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
                 <button class="tone-chip" onclick="setTone('conservative', this)">🤝 Conservative</button>
-                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban Modern</button>
+                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban</button>
             </div>
-            <button class="extra-intel-link" onclick="toggleIntelDrawer()">➕ More Intel</button>
+            <button class="extra-intel-btn" onclick="toggleIntelDrawer()">➕ Extra Intel</button>
         </div>
 
         <!-- Collapsible Intel Drawer -->
@@ -785,191 +817,204 @@ class SalesPipelineSystem:
         <button class="tab-item" onclick="switchTab('tab-pipeline')">🚀 7-Stage Pipeline</button>
     </div>
 
-    <!-- TAB 1: DIALER COPILOT (ZERO-SCROLL VIEWPORT) -->
-    <div id="tab-hud" class="tab-pane active">
-        <div class="hud-block">
-            <div class="hud-top-meta">
-                <span class="stage-title" id="hud-stage">Stage 1: Opening (0-5s)</span>
-                <span class="hotkey-hint" id="hud-step">Step 1 of 4 | Keys: [1-6] React, [Space] Copy, [R] Reset</span>
-            </div>
+    <!-- Tab Container Area -->
+    <div class="tab-container-area">
 
-            <!-- Sticky Call Note Banner -->
-            <div id="sticky-note-box" style="display:none; background:#fffbeb; border:1px solid #fde68a; padding:4px 8px; font-size:11px; color:#92400e; margin-bottom:6px; border-radius:2px;">
-                <strong>📌 Note:</strong> <span id="sticky-note-text"></span>
-            </div>
+        <!-- TAB 1: DIALER COPILOT (2-COLUMN COCKPIT LAYOUT) -->
+        <div id="tab-hud" class="tab-pane active">
+            <div class="cockpit-grid">
+                
+                <!-- LEFT COLUMN: WHAT YOU SAY -->
+                <div class="cockpit-left">
+                    <div class="cockpit-title-row">
+                        <span class="cockpit-title" id="hud-stage">Stage 1: Opening (0-5s)</span>
+                        <span class="cockpit-meta" id="hud-step">Step 1 of 4</span>
+                    </div>
 
-            <!-- Verbatim Speech Box -->
-            <div class="say-box">
-                <div class="say-header-row">
-                    <span class="say-lbl">🗣️ What You Say Out Loud (Verbatim)</span>
-                    <span class="tone-badge" id="active-tone-label">Tone: Wall Street</span>
+                    <!-- Sticky Call Note Banner -->
+                    <div id="sticky-note-box" style="display:none; background:#fffbeb; border:1px solid #fde68a; padding:3px 6px; font-size:10.5px; color:#92400e; margin-bottom:5px; border-radius:2px;">
+                        <strong>📌 Note:</strong> <span id="sticky-note-text"></span>
+                    </div>
+
+                    <div class="say-box">
+                        <div>
+                            <div class="say-header-row">
+                                <span class="say-lbl">🗣️ What You Say Out Loud (Verbatim)</span>
+                                <span class="tone-badge" id="active-tone-label">Wall Street</span>
+                            </div>
+                            <div class="say-text" id="hud-verbatim"></div>
+                        </div>
+                        <div class="tactical-bar" id="hud-bar">
+                            <strong>Tactical Execution:</strong> <span id="hud-tactical"></span>
+                        </div>
+                    </div>
+
+                    <div class="cockpit-action-bar">
+                        <button class="btn-ctrl" onclick="goBack()" id="btn-back" style="display:none;">⬅ Back</button>
+                        <div style="display: flex; gap: 4px; margin-left: auto;">
+                            <button class="btn-ctrl" onclick="copyText(getCleanScriptText())">📋 Copy (Space)</button>
+                            <button class="btn-ctrl" onclick="resetFlow()">🔄 Reset Call (R)</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="say-text" id="hud-verbatim"></div>
-                <div class="tactical-bar" id="hud-bar">
-                    <strong>Tactical Execution:</strong> <span id="hud-tactical"></span>
+
+                <!-- RIGHT COLUMN: PROSPECT REACTIONS (HOTKEYS 1-6) -->
+                <div class="cockpit-right">
+                    <div class="cockpit-title-row">
+                        <span class="cockpit-title">👉 Prospect Reactions</span>
+                        <span class="cockpit-meta">Press [1-6] or Click</span>
+                    </div>
+
+                    <div class="options-stack" id="hud-options">
+                        <!-- Injected Dynamically -->
+                    </div>
                 </div>
-            </div>
 
-            <!-- Reaction Options -->
-            <div class="options-row-lbl">
-                <span>👉 What did the prospect say?</span>
-                <span>(Click or Press Number Key)</span>
-            </div>
-
-            <div class="options-grid" id="hud-options">
-                <!-- Injected Dynamically -->
-            </div>
-
-            <div class="hud-foot">
-                <button class="btn-ctrl" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
-                <div style="display: flex; gap: 4px; margin-left: auto;">
-                    <button class="btn-ctrl" onclick="copyText(getCleanScriptText())">📋 Copy (Space)</button>
-                    <button class="btn-ctrl" onclick="resetFlow()">🔄 Reset (R)</button>
-                </div>
             </div>
         </div>
-    </div>
 
-    <!-- TAB 2: CUSTOM DECK STUDIO -->
-    <div id="tab-custom-decks" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>🛠️ Custom Deck Studio &amp; Pitch Builder</span>
+        <!-- TAB 2: CUSTOM DECK STUDIO -->
+        <div id="tab-custom-decks" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>🛠️ Custom Deck Studio &amp; Pitch Builder</span>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 8px;">
+                    Build custom pitch decks saved directly in your browser.
+                </p>
+                <div style="display:grid; gap:6px;">
+                    <input type="text" id="new-deck-name" class="lead-input-compact" placeholder="Deck Name (e.g. Florida Contractors Opener)">
+                    <textarea id="new-deck-opener" style="width:100%; min-height:55px; padding:5px 7px; border:1px solid var(--border-main); font-size:11.5px;" placeholder="Opener line (Use [Name], [Company], [Industry])"></textarea>
+                    <textarea id="new-deck-hook" style="width:100%; min-height:45px; padding:5px 7px; border:1px solid var(--border-main); font-size:11.5px;" placeholder="Hook & Disarm Line"></textarea>
+                    <input type="text" id="new-deck-note" class="lead-input-compact" placeholder="Delivery Note">
+                    <button class="btn-share-top" style="justify-content:center; padding:5px;" onclick="saveCustomDeck()">💾 Save Custom Deck</button>
+                </div>
+                <div style="font-size:11.5px; font-weight:700; color:var(--corporate-navy); margin:10px 0 4px;">Saved Custom Decks:</div>
+                <div id="custom-decks-container"></div>
             </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-                Build custom pitch decks saved directly in your browser.
-            </p>
-            <div style="display:grid; gap:8px;">
-                <input type="text" id="new-deck-name" class="lead-input-compact" placeholder="Deck Name (e.g. Florida Contractors Opener)">
-                <textarea id="new-deck-opener" style="width:100%; min-height:60px; padding:6px 8px; border:1px solid var(--border-main); font-size:12px;" placeholder="Opener line (Use [Name], [Company], [Industry])"></textarea>
-                <textarea id="new-deck-hook" style="width:100%; min-height:50px; padding:6px 8px; border:1px solid var(--border-main); font-size:12px;" placeholder="Hook & Disarm Line"></textarea>
-                <input type="text" id="new-deck-note" class="lead-input-compact" placeholder="Delivery Note">
-                <button class="btn-share-top" style="justify-content:center; padding:6px;" onclick="saveCustomDeck()">💾 Save Custom Deck</button>
-            </div>
-            <div style="font-size:12px; font-weight:700; color:var(--corporate-navy); margin:12px 0 6px;">Saved Custom Decks:</div>
-            <div id="custom-decks-container"></div>
         </div>
-    </div>
 
-    <!-- TAB 3: STATEMENT EXTRACTION -->
-    <div id="tab-statement" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>🚀 45-Second On-Call Statement Extraction Protocol</span>
-            </div>
-            <div class="copy-block green-box">
-                <div style="font-size: 10.5px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 2px;">Live Walkthrough Script</div>
-                <div class="copy-text" id="stmt-walkthrough-text"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
+        <!-- TAB 3: STATEMENT EXTRACTION -->
+        <div id="tab-statement" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>🚀 45-Second On-Call Statement Extraction Protocol</span>
+                </div>
+                <div class="copy-block green-box">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 2px;">Live Walkthrough Script</div>
+                    <div class="copy-text" id="stmt-walkthrough-text"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
 
-            <div style="font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 8px 0 4px;">Bank 2-Click Guides:</div>
-            <div class="bank-chips">
-                <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
-                <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
-                <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
-                <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile</button>
-            </div>
+                <div style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 6px 0 3px;">Bank 2-Click Guides:</div>
+                <div class="bank-chips">
+                    <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
+                    <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
+                    <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
+                    <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile</button>
+                </div>
 
-            <div class="copy-block">
-                <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
+                <div class="copy-block">
+                    <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
 2. "Click 'Statements & Documents' right below the balance."
 3. "Download the last 3 monthly PDFs and forward directly to my email."</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
 
-            <div class="copy-block yellow-box">
-                <div style="font-size: 10.5px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-bottom: 2px;">Chris Voss Loss-Aversion Rebuttal</div>
-                <div class="copy-text" id="loss-aversion-text"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB 4: SAVINGS CALCULATOR -->
-    <div id="tab-calc" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>💰 Live Debt Restructuring Calculator</span>
-            </div>
-            <div class="calc-grid">
-                <div class="calc-cell">
-                    <label>Monthly Revenue ($)</label>
-                    <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
-                </div>
-                <div class="calc-cell">
-                    <label>Current Debits ($/Mo)</label>
-                    <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
-                </div>
-                <div class="calc-cell">
-                    <label>New Payment ($/Mo)</label>
-                    <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
-                </div>
-                <div class="calc-cell">
-                    <label>New Capital ($)</label>
-                    <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
-                </div>
-            </div>
-
-            <div class="calc-summary">
-                <div>
-                    <div class="calc-val" id="res-monthly" style="color: var(--color-success);">+$10,500</div>
-                    <div class="calc-lbl">Monthly Cash Freed</div>
-                </div>
-                <div>
-                    <div class="calc-val" id="res-annual" style="color: var(--corporate-accent);">$126,000</div>
-                    <div class="calc-lbl">Annual Savings</div>
-                </div>
-                <div>
-                    <div class="calc-val" id="res-capital" style="color: var(--color-purple);">$150,000</div>
-                    <div class="calc-lbl">Liquidity Unlocked</div>
+                <div class="copy-block yellow-box">
+                    <div style="font-size: 10px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-bottom: 2px;">Chris Voss Loss-Aversion Rebuttal</div>
+                    <div class="copy-text" id="loss-aversion-text"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- TAB 5: PUSHBACK MATRIX -->
-    <div id="tab-objections" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>🛡️ Pushback &amp; Objection Rebuttals</span>
-            </div>
-            <div id="objections-list"></div>
-        </div>
-    </div>
+        <!-- TAB 4: SAVINGS CALCULATOR -->
+        <div id="tab-calc" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>💰 Live Debt Restructuring Calculator</span>
+                </div>
+                <div class="calc-grid">
+                    <div class="calc-cell">
+                        <label>Monthly Revenue ($)</label>
+                        <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>Current Debits ($/Mo)</label>
+                        <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>New Payment ($/Mo)</label>
+                        <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
+                    </div>
+                    <div class="calc-cell">
+                        <label>New Capital ($)</label>
+                        <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
+                    </div>
+                </div>
 
-    <!-- TAB 6: CADENCE -->
-    <div id="tab-cadence" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>📬 Multi-Touch SMS &amp; Email Cadence</span>
-            </div>
-            <div class="copy-block green-box">
-                <div style="font-size: 10px; font-weight: 700; color: var(--color-success); text-transform: uppercase;">Day 1: Instant Post-Call SMS</div>
-                <div class="copy-text" id="cadence-sms1"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-            <div class="copy-block yellow-box">
-                <div style="font-size: 10px; font-weight: 700; color: var(--color-warning); text-transform: uppercase;">Day 3: Midday Leakage Check-In</div>
-                <div class="copy-text" id="cadence-email1"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-            <div class="copy-block red-box">
-                <div style="font-size: 10px; font-weight: 700; color: var(--color-danger); text-transform: uppercase;">Day 8: Permission-to-Close Breakup</div>
-                <div class="copy-text" id="cadence-email2"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                <div class="calc-summary">
+                    <div>
+                        <div class="calc-val" id="res-monthly" style="color: var(--color-success);">+$10,500</div>
+                        <div class="calc-lbl">Monthly Cash Freed</div>
+                    </div>
+                    <div>
+                        <div class="calc-val" id="res-annual" style="color: var(--corporate-accent);">$126,000</div>
+                        <div class="calc-lbl">Annual Savings</div>
+                    </div>
+                    <div>
+                        <div class="calc-val" id="res-capital" style="color: var(--color-purple);">$150,000</div>
+                        <div class="calc-lbl">Liquidity Unlocked</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- TAB 7: PIPELINE STAGES -->
-    <div id="tab-pipeline" class="tab-pane">
-        <div class="section-block">
-            <div class="section-header-row">
-                <span>🚀 Complete 7-Stage Pipeline Guide</span>
+        <!-- TAB 5: PUSHBACK MATRIX -->
+        <div id="tab-objections" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>🛡️ Pushback &amp; Objection Rebuttals</span>
+                </div>
+                <div id="objections-list"></div>
             </div>
-            <div id="pipeline-list"></div>
         </div>
+
+        <!-- TAB 6: CADENCE -->
+        <div id="tab-cadence" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>📬 Multi-Touch SMS &amp; Email Cadence</span>
+                </div>
+                <div class="copy-block green-box">
+                    <div style="font-size: 9.5px; font-weight: 700; color: var(--color-success); text-transform: uppercase;">Day 1: Instant Post-Call SMS</div>
+                    <div class="copy-text" id="cadence-sms1"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+                <div class="copy-block yellow-box">
+                    <div style="font-size: 9.5px; font-weight: 700; color: var(--color-warning); text-transform: uppercase;">Day 3: Midday Leakage Check-In</div>
+                    <div class="copy-text" id="cadence-email1"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+                <div class="copy-block red-box">
+                    <div style="font-size: 9.5px; font-weight: 700; color: var(--color-danger); text-transform: uppercase;">Day 8: Permission-to-Close Breakup</div>
+                    <div class="copy-text" id="cadence-email2"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: PIPELINE STAGES -->
+        <div id="tab-pipeline" class="tab-pane">
+            <div class="section-block">
+                <div class="section-header-row">
+                    <span>🚀 Complete 7-Stage Pipeline Guide</span>
+                </div>
+                <div id="pipeline-list"></div>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -978,25 +1023,25 @@ class SalesPipelineSystem:
 <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeShareModal()">✕</button>
-        <div style="font-size:14px; font-weight:800; color:var(--corporate-navy); margin-bottom:2px;">📲 Add to Any Device / Create Link</div>
-        <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:8px;">Instant access on iPhone, Android, or PC.</div>
+        <div style="font-size:13px; font-weight:800; color:var(--corporate-navy); margin-bottom:2px;">📲 Add to Any Device / Create Link</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">Instant access on iPhone, Android, or PC.</div>
 
         <div class="qr-box">
             <img class="qr-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://naudiac.github.io/utility-scripts/michael-qin/">
-            <span style="font-size:10.5px; font-weight:700; color:var(--corporate-navy);">📷 Scan with Phone Camera to Open</span>
+            <span style="font-size:10px; font-weight:700; color:var(--corporate-navy);">📷 Scan with Phone Camera to Open</span>
         </div>
 
-        <div style="display:flex; gap:4px; margin-bottom:10px;">
+        <div style="display:flex; gap:4px; margin-bottom:8px;">
             <input type="text" id="share-url-box" class="lead-input-compact" readonly value="https://naudiac.github.io/utility-scripts/michael-qin/">
             <button class="btn-share-top" onclick="copyToolUrl()">📋 Copy</button>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:10.5px;">
-            <div style="background:var(--bg-subtle); padding:6px; border-radius:3px;">
-                <strong>📱 iPhone:</strong> Share ➔ 'Add to Home Screen'
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:10px;">
+            <div style="background:var(--bg-subtle); padding:5px; border-radius:3px;">
+                <strong>📱 iPhone:</strong> Share ➔ 'Add to Home'
             </div>
-            <div style="background:var(--bg-subtle); padding:6px; border-radius:3px;">
-                <strong>🤖 Android:</strong> 3-Dots ➔ 'Add to Home Screen'
+            <div style="background:var(--bg-subtle); padding:5px; border-radius:3px;">
+                <strong>🤖 Android:</strong> 3-Dots ➔ 'Add to Home'
             </div>
         </div>
     </div>
@@ -1196,7 +1241,7 @@ function setTone(toneKey, btn) {{
     
     const profile = TONE_PROFILES[toneKey] || TONE_PROFILES["wall_street"];
     const labelEl = document.getElementById('active-tone-label');
-    if (labelEl) labelEl.innerText = `Tone: ${{profile.name}}`;
+    if (labelEl) labelEl.innerText = profile.name;
 
     renderCurrentNode();
 }}
@@ -1501,7 +1546,7 @@ function renderCurrentNode() {{
     document.getElementById('hud-stage').innerText = node.stage;
     document.getElementById('hud-verbatim').innerHTML = formatWithTokens(node.verbatim, true);
     document.getElementById('hud-tactical').innerText = node.tactical;
-    document.getElementById('hud-step').innerText = `Step ${{historyStack.length}} of 4 | Keys: [1-6] React, [Space] Copy, [R] Reset`;
+    document.getElementById('hud-step').innerText = `Step ${{historyStack.length}} of 4`;
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
@@ -1632,14 +1677,14 @@ function renderCustomDeckList() {{
     if (!container) return;
 
     if (customDecks.length === 0) {{
-        container.innerHTML = `<div style="font-size: 11.5px; color: var(--text-muted); padding: 8px; background: #fff; border: 1px dashed var(--border-main); border-radius: 3px;">No custom decks created yet. Build your first custom deck above!</div>`;
+        container.innerHTML = `<div style="font-size: 11px; color: var(--text-muted); padding: 6px; background: #fff; border: 1px dashed var(--border-main); border-radius: 3px;">No custom decks created yet. Build your first custom deck above!</div>`;
         return;
     }}
 
     container.innerHTML = customDecks.map(d => `
-        <div style="background:#fff; border:1px solid var(--border-main); border-radius:3px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <div style="background:#fff; border:1px solid var(--border-main); border-radius:3px; padding:6px 8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
             <div>
-                <div style="font-weight:700; color:var(--corporate-navy); font-size:12px;">${{d.name}}</div>
+                <div style="font-weight:700; color:var(--corporate-navy); font-size:11.5px;">${{d.name}}</div>
             </div>
             <div style="display:flex; gap:4px;">
                 <button class="btn-ctrl" onclick="setTone('${{d.id}}'); switchTab('tab-hud');">⚡ Use</button>
@@ -1657,9 +1702,9 @@ function renderToneChips() {{
         <button class="tone-chip ${{currentToneKey === 'wall_street' ? 'active' : ''}}" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
         <button class="tone-chip ${{currentToneKey === 'high_tempo' ? 'active' : ''}}" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
         <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
-        <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO Analytical</button>
+        <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
         <button class="tone-chip ${{currentToneKey === 'conservative' ? 'active' : ''}}" onclick="setTone('conservative', this)">🤝 Conservative</button>
-        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban Modern</button>
+        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban</button>
     `;
 
     const customChips = customDecks.map(d => `
@@ -1735,13 +1780,13 @@ function runCalc() {{
 function renderObjections() {{
     const container = document.getElementById('objections-list');
     container.innerHTML = OBJECTIONS.map(o => `
-        <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
-            <div style="font-size: 12px; font-weight: 700; color: var(--color-danger); margin-bottom: 3px;">⚠️ "${{o.objection}}"</div>
+        <div style="margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+            <div style="font-size: 11.5px; font-weight: 700; color: var(--color-danger); margin-bottom: 2px;">⚠️ "${{o.objection}}"</div>
             <div class="copy-block red-box">
                 <div class="copy-text">"${{o.rebuttal}}"</div>
                 <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;"><strong>Principle:</strong> ${{o.principle}}</div>
+            <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px;"><strong>Principle:</strong> ${{o.principle}}</div>
         </div>
     `).join('');
 }}
@@ -1749,11 +1794,11 @@ function renderObjections() {{
 function renderPipeline() {{
     const container = document.getElementById('pipeline-list');
     container.innerHTML = STAGES.map(s => `
-        <div style="margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
-            <div style="font-size: 12.5px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 2px;">Stage ${{s.number}}: ${{s.title}}</div>
-            <div style="font-size: 11.5px; color: var(--text-main); margin-bottom: 4px;"><strong>Goal:</strong> ${{s.objective}}</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;"><strong>Key Actions:</strong></div>
-            <ul style="padding-left: 14px; font-size: 11.5px; color: var(--text-main);">
+        <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 2px;">Stage ${{s.number}}: ${{s.title}}</div>
+            <div style="font-size: 11px; color: var(--text-main); margin-bottom: 3px;"><strong>Goal:</strong> ${{s.objective}}</div>
+            <div style="font-size: 10.5px; color: var(--text-muted); margin-bottom: 3px;"><strong>Key Actions:</strong></div>
+            <ul style="padding-left: 14px; font-size: 11px; color: var(--text-main);">
                 ${{s.actions.map(a => `<li>${{a}}</li>`).join('')}}
             </ul>
         </div>
@@ -1943,7 +1988,7 @@ def main():
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[+] Successfully generated Zero-Scroll Ergonomic portal: {portal_html_path}")
+    print(f"[+] Successfully generated Dual-Column Cockpit portal: {portal_html_path}")
 
     # Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
