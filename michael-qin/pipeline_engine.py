@@ -71,7 +71,7 @@ class SalesPipelineSystem:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Walker Advisory — {self.rep_name} Sales Flight Deck</title>
+<title>Creative Capital Solutions — {self.rep_name} Sales Flight Deck</title>
 <style>
     :root {{
         /* ThinkAutomation Corporate Navy Palette */
@@ -746,7 +746,7 @@ class SalesPipelineSystem:
     <div class="top-header">
         <div class="header-row-1">
             <div class="brand-block">
-                <span class="brand-title">Walker Advisory</span>
+                <span class="brand-title">Creative Capital Solutions</span>
                 <span class="status-tag">Live</span>
                 <span class="rep-tag">{self.rep_name}</span>
             </div>
@@ -1034,10 +1034,10 @@ const OBJECTIONS = {objections_json};
 const TONE_PROFILES = {{
     "wall_street": {{
         name: "Wall Street",
-        opener: `"Hey [Name], Michael Qin on the institutional syndication desk at Capital Advisory. Look, I'll be direct—I know this call wasn't on your calendar today.
+        opener: `"Hey [Name], Michael Qin on the institutional syndication desk at Creative Capital Solutions. Look, I'll be direct—I know this call wasn't on your calendar today.
 
 The reason for the outreach is specific: our credit committee is actively restructuring secondary tier debt for mid-market operators in [Industry], moving companies out of [Lender_Or_Default] to cut monthly debit debt service by 40%."`,
-        who_is_this: `"I'm Michael Qin with Capital Placement Advisory. We specialize in senior debt restructuring and balance-sheet recapitalization.
+        who_is_this: `"I'm Michael Qin with Creative Capital Solutions. We specialize in senior debt restructuring and balance-sheet recapitalization.
 
 The reason I reached out directly to [Company] is that we just completed a placement for [Revenue_Or_Default] in [Industry], cutting their daily debit outflow in half.
 
@@ -1064,12 +1064,12 @@ Which institution does [Company] bank with—Chase, BoA, or Wells?"`,
 
     "high_tempo": {{
         name: "High-Tempo",
-        opener: `"Hey [Name], Michael Qin with Capital Advisory. I'll give you the 10-second version because I know you're running a business.
+        opener: `"Hey [Name], Michael Qin with Creative Capital Solutions. I'll give you the 10-second version because I know you're running a business.
 
 We're cutting monthly loan debits by 40% for [Industry] companies right now by clearing out [Lender_Or_Default].
 
 Have you looked at consolidating your current debt positions this quarter?"`,
-        who_is_this: `"Michael Qin, Capital Advisory. We recapitalize commercial debt for companies like [Company].
+        who_is_this: `"Michael Qin, Creative Capital Solutions. We recapitalize commercial debt for companies like [Company].
 
 Just cut debt payments for [Revenue_Or_Default] in [Industry] from daily debits down to a clean monthly schedule.
 
@@ -1092,10 +1092,10 @@ You using Chase or BoA?"`,
 
     "southern_direct": {{
         name: "Straight-Shooter",
-        opener: `"Hey [Name], hope you're having a good day. Michael Qin here with Capital Advisory. I know I caught you out of the blue, so I'll shoot straight with you.
+        opener: `"Hey [Name], hope you're having a good day. Michael Qin here with Creative Capital Solutions. I know I caught you out of the blue, so I'll shoot straight with you.
 
 We work directly with owners in [Industry] to get them out from under high daily debits and expensive lenders like [Lender_Or_Default]."`,
-        who_is_this: `"I'm Michael Qin with Capital Placement Advisory. We help honest business owners restructure heavy short-term debt so they can keep more cash in their business.
+        who_is_this: `"I'm Michael Qin with Creative Capital Solutions. We help honest business owners restructure heavy short-term debt so they can keep more cash in their business.
 
 We just helped an operator in [Industry] doing [Revenue_Or_Default] free up over \$8,000 a month in cash.
 
@@ -1122,10 +1122,10 @@ Which bank do you all use down there?"`,
 
     "cfo_analytical": {{
         name: "CFO Analytical",
-        opener: `"Good morning [Name]. Michael Qin from Capital Advisory's debt syndicate.
+        opener: `"Good morning [Name]. Michael Qin from Creative Capital Solutions' debt syndicate.
 
 We are currently conducting financial efficiency reviews for mid-sized operators in [Industry], specifically analyzing effective annual percentage rates across [Lender_Or_Default] and senior mezzanine positions."`,
-        who_is_this: `"Capital Placement Advisory. We specialize in senior debt placement and cost-of-capital compression for mid-market enterprises.
+        who_is_this: `"Creative Capital Solutions. We specialize in senior debt placement and cost-of-capital compression for mid-market enterprises.
 
 Recent underwriting benchmarks in [Industry] for entities generating [Revenue_Or_Default] demonstrate a 400 to 650 basis point reduction in effective cost of capital through structured consolidation.
 
@@ -1150,10 +1150,10 @@ Which commercial depository do you utilize?"`,
 
     "conservative": {{
         name: "Conservative",
-        opener: `"Good day [Name]. My name is Michael Qin with Capital Placement Advisory. I apologize for interrupting your afternoon without an appointment.
+        opener: `"Good day [Name]. My name is Michael Qin with Creative Capital Solutions. I apologize for interrupting your afternoon without an appointment.
 
 We specialize in conservative debt restructuring for established operators in [Industry], helping protect business equity from aggressive lenders like [Lender_Or_Default]."`,
-        who_is_this: `"I represent Capital Placement Advisory, a private working capital advisory firm.
+        who_is_this: `"I represent Creative Capital Solutions, a private working capital advisory firm.
 
 We work with established companies like [Company] to consolidate obligations into stable, manageable monthly structures with complete transparency.
 
@@ -1178,10 +1178,10 @@ Which banking institution handles your primary operations?"`,
 
     "blue_collar": {{
         name: "Blue-Collar",
-        opener: `"Hey [Name], Michael Qin with Capital Advisory. Look, I know you're busy running jobs today, so I'll keep this short.
+        opener: `"Hey [Name], Michael Qin with Creative Capital Solutions. Look, I know you're busy running jobs today, so I'll keep this short.
 
 We work directly with commercial operators in [Industry] to get rid of daily bank debits and clean up high-interest loan payments out of [Lender_Or_Default]."`,
-        who_is_this: `"I'm Michael Qin with Capital Advisory. We help business owners restructure heavy short-term debt so you're not getting drained by daily withdrawals every morning.
+        who_is_this: `"I'm Michael Qin with Creative Capital Solutions. We help business owners restructure heavy short-term debt so you're not getting drained by daily withdrawals every morning.
 
 We just helped an operator in [Industry] doing [Revenue_Or_Default] free up about \$6,000 a month in cash flow that was going straight to lender fees.
 
@@ -1349,9 +1349,9 @@ function clearLeadInputs() {{
 
 function updateCadenceSnippets() {{
     const t = getEffectiveTokens();
-    const sms1 = `"Hi ${{t.name}}, Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for ${{t.company}}, just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."`;
-    const email1 = `Subject: Quick question regarding ${{t.company}} cash flow\n\nHi ${{t.name}},\n\nFollowing up on our conversation regarding restructuring your operating debt for ${{t.company}}.\n\nOur underwriting desk locks weekly merchant placement tiers every Thursday at 4 PM. If you shoot over your 3 bank statements today, I can have your term sheet approved before the weekend.\n\nLet me know if you need help pulling the PDFs from Chase/BoA.\n\nBest,\nMichael Qin`;
-    const email2 = `Subject: Closing your file / ${{t.company}}\n\nHi ${{t.name}},\n\nI assume restructuring your working capital isn't a priority right now, so I will close out your file for ${{t.company}}.\n\nIf daily debits ever start squeezing your cash flow down the road, feel free to reach out anytime.\n\nBest regards,\nMichael Qin`;
+    const sms1 = `"Hi ${{t.name}}, Michael Qin here from Creative Capital Solutions. Great speaking with you briefly. To run your debt consolidation and statement audit for ${{t.company}}, just email your last 3 monthly business bank PDFs to michael@creativecapitalsolutions.com. Once received, I will have your approved numbers back within 24 hours."`;
+    const email1 = `Subject: Quick question regarding ${{t.company}} cash flow\n\nHi ${{t.name}},\n\nFollowing up on our conversation regarding restructuring your operating debt for ${{t.company}}.\n\nOur underwriting desk locks weekly merchant placement tiers every Thursday at 4 PM. If you shoot over your 3 bank statements today, I can have your term sheet approved before the weekend.\n\nLet me know if you need help pulling the PDFs from Chase/BoA.\n\nBest,\nMichael Qin\nCreative Capital Solutions`;
+    const email2 = `Subject: Closing your file / ${{t.company}}\n\nHi ${{t.name}},\n\nI assume restructuring your working capital isn't a priority right now, so I will close out your file for ${{t.company}}.\n\nIf daily debits ever start squeezing your cash flow down the road, feel free to reach out anytime.\n\nBest regards,\nMichael Qin\nCreative Capital Solutions`;
     const stmtWalk = `"${{t.name}}, are you in front of your computer or looking at your phone right now?\n\nStay on with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're on the line so this isn't hanging over your head tonight.\n\nWhich bank do you use for operations—Chase, Bank of America, or Wells?"`;
     const lossAv = `"${{t.name}}, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.\n\nIf our review shows your current setup is already optimal, I will tell you to keep it. But if you're leaking $2,500 a month in excessive factor fees or daily debits, wouldn't you want to know by tomorrow morning?\n\nLet me send you a secure request link right now. What's the best email?"`;
 
