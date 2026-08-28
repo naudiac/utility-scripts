@@ -287,6 +287,53 @@ class SalesPipelineSystem:
         font-weight: 700;
     }}
 
+    .industry-presets-row {{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        white-space: nowrap;
+        scrollbar-width: none;
+    }}
+    .industry-presets-row::-webkit-scrollbar {{ display: none; }}
+    .industry-lbl {{
+        font-size: 9.5px;
+        font-weight: 800;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        flex-shrink: 0;
+    }}
+    .industry-chips {{
+        display: flex;
+        gap: 3px;
+        flex-wrap: nowrap;
+    }}
+    .industry-chip {{
+        background: #ffffff;
+        border: 1px solid var(--border-main);
+        color: var(--corporate-navy);
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.1s;
+        flex-shrink: 0;
+        touch-action: manipulation;
+    }}
+    .industry-chip:hover {{
+        background: #f1f5f9;
+        border-color: var(--corporate-accent);
+    }}
+    .industry-chip.active {{
+        background: var(--corporate-navy);
+        color: #ffffff;
+        border-color: var(--corporate-navy);
+    }}
+
     .extra-intel-btn {{
         margin-left: auto;
         background: none;
@@ -312,6 +359,44 @@ class SalesPipelineSystem:
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
         gap: 4px;
+    }}
+    .intel-cheat-grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 4px;
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px dashed var(--border-subtle);
+    }}
+    .intel-cheat-card {{
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        border-left: 3px solid var(--corporate-navy);
+        padding: 4px 6px;
+        border-radius: 2px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        transition: all 0.1s;
+    }}
+    .intel-cheat-card:hover {{
+        border-left-color: var(--corporate-accent);
+        background: #f8fafc;
+    }}
+    .cheat-title {{
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+    }}
+    .cheat-cue {{
+        font-size: 9px;
+        color: var(--text-muted);
+    }}
+    .cheat-hook {{
+        font-size: 9px;
+        font-style: italic;
+        color: var(--color-success);
     }}
 
     /* Navigation Tabs */
@@ -762,6 +847,19 @@ class SalesPipelineSystem:
             <button class="btn-share-top" onclick="openShareModal()">🔗 Share</button>
         </div>
 
+        <!-- Target Vertical Quick Presets -->
+        <div class="industry-presets-row">
+            <span class="industry-lbl">⚡ Vertical:</span>
+            <div class="industry-chips">
+                <button class="industry-chip" onclick="applyIndustryPreset('contractor')">🛠️ Construction</button>
+                <button class="industry-chip" onclick="applyIndustryPreset('trucking')">🚛 Trucking</button>
+                <button class="industry-chip" onclick="applyIndustryPreset('restaurant')">🍽️ Restaurant</button>
+                <button class="industry-chip" onclick="applyIndustryPreset('medical')">🏥 Healthcare</button>
+                <button class="industry-chip" onclick="applyIndustryPreset('manufacturing')">🏭 Manufacturing</button>
+                <button class="industry-chip" onclick="applyIndustryPreset('retail')">🛒 Auto &amp; Retail</button>
+            </div>
+        </div>
+
         <!-- 3 Inline Lead Inputs -->
         <div class="lead-inputs-grid">
             <input type="text" id="lead-name" class="lead-input-compact" placeholder="Contact Name" oninput="updatePersonalization()">
@@ -791,6 +889,28 @@ class SalesPipelineSystem:
                 <input type="text" id="lead-rev" class="lead-input-compact" placeholder="Est. Rev (e.g. $120K/mo)" oninput="updatePersonalization()">
                 <input type="text" id="lead-debit-str" class="lead-input-compact" placeholder="Debits (e.g. $1,200/day)" oninput="updatePersonalization()">
                 <input type="text" id="lead-notes" class="lead-input-compact" placeholder="Sticky Note / Cue" oninput="updatePersonalization()">
+            </div>
+            <div class="intel-cheat-grid">
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('contractor')">
+                    <span class="cheat-title">🛠️ Contractors &amp; Trades</span>
+                    <span class="cheat-cue">Pain: 60-90 day GC progress draws &amp; material prepayments</span>
+                    <span class="cheat-hook">Hook: "Stop daily debits while waiting on the general contractor's check."</span>
+                </div>
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('trucking')">
+                    <span class="cheat-title">🚛 Trucking &amp; Logistics</span>
+                    <span class="cheat-cue">Pain: Diesel fuel card debits &amp; 45-day broker payables</span>
+                    <span class="cheat-hook">Hook: "Bridge slow broker payables without predatory factoring cuts."</span>
+                </div>
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('restaurant')">
+                    <span class="cheat-title">🍽️ Restaurants &amp; Food Service</span>
+                    <span class="cheat-cue">Pain: POS credit card batch holds &amp; inventory lulls</span>
+                    <span class="cheat-hook">Hook: "Keep 100% of your busy weekend card receipts."</span>
+                </div>
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('medical')">
+                    <span class="cheat-title">🏥 Healthcare &amp; Dental</span>
+                    <span class="cheat-cue">Pain: 60-day insurance reimbursement float</span>
+                    <span class="cheat-hook">Hook: "Smooth out insurance claim delays with zero personal collateral."</span>
+                </div>
             </div>
         </div>
     </div>
@@ -1397,6 +1517,72 @@ function toggleIntelDrawer() {{
         drawer.classList.toggle('open');
         trackTelemetry('INTEL_DRAWER', 'Toggled Intel Drawer');
     }}
+}}
+
+/* =========================================================================
+   INDUSTRY VERTICAL PRESETS & PAIN CUES
+   ========================================================================= */
+const INDUSTRY_PRESETS = {{
+    "contractor": {{
+        industry: "Commercial Construction & Roofing",
+        lender: "OnDeck / Rapid Finance",
+        revenue: "$140,000/mo",
+        debitStr: "$1,850/day",
+        notes: "Pain: 60-90 day GC progress draw delay & upfront material supply."
+    }},
+    "trucking": {{
+        industry: "Freight Logistics & Trucking",
+        lender: "Fundbox / Apex Capital",
+        revenue: "$185,000/mo",
+        debitStr: "$2,400/day",
+        notes: "Pain: Diesel fuel card debits & 45-day freight broker payables lag."
+    }},
+    "restaurant": {{
+        industry: "Restaurant & Hospitality",
+        lender: "Square Capital / Toast",
+        revenue: "$95,000/mo",
+        debitStr: "$950/day",
+        notes: "Pain: POS credit card batch holds; wants to keep 100% of weekend receipts."
+    }},
+    "medical": {{
+        industry: "Private Dental & Medical Practice",
+        lender: "Lendio / Fora Financial",
+        revenue: "$130,000/mo",
+        debitStr: "$1,200/day",
+        notes: "Pain: 60-day Medicare & private insurer reimbursement lag."
+    }},
+    "manufacturing": {{
+        industry: "Machining & Manufacturing",
+        lender: "Kapitus / National Funding",
+        revenue: "$260,000/mo",
+        debitStr: "$3,600/day",
+        notes: "Pain: High raw material prepayments & CNC equipment lease debt."
+    }},
+    "retail": {{
+        industry: "Auto Repair & Retail Supply",
+        lender: "Libertas / Fundraise",
+        revenue: "$110,000/mo",
+        debitStr: "$1,350/day",
+        notes: "Pain: Seasonal inventory buildup & parts supplier invoices."
+    }}
+}};
+
+function applyIndustryPreset(key) {{
+    const p = INDUSTRY_PRESETS[key];
+    if (!p) return;
+
+    document.querySelectorAll('.industry-chip').forEach(c => c.classList.remove('active'));
+    const btn = event?.currentTarget || event?.target;
+    if (btn && btn.classList?.contains('industry-chip')) btn.classList.add('active');
+
+    document.getElementById('lead-industry').value = p.industry;
+    const lenderEl = document.getElementById('lead-lender'); if (lenderEl) lenderEl.value = p.lender;
+    const revEl = document.getElementById('lead-rev'); if (revEl) revEl.value = p.revenue;
+    const debitEl = document.getElementById('lead-debit-str'); if (debitEl) debitEl.value = p.debitStr;
+    const notesEl = document.getElementById('lead-notes'); if (notesEl) notesEl.value = p.notes;
+
+    updatePersonalization();
+    trackTelemetry('INDUSTRY_PRESET', `Applied Vertical Preset: ${{p.industry}}`, {{ vertical: key }});
 }}
 
 /* =========================================================================
