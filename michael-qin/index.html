@@ -1024,15 +1024,33 @@ function trackTelemetry(actionType, title, details = {}) {
     sendBeacon(actionType, title, details);
 }
 
+function formatDynamicTitle(actionType, rawTitle, details, actorName) {
+    if (actionType === 'OPEN') return `${actorName} Opened Flight Deck`;
+    if (actionType === 'TONE_CHANGE') return `${actorName} Switched Tone to: ${details.toneName || details.toneKey || 'New Tone'}`;
+    if (actionType === 'REACTION') {
+        const actStr = details.optionClicked ? `"${details.optionClicked}"` : (details.nextStage || 'Next Stage');
+        return `${actorName} Selected: ${actStr}`;
+    }
+    if (actionType === 'SCRIPT_COPIED') return `${actorName} Copied Script to Clipboard`;
+    if (actionType === 'CUSTOM_DECK_SAVED') return `${actorName} Created Custom Deck: "${details.name || 'Custom'}"` ;
+    if (actionType === 'BANK_GUIDE_CLICK') return `${actorName} Viewed Bank Guide (${details.bank || 'Bank'})` ;
+    if (actionType === 'RESET') return `${actorName} Reset Call for Next Lead`;
+    if (actionType === 'HEARTBEAT') return `${actorName} Active on Call`;
+    return `${actorName}: ${rawTitle || actionType}`;
+}
+
 function sendBeacon(actionType, title, details) {
     if (window.location.protocol === 'file:') return;
 
     // Strict Device & Rep Attribution:
     const isWilliam = (isSupervisorUser || SUPERVISOR_IPS.includes(userIpInfo.ip));
+    const actorName = isWilliam ? "William" : "Michael Qin";
     const repLabel = isWilliam ? "William (Supervisor)" : "Michael Qin";
     const deviceLabel = isWilliam ? 
         (deviceType === 'Android' ? 'William (S24 Ultra)' : (deviceType === 'Windows PC' ? 'William (PC)' : `William (${deviceType})`)) :
         (deviceType === 'Windows PC' ? 'Michael (PC / Laptop)' : (deviceType === 'iPhone' ? 'Michael (iPhone)' : (deviceType === 'Android' ? 'Michael (Android)' : `Michael (${deviceType})`)));
+
+    const dynamicTitle = formatDynamicTitle(actionType, title, details, actorName);
 
     const payload = {
         rep: repLabel,
@@ -1043,7 +1061,7 @@ function sendBeacon(actionType, title, details) {
         ip: userIpInfo.ip || 'Unknown',
         location: userIpInfo.city ? `${userIpInfo.city}, ${userIpInfo.region}` : 'Unknown Location',
         action: actionType,
-        title: title,
+        title: dynamicTitle,
         details: details,
         url: window.location.href,
         ts: new Date().toISOString(),
@@ -1055,7 +1073,7 @@ function sendBeacon(actionType, title, details) {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'Title': `[${deviceLabel}] ${title} (${userIpInfo.city || 'US'})`,
+                'Title': `[${deviceLabel}] ${dynamicTitle} (${userIpInfo.city || 'US'})`,
                 'Tags': isWilliam ? 'bust_in_silhouette' : (actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard')
             },
             mode: 'no-cors',
@@ -1066,7 +1084,7 @@ function sendBeacon(actionType, title, details) {
 
 // Initial session beacon
 window.addEventListener('load', () => {
-    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
+    trackTelemetry('OPEN', 'Opened Flight Deck', {
         screen: `${window.innerWidth}x${window.innerHeight}`,
         referrer: document.referrer || 'direct'
     });
@@ -1270,7 +1288,7 @@ function setTone(toneKey, btn) {
     const labelEl = document.getElementById('active-tone-label');
     if (labelEl) labelEl.innerText = profile.name;
 
-    trackTelemetry('TONE_CHANGE', `Switched Tone: ${profile.name}`, { toneKey: toneKey });
+    trackTelemetry('TONE_CHANGE', `Switched Tone`, { toneName: profile.name, toneKey: toneKey });
     renderCurrentNode();
 }
 
