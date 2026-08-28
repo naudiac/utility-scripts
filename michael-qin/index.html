@@ -971,7 +971,6 @@ const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
 
 const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
 let isSupervisorUser = (
-    window.location.protocol === 'file:' ||
     window.location.search.includes('supervisor=') ||
     window.location.search.includes('admin=true') ||
     localStorage.getItem('ccs_is_supervisor') === 'true'
@@ -981,16 +980,13 @@ let userIpResolved = false;
 let userIpInfo = { ip: 'Pending', city: '', region: '' };
 let telemetryQueue = [];
 
-// Resolve IP and verify exclusion
+// Resolve IP
 fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
     if (data && data.ip) {
         userIpInfo = { ip: data.ip, city: data.city || '', region: data.region_code || '' };
         userIpResolved = true;
         if (SUPERVISOR_IPS.includes(data.ip)) {
             isSupervisorUser = true;
-            localStorage.setItem('ccs_is_supervisor', 'true');
-            telemetryQueue = []; // drop all queued events
-            return;
         }
         flushTelemetryQueue();
     }
@@ -1001,9 +997,6 @@ fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
             userIpResolved = true;
             if (SUPERVISOR_IPS.includes(data.ip)) {
                 isSupervisorUser = true;
-                localStorage.setItem('ccs_is_supervisor', 'true');
-                telemetryQueue = [];
-                return;
             }
             flushTelemetryQueue();
         }
@@ -1014,7 +1007,6 @@ fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
 });
 
 function flushTelemetryQueue() {
-    if (isSupervisorUser) return;
     while (telemetryQueue.length > 0) {
         const item = telemetryQueue.shift();
         sendBeacon(item.actionType, item.title, item.details);
@@ -1022,7 +1014,7 @@ function flushTelemetryQueue() {
 }
 
 function trackTelemetry(actionType, title, details = {}) {
-    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') return;
+    if (window.location.protocol === 'file:') return; // ignore local PDF generator
 
     if (!userIpResolved) {
         telemetryQueue.push({ actionType, title, details });
@@ -1033,17 +1025,23 @@ function trackTelemetry(actionType, title, details = {}) {
 }
 
 function sendBeacon(actionType, title, details) {
-    if (isSupervisorUser) return;
+    if (window.location.protocol === 'file:') return;
+
+    const repLabel = isSupervisorUser ? "William (Supervisor / Test)" : "Michael Qin";
+    const deviceLabel = isSupervisorUser ? 
+        (deviceType === 'Android' ? 'William (S24 Ultra)' : (deviceType === 'Windows PC' ? 'William (PC)' : `William (${deviceType})`)) :
+        deviceType;
 
     const payload = {
-        rep: "Michael Qin",
+        rep: repLabel,
+        isSupervisor: isSupervisorUser,
         company: "Creative Capital Solutions",
         sessionId: repSessionId,
-        device: deviceType,
+        device: deviceLabel,
         ip: userIpInfo.ip || 'Unknown',
         location: userIpInfo.city ? `${userIpInfo.city}, ${userIpInfo.region}` : 'Unknown Location',
         action: actionType,
-        title: title,
+        title: isSupervisorUser ? `[🧪 Test] ${title}` : title,
         details: details,
         url: window.location.href,
         ts: new Date().toISOString(),
@@ -1055,8 +1053,8 @@ function sendBeacon(actionType, title, details) {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'Title': `[${deviceType}] ${title} (${userIpInfo.city || 'US'})`,
-                'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
+                'Title': `[${deviceLabel}] ${payload.title} (${userIpInfo.city || 'US'})`,
+                'Tags': isSupervisorUser ? 'test_tube' : (actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard')
             },
             mode: 'no-cors',
             keepalive: true

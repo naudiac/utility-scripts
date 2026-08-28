@@ -1043,7 +1043,6 @@ const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
 
 const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
 let isSupervisorUser = (
-    window.location.protocol === 'file:' ||
     window.location.search.includes('supervisor=') ||
     window.location.search.includes('admin=true') ||
     localStorage.getItem('ccs_is_supervisor') === 'true'
@@ -1053,16 +1052,13 @@ let userIpResolved = false;
 let userIpInfo = {{ ip: 'Pending', city: '', region: '' }};
 let telemetryQueue = [];
 
-// Resolve IP and verify exclusion
+// Resolve IP
 fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {{
     if (data && data.ip) {{
         userIpInfo = {{ ip: data.ip, city: data.city || '', region: data.region_code || '' }};
         userIpResolved = true;
         if (SUPERVISOR_IPS.includes(data.ip)) {{
             isSupervisorUser = true;
-            localStorage.setItem('ccs_is_supervisor', 'true');
-            telemetryQueue = []; // drop all queued events
-            return;
         }}
         flushTelemetryQueue();
     }}
@@ -1073,9 +1069,6 @@ fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {{
             userIpResolved = true;
             if (SUPERVISOR_IPS.includes(data.ip)) {{
                 isSupervisorUser = true;
-                localStorage.setItem('ccs_is_supervisor', 'true');
-                telemetryQueue = [];
-                return;
             }}
             flushTelemetryQueue();
         }}
@@ -1086,7 +1079,6 @@ fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {{
 }});
 
 function flushTelemetryQueue() {{
-    if (isSupervisorUser) return;
     while (telemetryQueue.length > 0) {{
         const item = telemetryQueue.shift();
         sendBeacon(item.actionType, item.title, item.details);
@@ -1094,7 +1086,7 @@ function flushTelemetryQueue() {{
 }}
 
 function trackTelemetry(actionType, title, details = {{}}) {{
-    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') return;
+    if (window.location.protocol === 'file:') return; // ignore local PDF generator
 
     if (!userIpResolved) {{
         telemetryQueue.push({{ actionType, title, details }});
@@ -1105,17 +1097,23 @@ function trackTelemetry(actionType, title, details = {{}}) {{
 }}
 
 function sendBeacon(actionType, title, details) {{
-    if (isSupervisorUser) return;
+    if (window.location.protocol === 'file:') return;
+
+    const repLabel = isSupervisorUser ? "William (Supervisor / Test)" : "{self.rep_name}";
+    const deviceLabel = isSupervisorUser ? 
+        (deviceType === 'Android' ? 'William (S24 Ultra)' : (deviceType === 'Windows PC' ? 'William (PC)' : `William (${{deviceType}})`)) :
+        deviceType;
 
     const payload = {{
-        rep: "{self.rep_name}",
+        rep: repLabel,
+        isSupervisor: isSupervisorUser,
         company: "Creative Capital Solutions",
         sessionId: repSessionId,
-        device: deviceType,
+        device: deviceLabel,
         ip: userIpInfo.ip || 'Unknown',
         location: userIpInfo.city ? `${{userIpInfo.city}}, ${{userIpInfo.region}}` : 'Unknown Location',
         action: actionType,
-        title: title,
+        title: isSupervisorUser ? `[🧪 Test] ${{title}}` : title,
         details: details,
         url: window.location.href,
         ts: new Date().toISOString(),
@@ -1127,8 +1125,8 @@ function sendBeacon(actionType, title, details) {{
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {{
-                'Title': `[${{deviceType}}] ${{title}} (${{userIpInfo.city || 'US'}})`,
-                'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
+                'Title': `[${{deviceLabel}}] ${{payload.title}} (${{userIpInfo.city || 'US'}})`,
+                'Tags': isSupervisorUser ? 'test_tube' : (actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard')
             }},
             mode: 'no-cors',
             keepalive: true
@@ -2310,6 +2308,7 @@ window.addEventListener('DOMContentLoaded', () => {{
         </div>
 
         <div class="action-group">
+            <button class="pill-btn active" id="btn-toggle-sup" onclick="toggleSupervisorView()" style="background:#fef3c7; color:#92400e; border-color:#fde68a; font-weight:700;">🧪 Show My Test Traffic: ON</button>
             <button class="btn-action secondary" onclick="sendTestBeacon()">🧪 Send Test Ping</button>
             <button class="btn-action secondary" onclick="toggleAudioChime()" id="btn-audio">🔔 Chimes: Off</button>
             <button class="btn-action" onclick="fetchRecentEvents()">🔄 Refresh</button>
@@ -2329,7 +2328,7 @@ window.addEventListener('DOMContentLoaded', () => {{
 
     <!-- Diagnostic Details -->
     <div class="diag-box">
-        <strong>Telemetry Topic:</strong> {TELEMETRY_TOPIC} | <strong>Sync Mode:</strong> Server-Sent Events (SSE) + 5s Auto-Poll | <strong>Excluded IPs:</strong> 85.115.107.223, 74.209.76.220
+        <strong>Telemetry Topic:</strong> {TELEMETRY_TOPIC} | <strong>Sync Mode:</strong> Server-Sent Events (SSE) + 5s Auto-Poll | <strong>Supervisor IPs:</strong> 85.115.107.223 (PC), 74.209.76.220 (Cell)
     </div>
 
 </div>
@@ -2342,13 +2341,30 @@ const EXCLUDED_IPS = ['85.115.107.223', '74.209.76.220'];
 
 let rawEvents = [];
 let activeFilter = 'ALL';
+let showSupervisorTraffic = true;
 let audioEnabled = false;
 let lastSeenTimestamp = null;
-let counters = {{ opens: 0, reactions: 0, copies: 0 }};
+let supervisorLastSeen = null;
+let counters = {{ opens: 0, reactions: 0, copies: 0, testEvents: 0 }};
 
 function markCurrentDeviceSupervisor() {{
     localStorage.setItem('ccs_is_supervisor', 'true');
-    alert("This device is permanently marked as Supervisor! Outbound telemetry is completely blocked from this browser.");
+    alert("This device is permanently marked as Supervisor! Outbound telemetry will be tagged as [🧪 Test].");
+}}
+
+function toggleSupervisorView() {{
+    showSupervisorTraffic = !showSupervisorTraffic;
+    const btn = document.getElementById('btn-toggle-sup');
+    if (showSupervisorTraffic) {{
+        btn.innerText = '🧪 Show My Test Traffic: ON';
+        btn.style.background = '#fef3c7';
+        btn.style.color = '#92400e';
+    }} else {{
+        btn.innerText = '🧪 Show My Test Traffic: OFF';
+        btn.style.background = '#f1f5f9';
+        btn.style.color = '#64748b';
+    }}
+    renderEventList();
 }}
 
 function toggleAudioChime() {{
@@ -2377,7 +2393,7 @@ function playChime() {{
 
 function setFilter(filterType, btn) {{
     activeFilter = filterType;
-    document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     renderEventList();
 }}
@@ -2402,22 +2418,33 @@ function getRelativeTime(isoStr) {{
 
 function processEventData(data, isLive = false) {{
     if (!data || !data.action) return;
+    if (data.url?.startsWith('file:')) return; // ignore local PDF builds
 
-    // Filter out William / Supervisor IP, local file builds, and internal test sessions
-    if (EXCLUDED_IPS.includes(data.ip) || data.url?.startsWith('file:') || data.isSupervisor) {{
-        return;
-    }}
+    const isSup = (
+        data.isSupervisor === true ||
+        data.rep?.includes('Supervisor') ||
+        data.rep?.includes('William') ||
+        data.device?.includes('William') ||
+        data.sessionId === 'test_verification' ||
+        EXCLUDED_IPS.includes(data.ip)
+    );
+    data.isSupervisor = isSup;
 
     // Deduplicate by timestamp + sessionId + action
     const exists = rawEvents.some(e => e.ts === data.ts && e.sessionId === data.sessionId && e.action === data.action);
     if (exists) return;
 
     rawEvents.unshift(data);
-    lastSeenTimestamp = data.ts;
 
-    if (data.action === 'OPEN') counters.opens++;
-    if (data.action === 'REACTION') counters.reactions++;
-    if (data.action === 'SCRIPT_COPIED') counters.copies++;
+    if (isSup) {{
+        counters.testEvents++;
+        supervisorLastSeen = data.ts;
+    }} else {{
+        lastSeenTimestamp = data.ts;
+        if (data.action === 'OPEN') counters.opens++;
+        if (data.action === 'REACTION') counters.reactions++;
+        if (data.action === 'SCRIPT_COPIED') counters.copies++;
+    }}
 
     if (isLive) playChime();
 
@@ -2431,19 +2458,26 @@ function updateUI() {{
     document.getElementById('kpi-last-active').innerText = getRelativeTime(lastSeenTimestamp);
 
     // Live status
-    const isOnline = lastSeenTimestamp && (Date.now() - new Date(lastSeenTimestamp).getTime()) < 150000;
+    const isMichaelOnline = lastSeenTimestamp && (Date.now() - new Date(lastSeenTimestamp).getTime()) < 150000;
+    const isWilliamOnline = supervisorLastSeen && (Date.now() - new Date(supervisorLastSeen).getTime()) < 60000;
     const dot = document.getElementById('live-dot');
     const status = document.getElementById('live-status');
 
-    if (isOnline) {{
+    if (isMichaelOnline) {{
         const locStr = rawEvents[0]?.location ? ` • ${{rawEvents[0].location}}` : '';
         dot.className = 'pulse-dot online';
         status.innerText = `🟢 Michael Active Now (${{rawEvents[0]?.device || 'Online'}}${{locStr}})`;
+    }} else if (isWilliamOnline) {{
+        dot.className = 'pulse-dot online';
+        dot.style.background = '#f59e0b';
+        status.innerText = `🧪 William Active Testing (S24 Ultra / PC) • Michael Idle`;
     }} else if (lastSeenTimestamp) {{
         dot.className = 'pulse-dot';
-        status.innerText = `⚪ Last Seen: ${{getRelativeTime(lastSeenTimestamp)}}`;
+        dot.style.background = '#94a3b8';
+        status.innerText = `⚪ Michael Last Seen: ${{getRelativeTime(lastSeenTimestamp)}}`;
     }} else {{
         dot.className = 'pulse-dot';
+        dot.style.background = '#94a3b8';
         status.innerText = `⚪ Waiting for Michael's Session`;
     }}
 
@@ -2451,18 +2485,26 @@ function updateUI() {{
 }}
 
 function renderEventList() {{
-    const filtered = activeFilter === 'ALL' ? rawEvents : rawEvents.filter(e => e.action === activeFilter);
-    document.getElementById('event-count-badge').innerText = `${{filtered.length}} events (Filter: ${{activeFilter}})`;
+    let listData = rawEvents;
+    if (!showSupervisorTraffic) {{
+        listData = listData.filter(e => !e.isSupervisor);
+    }}
+    if (activeFilter !== 'ALL') {{
+        listData = listData.filter(e => e.action === activeFilter);
+    }}
+
+    document.getElementById('event-count-badge').innerText = `${{listData.length}} events (Filter: ${{activeFilter}})`;
 
     const list = document.getElementById('event-list');
-    if (filtered.length === 0) {{
-        list.innerHTML = `<div class="empty-state">No events matching "${{activeFilter}}". When Michael uses the tool, telemetry appears here live.</div>`;
+    if (listData.length === 0) {{
+        list.innerHTML = `<div class="empty-state">No events matching "${{activeFilter}}". When someone taps or opens the tool, telemetry appears here live.</div>`;
         return;
     }}
 
-    list.innerHTML = filtered.map(e => {{
+    list.innerHTML = listData.map(e => {{
         let cls = 'event-item';
-        if (e.action === 'OPEN') cls += ' open';
+        if (e.isSupervisor) cls += ' supervisor-test';
+        else if (e.action === 'OPEN') cls += ' open';
         else if (e.action === 'REACTION') cls += ' reaction';
         else if (e.action === 'SCRIPT_COPIED') cls += ' copy';
         else if (e.action === 'TONE_CHANGE') cls += ' tone';
@@ -2486,15 +2528,18 @@ function renderEventList() {{
         }}
 
         const locBadge = e.location && e.location !== 'Unknown Location' ? `📍 ${{e.location}}` : (e.ip && e.ip !== 'Unknown' ? `IP: ${{e.ip}}` : '');
+        const devBadge = e.isSupervisor ? 
+            `<span class="device-pill" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">🧪 ${{e.device || 'William (Test)'}}</span>` :
+            `<span class="device-pill" style="background:#dcfce7; color:#166534; border:1px solid #bbf7d0;">🟢 ${{e.device || 'Michael (Rep)'}}</span>`;
 
         return `
-            <div class="${{cls}}">
+            <div class="${{cls}}" style="${{e.isSupervisor ? 'border-left-color:#f59e0b; background:#fffbeb;' : ''}}">
                 <div class="event-main">
                     <div class="event-title">${{e.title || e.action}}</div>
-                    <div class="event-details">${{detailHtml || '<span style="color:#94a3b8;">No extra params</span>'}}</div>
+                    <div class="event-details">${{detailHtml || '<span style="color:#94a3b8;">Standard interaction</span>'}}</div>
                 </div>
                 <div class="event-meta">
-                    <span class="device-pill">${{e.device || 'Desktop'}}</span>
+                    ${{devBadge}}
                     <div style="font-size:9.5px; color:#64748b; font-family:var(--mono); margin-top:2px;">${{locBadge}}</div>
                     <div style="font-size:9.5px; color:#94a3b8; font-family:var(--mono); margin-top:1px;">${{formatTime(e.ts)}}</div>
                 </div>
@@ -2511,7 +2556,7 @@ async function fetchRecentEvents() {{
         const lines = text.trim().split('\\n');
         
         rawEvents = [];
-        counters = {{ opens: 0, reactions: 0, copies: 0 }};
+        counters = {{ opens: 0, reactions: 0, copies: 0, testEvents: 0 }};
 
         lines.forEach(line => {{
             try {{
@@ -2555,17 +2600,18 @@ function connectSSE() {{
 // Send a test beacon directly to verify pipeline
 function sendTestBeacon() {{
     const testPayload = {{
-        rep: "Test Rep",
+        rep: "William (Supervisor / Test)",
         company: "Creative Capital Solutions",
         sessionId: "test_" + Date.now(),
-        device: "Supervisor Diagnostic",
-        ip: "Diagnostic-Local",
-        location: "Test Console",
+        device: "Supervisor Cockpit Console",
+        isSupervisor: true,
+        ip: "85.115.107.223",
+        location: "Supervisor Desk",
         action: "REACTION",
-        title: "🧪 Diagnostic Verification Ping",
+        title: "[🧪 Test] Selected Reaction: [1] Who is this?",
         details: {{
             leadName: "Sample Prospect",
-            leadCompany: "Acme Enterprises",
+            leadCompany: "Acme Logistics",
             stage: "Stage 2: Identity & Disarm",
             note: "Verified Live Telemetry Pipeline"
         }},
