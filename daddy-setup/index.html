@@ -18,10 +18,13 @@
   .step h2 { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
   .step p { color: #8b949e; font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
   .step p:last-child { margin-bottom: 0; }
-  .store-btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 700; margin: 10px 0; transition: opacity .15s; width: 100%; justify-content: center; }
+  .store-btn { display: flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 10px; padding: 13px 20px; font-size: 14px; font-weight: 700; margin: 8px 0; transition: opacity .15s; justify-content: center; }
   .btn-play { background: #01875f; color: #fff; }
-  .btn-ts { background: #1565c0; color: #fff; }
+  .btn-apk  { background: #6e40c9; color: #fff; }
+  .btn-ts   { background: #1565c0; color: #fff; }
   .store-btn:hover { opacity: .85; }
+  .or { text-align: center; color: #484f58; font-size: 12px; margin: 4px 0; letter-spacing: 1px; }
+  .search-tag { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 8px; padding: 8px 14px; font-family: "JetBrains Mono", monospace; font-size: 13px; color: #e6edf3; margin: 6px 0; }
   .cmd { background: #010409; border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; margin: 10px 0; position: relative; }
   .cmd code { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #79c0ff; display: block; line-height: 1.7; white-space: pre-wrap; word-break: break-all; padding-right: 60px; }
   .copy { position: absolute; top: 9px; right: 9px; background: #21262d; border: 1px solid #30363d; color: #8b949e; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap; }
@@ -30,8 +33,8 @@
   .tip { background: rgba(88,166,255,.06); border-left: 3px solid #58a6ff; border-radius: 6px; padding: 9px 13px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
   .warn { background: rgba(210,153,34,.08); border-left: 3px solid #d29922; border-radius: 6px; padding: 9px 13px; margin: 10px 0; font-size: 13px; line-height: 1.6; }
   .warn strong { color: #d29922; }
-  .key-box { background: #010409; border: 2px dashed #30363d; border-radius: 10px; padding: 14px; margin: 10px 0; text-align: center; position: relative; }
-  .key-box code { font-family: "JetBrains Mono", monospace; font-size: 11px; color: #3fb950; word-break: break-all; display: block; margin-bottom: 8px; }
+  .key-box { background: #010409; border: 2px dashed #3fb950; border-radius: 10px; padding: 14px; margin: 10px 0; text-align: center; position: relative; }
+  .key-box code { font-family: "JetBrains Mono", monospace; font-size: 11px; color: #3fb950; word-break: break-all; display: block; margin-bottom: 8px; line-height: 1.8; }
   .done { background: rgba(63,185,80,.07); border: 1px solid rgba(63,185,80,.3); border-radius: 14px; padding: 22px; text-align: center; }
   .done .big { font-size: 40px; margin-bottom: 8px; }
   .done h2 { color: #3fb950; font-size: 19px; margin-bottom: 5px; }
@@ -49,59 +52,59 @@
   <div class="step">
     <div class="badge">1</div>
     <h2>Install Termux</h2>
-    <p>Tap the button to open Termux in the Play Store, then install it.</p>
-    <a class="store-btn btn-play" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l13.6-11.96L13.54 7.8 3.18 23.76zM20.7 10.56l-2.9-1.66-4.17 3.66 4.17 3.66 2.93-1.68c.84-.48.84-1.5-.03-1.98zM3.17.25C2.87.42 2.67.76 2.67 1.2v21.6c0 .44.2.77.5.93l13.6-11.74L3.17.25zM17.77 14.04L4.17 26l.01-.01c.3.17.64.2.99.03l13.6-11.96-1-1.02z"/></svg>
-      Get Termux on Google Play
-    </a>
-    <div class="tip">&#9989; After installing, open Termux. You'll see a black screen with a cursor.</div>
+    <p>Try the button first. If it says &ldquo;item not found&rdquo;, open the Play Store and search manually:</p>
+    <a class="store-btn btn-play" href="https://play.google.com/store/apps/details?id=com.termux" target="_blank">&#9654; Open Termux in Play Store</a>
+    <div class="or">— OR SEARCH IN PLAY STORE FOR —</div>
+    <div style="text-align:center"><span class="search-tag">Termux</span></div>
+    <div class="tip">&#9989; After installing, open Termux. You&rsquo;ll see a black screen with a blinking cursor.</div>
   </div>
 
   <div class="step">
     <div class="badge">2</div>
-    <h2>Run the Setup Command in Termux</h2>
-    <p>Tap <strong>Copy</strong>, switch to Termux, long-press &rarr; Paste &rarr; Enter.</p>
+    <h2>Run the Setup Command</h2>
+    <p>Tap <strong>Copy</strong>, switch to Termux, long-press &rarr; <strong>Paste</strong> &rarr; hit Enter.</p>
     <div class="cmd">
       <code>pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash</code>
-      <button class="copy" onclick="copyCmd(this,'pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
+      <button class="copy" onclick="cp(this,'pkg install -y curl && curl -fsSL https://raw.githubusercontent.com/naudiac/utility-scripts/main/daddy-setup/daddy_setup.sh | bash')">Copy</button>
     </div>
-    <div class="warn"><strong>&#9203; Takes 2&ndash;3 minutes.</strong> Press Enter if it asks any questions. When you see &#9989; SETUP COMPLETE &mdash; move to Step 3.</div>
+    <div class="warn"><strong>&#9203; Takes 2&ndash;3 minutes.</strong> Press Enter if it asks anything. Wait for &#9989; SETUP COMPLETE, then do Step 3.</div>
   </div>
 
   <div class="step">
     <div class="badge">3</div>
     <h2>Install Tailscale</h2>
-    <p>Tap the button to install the Tailscale app. This connects your phone to Will's home network.</p>
-    <a class="store-btn btn-ts" href="https://play.google.com/store/apps/details?id=com.tailscale.ipn.android" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/><path fill="#1565c0" d="M8 12a4 4 0 108 0 4 4 0 00-8 0z"/><path fill="white" d="M10 12a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
-      Get Tailscale on Google Play
-    </a>
+    <p>Try the button. If it says &ldquo;item not found&rdquo;, use the direct download instead:</p>
+    <a class="store-btn btn-ts" href="https://play.google.com/store/apps/details?id=com.tailscale.ipn.android" target="_blank">&#9654; Open Tailscale in Play Store</a>
+    <div class="or">— OR SEARCH IN PLAY STORE FOR —</div>
+    <div style="text-align:center; margin-bottom:8px"><span class="search-tag">Tailscale</span></div>
+    <div class="or">— OR DOWNLOAD THE APK DIRECTLY —</div>
+    <a class="store-btn btn-apk" href="https://pkgs.tailscale.com/stable/tailscale-latest.apk" target="_blank">&#11015; Download Tailscale APK Directly</a>
+    <div class="tip">If you use the APK: tap it after downloading &rarr; tap <strong>Install</strong> &rarr; tap <strong>Open</strong>.</div>
   </div>
 
   <div class="step">
     <div class="badge">4</div>
-    <h2>Open Tailscale &amp; Enter the Auth Key</h2>
-    <p>Open the Tailscale app. Tap <strong>Log in</strong> &rarr; <strong>Use auth key</strong>, then paste this key exactly:</p>
+    <h2>Connect Tailscale with the Key</h2>
+    <p>Open Tailscale &rarr; tap <strong>Log in</strong> &rarr; tap <strong>Use auth key</strong> &rarr; paste this:</p>
     <div class="key-box">
       <code>tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3</code>
-      <button class="copy" onclick="copyCmd(this,'tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3')">Copy Key</button>
+      <button class="copy" onclick="cp(this,'tskey-auth-ko5KuV6aJb11CNTRL-5kxWDTSMHZPMrVcRWBMAZPYQ1HMaPQu3')">Copy Key</button>
     </div>
-    <div class="tip">&#9989; Once Tailscale shows <strong>Connected</strong> &mdash; Will&rsquo;s system takes over automatically. You&rsquo;re done!</div>
+    <div class="tip">&#9989; Once Tailscale shows <strong>Connected</strong> &mdash; Will&rsquo;s system takes over. You&rsquo;re done!</div>
   </div>
 
   <div class="done">
     <div class="big">&#127881;</div>
     <h2>That&rsquo;s it, Dad!</h2>
-    <p>The moment Tailscale connects, Will&rsquo;s system sees your phone and handles everything else remotely.<br/><br/>
-    <strong>Keep Termux open and the phone plugged in. You don&rsquo;t touch the TV.</strong></p>
+    <p>The moment Tailscale connects, Will handles everything else remotely.<br/><br/>
+    <strong>Keep Termux open and the phone plugged in. Don&rsquo;t touch the TV.</strong></p>
   </div>
 </div>
 <script>
-function copyCmd(btn, text) {
+function cp(btn, text) {
   navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = 'Copied!'; btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = orig; btn.classList.remove('ok'); }, 3000);
+    const o = btn.textContent; btn.textContent = 'Copied!'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = o; btn.classList.remove('ok'); }, 3000);
   });
 }
 </script>
