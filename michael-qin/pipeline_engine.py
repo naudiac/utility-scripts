@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """
 Antigravity IDE - Michael Qin's Merchant Statement & Sales Mastery Flight Deck
-Wall Street Institutional Edition with Instant Persona Tone Switching & Custom Deck Builder.
-Features:
-- Wall Street Senior Syndication Openers (High-Status, Zero Sales Breath)
-- 6 Instant Persona & Demographic Tone Profiles (Wall Street, High-Tempo, Straight-Shooter, CFO Analytical, Conservative, Urban Modern)
-- Interactive Custom Deck Builder & LocalStorage Persistence
+ThinkAutomation Corporate Navy Edition - Zero-Scroll Ultra-Ergonomic Viewport Fit.
+Designed for 100% visibility on Desktop (Zero-Scroll Call HUD), iPhone, and Android.
 """
 
 import os
@@ -72,7 +69,7 @@ class SalesPipelineSystem:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Walker Advisory — {self.rep_name} Wall Street Syndication &amp; Sales Flight Deck</title>
+<title>Walker Advisory — {self.rep_name} Sales Flight Deck</title>
 <style>
     :root {{
         /* ThinkAutomation v83 Corporate Palette */
@@ -87,11 +84,8 @@ class SalesPipelineSystem:
         --bg-page: #f8fafc;
         --bg-card: #ffffff;
         --bg-subtle: #f1f5f9;
-        --bg-highlight: #f8fafc;
-        
         --border-main: #cbd5e1;
         --border-subtle: #e2e8f0;
-        --border-dark: #94a3b8;
         
         /* Semantic Accents */
         --color-success: #166534;
@@ -106,16 +100,12 @@ class SalesPipelineSystem:
         --color-danger-bg: #fef2f2;
         --color-danger-border: #fecaca;
         
-        --color-info: #0284c7;
-        --color-info-bg: #f0f9ff;
-        --color-info-border: #bae6fd;
-        
         --color-purple: #6b21a8;
         --color-purple-bg: #faf5ff;
         --color-purple-border: #e9d5ff;
 
         --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }}
 
     * {{
@@ -125,168 +115,156 @@ class SalesPipelineSystem:
         -webkit-tap-highlight-color: transparent;
     }}
 
-    body {{
+    html, body {{
         background-color: var(--bg-page);
         color: var(--text-main);
         font-family: var(--font-family);
-        line-height: 1.5;
-        font-size: 13.5px;
+        line-height: 1.4;
+        font-size: 13px;
         -webkit-font-smoothing: antialiased;
         min-height: 100vh;
-        padding-bottom: 40px;
     }}
 
-    .page-wrapper {{
+    .app-container {{
         width: 100%;
-        max-width: 1060px;
+        max-width: 1240px;
         margin: 0 auto;
-        padding: 16px 20px;
+        padding: 8px 12px;
     }}
 
-    /* Corporate Document Header */
-    .doc-header {{
+    /* Compact Corporate Header */
+    .top-header {{
         background: var(--bg-card);
         border: 1px solid var(--border-main);
-        border-top: 4px solid var(--corporate-navy);
-        padding: 18px 24px;
-        margin-bottom: 16px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        border-top: 3px solid var(--corporate-navy);
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }}
 
-    .doc-header-top {{
+    .header-main-row {{
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid var(--border-subtle);
-        padding-bottom: 12px;
-        margin-bottom: 14px;
+        justify-content: space-between;
+        gap: 8px;
         flex-wrap: wrap;
-        gap: 10px;
     }}
 
-    .company-title {{
-        font-size: 20px;
-        font-weight: 700;
+    .brand-block {{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+    }}
+    .brand-title {{
+        font-size: 15px;
+        font-weight: 800;
         color: var(--corporate-navy);
         letter-spacing: -0.3px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
     }}
-
     .status-tag {{
-        display: inline-block;
-        font-size: 10.5px;
+        font-size: 9.5px;
         font-weight: 700;
-        padding: 2px 8px;
+        padding: 1px 6px;
         border-radius: 3px;
         text-transform: uppercase;
-        letter-spacing: 0.3px;
         background: #dcfce7;
         color: #166534;
         border: 1px solid #bbf7d0;
     }}
 
-    .btn-share-hdr {{
-        background: var(--corporate-navy);
-        color: #ffffff;
-        border: 1px solid var(--corporate-navy);
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        display: inline-flex;
+    /* Horizontal Lead Inputs Bar */
+    .lead-inline-bar {{
+        display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
+        flex: 1;
+        min-width: 280px;
+        justify-content: flex-end;
     }}
-    .btn-share-hdr:hover {{ background: var(--corporate-blue); }}
-
-    /* Quick Lead Input Bar */
-    .lead-grid {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
-        gap: 10px;
-        align-items: flex-end;
+    .lead-input-wrap {{
+        flex: 1;
+        max-width: 180px;
+        min-width: 90px;
     }}
-    .meta-cell {{
-        display: flex;
-        flex-direction: column;
-    }}
-    .meta-label {{
-        font-size: 10.5px;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: var(--text-muted);
-        letter-spacing: 0.5px;
-        margin-bottom: 3px;
-        display: flex;
-        justify-content: space-between;
-    }}
-    .meta-input {{
+    .lead-input-compact {{
+        width: 100%;
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--corporate-navy);
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 13px;
+        padding: 5px 8px;
+        border-radius: 3px;
+        font-size: 11.5px;
         font-weight: 600;
         outline: none;
     }}
-    .meta-input:focus {{
+    .lead-input-compact:focus {{
         border-color: var(--corporate-accent);
         background: #ffffff;
     }}
-    .btn-clear {{
+    .btn-clear-compact {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        padding: 6px 12px;
-        border-radius: 4px;
+        padding: 5px 8px;
+        border-radius: 3px;
         font-size: 11px;
         font-weight: 700;
         cursor: pointer;
-        height: 31px;
+        white-space: nowrap;
     }}
-    .btn-clear:hover {{ color: var(--text-main); background: #e2e8f0; }}
+    .btn-clear-compact:hover {{ color: var(--text-main); background: #e2e8f0; }}
 
-    /* Persona & Tone Switcher Bar */
-    .tone-bar {{
-        margin-top: 14px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border-subtle);
-    }}
-    .tone-header {{
-        display: flex;
-        justify-content: space-between;
+    .btn-share-top {{
+        background: var(--corporate-navy);
+        color: #ffffff;
+        border: 1px solid var(--corporate-navy);
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 11.5px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-flex;
         align-items: center;
-        margin-bottom: 6px;
+        gap: 4px;
     }}
-    .tone-title {{
-        font-size: 11px;
+    .btn-share-top:hover {{ background: var(--corporate-blue); }}
+
+    /* Compact Tone Bar */
+    .tone-strip {{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid var(--border-subtle);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }}
+    .tone-strip::-webkit-scrollbar {{ display: none; }}
+    
+    .tone-strip-lbl {{
+        font-size: 10px;
         font-weight: 800;
         text-transform: uppercase;
-        color: var(--corporate-navy);
-        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        white-space: nowrap;
     }}
     .tone-chips {{
         display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
+        gap: 4px;
     }}
     .tone-chip {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 600;
-        padding: 5px 10px;
-        border-radius: 4px;
+        padding: 3px 8px;
+        border-radius: 3px;
         cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        transition: all 0.1s;
+        white-space: nowrap;
     }}
     .tone-chip:hover {{ color: var(--corporate-navy); border-color: var(--corporate-accent); }}
     .tone-chip.active {{
@@ -296,63 +274,39 @@ class SalesPipelineSystem:
         font-weight: 700;
     }}
 
-    /* Optional Custom Details Drawer */
-    .custom-details-toggle {{
-        margin-top: 10px;
-        padding-top: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }}
-    .btn-toggle-custom {{
+    .extra-intel-link {{
+        margin-left: auto;
         background: none;
         border: none;
         color: var(--corporate-accent);
-        font-size: 11.5px;
+        font-size: 10.5px;
         font-weight: 700;
         cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
+        white-space: nowrap;
     }}
-    .btn-toggle-custom:hover {{ text-decoration: underline; }}
 
-    .custom-drawer {{
+    /* Extra Intel Collapsible Drawer */
+    .intel-drawer {{
         display: none;
-        margin-top: 10px;
-        padding: 12px;
+        margin-top: 6px;
+        padding: 8px 10px;
         background: var(--bg-subtle);
         border: 1px solid var(--border-subtle);
-        border-radius: 4px;
-    }}
-    .custom-drawer.open {{ display: block; }}
-
-    .custom-fields-grid {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 10px;
-        margin-bottom: 8px;
-    }}
-
-    /* Sticky HUD Notes Banner */
-    .sticky-note-banner {{
-        background: #fffbeb;
-        border: 1px solid #fde68a;
-        border-left: 3px solid #d97706;
-        padding: 6px 12px;
         border-radius: 3px;
-        font-size: 12px;
-        color: #92400e;
-        margin-bottom: 12px;
-        display: none;
+    }}
+    .intel-drawer.open {{ display: block; }}
+    .intel-grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 6px;
     }}
 
-    /* Navigation Tabs Bar */
+    /* Tabs Bar */
     .tabs-nav {{
         display: flex;
-        gap: 4px;
+        gap: 3px;
         border-bottom: 2px solid var(--border-main);
-        margin-bottom: 16px;
+        margin-bottom: 8px;
         overflow-x: auto;
         scrollbar-width: none;
     }}
@@ -363,21 +317,18 @@ class SalesPipelineSystem:
         border: 1px solid var(--border-main);
         border-bottom: none;
         color: var(--text-muted);
-        font-size: 12.5px;
+        font-size: 11.5px;
         font-weight: 600;
-        padding: 8px 14px;
-        border-radius: 4px 4px 0 0;
+        padding: 6px 10px;
+        border-radius: 3px 3px 0 0;
         cursor: pointer;
         white-space: nowrap;
-        display: flex;
-        align-items: center;
-        gap: 5px;
     }}
     .tab-item:hover {{ color: var(--corporate-navy); }}
     .tab-item.active {{
         background: #ffffff;
         color: var(--corporate-navy);
-        border-top: 3px solid var(--corporate-navy);
+        border-top: 2.5px solid var(--corporate-navy);
         border-bottom: 2px solid #ffffff;
         margin-bottom: -2px;
         font-weight: 700;
@@ -386,144 +337,134 @@ class SalesPipelineSystem:
     .tab-pane {{ display: none; }}
     .tab-pane.active {{ display: block; }}
 
-    /* Section Architecture Block */
-    .section-block {{
+    /* =========================================================================
+       DIALER COPILOT - ZERO SCROLL LAYOUT
+       ========================================================================= */
+    .hud-block {{
         background: var(--bg-card);
         border: 1px solid var(--border-main);
-        margin-bottom: 16px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        padding: 10px 14px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }}
 
-    .section-header {{
-        background: var(--bg-subtle);
-        border-bottom: 1px solid var(--border-main);
-        padding: 12px 18px;
+    .hud-top-meta {{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid var(--border-subtle);
     }}
-
-    .section-title {{
-        font-size: 13.5px;
-        font-weight: 700;
+    .stage-title {{
+        font-size: 12px;
+        font-weight: 800;
         color: var(--corporate-navy);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
     }}
-    .section-meta {{
+    .hotkey-hint {{
         font-family: var(--font-mono);
-        font-size: 11px;
+        font-size: 10px;
         color: var(--text-muted);
     }}
 
-    .section-body {{
-        padding: 18px;
-    }}
-
-    /* Verbatim Script Box */
+    /* Verbatim Speech Box */
     .say-box {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
-        border-left: 4px solid var(--corporate-accent);
-        padding: 16px 18px;
-        margin-bottom: 16px;
+        border-left: 3.5px solid var(--corporate-accent);
+        padding: 10px 14px;
+        margin-bottom: 10px;
         border-radius: 2px;
     }}
     .say-header-row {{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
     }}
-    .say-label {{
-        display: inline-block;
-        font-size: 10px;
+    .say-lbl {{
+        font-size: 9.5px;
         font-weight: 800;
         text-transform: uppercase;
         color: var(--corporate-accent);
         letter-spacing: 0.5px;
     }}
-    .active-tone-indicator {{
-        font-size: 11px;
+    .tone-badge {{
+        font-size: 10px;
         font-weight: 700;
         color: var(--corporate-navy);
         background: #e2e8f0;
-        padding: 2px 7px;
-        border-radius: 3px;
+        padding: 1px 5px;
+        border-radius: 2px;
         font-family: var(--font-mono);
     }}
+
     .say-text {{
-        font-size: 16.5px;
+        font-size: 15.5px;
         font-weight: 600;
         color: var(--corporate-navy);
-        line-height: 1.5;
+        line-height: 1.45;
         white-space: pre-wrap;
     }}
     @media (max-width: 600px) {{
-        .say-text {{ font-size: 14.5px; }}
+        .say-text {{ font-size: 14px; line-height: 1.4; }}
     }}
     .say-text .token-highlight {{
         background: #fef3c7;
         color: #92400e;
-        padding: 1px 5px;
-        border-radius: 3px;
+        padding: 0 4px;
+        border-radius: 2px;
         font-weight: 700;
     }}
 
-    /* Tactical Tip */
     .tactical-bar {{
         background: var(--color-purple-bg);
         border: 1px solid var(--color-purple-border);
         border-left: 3px solid var(--color-purple);
-        padding: 8px 12px;
-        margin-top: 10px;
-        font-size: 11.5px;
+        padding: 5px 10px;
+        margin-top: 6px;
+        font-size: 11px;
         color: var(--color-purple);
         border-radius: 2px;
     }}
 
-    /* Response Options Grid */
-    .options-label {{
-        font-size: 11px;
-        font-weight: 700;
+    /* Options Label & Grid */
+    .options-row-lbl {{
+        font-size: 10px;
+        font-weight: 800;
         color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
+        letter-spacing: 0.4px;
+        margin-bottom: 6px;
         display: flex;
         justify-content: space-between;
     }}
 
     .options-grid {{
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-bottom: 16px;
-    }}
-    @media (min-width: 640px) {{
-        .options-grid {{ grid-template-columns: repeat(2, 1fr); }}
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 6px;
+        margin-bottom: 8px;
     }}
 
     .opt-btn {{
         background: #ffffff;
         border: 1px solid var(--border-main);
-        padding: 12px 14px;
-        border-radius: 4px;
-        font-size: 12.5px;
+        padding: 8px 10px;
+        border-radius: 3px;
+        font-size: 12px;
         font-weight: 600;
         text-align: left;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: border-color 0.1s, box-shadow 0.1s;
+        transition: transform 0.05s, box-shadow 0.1s;
     }}
     .opt-btn:hover {{ box-shadow: 0 1px 3px rgba(0,0,0,0.06); }}
     .opt-btn:active {{ transform: scale(0.99); }}
 
-    /* Option Colors */
     .opt-btn.pos {{
         background: var(--color-success-bg);
         border-color: var(--color-success-border);
@@ -547,11 +488,11 @@ class SalesPipelineSystem:
 
     .key-pill {{
         font-family: var(--font-mono);
-        font-size: 11px;
-        font-weight: 700;
-        padding: 1px 6px;
-        border-radius: 3px;
-        margin-left: 8px;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 1px 5px;
+        border-radius: 2px;
+        margin-left: 6px;
         flex-shrink: 0;
     }}
 
@@ -560,29 +501,45 @@ class SalesPipelineSystem:
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-top: 12px;
+        padding-top: 6px;
         border-top: 1px solid var(--border-subtle);
     }}
     .btn-ctrl {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-main);
-        padding: 6px 12px;
+        padding: 4px 10px;
         border-radius: 3px;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 600;
         cursor: pointer;
     }}
     .btn-ctrl:hover {{ background: #e2e8f0; }}
 
-    /* Copy Blocks */
+    /* Cards for Other Tabs */
+    .section-block {{
+        background: var(--bg-card);
+        border: 1px solid var(--border-main);
+        padding: 16px;
+        margin-bottom: 12px;
+    }}
+    .section-header-row {{
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--corporate-navy);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }}
+
     .copy-block {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
-        border-left: 4px solid var(--corporate-accent);
+        border-left: 3.5px solid var(--corporate-accent);
         border-radius: 3px;
-        padding: 12px 14px;
-        margin: 8px 0 14px 0;
+        padding: 10px 12px;
+        margin: 6px 0 10px 0;
         position: relative;
     }}
     .copy-block.green-box {{ border-left-color: var(--color-success); background: var(--color-success-bg); }}
@@ -590,84 +547,38 @@ class SalesPipelineSystem:
     .copy-block.yellow-box {{ border-left-color: var(--color-warning); background: var(--color-warning-bg); }}
 
     .copy-text {{
-        font-size: 12.5px;
+        font-size: 12px;
         color: var(--text-main);
         white-space: pre-wrap;
-        line-height: 1.5;
+        line-height: 1.45;
     }}
     .btn-copy {{
         position: absolute;
-        top: 8px;
-        right: 8px;
+        top: 6px;
+        right: 6px;
         background: #ffffff;
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        font-size: 10.5px;
+        font-size: 10px;
         font-weight: 600;
-        padding: 2px 7px;
-        border-radius: 3px;
+        padding: 1px 6px;
+        border-radius: 2px;
         cursor: pointer;
     }}
-    .btn-copy:hover {{ color: var(--corporate-navy); border-color: var(--corporate-accent); }}
 
-    /* Custom Deck Studio */
-    .deck-builder-box {{
-        background: #f8fafc;
-        border: 1px solid var(--border-main);
-        border-radius: 4px;
-        padding: 16px;
-        margin-bottom: 16px;
-    }}
-    .deck-builder-grid {{
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }}
-    .deck-input-area {{
-        width: 100%;
-        min-height: 70px;
-        background: #ffffff;
-        border: 1px solid var(--border-main);
-        border-radius: 4px;
-        padding: 8px 10px;
-        font-family: var(--font-family);
-        font-size: 13px;
-        color: var(--corporate-navy);
-        resize: vertical;
-        outline: none;
-    }}
-    .deck-input-area:focus {{ border-color: var(--corporate-accent); }}
-
-    .custom-deck-list {{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 14px;
-    }}
-    .custom-deck-card {{
-        background: #ffffff;
-        border: 1px solid var(--border-main);
-        border-radius: 4px;
-        padding: 12px 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }}
-
-    /* Bank Selector Chips */
     .bank-chips {{
         display: flex;
-        gap: 6px;
-        margin-bottom: 12px;
+        gap: 4px;
+        margin-bottom: 8px;
         overflow-x: auto;
     }}
     .bank-chip {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
         color: var(--text-muted);
-        padding: 6px 12px;
+        padding: 5px 10px;
         border-radius: 3px;
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 600;
         cursor: pointer;
     }}
@@ -677,350 +588,243 @@ class SalesPipelineSystem:
         color: #ffffff;
     }}
 
-    /* Calculator Grid */
+    /* Calculator */
     .calc-grid {{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 10px;
-        margin-bottom: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
     }}
     .calc-cell label {{
         display: block;
-        font-size: 10.5px;
+        font-size: 10px;
         font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
-        margin-bottom: 3px;
+        margin-bottom: 2px;
     }}
     .calc-cell input {{
         width: 100%;
         background: #ffffff;
         border: 1px solid var(--border-main);
         color: var(--corporate-navy);
-        padding: 7px 10px;
+        padding: 6px 8px;
         border-radius: 3px;
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 600;
     }}
-    .calc-cell input:focus {{ outline: none; border-color: var(--corporate-accent); }}
 
     .calc-summary {{
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
-        border-radius: 4px;
-        padding: 14px;
+        border-radius: 3px;
+        padding: 10px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: 6px;
         text-align: center;
     }}
     .calc-val {{
-        font-size: 18px;
-        font-weight: 700;
+        font-size: 16px;
+        font-weight: 800;
         font-family: var(--font-mono);
     }}
     .calc-lbl {{
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 700;
         color: var(--text-muted);
         text-transform: uppercase;
-        margin-top: 2px;
     }}
 
-    /* Share Modal */
+    /* Modal */
     .modal-overlay {{
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(15, 39, 68, 0.6);
+        background: rgba(15, 39, 68, 0.65);
         backdrop-filter: blur(3px);
         z-index: 1000;
         display: none;
         align-items: center;
         justify-content: center;
-        padding: 16px;
+        padding: 12px;
     }}
     .modal-overlay.open {{ display: flex; }}
-    
     .modal-content {{
         background: #ffffff;
         border: 1px solid var(--border-main);
         border-top: 4px solid var(--corporate-navy);
         border-radius: 4px;
-        max-width: 480px;
+        max-width: 440px;
         width: 100%;
-        padding: 22px;
+        padding: 18px;
         position: relative;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }}
     .modal-close {{
         position: absolute;
-        top: 12px;
-        right: 12px;
+        top: 10px;
+        right: 10px;
         background: var(--bg-subtle);
         border: 1px solid var(--border-main);
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
         border-radius: 3px;
         cursor: pointer;
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }}
-    .modal-title {{
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--corporate-navy);
-        margin-bottom: 2px;
-    }}
-    .modal-sub {{
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-bottom: 14px;
     }}
 
-    .qr-container {{
+    .qr-box {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
-        border-radius: 4px;
-        padding: 14px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 14px;
+        gap: 6px;
+        margin: 10px 0;
     }}
     .qr-img {{
-        width: 150px;
-        height: 150px;
-        border-radius: 3px;
-        border: 1px solid var(--border-main);
+        width: 140px;
+        height: 140px;
         background: #fff;
         padding: 4px;
-    }}
-
-    .link-copy-group {{
-        display: flex;
-        gap: 6px;
-        margin-bottom: 14px;
-    }}
-    .link-input {{
-        flex: 1;
-        background: var(--bg-subtle);
         border: 1px solid var(--border-main);
-        color: var(--corporate-navy);
-        padding: 7px 10px;
-        border-radius: 3px;
-        font-family: var(--font-mono);
-        font-size: 11.5px;
-        outline: none;
-    }}
-    .btn-copy-url {{
-        background: var(--corporate-navy);
-        color: #ffffff;
-        border: none;
-        padding: 7px 12px;
-        border-radius: 3px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        white-space: nowrap;
-    }}
-
-    .device-guide-grid {{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }}
-    .device-guide-item {{
-        background: var(--bg-subtle);
-        border: 1px solid var(--border-subtle);
-        padding: 9px 10px;
-        border-radius: 3px;
-        font-size: 11px;
-    }}
-    .guide-title {{
-        font-weight: 700;
-        color: var(--corporate-navy);
-        margin-bottom: 2px;
-    }}
-    .guide-desc {{
-        color: var(--text-muted);
-        line-height: 1.35;
     }}
 
     /* Toast */
     .toast {{
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 16px;
+        right: 16px;
         background: var(--corporate-navy);
         color: #ffffff;
         font-weight: 600;
-        font-size: 12px;
-        padding: 6px 14px;
-        border-radius: 4px;
+        font-size: 11.5px;
+        padding: 5px 12px;
+        border-radius: 3px;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.15s ease;
         z-index: 2000;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }}
     .toast.show {{ opacity: 1; }}
 
     @media print {{
-        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear, .btn-share-hdr, .modal-overlay, .tone-bar, .custom-details-toggle, .custom-drawer {{ display: none !important; }}
+        .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear-compact, .btn-share-top, .modal-overlay, .tone-strip {{ display: none !important; }}
         body {{ background: #fff; color: #000; }}
-        .doc-header, .section-block {{ border: 1px solid #ccc; background: #fff; box-shadow: none; }}
-        .say-box, .copy-block {{ background: #fafafa; border: 1px solid #ddd; }}
-        .say-text, .copy-text {{ color: #000; }}
+        .hud-block, .section-block {{ border: 1px solid #ccc; background: #fff; }}
     }}
 </style>
 </head>
 <body>
 
-<div class="page-wrapper">
+<div class="app-container">
 
-    <!-- Document Header (ThinkAutomation Corporate Style) -->
-    <div class="doc-header">
-        <div class="doc-header-top">
-            <div>
-                <div class="company-title">
-                    Walker Advisory <span class="status-tag">Live System</span>
-                </div>
-                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">
-                    {self.rep_name} — Wall Street Syndication &amp; Sales Closer Flight Deck
-                </div>
+    <!-- Compact Corporate Header -->
+    <div class="top-header">
+        <div class="header-main-row">
+            <div class="brand-block">
+                <span class="brand-title">Walker Advisory</span>
+                <span class="status-tag">Live System</span>
+                <span style="font-size: 11px; color: var(--text-muted); margin-left: 4px;">{self.rep_name}</span>
             </div>
-            <div>
-                <button class="btn-share-hdr" onclick="openShareModal()">🔗 Create Link / Add to Device</button>
+
+            <!-- Horizontal Inline Lead Inputs -->
+            <div class="lead-inline-bar">
+                <div class="lead-input-wrap">
+                    <input type="text" id="lead-name" class="lead-input-compact" placeholder="Contact Name" oninput="updatePersonalization()">
+                </div>
+                <div class="lead-input-wrap">
+                    <input type="text" id="lead-company" class="lead-input-compact" placeholder="Company Name" oninput="updatePersonalization()">
+                </div>
+                <div class="lead-input-wrap">
+                    <input type="text" id="lead-industry" class="lead-input-compact" placeholder="Industry / Niche" oninput="updatePersonalization()">
+                </div>
+                <button class="btn-clear-compact" onclick="clearLeadInputs()">✕</button>
+                <button class="btn-share-top" onclick="openShareModal()">🔗 Share / Link</button>
             </div>
         </div>
 
-        <!-- Quick Lead Personalization Bar -->
-        <div class="lead-grid">
-            <div class="meta-cell">
-                <span class="meta-label">Contact / Owner Name</span>
-                <input type="text" id="lead-name" class="meta-input" placeholder="e.g. John (Optional)" oninput="updatePersonalization()">
-            </div>
-            <div class="meta-cell">
-                <span class="meta-label">Merchant / Company Name</span>
-                <input type="text" id="lead-company" class="meta-input" placeholder="e.g. Apex Logistics (Optional)" oninput="updatePersonalization()">
-            </div>
-            <div class="meta-cell">
-                <span class="meta-label">Industry / Operating Niche</span>
-                <input type="text" id="lead-industry" class="meta-input" placeholder="e.g. Trucking (Optional)" oninput="updatePersonalization()">
-            </div>
-            <button class="btn-clear" onclick="clearLeadInputs()">Clear</button>
-        </div>
-
-        <!-- Persona & Tone Gear Switcher -->
-        <div class="tone-bar">
-            <div class="tone-header">
-                <span class="tone-title">🎭 Instant Persona Tone Selector:</span>
-                <span style="font-size: 11px; color: var(--text-muted);">1-Click Re-gear Pitch Vocabulary &amp; Tempo</span>
-            </div>
+        <!-- Compact Tone Selector Strip -->
+        <div class="tone-strip">
+            <span class="tone-strip-lbl">🎭 Tone:</span>
             <div class="tone-chips" id="tone-chips-container">
-                <button class="tone-chip active" onclick="setTone('wall_street', this)">🏛️ Wall Street Pro</button>
-                <button class="tone-chip" onclick="setTone('high_tempo', this)">⚡ High-Tempo / Executive</button>
-                <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Grounded / Straight-Shooter</button>
-                <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO / Financial Auditor</button>
-                <button class="tone-chip" onclick="setTone('conservative', this)">🤝 Senior / Conservative</button>
-                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban / Street-Smart</button>
+                <button class="tone-chip active" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
+                <button class="tone-chip" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
+                <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
+                <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO Analytical</button>
+                <button class="tone-chip" onclick="setTone('conservative', this)">🤝 Conservative</button>
+                <button class="tone-chip" onclick="setTone('urban_modern', this)">🏙️ Urban Modern</button>
             </div>
+            <button class="extra-intel-link" onclick="toggleIntelDrawer()">➕ More Intel</button>
         </div>
 
-        <!-- Collapsible Progressive Call Enhancers -->
-        <div class="custom-details-toggle">
-            <button class="btn-toggle-custom" onclick="toggleCustomDrawer()">
-                <span id="drawer-icon">➕</span> <strong>Add Extra Call Intel (Lender, Revenue, Debit, Notes)</strong>
-            </button>
-            <span style="font-size: 11px; color: var(--text-light);">100% Optional • Use as needed</span>
-        </div>
-
-        <div class="custom-drawer" id="custom-drawer">
-            <div class="custom-fields-grid">
-                <div class="meta-cell">
-                    <span class="meta-label">Current Lender / Competitor</span>
-                    <input type="text" id="lead-lender" class="meta-input" placeholder="e.g. OnDeck, National Funding" oninput="updatePersonalization()">
-                </div>
-                <div class="meta-cell">
-                    <span class="meta-label">Est. Monthly Revenue</span>
-                    <input type="text" id="lead-rev" class="meta-input" placeholder="e.g. $120K/mo" oninput="updatePersonalization()">
-                </div>
-                <div class="meta-cell">
-                    <span class="meta-label">Current Daily/Weekly Debit</span>
-                    <input type="text" id="lead-debit-str" class="meta-input" placeholder="e.g. $1,200/day" oninput="updatePersonalization()">
-                </div>
-            </div>
-
-            <div class="meta-cell">
-                <span class="meta-label">Sticky Call Notes (Appears in HUD)</span>
-                <input type="text" id="lead-notes" class="meta-input" placeholder="e.g. Partner Dave is in the yard until 2 PM" oninput="updatePersonalization()">
+        <!-- Collapsible Intel Drawer -->
+        <div class="intel-drawer" id="intel-drawer">
+            <div class="intel-grid">
+                <input type="text" id="lead-lender" class="lead-input-compact" placeholder="Lender (e.g. OnDeck)" oninput="updatePersonalization()">
+                <input type="text" id="lead-rev" class="lead-input-compact" placeholder="Est. Rev (e.g. $120K/mo)" oninput="updatePersonalization()">
+                <input type="text" id="lead-debit-str" class="lead-input-compact" placeholder="Debits (e.g. $1,200/day)" oninput="updatePersonalization()">
+                <input type="text" id="lead-notes" class="lead-input-compact" placeholder="Sticky Note / Cue" oninput="updatePersonalization()">
             </div>
         </div>
-
     </div>
 
     <!-- Navigation Tabs -->
     <div class="tabs-nav">
         <button class="tab-item active" onclick="switchTab('tab-hud')">🎙️ Dialer Copilot</button>
-        <button class="tab-item" onclick="switchTab('tab-custom-decks')">🛠️ Custom Deck Studio</button>
-        <button class="tab-item" onclick="switchTab('tab-statement')">📄 Statement Extraction</button>
-        <button class="tab-item" onclick="switchTab('tab-calc')">💰 Savings Calculator</button>
+        <button class="tab-item" onclick="switchTab('tab-custom-decks')">🛠️ Custom Decks</button>
+        <button class="tab-item" onclick="switchTab('tab-statement')">📄 Statements (45s)</button>
+        <button class="tab-item" onclick="switchTab('tab-calc')">💰 Savings Calc</button>
         <button class="tab-item" onclick="switchTab('tab-objections')">🛡️ Pushbacks</button>
         <button class="tab-item" onclick="switchTab('tab-cadence')">📬 SMS Follow-Ups</button>
         <button class="tab-item" onclick="switchTab('tab-pipeline')">🚀 7-Stage Pipeline</button>
     </div>
 
-    <!-- TAB 1: DIALER COPILOT -->
+    <!-- TAB 1: DIALER COPILOT (ZERO-SCROLL VIEWPORT) -->
     <div id="tab-hud" class="tab-pane active">
-        <div class="section-block">
-            <div class="section-header">
-                <span class="section-title" id="hud-stage">Stage 1: Opening (0-5s)</span>
-                <span class="section-meta" id="hud-step">Step 1 of 4 | Hotkeys: [1-6] React, [Space] Copy, [R] Reset</span>
+        <div class="hud-block">
+            <div class="hud-top-meta">
+                <span class="stage-title" id="hud-stage">Stage 1: Opening (0-5s)</span>
+                <span class="hotkey-hint" id="hud-step">Step 1 of 4 | Keys: [1-6] React, [Space] Copy, [R] Reset</span>
             </div>
 
-            <div class="section-body">
-                <!-- Sticky Call Note Banner (If populated) -->
-                <div class="sticky-note-banner" id="sticky-note-box">
-                    <strong>📌 Call Note:</strong> <span id="sticky-note-text"></span>
-                </div>
+            <!-- Sticky Call Note Banner -->
+            <div id="sticky-note-box" style="display:none; background:#fffbeb; border:1px solid #fde68a; padding:4px 8px; font-size:11px; color:#92400e; margin-bottom:6px; border-radius:2px;">
+                <strong>📌 Note:</strong> <span id="sticky-note-text"></span>
+            </div>
 
-                <!-- What You Say Out Loud -->
-                <div class="say-box">
-                    <div class="say-header-row">
-                        <span class="say-label">🗣️ What You Say Out Loud (Verbatim)</span>
-                        <span class="active-tone-indicator" id="active-tone-label">Tone: Wall Street Pro</span>
-                    </div>
-                    <div class="say-text" id="hud-verbatim"></div>
-                    <div class="tactical-bar" id="hud-bar">
-                        <strong>Tactical Execution:</strong> <span id="hud-tactical"></span>
-                    </div>
+            <!-- Verbatim Speech Box -->
+            <div class="say-box">
+                <div class="say-header-row">
+                    <span class="say-lbl">🗣️ What You Say Out Loud (Verbatim)</span>
+                    <span class="tone-badge" id="active-tone-label">Tone: Wall Street</span>
                 </div>
-
-                <!-- What They Say -->
-                <div class="options-label">
-                    <span>👉 What did the prospect say?</span>
-                    <span>(Click or Press Number Key)</span>
+                <div class="say-text" id="hud-verbatim"></div>
+                <div class="tactical-bar" id="hud-bar">
+                    <strong>Tactical Execution:</strong> <span id="hud-tactical"></span>
                 </div>
+            </div>
 
-                <div class="options-grid" id="hud-options">
-                    <!-- Dynamically Injected -->
-                </div>
+            <!-- Reaction Options -->
+            <div class="options-row-lbl">
+                <span>👉 What did the prospect say?</span>
+                <span>(Click or Press Number Key)</span>
+            </div>
 
-                <div class="hud-foot">
-                    <button class="btn-ctrl" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
-                    <div style="display: flex; gap: 6px; margin-left: auto;">
-                        <button class="btn-ctrl" onclick="copyText(getCleanScriptText())">📋 Copy Line (Space)</button>
-                        <button class="btn-ctrl" onclick="resetFlow()">🔄 Reset Call (R)</button>
-                    </div>
+            <div class="options-grid" id="hud-options">
+                <!-- Injected Dynamically -->
+            </div>
+
+            <div class="hud-foot">
+                <button class="btn-ctrl" onclick="goBack()" id="btn-back" style="display:none;">⬅ Previous Cue</button>
+                <div style="display: flex; gap: 4px; margin-left: auto;">
+                    <button class="btn-ctrl" onclick="copyText(getCleanScriptText())">📋 Copy (Space)</button>
+                    <button class="btn-ctrl" onclick="resetFlow()">🔄 Reset (R)</button>
                 </div>
             </div>
         </div>
@@ -1029,100 +833,55 @@ class SalesPipelineSystem:
     <!-- TAB 2: CUSTOM DECK STUDIO -->
     <div id="tab-custom-decks" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">🛠️ Custom Deck Studio &amp; Pitch Builder</span>
-                <span class="section-meta">Create and save your own personalized pitch decks</span>
+            <div class="section-header-row">
+                <span>🛠️ Custom Deck Studio &amp; Pitch Builder</span>
             </div>
-            <div class="section-body">
-                <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
-                    Build your own custom decks tailored to your favorite niches, closing styles, or local markets. Saved decks are stored in your browser and accessible instantly in the Dialer Copilot.
-                </p>
-
-                <div class="deck-builder-box">
-                    <div style="font-size: 13px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 10px;">➕ Create New Custom Deck</div>
-                    <div class="deck-builder-grid">
-                        <div>
-                            <span class="meta-label">Deck Name / Identifier</span>
-                            <input type="text" id="new-deck-name" class="meta-input" placeholder="e.g. My Heavy Equipment Closer, Florida Contractors Opener">
-                        </div>
-                        <div>
-                            <span class="meta-label">Stage 1: Opener Line (Use [Name], [Company], [Industry])</span>
-                            <textarea id="new-deck-opener" class="deck-input-area" placeholder="Hey [Name], Michael Qin on the syndication desk..."></textarea>
-                        </div>
-                        <div>
-                            <span class="meta-label">Stage 2: Core Value Hook &amp; Disarm Line</span>
-                            <textarea id="new-deck-hook" class="deck-input-area" placeholder="I'm not asking for your business today—I just want to run an underwriting audit..."></textarea>
-                        </div>
-                        <div>
-                            <span class="meta-label">Tactical Principle / Delivery Note</span>
-                            <input type="text" id="new-deck-note" class="meta-input" placeholder="e.g. Unhurried, consultative auditor tone.">
-                        </div>
-                        <button class="btn-share-hdr" style="justify-content: center; padding: 8px 16px;" onclick="saveCustomDeck()">💾 Save Custom Deck to My System</button>
-                    </div>
-                </div>
-
-                <div style="font-size: 13px; font-weight: 700; color: var(--corporate-navy); margin: 18px 0 8px;">Saved Custom Decks:</div>
-                <div id="custom-decks-container" class="custom-deck-list">
-                    <!-- Injected dynamically -->
-                </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                Build custom pitch decks saved directly in your browser.
+            </p>
+            <div style="display:grid; gap:8px;">
+                <input type="text" id="new-deck-name" class="lead-input-compact" placeholder="Deck Name (e.g. Florida Contractors Opener)">
+                <textarea id="new-deck-opener" style="width:100%; min-height:60px; padding:6px 8px; border:1px solid var(--border-main); font-size:12px;" placeholder="Opener line (Use [Name], [Company], [Industry])"></textarea>
+                <textarea id="new-deck-hook" style="width:100%; min-height:50px; padding:6px 8px; border:1px solid var(--border-main); font-size:12px;" placeholder="Hook & Disarm Line"></textarea>
+                <input type="text" id="new-deck-note" class="lead-input-compact" placeholder="Delivery Note">
+                <button class="btn-share-top" style="justify-content:center; padding:6px;" onclick="saveCustomDeck()">💾 Save Custom Deck</button>
             </div>
+            <div style="font-size:12px; font-weight:700; color:var(--corporate-navy); margin:12px 0 6px;">Saved Custom Decks:</div>
+            <div id="custom-decks-container"></div>
         </div>
     </div>
 
     <!-- TAB 3: STATEMENT EXTRACTION -->
     <div id="tab-statement" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">45-Second On-Call Statement Extraction Protocol</span>
-                <span class="section-meta">Eliminates the "I'll do it later" delay</span>
+            <div class="section-header-row">
+                <span>🚀 45-Second On-Call Statement Extraction Protocol</span>
             </div>
-            <div class="section-body">
-                <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
-                    Keep the merchant on the line and guide them through exporting their 3 PDF statements immediately while you have their attention.
-                </p>
+            <div class="copy-block green-box">
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 2px;">Live Walkthrough Script</div>
+                <div class="copy-text" id="stmt-walkthrough-text"></div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+            </div>
 
-                <div class="copy-block green-box">
-                    <div style="font-size: 11px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 4px;">Live Walkthrough Script (On Phone)</div>
-                    <div class="copy-text" id="stmt-walkthrough-text">"John, are you in front of your computer or looking at your phone right now?
+            <div style="font-size: 10.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 8px 0 4px;">Bank 2-Click Guides:</div>
+            <div class="bank-chips">
+                <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
+                <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
+                <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
+                <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile</button>
+            </div>
 
-Stay on with me for literally 45 seconds while you export your last 3 monthly statements as PDFs. I will confirm receipt while we're on the line so this isn't hanging over your head tonight.
-
-Which bank do you use for operations—Chase, Bank of America, or Wells?"</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
-
-                <div style="margin: 14px 0 6px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
-                    Select Merchant Bank for Exact 2-Click Export Steps:
-                </div>
-                <div class="bank-chips">
-                    <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
-                    <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
-                    <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
-                    <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile App</button>
-                </div>
-
-                <div class="copy-block">
-                    <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
+            <div class="copy-block">
+                <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
 2. "Click 'Statements & Documents' right below the balance."
 3. "Download the last 3 monthly PDFs and forward directly to my email."</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
-        </div>
 
-        <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">The "Loss Aversion" Rebuttal (Chris Voss Tactical Empathy)</span>
-            </div>
-            <div class="section-body">
-                <div class="copy-block yellow-box">
-                    <div class="copy-text" id="loss-aversion-text">"John, I don't want you wasting your evening downloading statements if this doesn't put money back into your business.
-
-If our review shows your current setup is already optimal, I will tell you to keep it. But if you're leaking $2,500 a month in excessive factor fees or daily debits, wouldn't you want to know by tomorrow morning?
-
-Let me send you a secure request link right now. What's the best email?"</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
+            <div class="copy-block yellow-box">
+                <div style="font-size: 10.5px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-bottom: 2px;">Chris Voss Loss-Aversion Rebuttal</div>
+                <div class="copy-text" id="loss-aversion-text"></div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
         </div>
     </div>
@@ -1130,43 +889,40 @@ Let me send you a secure request link right now. What's the best email?"</div>
     <!-- TAB 4: SAVINGS CALCULATOR -->
     <div id="tab-calc" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">Live Merchant Debt Restructuring &amp; Cash Flow Calculator</span>
-                <span class="section-meta">Calculates Net Cash Freed Up in Real Time</span>
+            <div class="section-header-row">
+                <span>💰 Live Debt Restructuring Calculator</span>
             </div>
-            <div class="section-body">
-                <div class="calc-grid">
-                    <div class="calc-cell">
-                        <label>Monthly Revenue ($)</label>
-                        <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
-                    </div>
-                    <div class="calc-cell">
-                        <label>Current Debits ($/Month)</label>
-                        <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
-                    </div>
-                    <div class="calc-cell">
-                        <label>Proposed New Payment ($/Mo)</label>
-                        <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
-                    </div>
-                    <div class="calc-cell">
-                        <label>New Capital Advance ($)</label>
-                        <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
-                    </div>
+            <div class="calc-grid">
+                <div class="calc-cell">
+                    <label>Monthly Revenue ($)</label>
+                    <input type="number" id="calc-rev" value="120000" step="5000" oninput="runCalc()">
                 </div>
+                <div class="calc-cell">
+                    <label>Current Debits ($/Mo)</label>
+                    <input type="number" id="calc-debit" value="18000" step="1000" oninput="runCalc()">
+                </div>
+                <div class="calc-cell">
+                    <label>New Payment ($/Mo)</label>
+                    <input type="number" id="calc-new-pay" value="7500" step="500" oninput="runCalc()">
+                </div>
+                <div class="calc-cell">
+                    <label>New Capital ($)</label>
+                    <input type="number" id="calc-advance" value="150000" step="10000" oninput="runCalc()">
+                </div>
+            </div>
 
-                <div class="calc-summary">
-                    <div>
-                        <div class="calc-val" id="res-monthly" style="color: var(--color-success);">+$10,500</div>
-                        <div class="calc-lbl">Monthly Cash Freed</div>
-                    </div>
-                    <div>
-                        <div class="calc-val" id="res-annual" style="color: var(--corporate-accent);">$126,000</div>
-                        <div class="calc-lbl">Annual Savings</div>
-                    </div>
-                    <div>
-                        <div class="calc-val" id="res-capital" style="color: var(--color-purple);">$150,000</div>
-                        <div class="calc-lbl">Liquidity Unlocked</div>
-                    </div>
+            <div class="calc-summary">
+                <div>
+                    <div class="calc-val" id="res-monthly" style="color: var(--color-success);">+$10,500</div>
+                    <div class="calc-lbl">Monthly Cash Freed</div>
+                </div>
+                <div>
+                    <div class="calc-val" id="res-annual" style="color: var(--corporate-accent);">$126,000</div>
+                    <div class="calc-lbl">Annual Savings</div>
+                </div>
+                <div>
+                    <div class="calc-val" id="res-capital" style="color: var(--color-purple);">$150,000</div>
+                    <div class="calc-lbl">Liquidity Unlocked</div>
                 </div>
             </div>
         </div>
@@ -1175,57 +931,33 @@ Let me send you a secure request link right now. What's the best email?"</div>
     <!-- TAB 5: PUSHBACK MATRIX -->
     <div id="tab-objections" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">Merchant Pushback &amp; Objection Matrix</span>
+            <div class="section-header-row">
+                <span>🛡️ Pushback &amp; Objection Rebuttals</span>
             </div>
-            <div class="section-body" id="objections-list"></div>
+            <div id="objections-list"></div>
         </div>
     </div>
 
     <!-- TAB 6: CADENCE -->
     <div id="tab-cadence" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">10-Day Multi-Touch SMS &amp; Email Cadence</span>
+            <div class="section-header-row">
+                <span>📬 Multi-Touch SMS &amp; Email Cadence</span>
             </div>
-            <div class="section-body">
-                <div style="font-size: 11px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-top: 4px;">Day 1: Instant Post-Call SMS</div>
-                <div class="copy-block green-box">
-                    <div class="copy-text" id="cadence-sms1">"Hi [Name], Michael Qin here from Capital Advisory. Great speaking with you briefly. To run your debt consolidation and statement audit for [Company], just email your last 3 monthly business bank PDFs to michael@capitaladvisory.com. Once received, I will have your approved numbers back within 24 hours."</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
-
-                <div style="font-size: 11px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-top: 14px;">Day 3: Midday Leakage Check-In</div>
-                <div class="copy-block yellow-box">
-                    <div class="copy-text" id="cadence-email1">Subject: Quick question regarding [Company] cash flow
-
-Hi [Name],
-
-Following up on our conversation regarding restructuring your operating debt for [Company]. 
-
-Our underwriting desk locks weekly merchant placement tiers every Thursday at 4 PM. If you shoot over your 3 bank statements today, I can have your term sheet approved before the weekend.
-
-Let me know if you need help pulling the PDFs from Chase/BoA.
-
-Best,
-Michael Qin</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
-
-                <div style="font-size: 11px; font-weight: 700; color: var(--color-danger); text-transform: uppercase; margin-top: 14px;">Day 8: Permission-to-Close Breakup</div>
-                <div class="copy-block red-box">
-                    <div class="copy-text" id="cadence-email2">Subject: Closing your file / [Company]
-
-Hi [Name],
-
-I assume restructuring your working capital isn't a priority right now, so I will close out your file for [Company].
-
-If daily debits ever start squeezing your cash flow down the road, feel free to reach out anytime.
-
-Best regards,
-Michael Qin</div>
-                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-                </div>
+            <div class="copy-block green-box">
+                <div style="font-size: 10px; font-weight: 700; color: var(--color-success); text-transform: uppercase;">Day 1: Instant Post-Call SMS</div>
+                <div class="copy-text" id="cadence-sms1"></div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+            </div>
+            <div class="copy-block yellow-box">
+                <div style="font-size: 10px; font-weight: 700; color: var(--color-warning); text-transform: uppercase;">Day 3: Midday Leakage Check-In</div>
+                <div class="copy-text" id="cadence-email1"></div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+            </div>
+            <div class="copy-block red-box">
+                <div style="font-size: 10px; font-weight: 700; color: var(--color-danger); text-transform: uppercase;">Day 8: Permission-to-Close Breakup</div>
+                <div class="copy-text" id="cadence-email2"></div>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
         </div>
     </div>
@@ -1233,48 +965,38 @@ Michael Qin</div>
     <!-- TAB 7: PIPELINE STAGES -->
     <div id="tab-pipeline" class="tab-pane">
         <div class="section-block">
-            <div class="section-header">
-                <span class="section-title">The Complete 7-Stage Advisory Pipeline</span>
+            <div class="section-header-row">
+                <span>🚀 Complete 7-Stage Pipeline Guide</span>
             </div>
-            <div class="section-body" id="pipeline-list"></div>
+            <div id="pipeline-list"></div>
         </div>
     </div>
 
 </div>
 
-<!-- SHARE / CREATE LINK MODAL -->
+<!-- SHARE MODAL -->
 <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeShareModal()">✕</button>
-        <div class="modal-title">📲 Add to Any Device / Create Link</div>
-        <div class="modal-sub">Open this flight deck instantly on your phone or cubicle PC.</div>
+        <div style="font-size:14px; font-weight:800; color:var(--corporate-navy); margin-bottom:2px;">📲 Add to Any Device / Create Link</div>
+        <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:8px;">Instant access on iPhone, Android, or PC.</div>
 
-        <div class="qr-container">
-            <img class="qr-img" id="qr-code-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://naudiac.github.io/utility-scripts/michael-qin/">
-            <span style="font-size: 11px; font-weight: 700; color: var(--corporate-navy);">📷 Scan with Phone Camera to Open</span>
+        <div class="qr-box">
+            <img class="qr-img" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://naudiac.github.io/utility-scripts/michael-qin/">
+            <span style="font-size:10.5px; font-weight:700; color:var(--corporate-navy);">📷 Scan with Phone Camera to Open</span>
         </div>
 
-        <div class="link-copy-group">
-            <input type="text" id="share-url-box" class="link-input" readonly value="https://naudiac.github.io/utility-scripts/michael-qin/">
-            <button class="btn-copy-url" onclick="copyToolUrl()">📋 Copy Link</button>
+        <div style="display:flex; gap:4px; margin-bottom:10px;">
+            <input type="text" id="share-url-box" class="lead-input-compact" readonly value="https://naudiac.github.io/utility-scripts/michael-qin/">
+            <button class="btn-share-top" onclick="copyToolUrl()">📋 Copy</button>
         </div>
 
-        <div class="device-guide-grid">
-            <div class="device-guide-item">
-                <div class="guide-title">📱 iPhone / Safari</div>
-                <div class="guide-desc">Tap <strong>Share ➔ 'Add to Home Screen'</strong> to run as a full-screen app.</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:10.5px;">
+            <div style="background:var(--bg-subtle); padding:6px; border-radius:3px;">
+                <strong>📱 iPhone:</strong> Share ➔ 'Add to Home Screen'
             </div>
-            <div class="device-guide-item">
-                <div class="guide-title">🤖 Android / Chrome</div>
-                <div class="guide-desc">Tap <strong>3-Dots ➔ 'Add to Home Screen'</strong> or 'Install App'.</div>
-            </div>
-            <div class="device-guide-item">
-                <div class="guide-title">💻 Windows Dialer</div>
-                <div class="guide-desc">Press <strong>Ctrl+D</strong> to bookmark next to your autodialer window.</div>
-            </div>
-            <div class="device-guide-item">
-                <div class="guide-title">⚡ Native Share</div>
-                <div class="guide-desc"><a href="javascript:void(0)" onclick="triggerNativeShare()" style="color:var(--corporate-accent); font-weight:700; text-decoration:none;">Tap to AirDrop / SMS Link →</a></div>
+            <div style="background:var(--bg-subtle); padding:6px; border-radius:3px;">
+                <strong>🤖 Android:</strong> 3-Dots ➔ 'Add to Home Screen'
             </div>
         </div>
     </div>
@@ -1287,13 +1009,11 @@ const STAGES = {stages_json};
 const OBJECTIONS = {objections_json};
 
 /* =========================================================================
-   6 INSTANT PERSONA TONE PROFILES (WALL STREET TO BLUE-COLLAR GROUNDED)
+   6 INSTANT PERSONA TONE PROFILES
    ========================================================================= */
 const TONE_PROFILES = {{
     "wall_street": {{
-        name: "Wall Street Pro",
-        tag: "🏛️ Wall Street Pro",
-        description: "Institutional senior syndication desk authority. Zero sales breath, calm auditor frame.",
+        name: "Wall Street",
         opener: `"Hey [Name], Michael Qin on the institutional syndication desk at Capital Advisory. Look, I'll be direct—I know this call wasn't on your calendar today.
 
 The reason for the outreach is specific: our credit committee is actively restructuring secondary tier debt for mid-market operators in [Industry], moving companies out of [Lender_Or_Default] to cut monthly debit debt service by 40%."`,
@@ -1323,9 +1043,7 @@ Which institution does [Company] bank with—Chase, BoA, or Wells?"`,
     }},
 
     "high_tempo": {{
-        name: "High-Tempo Executive",
-        tag: "⚡ High-Tempo",
-        description: "Ultra-concise, fast-paced NYC/Chicago tempo. 10-second disarm for busy CEOs.",
+        name: "High-Tempo",
         opener: `"Hey [Name], Michael Qin with Capital Advisory. I'll give you the 10-second version because I know you're running a business.
 
 We're cutting monthly loan debits by 40% for [Industry] companies right now by clearing out [Lender_Or_Default].
@@ -1353,9 +1071,7 @@ You using Chase or BoA?"`,
     }},
 
     "southern_direct": {{
-        name: "Grounded Straight-Shooter",
-        tag: "🤠 Straight-Shooter",
-        description: "Warm, respectful, zero-BS plain English. Great for blue-collar, construction, trucking.",
+        name: "Straight-Shooter",
         opener: `"Hey [Name], hope you're having a good day. Michael Qin here with Capital Advisory. I know I caught you out of the blue, so I'll shoot straight with you.
 
 We work directly with owners in [Industry] to get them out from under high daily debits and expensive lenders like [Lender_Or_Default]."`,
@@ -1385,9 +1101,7 @@ Which bank do you all use down there?"`,
     }},
 
     "cfo_analytical": {{
-        name: "CFO Financial Auditor",
-        tag: "📊 CFO / Analytical",
-        description: "Numbers-heavy, balance sheet, basis points, cash flow margin expansion.",
+        name: "CFO Analytical",
         opener: `"Good morning [Name]. Michael Qin from Capital Advisory's debt syndicate.
 
 We are currently conducting financial efficiency reviews for mid-sized operators in [Industry], specifically analyzing effective annual percentage rates across [Lender_Or_Default] and senior mezzanine positions."`,
@@ -1415,9 +1129,7 @@ Which commercial depository do you utilize?"`,
     }},
 
     "conservative": {{
-        name: "Senior Conservative",
-        tag: "🤝 Senior / Conservative",
-        description: "Deeply respectful, unhurried, fiduciary tone, privacy and capital preservation first.",
+        name: "Conservative",
         opener: `"Good day [Name]. My name is Michael Qin with Capital Placement Advisory. I apologize for interrupting your afternoon without an appointment.
 
 We specialize in conservative debt restructuring for established operators in [Industry], helping protect business equity from aggressive lenders like [Lender_Or_Default]."`,
@@ -1445,9 +1157,7 @@ Which banking institution handles your primary operations?"`,
     }},
 
     "urban_modern": {{
-        name: "Urban Modern Entrepreneur",
-        tag: "🏙️ Urban / Modern",
-        description: "Sharp, relatable, street-smart commercial fluency. Cuts through corporate fluff.",
+        name: "Urban Modern",
         opener: `"Yo [Name], Michael Qin with Capital Advisory. Keeping it 100% brief since I'm catching you on the fly.
 
 We're in the market right now cleaning up expensive financing for operators in [Industry] getting squeezed by high-rate lenders like [Lender_Or_Default]."`,
@@ -1509,21 +1219,13 @@ function copyToolUrl() {{
     copyText(box.value);
 }}
 
-function triggerNativeShare() {{
-    const url = "https://naudiac.github.io/utility-scripts/michael-qin/";
-    if (navigator.share) {{
-        navigator.share({{
-            title: "Michael Qin - Sales Flight Deck",
-            text: "Real-time autodialer copilot & merchant statement extraction tool.",
-            url: url
-        }}).catch(() => {{}});
-    }} else {{
-        copyToolUrl();
-    }}
+function toggleIntelDrawer() {{
+    const drawer = document.getElementById('intel-drawer');
+    if (drawer) drawer.classList.toggle('open');
 }}
 
 /* =========================================================================
-   DYNAMIC LEAD PERSONALIZATION (PROGRESSIVE & 100% OPTIONAL)
+   DYNAMIC LEAD PERSONALIZATION
    ========================================================================= */
 let leadState = {{
     name: "",
@@ -1534,15 +1236,6 @@ let leadState = {{
     debitStr: "",
     notes: ""
 }};
-
-function toggleCustomDrawer() {{
-    const drawer = document.getElementById('custom-drawer');
-    const icon = document.getElementById('drawer-icon');
-    if (drawer) {{
-        drawer.classList.toggle('open');
-        icon.innerText = drawer.classList.contains('open') ? "➖" : "➕";
-    }}
-}}
 
 function getEffectiveTokens() {{
     return {{
@@ -1560,28 +1253,24 @@ function formatWithTokens(templateStr, highlight = false) {{
     const t = getEffectiveTokens();
     let res = templateStr;
 
-    // Contact Name
     if (highlight && leadState.name.trim()) {{
         res = res.replaceAll("[Name]", `<span class="token-highlight">${{t.name}}</span>`);
     }} else {{
         res = res.replaceAll("[Name]", t.name);
     }}
 
-    // Company Name
     if (highlight && leadState.company.trim()) {{
         res = res.replaceAll("[Company]", `<span class="token-highlight">${{t.company}}</span>`);
     }} else {{
         res = res.replaceAll("[Company]", t.company);
     }}
 
-    // Industry / Niche
     if (highlight && leadState.industry.trim()) {{
         res = res.replaceAll("[Industry]", `<span class="token-highlight">${{t.industry}}</span>`);
     }} else {{
         res = res.replaceAll("[Industry]", t.industry);
     }}
 
-    // Current Lender (If present)
     if (leadState.lender.trim()) {{
         const lenderToken = highlight ? `<span class="token-highlight">${{t.lender}}</span>` : t.lender;
         res = res.replaceAll("[Lender_Or_Default]", `positions out of lenders like ${{lenderToken}}`);
@@ -1589,7 +1278,6 @@ function formatWithTokens(templateStr, highlight = false) {{
         res = res.replaceAll("[Lender_Or_Default]", "expensive daily debt positions in your space");
     }}
 
-    // Monthly Revenue (If present)
     if (leadState.revenue.trim()) {{
         const revToken = highlight ? `<span class="token-highlight">${{t.revenue}}</span>` : t.revenue;
         res = res.replaceAll("[Revenue_Or_Default]", `businesses generating ${{revToken}} in volume`);
@@ -1610,7 +1298,6 @@ function updatePersonalization() {{
     const debitEl = document.getElementById('lead-debit-str'); if(debitEl) leadState.debitStr = debitEl.value;
     const notesEl = document.getElementById('lead-notes'); if(notesEl) leadState.notes = notesEl.value;
 
-    // Sticky Note Box
     const stickyBox = document.getElementById('sticky-note-box');
     const stickyText = document.getElementById('sticky-note-text');
     if (stickyBox && stickyText) {{
@@ -1656,7 +1343,7 @@ function updateCadenceSnippets() {{
 }}
 
 /* =========================================================================
-   DYNAMIC CALL FLOW ROUTING (FEEDS FROM ACTIVE TONE PROFILE)
+   DYNAMIC CALL FLOW ROUTING
    ========================================================================= */
 function getActiveNodeData(nodeKey) {{
     const profile = TONE_PROFILES[currentToneKey] || TONE_PROFILES["wall_street"];
@@ -1814,7 +1501,7 @@ function renderCurrentNode() {{
     document.getElementById('hud-stage').innerText = node.stage;
     document.getElementById('hud-verbatim').innerHTML = formatWithTokens(node.verbatim, true);
     document.getElementById('hud-tactical').innerText = node.tactical;
-    document.getElementById('hud-step').innerText = `Step ${{historyStack.length}} of 4 | Hotkeys: [1-6] React, [Space] Copy, [R] Reset`;
+    document.getElementById('hud-step').innerText = `Step ${{historyStack.length}} of 4 | Keys: [1-6] React, [Space] Copy, [R] Reset`;
 
     const btnGrid = document.getElementById('hud-options');
     btnGrid.innerHTML = node.options.map(opt => `
@@ -1872,7 +1559,7 @@ window.addEventListener('keydown', (e) => {{
 }});
 
 /* =========================================================================
-   CUSTOM DECK BUILDER (LOCALSTORAGE PERSISTENCE)
+   CUSTOM DECK BUILDER (LOCALSTORAGE)
    ========================================================================= */
 let customDecks = [];
 
@@ -1901,8 +1588,6 @@ function saveCustomDeck() {{
     const newDeck = {{
         id: deckId,
         name: name,
-        tag: `⭐ ${{name}}`,
-        description: note || "Custom user deck",
         opener: opener,
         who_is_this: hook || opener,
         hook: hook || opener,
@@ -1914,10 +1599,8 @@ function saveCustomDeck() {{
     customDecks.push(newDeck);
     localStorage.setItem('mq_custom_decks', JSON.stringify(customDecks));
 
-    // Register into active TONE_PROFILES
     TONE_PROFILES[deckId] = newDeck;
 
-    // Reset inputs
     document.getElementById('new-deck-name').value = "";
     document.getElementById('new-deck-opener').value = "";
     document.getElementById('new-deck-hook').value = "";
@@ -1929,7 +1612,7 @@ function saveCustomDeck() {{
     switchTab('tab-hud');
 
     const toast = document.getElementById('toast');
-    toast.innerText = `Deck "${{name}}" Saved & Activated!`;
+    toast.innerText = `Deck "${{name}}" Saved!`;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2000);
 }}
@@ -1949,19 +1632,18 @@ function renderCustomDeckList() {{
     if (!container) return;
 
     if (customDecks.length === 0) {{
-        container.innerHTML = `<div style="font-size: 12px; color: var(--text-muted); padding: 10px; background: #fff; border: 1px dashed var(--border-main); border-radius: 4px;">No custom decks created yet. Build your first custom deck above!</div>`;
+        container.innerHTML = `<div style="font-size: 11.5px; color: var(--text-muted); padding: 8px; background: #fff; border: 1px dashed var(--border-main); border-radius: 3px;">No custom decks created yet. Build your first custom deck above!</div>`;
         return;
     }}
 
     container.innerHTML = customDecks.map(d => `
-        <div class="custom-deck-card">
+        <div style="background:#fff; border:1px solid var(--border-main); border-radius:3px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <div>
-                <div style="font-weight: 700; color: var(--corporate-navy); font-size: 13px;">${{d.name}}</div>
-                <div style="font-size: 11.5px; color: var(--text-muted);">${{d.description}}</div>
+                <div style="font-weight:700; color:var(--corporate-navy); font-size:12px;">${{d.name}}</div>
             </div>
-            <div style="display:flex; gap:6px;">
-                <button class="btn-ctrl" onclick="setTone('${{d.id}}'); switchTab('tab-hud');">⚡ Use in Dialer</button>
-                <button class="btn-ctrl" style="color:var(--color-danger);" onclick="deleteCustomDeck('${{d.id}}', event)">🗑️ Delete</button>
+            <div style="display:flex; gap:4px;">
+                <button class="btn-ctrl" onclick="setTone('${{d.id}}'); switchTab('tab-hud');">⚡ Use</button>
+                <button class="btn-ctrl" style="color:var(--color-danger);" onclick="deleteCustomDeck('${{d.id}}', event)">🗑️</button>
             </div>
         </div>
     `).join('');
@@ -1972,12 +1654,12 @@ function renderToneChips() {{
     if (!container) return;
 
     const baseChips = `
-        <button class="tone-chip ${{currentToneKey === 'wall_street' ? 'active' : ''}}" onclick="setTone('wall_street', this)">🏛️ Wall Street Pro</button>
-        <button class="tone-chip ${{currentToneKey === 'high_tempo' ? 'active' : ''}}" onclick="setTone('high_tempo', this)">⚡ High-Tempo / Executive</button>
-        <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Grounded / Straight-Shooter</button>
-        <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO / Financial Auditor</button>
-        <button class="tone-chip ${{currentToneKey === 'conservative' ? 'active' : ''}}" onclick="setTone('conservative', this)">🤝 Senior / Conservative</button>
-        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban / Street-Smart</button>
+        <button class="tone-chip ${{currentToneKey === 'wall_street' ? 'active' : ''}}" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
+        <button class="tone-chip ${{currentToneKey === 'high_tempo' ? 'active' : ''}}" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
+        <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
+        <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO Analytical</button>
+        <button class="tone-chip ${{currentToneKey === 'conservative' ? 'active' : ''}}" onclick="setTone('conservative', this)">🤝 Conservative</button>
+        <button class="tone-chip ${{currentToneKey === 'urban_modern' ? 'active' : ''}}" onclick="setTone('urban_modern', this)">🏙️ Urban Modern</button>
     `;
 
     const customChips = customDecks.map(d => `
@@ -2053,13 +1735,13 @@ function runCalc() {{
 function renderObjections() {{
     const container = document.getElementById('objections-list');
     container.innerHTML = OBJECTIONS.map(o => `
-        <div style="margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
-            <div style="font-size: 13px; font-weight: 700; color: var(--color-danger); margin-bottom: 4px;">⚠️ "${{o.objection}}"</div>
+        <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--color-danger); margin-bottom: 3px;">⚠️ "${{o.objection}}"</div>
             <div class="copy-block red-box">
                 <div class="copy-text">"${{o.rebuttal}}"</div>
                 <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
-            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;"><strong>Principle:</strong> ${{o.principle}}</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;"><strong>Principle:</strong> ${{o.principle}}</div>
         </div>
     `).join('');
 }}
@@ -2067,11 +1749,11 @@ function renderObjections() {{
 function renderPipeline() {{
     const container = document.getElementById('pipeline-list');
     container.innerHTML = STAGES.map(s => `
-        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
-            <div style="font-size: 13.5px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 4px;">Stage ${{s.number}}: ${{s.title}}</div>
-            <div style="font-size: 12px; color: var(--text-main); margin-bottom: 8px;"><strong>Goal:</strong> ${{s.objective}}</div>
-            <div style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 6px;"><strong>Key Actions:</strong></div>
-            <ul style="padding-left: 16px; font-size: 12px; color: var(--text-main);">
+        <div style="margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+            <div style="font-size: 12.5px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 2px;">Stage ${{s.number}}: ${{s.title}}</div>
+            <div style="font-size: 11.5px; color: var(--text-main); margin-bottom: 4px;"><strong>Goal:</strong> ${{s.objective}}</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;"><strong>Key Actions:</strong></div>
+            <ul style="padding-left: 14px; font-size: 11.5px; color: var(--text-main);">
                 ${{s.actions.map(a => `<li>${{a}}</li>`).join('')}}
             </ul>
         </div>
@@ -2261,7 +1943,7 @@ def main():
     portal_html_path = "index.html"
     with open(portal_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[+] Successfully generated Wall Street Multi-Tone portal: {portal_html_path}")
+    print(f"[+] Successfully generated Zero-Scroll Ergonomic portal: {portal_html_path}")
 
     # Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
