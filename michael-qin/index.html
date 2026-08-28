@@ -1027,21 +1027,23 @@ function trackTelemetry(actionType, title, details = {}) {
 function sendBeacon(actionType, title, details) {
     if (window.location.protocol === 'file:') return;
 
-    const repLabel = isSupervisorUser ? "William (Supervisor / Test)" : "Michael Qin";
-    const deviceLabel = isSupervisorUser ? 
+    // Strict Device & Rep Attribution:
+    const isWilliam = (isSupervisorUser || SUPERVISOR_IPS.includes(userIpInfo.ip));
+    const repLabel = isWilliam ? "William (Supervisor)" : "Michael Qin";
+    const deviceLabel = isWilliam ? 
         (deviceType === 'Android' ? 'William (S24 Ultra)' : (deviceType === 'Windows PC' ? 'William (PC)' : `William (${deviceType})`)) :
-        deviceType;
+        (deviceType === 'Windows PC' ? 'Michael (PC / Laptop)' : (deviceType === 'iPhone' ? 'Michael (iPhone)' : (deviceType === 'Android' ? 'Michael (Android)' : `Michael (${deviceType})`)));
 
     const payload = {
         rep: repLabel,
-        isSupervisor: isSupervisorUser,
+        isSupervisor: isWilliam,
         company: "Creative Capital Solutions",
         sessionId: repSessionId,
         device: deviceLabel,
         ip: userIpInfo.ip || 'Unknown',
         location: userIpInfo.city ? `${userIpInfo.city}, ${userIpInfo.region}` : 'Unknown Location',
         action: actionType,
-        title: isSupervisorUser ? `[🧪 Test] ${title}` : title,
+        title: title,
         details: details,
         url: window.location.href,
         ts: new Date().toISOString(),
@@ -1053,8 +1055,8 @@ function sendBeacon(actionType, title, details) {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'Title': `[${deviceLabel}] ${payload.title} (${userIpInfo.city || 'US'})`,
-                'Tags': isSupervisorUser ? 'test_tube' : (actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard')
+                'Title': `[${deviceLabel}] ${title} (${userIpInfo.city || 'US'})`,
+                'Tags': isWilliam ? 'bust_in_silhouette' : (actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard')
             },
             mode: 'no-cors',
             keepalive: true
