@@ -503,9 +503,14 @@ class SalesPipelineSystem:
         justify-content: space-between;
         align-items: center;
         transition: transform 0.05s, box-shadow 0.1s;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }}
+    .opt-btn * {{
+        pointer-events: none;
     }}
     .opt-btn:hover {{ box-shadow: 0 1px 3px rgba(0,0,0,0.06); }}
-    .opt-btn:active {{ transform: scale(0.99); }}
+    .opt-btn:active {{ transform: scale(0.98); background: #f1f5f9; }}
 
     .opt-btn.pos {{
         background: var(--color-success-bg);
@@ -1097,6 +1102,8 @@ function trackTelemetry(actionType, title, details = {{}}) {{
 }}
 
 function formatDynamicTitle(actionType, rawTitle, details, actorName) {{
+    details = details || {{}};
+    actorName = actorName || 'Rep';
     if (actionType === 'OPEN') return `${{actorName}} Opened Flight Deck`;
     if (actionType === 'TONE_CHANGE') return `${{actorName}} Switched Tone to: ${{details.toneName || details.toneKey || 'New Tone'}}`;
     if (actionType === 'REACTION') {{
@@ -1698,15 +1705,21 @@ function getCleanScriptText() {{
 }}
 
 function pickNext(key, optLabel = '') {{
-    historyStack.push(key);
-    trackTelemetry('REACTION', `Reaction Chosen: ${{key}}`, {{
-        nextStage: key,
-        optionClicked: optLabel,
-        leadName: leadState.name || 'Anonymous',
-        leadCompany: leadState.company || 'Unknown',
-        tone: currentToneKey
-    }});
-    renderCurrentNode();
+    try {{
+        historyStack.push(key);
+        renderCurrentNode();
+    }} catch(err) {{
+        console.error("renderCurrentNode error:", err);
+    }}
+    try {{
+        trackTelemetry('REACTION', `Reaction Chosen: ${{key}}`, {{
+            nextStage: key,
+            optionClicked: optLabel,
+            leadName: leadState.name || 'Anonymous',
+            leadCompany: leadState.company || 'Unknown',
+            tone: currentToneKey
+        }});
+    }} catch(e) {{}}
 }}
 
 function goBack() {{
