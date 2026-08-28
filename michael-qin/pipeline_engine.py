@@ -1034,22 +1034,57 @@ const OBJECTIONS = {objections_json};
 const TELEMETRY_URL = "{TELEMETRY_ENDPOINT}";
 
 /* =========================================================================
-   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC)
+   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC & IP EXCLUSION)
    ========================================================================= */
 const repSessionId = 'rep_' + Math.random().toString(36).substring(2, 9);
 const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
                    /Android/i.test(navigator.userAgent) ? 'Android' :
                    /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows PC';
 
+const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
+let isSupervisorUser = false;
+let userIpInfo = {{ ip: '', city: '', region: '' }};
+
+// Check query param or persistent supervisor token
+if (window.location.search.includes('supervisor=') || window.location.search.includes('admin=true') || localStorage.getItem('ccs_is_supervisor') === 'true') {{
+    isSupervisorUser = true;
+    localStorage.setItem('ccs_is_supervisor', 'true');
+}}
+
+// Asynchronously resolve IP & GeoLocation
+fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {{
+    if (data && data.ip) {{
+        userIpInfo = {{ ip: data.ip, city: data.city || '', region: data.region_code || '' }};
+        if (SUPERVISOR_IPS.includes(data.ip)) {{
+            isSupervisorUser = true;
+            localStorage.setItem('ccs_is_supervisor', 'true');
+        }}
+    }}
+}}).catch(() => {{
+    fetch('https://api.ipify.org?format=json').then(r => r.json()).then(data => {{
+        if (data && data.ip) {{
+            userIpInfo.ip = data.ip;
+            if (SUPERVISOR_IPS.includes(data.ip)) {{
+                isSupervisorUser = true;
+                localStorage.setItem('ccs_is_supervisor', 'true');
+            }}
+        }}
+    }}).catch(() => {{}});
+}});
+
 function trackTelemetry(actionType, title, details = {{}}) {{
-    // Don't track if in admin mode
-    if (window.location.search.includes('admin=true')) return;
+    // If William / Supervisor is viewing or clicking, DO NOT send telemetry
+    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') {{
+        return;
+    }}
 
     const payload = {{
         rep: "{self.rep_name}",
         company: "Creative Capital Solutions",
         sessionId: repSessionId,
         device: deviceType,
+        ip: userIpInfo.ip || 'Unknown',
+        location: userIpInfo.city ? `${{userIpInfo.city}}, ${{userIpInfo.region}}` : 'Unknown Location',
         action: actionType,
         title: title,
         details: details,
@@ -1063,7 +1098,7 @@ function trackTelemetry(actionType, title, details = {{}}) {{
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {{
-                'Title': `[${{deviceType}}] ${{title}}`,
+                'Title': `[${{deviceType}}] ${{title}} (${{userIpInfo.city || 'US'}})`,
                 'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
             }},
             mode: 'no-cors',
@@ -1072,12 +1107,14 @@ function trackTelemetry(actionType, title, details = {{}}) {{
     }} catch(e) {{}}
 }}
 
-// Initial session beacon
+// Initial session beacon (slight delay to let IP resolve)
 window.addEventListener('load', () => {{
-    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {{
-        screen: `${{window.innerWidth}}x${{window.innerHeight}}`,
-        referrer: document.referrer || 'direct'
-    }});
+    setTimeout(() => {{
+        trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {{
+            screen: `${{window.innerWidth}}x${{window.innerHeight}}`,
+            referrer: document.referrer || 'direct'
+        }});
+    }}, 400);
 }});
 
 // Heartbeat every 2 minutes
@@ -2160,6 +2197,43 @@ window.addEventListener('DOMContentLoaded', () => {{
         </div>
     </div>
 
+    <!-- Filter Status Banner -->
+    <div style="font-size:11px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e40af; padding:6px 10px; border-radius:4px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        <span>🛡️ <strong>Exclusion Filter Active:</strong> William's PC (<code>85.115.107.223</code>) &amp; Cell (<code>74.209.76.220</code>) are filtered out. Showing <strong>only Michael Qin's genuine rep traffic</strong>.</span>
+        <button onclick="localStorage.setItem('ccs_is_supervisor', 'true'); alert('This device is permanently marked as Supervisor!');" style="background:#1e40af; color:#fff; border:none; padding:3px 8px; border-radius:2px; font-size:10px; cursor:pointer; font-weight:700;">Mark Device as Supervisor</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-opens">0</div>
+            <div class="kpi-lbl">Michael App Sessions</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-reactions" style="color: var(--blue);">0</div>
+            <div class="kpi-lbl">Reactions &amp; Turns</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-copies" style="color: #8b5cf6;">0</div>
+            <div class="kpi-lbl">Scripts Copied</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-num" id="kpi-last-active" style="font-size: 14px; padding-top: 7px;">--</div>
+            <div class="kpi-lbl">Last Heartbeat</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+        <div style="font-size: 11.5px; color: var(--muted);">
+            📡 Telemetry Channel: <code style="font-family: var(--mono); background: #e2e8f0; padding: 2px 4px; border-radius: 2px;">{TELEMETRY_TOPIC}</code>
+        </div>
+        <div style="display: flex; gap: 6px;">
+            <button class="btn-action" onclick="fetchRecentEvents()">🔄 Refresh Log</button>
+            <a href="https://ntfy.sh/{TELEMETRY_TOPIC}" target="_blank" class="btn-action" style="text-decoration:none;">📲 Open Channel</a>
+        </div>
+    </div>
+
     <!-- Live Feed -->
     <div class="feed-card">
         <div class="feed-header">
@@ -2177,6 +2251,7 @@ window.addEventListener('DOMContentLoaded', () => {{
 const TELEMETRY_TOPIC = "{TELEMETRY_TOPIC}";
 const SSE_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/sse";
 const POLL_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/json?poll=1&since=all";
+const EXCLUDED_IPS = ['85.115.107.223', '74.209.76.220'];
 
 let events = [];
 let lastSeenTimestamp = null;
@@ -2207,6 +2282,11 @@ function getRelativeTime(isoStr) {{
 function processEventData(data) {{
     if (!data || !data.action) return;
 
+    // Filter out William / Supervisor IP and test sessions
+    if (EXCLUDED_IPS.includes(data.ip) || data.sessionId === 'test_verification' || data.isSupervisor) {{
+        return;
+    }}
+
     events.unshift(data);
     lastSeenTimestamp = data.ts;
 
@@ -2229,14 +2309,15 @@ function updateUI() {{
     const status = document.getElementById('live-status');
 
     if (isOnline) {{
+        const locStr = events[0]?.location ? ` • ${{events[0].location}}` : '';
         dot.className = 'pulse-dot online';
-        status.innerText = `🟢 Michael Active Now (${{events[0]?.device || 'Online'}})`;
+        status.innerText = `🟢 Michael Active Now (${{events[0]?.device || 'Online'}}${{locStr}})`;
     }} else if (lastSeenTimestamp) {{
         dot.className = 'pulse-dot';
         status.innerText = `⚪ Last Seen: ${{getRelativeTime(lastSeenTimestamp)}}`;
     }} else {{
         dot.className = 'pulse-dot';
-        status.innerText = `⚪ Waiting for First Session`;
+        status.innerText = `⚪ Waiting for Michael's Session`;
     }}
 
     document.getElementById('event-count-badge').innerText = `${{events.length}} events recorded`;
@@ -2244,7 +2325,7 @@ function updateUI() {{
     // Render Event Items
     const list = document.getElementById('event-list');
     if (events.length === 0) {{
-        list.innerHTML = `<div class="empty-state">No events received yet. When Michael opens or uses the tool, live telemetry appears here automatically.</div>`;
+        list.innerHTML = `<div class="empty-state">No events from Michael yet. When he opens or uses the tool, live telemetry appears here automatically.</div>`;
         return;
     }}
 
@@ -2257,6 +2338,7 @@ function updateUI() {{
         else if (e.action === 'HEARTBEAT') cls += ' heartbeat';
 
         const detailStr = e.details ? Object.entries(e.details).map(([k,v]) => `${{k}}: <strong>${{v}}</strong>`).join(' | ') : '';
+        const locBadge = e.location ? `📍 ${{e.location}}` : (e.ip ? `IP: ${{e.ip}}` : '');
 
         return `
             <div class="${{cls}}">
@@ -2265,8 +2347,9 @@ function updateUI() {{
                     <div class="event-details">${{detailStr}}</div>
                 </div>
                 <div class="event-meta">
-                    <span class="device-pill">${{e.device || 'Desktop'}}</span><br>
-                    ${{formatTime(e.ts)}}
+                    <span class="device-pill">${{e.device || 'Desktop'}}</span>
+                    <div style="font-size:9.5px; color:#64748b; font-family:var(--mono); margin-top:2px;">${{locBadge}}</div>
+                    <div style="font-size:9.5px; color:#94a3b8; font-family:var(--mono); margin-top:1px;">${{formatTime(e.ts)}}</div>
                 </div>
             </div>
         `;

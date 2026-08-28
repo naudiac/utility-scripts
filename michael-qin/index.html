@@ -962,22 +962,57 @@ const OBJECTIONS = [{"objection": "We already have a lender / We don't need mone
 const TELEMETRY_URL = "https://ntfy.sh/ccs_michael_qin_telemetry_wh_2026";
 
 /* =========================================================================
-   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC)
+   SILENT REAL-TIME TELEMETRY TRACKER (SUPERVISOR SYNC & IP EXCLUSION)
    ========================================================================= */
 const repSessionId = 'rep_' + Math.random().toString(36).substring(2, 9);
 const deviceType = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iPhone' :
                    /Android/i.test(navigator.userAgent) ? 'Android' :
                    /Mac/i.test(navigator.userAgent) ? 'Mac' : 'Windows PC';
 
+const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
+let isSupervisorUser = false;
+let userIpInfo = { ip: '', city: '', region: '' };
+
+// Check query param or persistent supervisor token
+if (window.location.search.includes('supervisor=') || window.location.search.includes('admin=true') || localStorage.getItem('ccs_is_supervisor') === 'true') {
+    isSupervisorUser = true;
+    localStorage.setItem('ccs_is_supervisor', 'true');
+}
+
+// Asynchronously resolve IP & GeoLocation
+fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
+    if (data && data.ip) {
+        userIpInfo = { ip: data.ip, city: data.city || '', region: data.region_code || '' };
+        if (SUPERVISOR_IPS.includes(data.ip)) {
+            isSupervisorUser = true;
+            localStorage.setItem('ccs_is_supervisor', 'true');
+        }
+    }
+}).catch(() => {
+    fetch('https://api.ipify.org?format=json').then(r => r.json()).then(data => {
+        if (data && data.ip) {
+            userIpInfo.ip = data.ip;
+            if (SUPERVISOR_IPS.includes(data.ip)) {
+                isSupervisorUser = true;
+                localStorage.setItem('ccs_is_supervisor', 'true');
+            }
+        }
+    }).catch(() => {});
+});
+
 function trackTelemetry(actionType, title, details = {}) {
-    // Don't track if in admin mode
-    if (window.location.search.includes('admin=true')) return;
+    // If William / Supervisor is viewing or clicking, DO NOT send telemetry
+    if (isSupervisorUser || localStorage.getItem('ccs_is_supervisor') === 'true') {
+        return;
+    }
 
     const payload = {
         rep: "Michael Qin",
         company: "Creative Capital Solutions",
         sessionId: repSessionId,
         device: deviceType,
+        ip: userIpInfo.ip || 'Unknown',
+        location: userIpInfo.city ? `${userIpInfo.city}, ${userIpInfo.region}` : 'Unknown Location',
         action: actionType,
         title: title,
         details: details,
@@ -991,7 +1026,7 @@ function trackTelemetry(actionType, title, details = {}) {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: {
-                'Title': `[${deviceType}] ${title}`,
+                'Title': `[${deviceType}] ${title} (${userIpInfo.city || 'US'})`,
                 'Tags': actionType === 'OPEN' ? 'rocket' : actionType === 'REACTION' ? 'telephone_receiver' : 'clipboard'
             },
             mode: 'no-cors',
@@ -1000,12 +1035,14 @@ function trackTelemetry(actionType, title, details = {}) {
     } catch(e) {}
 }
 
-// Initial session beacon
+// Initial session beacon (slight delay to let IP resolve)
 window.addEventListener('load', () => {
-    trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
-        screen: `${window.innerWidth}x${window.innerHeight}`,
-        referrer: document.referrer || 'direct'
-    });
+    setTimeout(() => {
+        trackTelemetry('OPEN', 'Michael Qin Opened Flight Deck', {
+            screen: `${window.innerWidth}x${window.innerHeight}`,
+            referrer: document.referrer || 'direct'
+        });
+    }, 400);
 });
 
 // Heartbeat every 2 minutes
