@@ -2883,6 +2883,175 @@ window.addEventListener('DOMContentLoaded', () => {{
             "principle": o.tactical_principle
         } for o in self.objections])
 
+        personas_data = {
+            "contractor": {
+                "name": "Frank Miller (Owner)",
+                "company": "Apex Roofing & Commercial Contracting",
+                "vertical": "Commercial Roofing & Trades",
+                "location": "Dallas, TX",
+                "revenue": "$140,000 / month",
+                "debtStack": "OnDeck ($85k bal, $1,150/day) + Rapid ($45k bal, $700/day) = $1,850/day",
+                "mood": "Stressed, on a noisy rooftop jobsite. Waiting on a $65k GC draw that is 45 days late.",
+                "openers": {
+                    "easy": "Yeah Frank here, what can I do for you?",
+                    "med": "Yeah Frank here, make it quick, I'm up on a commercial roof right now.",
+                    "hard": "I'm on a loud jobsite in the middle of a crane lift. Why are you calling my personal cell?"
+                },
+                "secret": "He is terrified he won't make next Friday's payroll ($22k) because of the $1,850 daily debit drain, but he's too proud to ask for a loan.",
+                "winTrigger": "If Michael says: 'I\\'m calling to stop daily debits while you wait on 60-day GC progress draws, without adding debt,' and locks the 45-second bank app download."
+            },
+            "trucking": {
+                "name": "Big Bob Kowalski (Fleet Owner)",
+                "company": "Ironclad Freight & Logistics",
+                "vertical": "Long-Haul Freight (8 Trucks)",
+                "location": "Chicago, IL",
+                "revenue": "$185,000 / month",
+                "debtStack": "Fundbox ($65k bal, $1,400/day) + Apex fuel card factoring taking 5% = $2,400/day",
+                "mood": "Gruff, cynical. Burned by an offshore broker last year who charged upfront fees.",
+                "openers": {
+                    "easy": "Bob speaking, who is this?",
+                    "med": "Who is this, and what scam list did you buy my cell number from?",
+                    "hard": "Look buddy, I get 10 spam calls a day from brokers. What makes you any different?"
+                },
+                "secret": "His diesel fuel bill is $35k/month and two brokers are 45 days late on $40k in invoices. He desperately needs a clean monthly credit line.",
+                "winTrigger": "If Michael assures him: 'We never charge upfront fees and we don\\'t shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms.'"
+            },
+            "restaurant": {
+                "name": "Tony DeMarco (Chef & Owner)",
+                "company": "Harbor Bistro & Tavern",
+                "vertical": "Full-Service Restaurant & Bar",
+                "location": "Boston, MA",
+                "revenue": "$95,000 / month",
+                "debtStack": "Toast holding 15% of daily credit card batches ($950/day) + Square ($35k bal)",
+                "mood": "Chaotic lunch prep in the kitchen. Tickets printing, pans clattering, zero patience.",
+                "openers": {
+                    "easy": "Harbor Bistro, Tony speaking.",
+                    "med": "I'm in the middle of kitchen prep, I don't have time for sales calls, just email me.",
+                    "hard": "I'm prepping lunch rush with 4 pans on the fire! Why are you calling during service hours?"
+                },
+                "secret": "He hates seeing 15% sliced off his weekend dinner receipts before the cash hits his bank.",
+                "winTrigger": "If Michael says: 'Stay on with me for 45 seconds on your phone while the water boils so you can keep 100% of your weekend credit card receipts.'"
+            },
+            "cfo": {
+                "name": "Brenda Vance (CFO / Controller)",
+                "company": "Precision Aerospace Machining",
+                "vertical": "Contract CNC Machining",
+                "location": "Cleveland, OH",
+                "revenue": "$260,000 / month",
+                "debtStack": "Kapitus mezzanine note ($120k bal, $3,600/day) + 3 CNC equipment leases",
+                "mood": "Cold, analytical MBA. Hates sales fluff, tests reps on basis points and effective APR.",
+                "openers": {
+                    "easy": "This is Brenda Vance, how may I direct your call?",
+                    "med": "This is Brenda. What is your firm's effective cost of capital and are you an institutional syndicate or a broker?",
+                    "hard": "We do not take unvetted capital solicitations. Transmit your firm's FINRA/SEC credentials and rate card to my assistant."
+                },
+                "secret": "The board ordered her to reduce debt service by 300 basis points this quarter before an upcoming audit.",
+                "winTrigger": "If Michael uses the Wall Street tone, cites basis points, senior debt consolidation, and non-dilutive balance-sheet recapitalization."
+            },
+            "complacent": {
+                "name": "Dave Harrison (Owner)",
+                "company": "Sunshine State HVAC & Mechanical",
+                "vertical": "Commercial & Residential HVAC",
+                "location": "Tampa, FL",
+                "revenue": "$120,000 / month",
+                "debtStack": "Zero active loans. $85k sitting in operating checking.",
+                "mood": "Relaxed, confident. Convinced he doesn't need to speak to any finance person.",
+                "openers": {
+                    "easy": "Dave here, how can I help you today?",
+                    "med": "Appreciate the call man, but business is booming, I got plenty of cash in the bank, I don't need a loan.",
+                    "hard": "Look, I don't borrow money, never have, never will. Remove me from your database."
+                },
+                "secret": "He is paying 3.8% on credit card processing fees and overpaying merchant vendor surcharges without knowing it.",
+                "winTrigger": "If Michael pivots: 'We don\\'t sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you\\'re losing $2,500/mo in fee leakage.'"
+            },
+            "gatekeeper": {
+                "name": "Rick (Hostile Co-Owner / Gatekeeper)",
+                "company": "Titan Heavy Excavation",
+                "vertical": "Excavation & Earthmoving",
+                "location": "Pittsburgh, PA",
+                "revenue": "$300,000 / month",
+                "debtStack": "Cat Financial heavy equipment notes ($18k/mo) + Yellow Iron lease",
+                "mood": "Aggressive, furious. Already received 8 telemarketer calls today.",
+                "openers": {
+                    "easy": "Titan Excavation, what do you want?",
+                    "med": "Stop calling me! Take my damn number off your list! Every day you guys spam my phone!",
+                    "hard": "If you call this number one more time I am filing an FTC harassment complaint against your company!"
+                },
+                "secret": "He respects people who don't get rattled or apologize. If you match his energy with steady confidence, he will listen.",
+                "winTrigger": "If Michael uses Chris Voss tactical empathy: 'Sounds like you\\'re getting slammed by 15 telemarketers today and you\\'re sick of it... I\\'ll be off your phone in 10 seconds.'"
+            }
+        }
+
+        curveballs_data = [
+            {
+                "id": "q_who_is_this",
+                "q": "📞 \"Who is this & why are you calling my cell?\"",
+                "cue": "Testing Michael's 5-second composure and value hook.",
+                "spokenLine": "Who is this, and why are you calling my personal cell phone right now?",
+                "win": "Winning Move: \"Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but our desk is actively restructuring high daily debits for [Industry] operators...\"",
+                "trap": "Rookie Trap: Apologizing ('Sorry to bother you') or sounding like a robotic telemarketer reading a script."
+            },
+            {
+                "id": "q_dont_need_money",
+                "q": "🚫 \"We don't need any money right now, business is good.\"",
+                "cue": "The classic brush-off. Tests if he pivots to an audit or folds.",
+                "spokenLine": "Look, we're doing great, revenue is strong, and I don't need to borrow any money right now.",
+                "win": "Winning Move: \"Glad cash flow is strong. We actually don't place speculative debt—we audit incumbent lenders to stop $2k/mo in fee leakage and keep lenders honest at zero cost.\"",
+                "trap": "Rookie Trap: Trying to force a loan or asking 'Are you sure you don't need capital for expansion?'"
+            },
+            {
+                "id": "q_just_email",
+                "q": "📧 \"Just email me your rate sheet, I'm busy.\"",
+                "cue": "The 90% death trap. Tests the 45-second on-call download ask.",
+                "spokenLine": "I'm right in the middle of something. Just send whatever you have to my email and I'll look at it later.",
+                "win": "Winning Move: \"Happy to route that over. Rather than sending generic decks you'll never read, are you looking at your phone right now? Pull up your banking app for 45 seconds while I confirm receipt...\"",
+                "trap": "Rookie Trap: Saying 'Sure, what's your email?' and hanging up with 0% chance of closing."
+            },
+            {
+                "id": "q_what_rates",
+                "q": "🏷️ \"What are your exact rates? Give me a percentage.\"",
+                "cue": "Price pressure trap. Tests if he quotes a blind rate or trades for statements.",
+                "spokenLine": "Before we talk about anything, what are your exact rates? Give me a percentage or APR.",
+                "win": "Winning Move: \"Rates depend entirely on monthly deposits, but we consistently cut daily debit payments in half. Rather than quoting a misleading ballpark, send 3 statements and I'll have your exact rate card in 3 hours.\"",
+                "trap": "Rookie Trap: Quoting a random number like '8% to 15%' which destroys credibility."
+            },
+            {
+                "id": "q_why_statements",
+                "q": "🔒 \"Why do you need bank statements? I'm not sending docs.\"",
+                "cue": "Security friction. Tests if he offers account number redaction.",
+                "spokenLine": "Why do you need my bank statements right away? I'm not emailing my company financials to a stranger.",
+                "win": "Winning Move: \"Totally understand—your numbers are sensitive. We don't shop your file to 20 brokers. You can redact your account numbers. We just need the deposit volume to calculate your term sheet.\"",
+                "trap": "Rookie Trap: Getting defensive or arguing 'That's just company policy.'"
+            },
+            {
+                "id": "q_already_have_debt",
+                "q": "💸 \"I already have 2 loans with OnDeck taking $1,800/day.\"",
+                "cue": "The golden consolidation lead! Tests if he identifies the consolidation play.",
+                "spokenLine": "I already have two MCA advances with OnDeck and Rapid taking $1,800 out of my account every single day, so I can't take any more debt.",
+                "win": "Winning Move: \"That's exactly why I called. We specialize in rolling stacked daily ACH positions out of OnDeck into a single clean monthly schedule to cut your debit drain by 40%.\"",
+                "trap": "Rookie Trap: Treating it as a rejection instead of the highest-converting opportunity."
+            },
+            {
+                "id": "q_driving",
+                "q": "⏳ \"I'm on a noisy roof / driving on the highway right now.\"",
+                "cue": "Time barrier. Tests the 1-click SMS pivot.",
+                "spokenLine": "I can barely hear you, I'm driving 70 on the highway / up on a crane lift right now.",
+                "win": "Winning Move: \"Understood, drive safe. I am texting my direct upload link to this mobile number right now. Reply with the 3 PDFs when you park and I'll run the numbers today.\"",
+                "trap": "Rookie Trap: Trying to keep talking while they are clearly unable to look at anything."
+            },
+            {
+                "id": "q_broker_shopping",
+                "q": "🛑 \"Are you just another broker who's gonna blast my credit?\"",
+                "cue": "Trust test. Tests CCAP's direct private credit positioning.",
+                "spokenLine": "Are you just another middleman broker who's gonna take my file and blast it to 30 lenders across the country?",
+                "win": "Winning Move: \"No. We operate a direct syndication desk in New York. We conduct an in-house preliminary audit. Your file is never blasted to public market portals.\"",
+                "trap": "Rookie Trap: Stuttering or giving a vague answer about 'our network of 50 partners.'"
+            }
+        ]
+
+        personas_json = json.dumps(personas_data)
+        curveballs_json = json.dumps(curveballs_data)
+
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3081,7 +3250,7 @@ window.addEventListener('DOMContentLoaded', () => {{
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
         color: var(--navy);
-        padding: 3px 6px;
+        padding: 4px 6px;
         border-radius: 3px;
         font-size: 10.5px;
         font-weight: 700;
@@ -3216,7 +3385,6 @@ window.addEventListener('DOMContentLoaded', () => {{
         border: 1px solid var(--border-subtle);
         border-radius: 3px;
         padding: 6px 8px;
-        cursor: pointer;
         transition: all 0.1s;
     }}
     .curve-card:hover {{
@@ -3228,20 +3396,45 @@ window.addEventListener('DOMContentLoaded', () => {{
         background: #fffafa;
         box-shadow: 0 0 0 1px var(--accent);
     }}
+    .curve-q-row {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }}
     .curve-q {{
         font-size: 11.5px;
         font-weight: 800;
         color: var(--navy);
-        margin-bottom: 2px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
     }}
     .curve-card.active .curve-q {{ color: var(--accent); }}
     .curve-cue {{
         font-size: 10.5px;
         color: var(--muted);
+        margin-top: 2px;
     }}
+
+    .curve-actions-row {{
+        display: flex;
+        gap: 4px;
+        margin-top: 4px;
+    }}
+    .btn-action-sm {{
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        color: var(--navy);
+        padding: 2px 6px;
+        border-radius: 2px;
+        font-size: 9.5px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }}
+    .btn-action-sm:hover {{ background: #e2e8f0; }}
+    .btn-action-sm.fire {{ background: #fee2e2; color: var(--accent); border-color: #fca5a5; }}
+    .btn-action-sm.fire:hover {{ background: #fecaca; }}
 
     .curve-detail {{
         margin-top: 6px;
@@ -3550,173 +3743,13 @@ window.addEventListener('DOMContentLoaded', () => {{
 
 <script>
 const TELEMETRY_TOPIC = "ccs_michael_qin_telemetry_wh_2026";
+const TELEMETRY_POST_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC;
 const SSE_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/sse";
 const POLL_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/json?poll=1&since=all";
 const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
 
-/* =========================================================================
-   6 DEEP MERCHANT PERSONAS
-   ========================================================================= */
-const PERSONAS = {{
-    "contractor": {{
-        name: "Frank Miller (Owner)",
-        company: "Apex Roofing & Commercial Contracting",
-        vertical: "Commercial Roofing & Trades",
-        location: "Dallas, TX",
-        revenue: "$140,000 / month",
-        debtStack: "OnDeck ($85k bal, $1,150/day) + Rapid ($45k bal, $700/day) = $1,850/day",
-        mood: "Stressed, on a noisy rooftop jobsite. Waiting on a $65k GC draw that is 45 days late.",
-        openers: {{
-            easy: '"Yeah Frank here, what can I do for you?"',
-            med: '"Yeah Frank here, make it quick, I\'m up on a commercial roof right now."',
-            hard: '"I\'m on a loud jobsite in the middle of a crane lift. Why are you calling my personal cell?"'
-        }},
-        secret: "He is terrified he won't make next Friday's payroll ($22k) because of the $1,850 daily debit drain, but he's too proud to ask for a loan.",
-        winTrigger: 'If Michael says: "I\'m calling to stop daily debits while you wait on 60-day GC progress draws, without adding debt," and locks the 45-second bank app download.'
-    }},
-    "trucking": {{
-        name: "Big Bob Kowalski (Fleet Owner)",
-        company: "Ironclad Freight & Logistics",
-        vertical: "Long-Haul Freight (8 Trucks)",
-        location: "Chicago, IL",
-        revenue: "$185,000 / month",
-        debtStack: "Fundbox ($65k bal, $1,400/day) + Apex fuel card factoring taking 5% = $2,400/day",
-        mood: "Gruff, cynical. Burned by an offshore broker last year who charged upfront fees.",
-        openers: {{
-            easy: '"Bob speaking, who is this?"',
-            med: '"Who is this, and what scam list did you buy my cell number from?"',
-            hard: '"Look buddy, I get 10 spam calls a day from brokers. What makes you any different?"'
-        }},
-        secret: "His diesel fuel bill is $35k/month and two brokers are 45 days late on $40k in invoices. He desperately needs a clean monthly credit line.",
-        winTrigger: 'If Michael assures him: "We never charge upfront fees and we don\'t shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms."'
-    }},
-    "restaurant": {{
-        name: "Tony DeMarco (Chef & Owner)",
-        company: "Harbor Bistro & Tavern",
-        vertical: "Full-Service Restaurant & Bar",
-        location: "Boston, MA",
-        revenue: "$95,000 / month",
-        debtStack: "Toast holding 15% of daily credit card batches ($950/day) + Square ($35k bal)",
-        mood: "Chaotic lunch prep in the kitchen. Tickets printing, pans clattering, zero patience.",
-        openers: {{
-            easy: '"Harbor Bistro, Tony speaking."',
-            med: '"I\'m in the middle of kitchen prep, I don\'t have time for sales calls, just email me."',
-            hard: '"I\'m prepping lunch rush with 4 pans on the fire! Why are you calling during service hours?"'
-        }},
-        secret: "He hates seeing 15% sliced off his weekend dinner receipts before the cash hits his bank.",
-        winTrigger: 'If Michael says: "Stay on with me for 45 seconds on your phone while the water boils so you can keep 100% of your weekend credit card receipts."'
-    }},
-    "cfo": {{
-        name: "Brenda Vance (CFO / Controller)",
-        company: "Precision Aerospace Machining",
-        vertical: "Contract CNC Machining",
-        location: "Cleveland, OH",
-        revenue: "$260,000 / month",
-        debtStack: "Kapitus mezzanine note ($120k bal, $3,600/day) + 3 CNC equipment leases",
-        mood: "Cold, analytical MBA. Hates sales fluff, tests reps on basis points and effective APR.",
-        openers: {{
-            easy: '"This is Brenda Vance, how may I direct your call?"',
-            med: '"This is Brenda. What is your firm\'s effective cost of capital and are you an institutional syndicate or a broker?"',
-            hard: '"We do not take unvetted capital solicitations. Transmit your firm\'s FINRA/SEC credentials and rate card to my assistant."'
-        }},
-        secret: "The board ordered her to reduce debt service by 300 basis points this quarter before an upcoming audit.",
-        winTrigger: 'If Michael uses the Wall Street tone, cites basis points, senior debt consolidation, and non-dilutive balance-sheet recapitalization.'
-    }},
-    "complacent": {{
-        name: "Dave Harrison (Owner)",
-        company: "Sunshine State HVAC & Mechanical",
-        vertical: "Commercial & Residential HVAC",
-        location: "Tampa, FL",
-        revenue: "$120,000 / month",
-        debtStack: "Zero active loans. $85k sitting in operating checking.",
-        mood: "Relaxed, confident. Convinced he doesn't need to speak to any finance person.",
-        openers: {{
-            easy: '"Dave here, how can I help you today?"',
-            med: '"Appreciate the call man, but business is booming, I got plenty of cash in the bank, I don\'t need a loan."',
-            hard: '"Look, I don\'t borrow money, never have, never will. Remove me from your database."'
-        }},
-        secret: "He is paying 3.8% on credit card processing fees and overpaying merchant vendor surcharges without knowing it.",
-        winTrigger: 'If Michael pivots: "We don\'t sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you\'re losing $2,500/mo in fee leakage."'
-    }},
-    "gatekeeper": {{
-        name: "Rick (Hostile Co-Owner / Gatekeeper)",
-        company: "Titan Heavy Excavation",
-        vertical: "Excavation & Earthmoving",
-        location: "Pittsburgh, PA",
-        revenue: "$300,000 / month",
-        debtStack: "Cat Financial heavy equipment notes ($18k/mo) + Yellow Iron lease",
-        mood: "Aggressive, furious. Already received 8 telemarketer calls today.",
-        openers: {{
-            easy: '"Titan Excavation, what do you want?"',
-            med: '"Stop calling me! Take my damn number off your list! Every day you guys spam my phone!"',
-            hard: '"If you call this number one more time I am filing an FTC harassment complaint against your company!"'
-        }},
-        secret: "He respects people who don\'t get rattled or apologize. If you match his energy with steady confidence, he will listen.",
-        winTrigger: 'If Michael uses Chris Voss tactical empathy: "Sounds like you\'re getting slammed by 15 telemarketers today and you\'re sick of it... I\'ll be off your phone in 10 seconds."'
-    }}
-}};
-
-/* =========================================================================
-   8 CURATED OPPONENT CURVEBALLS
-   ========================================================================= */
-const CURVEBALLS = [
-    {{
-        id: "q_who_is_this",
-        q: '📞 "Who is this & why are you calling my cell?"',
-        cue: "Testing Michael's 5-second composure and value hook.",
-        win: 'Winning Move: "Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but our desk is actively restructuring high daily debits for [Industry] operators..."',
-        trap: 'Rookie Trap: Apologizing ("Sorry to bother you") or sounding like a robotic telemarketer reading a script.'
-    }},
-    {{
-        id: "q_dont_need_money",
-        q: '🚫 "We don\'t need any money right now, business is good."',
-        cue: "The classic brush-off. Tests if he pivots to an audit or folds.",
-        win: 'Winning Move: "Glad cash flow is strong. We actually don\'t place speculative debt—we audit incumbent lenders to stop $2k/mo in fee leakage and keep lenders honest at zero cost."',
-        trap: 'Rookie Trap: Trying to force a loan or asking "Are you sure you don\'t need capital for expansion?"'
-    }},
-    {{
-        id: "q_just_email",
-        q: '📧 "Just email me your rate sheet, I\'m busy."',
-        cue: "The 90% death trap. Tests the 45-second on-call download ask.",
-        win: 'Winning Move: "Happy to route that over. Rather than sending generic decks you\'ll never read, are you looking at your phone right now? Pull up your banking app for 45 seconds while I confirm receipt..."',
-        trap: 'Rookie Trap: Saying "Sure, what\'s your email?" and hanging up with 0% chance of closing.'
-    }},
-    {{
-        id: "q_what_rates",
-        q: '🏷️ "What are your exact rates? Give me a percentage."',
-        cue: "Price pressure trap. Tests if he quotes a blind rate or trades for statements.",
-        win: 'Winning Move: "Rates depend entirely on monthly deposits, but we consistently cut daily debit payments in half. Rather than quoting a misleading ballpark, send 3 statements and I\'ll have your exact rate card in 3 hours."',
-        trap: 'Rookie Trap: Quoting a random number like "8% to 15%" which destroys credibility.'
-    }},
-    {{
-        id: "q_why_statements",
-        q: '🔒 "Why do you need bank statements? I\'m not sending docs."',
-        cue: "Security friction. Tests if he offers account number redaction.",
-        win: 'Winning Move: "Totally understand—your numbers are sensitive. We don\'t shop your file to 20 brokers. You can redact your account numbers. We just need the deposit volume to calculate your term sheet."',
-        trap: 'Rookie Trap: Getting defensive or arguing "That\'s just company policy."'
-    }},
-    {{
-        id: "q_already_have_debt",
-        q: '💸 "I already have 2 loans with OnDeck taking $1,800/day."',
-        cue: "The golden consolidation lead! Tests if he identifies the consolidation play.",
-        win: 'Winning Move: "That\'s exactly why I called. We specialize in rolling stacked daily ACH positions out of OnDeck into a single clean monthly schedule to cut your debit drain by 40%."',
-        trap: 'Rookie Trap: Treating it as a rejection instead of the highest-converting opportunity.'
-    }},
-    {{
-        id: "q_driving",
-        q: '⏳ "I\'m on a noisy roof / driving on the highway right now."',
-        cue: "Time barrier. Tests the 1-click SMS pivot.",
-        win: 'Winning Move: "Understood, drive safe. I am texting my direct upload link to this mobile number right now. Reply with the 3 PDFs when you park and I\'ll run the numbers today."',
-        trap: 'Rookie Trap: Trying to keep talking while they are clearly unable to look at anything.'
-    }},
-    {{
-        id: "q_broker_shopping",
-        q: '🛑 "Are you just another broker who\'s gonna blast my credit?"',
-        cue: "Trust test. Tests CCAP\'s direct private credit positioning.",
-        win: 'Winning Move: "No. We operate a direct syndication desk in New York. We conduct an in-house preliminary audit. Your file is never blasted to public market portals."',
-        trap: 'Rookie Trap: Stuttering or giving a vague answer about "our network of 50 partners."'
-    }}
-];
+const PERSONAS = {personas_json};
+const CURVEBALLS = {curveballs_json};
 
 let currentPersonaKey = "contractor";
 let currentDiff = "easy";
@@ -3734,6 +3767,40 @@ function setDifficulty(diff, btn) {{
     document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     renderPersonaDossier();
+}}
+
+function speakLine(text) {{
+    if ('speechSynthesis' in window) {{
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 1.0;
+        utter.pitch = 0.95;
+        window.speechSynthesis.speak(utter);
+    }} else {{
+        showToast("Audio synthesis not supported on this browser.");
+    }}
+}}
+
+async function broadcastPushback(curveId) {{
+    const c = CURVEBALLS.find(item => item.id === curveId);
+    if (!c) return;
+    try {{
+        await fetch(TELEMETRY_POST_URL, {{
+            method: 'POST',
+            body: JSON.stringify({{
+                action: 'supervisor_curveball',
+                title: "🥊 Opponent Pushback: " + c.q,
+                curveId: c.id,
+                spokenLine: c.spokenLine,
+                rep: 'Supervisor (William)',
+                isSupervisor: true,
+                localTime: new Date().toLocaleTimeString()
+            }})
+        }});
+        showToast("📡 Broadcasted pushback to Michael!");
+    }} catch(e) {{
+        showToast("Failed to broadcast pushback.");
+    }}
 }}
 
 function renderPersonaDossier() {{
@@ -3766,7 +3833,10 @@ function renderPersonaDossier() {{
             <span class="dossier-val" style="font-style:italic;">${{p.mood}}</span>
         </div>
         <div class="opener-box">
-            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:var(--navy); margin-bottom:2px;">🗣️ Your Spoken Opener (Say This):</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                <span style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:var(--navy);">🗣️ Your Spoken Opener (Say This):</span>
+                <button class="btn-action-sm" onclick="speakLine(\`${{opener}}\`)">🔊 Speak</button>
+            </div>
             <div style="font-weight:700; color:var(--navy);">${{opener}}</div>
         </div>
     `;
@@ -3785,12 +3855,16 @@ function renderPersonaDossier() {{
 function renderCurveballs() {{
     const container = document.getElementById('curveball-list');
     container.innerHTML = CURVEBALLS.map((c, idx) => `
-        <div class="curve-card" onclick="toggleCurveball('${{c.id}}', this)">
-            <div class="curve-q">
-                <span>${{c.q}}</span>
+        <div class="curve-card" id="card-${{c.id}}">
+            <div class="curve-q-row" onclick="toggleCurveball('${{c.id}}')">
+                <span class="curve-q">${{c.q}}</span>
                 <span style="font-size:9px; color:var(--muted); font-family:var(--mono);">[Click to Expand]</span>
             </div>
             <div class="curve-cue">${{c.cue}}</div>
+            <div class="curve-actions-row">
+                <button class="btn-action-sm" onclick="speakLine(\`${{c.spokenLine}}\`)">🔊 Speak Aloud</button>
+                <button class="btn-action-sm fire" onclick="broadcastPushback('${{c.id}}')">📡 Fire at Michael</button>
+            </div>
             <div class="curve-detail">
                 <div class="pill-win">✅ <strong>Winning Move:</strong> ${{c.win}}</div>
                 <div class="pill-trap">❌ <strong>Rookie Trap:</strong> ${{c.trap}}</div>
@@ -3799,11 +3873,15 @@ function renderCurveballs() {{
     `).join('');
 }}
 
-function toggleCurveball(id, el) {{
-    document.querySelectorAll('.curve-card').forEach(c => {{
-        if (c !== el) c.classList.remove('active');
-    }});
-    el.classList.toggle('active');
+function toggleCurveball(id) {{
+    const targetCard = document.getElementById(`card-${{id}}`);
+    if (!targetCard) return;
+    const isCurrentlyActive = targetCard.classList.contains('active');
+    
+    document.querySelectorAll('.curve-card').forEach(c => c.classList.remove('active'));
+    if (!isCurrentlyActive) {{
+        targetCard.classList.add('active');
+    }}
 }}
 
 /* =========================================================================
