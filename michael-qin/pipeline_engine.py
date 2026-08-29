@@ -2792,15 +2792,32 @@ function processEventData(data, isLive = false) {{
     );
     if (isMock) return;
 
+    // Multi-Person Identity Resolver:
+    function getPersonInfo(e) {
+        const ip = e.ip || '';
+        const dev = e.device || '';
+        const loc = e.location || '';
+        
+        if (e.isSupervisor === true || ip === '85.115.107.223' || ip === '74.209.76.220' || e.rep?.includes('Supervisor') || e.rep?.includes('William') || dev?.includes('William')) {
+            return { name: 'William', role: 'supervisor', badge: '<span class="device-pill" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-weight:800;">👑 YOU (Supervisor)</span>', cardStyle: 'border-left-color:#64748b; background:#f8fafc;' };
+        }
+        if (ip === '69.203.0.85' || loc.includes('Staten Island') || (dev.includes('iPhone') && e.details?.screen === '428x751')) {
+            return { name: 'Michael Qin', role: 'rep', badge: '<span class="device-pill" style="background:#16a34a; color:#ffffff; border:1px solid #15803d; font-weight:800; letter-spacing:0.3px;">🟢 MICHAEL QIN (Rep — Staten Island)</span>', cardStyle: 'border-left-color:#16a34a; background:#f0fdf4;' };
+        }
+        if (ip === '68.132.69.243' || loc.includes('Huntington') || (dev.includes('Android') && e.details?.screen === '378x656')) {
+            return { name: 'Salvatore', role: 'brother', badge: '<span class="device-pill" style="background:#0284c7; color:#ffffff; border:1px solid #0369a1; font-weight:800; letter-spacing:0.3px;">👤 SALVATORE (Brother — Huntington, NY)</span>', cardStyle: 'border-left-color:#0284c7; background:#f0f9ff;' };
+        }
+        if (ip === '2600:387:15:2911::5' || loc.includes('White Plains') || (dev.includes('iPhone') && e.details?.screen === '393x754')) {
+            return { name: 'David Qin', role: 'father', badge: '<span class="device-pill" style="background:#8b5cf6; color:#ffffff; border:1px solid #7c3aed; font-weight:800; letter-spacing:0.3px;">👨‍👦 DAVID QIN (Father — AT&T Cellular)</span>', cardStyle: 'border-left-color:#8b5cf6; background:#faf5ff;' };
+        }
+        return { name: e.rep || 'Guest', role: 'guest', badge: `<span class="device-pill" style="background:#64748b; color:#ffffff; border:1px solid #475569; font-weight:800;">📱 GUEST (${dev || 'Mobile'})</span>`, cardStyle: 'border-left-color:#64748b; background:#f8fafc;' };
+    }
+
     // Strict Device & Rep Identification:
-    const isWilliam = (
-        data.isSupervisor === true ||
-        data.rep?.includes('Supervisor') ||
-        data.rep?.includes('William') ||
-        data.device?.includes('William') ||
-        SUPERVISOR_IPS.includes(data.ip)
-    );
+    const person = getPersonInfo(data);
+    const isWilliam = person.role === 'supervisor';
     data.isWilliam = isWilliam;
+    data.person = person;
 
     // Deduplicate by timestamp + sessionId + action
     const exists = rawEvents.some(e => e.ts === data.ts && e.sessionId === data.sessionId && e.action === data.action);
@@ -2810,7 +2827,7 @@ function processEventData(data, isLive = false) {{
 
     if (isWilliam) {{
         supervisorLastSeen = data.ts;
-    }} else {{
+    }} else if (person.role === 'rep') {{
         michaelLastSeen = data.ts;
         if (data.action === 'OPEN') counters.opens++;
         if (data.action === 'REACTION') counters.reactions++;
@@ -2835,15 +2852,13 @@ function updateUI() {{
     const status = document.getElementById('live-status');
 
     if (isMichaelOnline) {{
-        const locStr = rawEvents.find(e => !e.isWilliam)?.location ? ` • ${{rawEvents.find(e => !e.isWilliam).location}}` : '';
-        const devStr = rawEvents.find(e => !e.isWilliam)?.device || 'Online';
         dot.className = 'pulse-dot online';
         dot.style.background = '#22c55e';
-        status.innerText = `🟢 Michael Qin Active Now (${{devStr}}${{locStr}})`;
+        status.innerText = `🟢 Michael Qin Active Now (Staten Island, NY)`;
     }} else if (isWilliamOnline) {{
         dot.className = 'pulse-dot online';
         dot.style.background = '#3b82f6';
-        status.innerText = `👤 You Active (Testing) • Michael Qin Idle`;
+        status.innerText = `👑 You Active (Testing) • Michael Qin Idle`;
     }} else if (michaelLastSeen) {{
         dot.className = 'pulse-dot';
         dot.style.background = '#94a3b8';
@@ -2901,24 +2916,16 @@ function renderEventList() {{
         }}
 
         const locBadge = e.location && e.location !== 'Unknown Location' ? `📍 ${{e.location}}` : (e.ip && e.ip !== 'Unknown' ? `IP: ${{e.ip}}` : '');
-        
-        // Pristine Badges:
-        const devBadge = e.isWilliam ? 
-            `<span class="device-pill" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-weight:800;">👤 YOU (${{e.device || 'Your Device'}})</span>` :
-            `<span class="device-pill" style="background:#16a34a; color:#ffffff; border:1px solid #15803d; font-weight:800; letter-spacing:0.3px;">🟢 MICHAEL QIN (${{e.device || 'Rep Device'}})</span>`;
-
-        const cardStyle = e.isWilliam ? 
-            'border-left-color:#64748b; background:#f8fafc;' : 
-            'border-left-color:#16a34a; background:#f0fdf4;';
+        const personInfo = e.person || (typeof getPersonInfo === 'function' ? getPersonInfo(e) : {{ badge: '', cardStyle: '' }});
 
         return `
-            <div class="${{cls}}" style="${{cardStyle}}">
+            <div class="${{cls}}" style="${{personInfo.cardStyle}}">
                 <div class="event-main">
                     <div class="event-title">${{e.title || e.action}}</div>
                     <div class="event-details">${{detailHtml || '<span style="color:#94a3b8;">Flight deck interaction</span>'}}</div>
                 </div>
                 <div class="event-meta">
-                    ${{devBadge}}
+                    ${{personInfo.badge}}
                     <div style="font-size:9.5px; color:#64748b; font-family:var(--mono); margin-top:2px;">${{locBadge}}</div>
                     <div style="font-size:9.5px; color:#94a3b8; font-family:var(--mono); margin-top:1px;">${{formatTime(e.ts)}}</div>
                 </div>
@@ -4662,23 +4669,48 @@ function processEventData(data) {{
     if (!data || !data.action) return;
     if (data.url?.startsWith('file:')) return;
 
-    const isWilliam = (
-        data.isSupervisor === true ||
-        data.rep?.includes('Supervisor') ||
-        data.rep?.includes('William') ||
-        SUPERVISOR_IPS.includes(data.ip)
-    );
+    const ip = data.ip || '';
+    const dev = data.device || '';
+    const loc = data.location || '';
+    
+    let personRole = 'guest';
+    let personLabel = '📱 Guest Active';
+
+    if (data.isSupervisor === true || ip === '85.115.107.223' || ip === '74.209.76.220' || data.rep?.includes('Supervisor') || data.rep?.includes('William') || dev?.includes('William')) {{
+        personRole = 'supervisor';
+        personLabel = '👑 You Active (Testing)';
+    }} else if (ip === '69.203.0.85' || loc.includes('Staten Island') || (dev.includes('iPhone') && data.details?.screen === '428x751')) {{
+        personRole = 'rep';
+        personLabel = '🟢 Michael Qin Active (Staten Island)';
+    }} else if (ip === '68.132.69.243' || loc.includes('Huntington') || (dev.includes('Android') && data.details?.screen === '378x656')) {{
+        personRole = 'brother';
+        personLabel = '👤 Salvatore Active (Huntington, NY)';
+    }} else if (ip === '2600:387:15:2911::5' || loc.includes('White Plains') || (dev.includes('iPhone') && data.details?.screen === '393x754')) {{
+        personRole = 'father';
+        personLabel = '👨‍👦 David Qin Active (Father)';
+    }}
 
     const liveDot = document.getElementById('live-dot');
     const statusText = document.getElementById('rep-status-text');
     liveDot.classList.add('online');
 
-    if (isWilliam) {{
-        statusText.innerText = '👤 You Active (Testing) • Michael Qin Idle';
+    if (personRole === 'supervisor') {{
+        liveDot.style.background = '#3b82f6';
+        statusText.innerText = personLabel + ' • Michael Qin Idle';
         return;
     }}
 
-    statusText.innerText = `🟢 Michael Qin Active (${{data.device || 'Online'}})`;
+    if (personRole === 'rep') {{
+        liveDot.style.background = '#22c55e';
+    }} else if (personRole === 'brother') {{
+        liveDot.style.background = '#0284c7';
+    }} else if (personRole === 'father') {{
+        liveDot.style.background = '#8b5cf6';
+    }} else {{
+        liveDot.style.background = '#64748b';
+    }}
+
+    statusText.innerText = personLabel;
     document.getElementById('mirror-time').innerText = data.localTime || new Date().toLocaleTimeString();
     document.getElementById('mirror-stage').innerText = data.title || data.action;
 
