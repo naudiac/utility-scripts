@@ -2494,9 +2494,12 @@ window.addEventListener('DOMContentLoaded', () => {{
             <p>Live Real-Time Activity, Dials &amp; Call Telemetry for Michael Qin</p>
         </div>
 
-        <div class="pulse-box">
-            <div class="pulse-dot" id="live-dot"></div>
-            <span class="pulse-status" id="live-status">Connecting to Live Stream...</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <a href="opponent.html" style="background:#dc2626; color:#ffffff; padding:6px 12px; border-radius:4px; text-decoration:none; font-weight:800; font-size:11.5px; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(220,38,38,0.3);">🥊 Sparring Arena</a>
+            <div class="pulse-box">
+                <div class="pulse-dot" id="live-dot"></div>
+                <span class="pulse-status" id="live-status">Connecting to Live Stream...</span>
+            </div>
         </div>
     </div>
 
@@ -2828,7 +2831,6 @@ async function fetchRecentEvents() {{
     }}
 }}
 
-// Connect to Live SSE Stream
 function connectSSE() {{
     const eventSource = new EventSource(SSE_URL);
     
@@ -2860,6 +2862,1006 @@ window.addEventListener('DOMContentLoaded', () => {{
 </script>
 </body>
 </html>"""
+
+    def render_opponent_html(self) -> str:
+        stages_json = json.dumps([{
+            "number": s.number,
+            "title": s.title,
+            "phase": s.phase_name,
+            "objective": s.objective,
+            "duration": s.duration,
+            "actions": s.key_actions,
+            "scripts": s.scripts_and_templates,
+            "metrics": s.metrics_and_kpis,
+            "pitfalls": s.common_pitfalls
+        } for s in self.stages])
+
+        objections_json = json.dumps([{
+            "objection": o.objection,
+            "stage": o.trigger_stage,
+            "rebuttal": o.rebuttal_script,
+            "principle": o.tactical_principle
+        } for o in self.objections])
+
+        return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merchant Sparring Arena &amp; Roleplay Trainer - Creative Capital Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {{
+        --navy: #0f172a;
+        --navy-dark: #020617;
+        --accent: #dc2626;
+        --accent-hover: #b91c1c;
+        --blue-accent: #2563eb;
+        --bg: #0b0f19;
+        --card: #1e293b;
+        --card-subtle: #0f172a;
+        --border: #334155;
+        --border-subtle: #1e293b;
+        --text: #f8fafc;
+        --text-muted: #94a3b8;
+        --success: #22c55e;
+        --success-bg: rgba(34, 197, 94, 0.15);
+        --danger: #ef4444;
+        --danger-bg: rgba(239, 68, 68, 0.15);
+        --warning: #f59e0b;
+        --warning-bg: rgba(245, 158, 11, 0.15);
+        --mono: 'JetBrains Mono', monospace;
+    }}
+
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        padding: 12px;
+        min-height: 100vh;
+    }}
+
+    .arena-container {{
+        max-width: 1440px;
+        margin: 0 auto;
+    }}
+
+    /* Header */
+    .arena-header {{
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border: 1px solid var(--border);
+        border-top: 4px solid var(--accent);
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }}
+    .arena-title-block h1 {{
+        font-size: 16px;
+        font-weight: 800;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }}
+    .arena-title-block p {{
+        font-size: 11.5px;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }}
+
+    .live-status-pill {{
+        background: #020617;
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+    }}
+    .pulse-dot {{
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #94a3b8;
+    }}
+    .pulse-dot.online {{
+        background: var(--success);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        animation: pulseAnim 1.8s infinite;
+    }}
+    @keyframes pulseAnim {{
+        0% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }}
+        70% {{ transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }}
+        100% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }}
+    }}
+
+    .header-nav-btns {{
+        display: flex;
+        gap: 6px;
+    }}
+    .btn-nav {{
+        background: #334155;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: background 0.1s;
+    }}
+    .btn-nav:hover {{ background: #475569; }}
+    .btn-nav.primary {{ background: var(--blue-accent); }}
+    .btn-nav.primary:hover {{ background: #1d4ed8; }}
+
+    /* 3-Column Arena Grid */
+    .arena-grid {{
+        display: grid;
+        grid-template-columns: 1.15fr 1.35fr 1fr;
+        gap: 12px;
+    }}
+    @media (max-width: 1024px) {{
+        .arena-grid {{ grid-template-columns: 1fr; }}
+    }}
+
+    .arena-panel {{
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }}
+
+    .panel-head {{
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }}
+
+    /* Persona Selector */
+    .persona-chips {{
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+    }}
+    .persona-btn {{
+        background: #0f172a;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.1s;
+    }}
+    .persona-btn:hover {{ color: #ffffff; border-color: var(--blue-accent); }}
+    .persona-btn.active {{
+        background: var(--blue-accent);
+        border-color: var(--blue-accent);
+        color: #ffffff;
+    }}
+
+    /* Dossier Card */
+    .dossier-card {{
+        background: #0f172a;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }}
+    .dossier-row {{
+        display: flex;
+        justify-content: space-between;
+        font-size: 11.5px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding-bottom: 4px;
+    }}
+    .dossier-lbl {{ color: var(--text-muted); font-weight: 600; }}
+    .dossier-val {{ color: #ffffff; font-weight: 700; text-align: right; }}
+
+    .secret-box {{
+        background: rgba(220, 38, 38, 0.1);
+        border: 1px solid rgba(220, 38, 38, 0.3);
+        border-left: 3px solid var(--accent);
+        padding: 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        color: #fca5a5;
+    }}
+    .secret-title {{
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 9.5px;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }}
+
+    .win-trigger-box {{
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-left: 3px solid var(--success);
+        padding: 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        color: #86efac;
+    }}
+
+    /* Live Teleprompter & Curveballs (Col 2) */
+    .live-mirror-box {{
+        background: #020617;
+        border: 1px solid #1e3a8a;
+        border-left: 4px solid var(--blue-accent);
+        padding: 10px;
+        border-radius: 4px;
+    }}
+    .live-mirror-header {{
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #93c5fd;
+        margin-bottom: 4px;
+    }}
+    .live-stage-name {{
+        font-size: 13px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 2px;
+    }}
+    .live-stage-script {{
+        font-size: 12px;
+        color: #cbd5e1;
+        font-style: italic;
+        background: rgba(255,255,255,0.03);
+        padding: 6px;
+        border-radius: 3px;
+        border: 1px dashed var(--border);
+    }}
+
+    /* Curveball Soundboard */
+    .curveball-list {{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }}
+    .curveball-card {{
+        background: #0f172a;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 8px 10px;
+        cursor: pointer;
+        transition: all 0.1s;
+    }}
+    .curveball-card:hover {{
+        border-color: var(--accent);
+        background: #1e293b;
+    }}
+    .curveball-card.active {{
+        border-color: var(--accent);
+        background: #1e293b;
+        box-shadow: 0 0 0 1px var(--accent);
+    }}
+    .curve-q {{
+        font-size: 12px;
+        font-weight: 800;
+        color: #f87171;
+        margin-bottom: 3px;
+    }}
+    .curve-cue {{
+        font-size: 11px;
+        color: var(--text-muted);
+    }}
+
+    .curve-detail-box {{
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px dashed var(--border);
+        display: none;
+    }}
+    .curveball-card.active .curve-detail-box {{ display: block; }}
+    
+    .tactical-pill-win {{
+        background: var(--success-bg);
+        border: 1px solid var(--success);
+        color: #86efac;
+        padding: 4px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        margin-bottom: 4px;
+    }}
+    .tactical-pill-trap {{
+        background: var(--danger-bg);
+        border: 1px solid var(--danger);
+        color: #fca5a5;
+        padding: 4px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+    }}
+
+    /* Stopwatch & Scorecard (Col 3) */
+    .timer-card {{
+        background: #020617;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 12px;
+        text-align: center;
+    }}
+    .timer-display {{
+        font-family: var(--mono);
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 6px;
+        letter-spacing: 2px;
+    }}
+    .timer-btns {{
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+    }}
+    .btn-timer {{
+        background: #334155;
+        border: none;
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 3px;
+        font-weight: 700;
+        font-size: 11px;
+        cursor: pointer;
+    }}
+    .btn-timer.start {{ background: var(--success); color: #020617; }}
+    .btn-timer.pause {{ background: var(--warning); color: #020617; }}
+    .btn-timer.reset {{ background: #475569; }}
+
+    /* Scoring Rubric */
+    .rubric-group {{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 6px;
+    }}
+    .rubric-lbl {{
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+    }}
+    .rubric-toggles {{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3px;
+    }}
+    .rubric-btn {{
+        background: #0f172a;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 4px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.1s;
+    }}
+    .rubric-btn:hover {{ color: #ffffff; border-color: #64748b; }}
+    .rubric-btn.red.active {{ background: var(--danger); color: #ffffff; border-color: var(--danger); }}
+    .rubric-btn.amber.active {{ background: var(--warning); color: #020617; border-color: var(--warning); }}
+    .rubric-btn.green.active {{ background: var(--success); color: #020617; border-color: var(--success); }}
+
+    .notes-box {{
+        width: 100%;
+        min-height: 70px;
+        background: #0f172a;
+        border: 1px solid var(--border);
+        color: #ffffff;
+        padding: 6px 8px;
+        font-size: 11px;
+        border-radius: 3px;
+        resize: vertical;
+        font-family: inherit;
+    }}
+
+    .btn-debrief {{
+        background: var(--accent);
+        color: #ffffff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.1s;
+    }}
+    .btn-debrief:hover {{ background: var(--accent-hover); }}
+
+    .toast {{
+        position: fixed;
+        bottom: 12px;
+        right: 12px;
+        background: var(--accent);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 3px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease;
+        z-index: 2000;
+    }}
+    .toast.show {{ opacity: 1; }}
+</style>
+</head>
+<body>
+
+<div class="arena-container">
+
+    <!-- Header -->
+    <div class="arena-header">
+        <div class="arena-title-block">
+            <h1>🥊 Merchant Sparring Arena &amp; Roleplay Trainer</h1>
+            <p>Live Practice Co-Pilot for William Hanusiewicz (Supervisor / Opponent Role)</p>
+        </div>
+
+        <div class="live-status-pill">
+            <div class="pulse-dot" id="live-dot"></div>
+            <span id="rep-status-text">Listening for Michael Qin...</span>
+        </div>
+
+        <div class="header-nav-btns">
+            <a href="admin.html" class="btn-nav">📡 Supervisor Cockpit</a>
+            <a href="index.html" class="btn-nav primary" target="_blank">📱 Rep Flight Deck</a>
+        </div>
+    </div>
+
+    <!-- 3-Column Arena Grid -->
+    <div class="arena-grid">
+
+        <!-- COLUMN 1: MERCHANT PERSONA & FACTS -->
+        <div class="arena-panel">
+            <div class="panel-head">
+                <span>🎭 Merchant Persona Dossier</span>
+                <span style="font-size: 10px; color: var(--text-muted);">Who you are playing</span>
+            </div>
+
+            <!-- Persona Selector Chips -->
+            <div class="persona-chips">
+                <button class="persona-btn active" onclick="selectPersona('contractor', this)">🏗️ Contractor</button>
+                <button class="persona-btn" onclick="selectPersona('trucking', this)">🚛 Trucking</button>
+                <button class="persona-btn" onclick="selectPersona('restaurant', this)">🍽️ Restaurant</button>
+                <button class="persona-btn" onclick="selectPersona('cfo', this)">📊 CFO</button>
+                <button class="persona-btn" onclick="selectPersona('complacent', this)">🤝 No Debt</button>
+                <button class="persona-btn" onclick="selectPersona('gatekeeper', this)">🥊 Hostile</button>
+            </div>
+
+            <!-- Detailed Dossier -->
+            <div class="dossier-card" id="dossier-content">
+                <!-- Dynamically Rendered -->
+            </div>
+
+            <!-- Secret Intel (What William knows but won't volunteer) -->
+            <div class="secret-box" id="secret-intel-box">
+                <!-- Dynamically Rendered -->
+            </div>
+
+            <!-- Win Trigger (How Michael wins your statements) -->
+            <div class="win-trigger-box" id="win-trigger-box">
+                <!-- Dynamically Rendered -->
+            </div>
+        </div>
+
+        <!-- COLUMN 2: LIVE TELEPROMPTER & CURVEBALL SOUNDBOARD -->
+        <div class="arena-panel">
+            <div class="panel-head">
+                <span>⚡ Live Stage Tracker &amp; Pushbacks</span>
+                <span id="live-actor-tag" style="font-size: 10px; color: var(--blue-accent); font-family: var(--mono);">Sync Active</span>
+            </div>
+
+            <!-- Live Mirror Box (What Michael is doing right now) -->
+            <div class="live-mirror-box">
+                <div class="live-mirror-header">
+                    <span>🔴 Michael Qin Current Position:</span>
+                    <span id="mirror-time">--</span>
+                </div>
+                <div class="live-stage-name" id="mirror-stage">Stage 1: Opening (0-5s)</div>
+                <div class="live-stage-script" id="mirror-script">Waiting for dial telemetry...</div>
+            </div>
+
+            <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">
+                🎯 Opponent Curveballs (Say These Aloud to Test Him):
+            </div>
+
+            <!-- Curveball Soundboard -->
+            <div class="curveball-list" id="curveball-list">
+                <!-- Injected Dynamically -->
+            </div>
+        </div>
+
+        <!-- COLUMN 3: TIMER, SCORING & DEBRIEF -->
+        <div class="arena-panel">
+            <div class="panel-head">
+                <span>⏱️ Round Scorecard &amp; Debrief</span>
+                <span style="font-size: 10px; color: var(--text-muted);">Instant Feedback</span>
+            </div>
+
+            <!-- Stopwatch -->
+            <div class="timer-card">
+                <div class="timer-display" id="timer-display">00:00</div>
+                <div class="timer-btns">
+                    <button class="btn-timer start" onclick="startTimer()">▶ Start</button>
+                    <button class="btn-timer pause" onclick="pauseTimer()">⏸ Pause</button>
+                    <button class="btn-timer reset" onclick="resetTimer()">↺ Reset</button>
+                </div>
+            </div>
+
+            <!-- Scoring Rubrics -->
+            <div class="rubric-group">
+                <div class="rubric-lbl">
+                    <span>1. Tone &amp; Authority:</span>
+                    <span id="score-tone-lbl">--</span>
+                </div>
+                <div class="rubric-toggles">
+                    <button class="rubric-btn red" onclick="setRubric('tone', 'Rushed / Timid', 'red', this)">🔴 Timid</button>
+                    <button class="rubric-btn amber" onclick="setRubric('tone', 'Conversational', 'amber', this)">🟡 Casual</button>
+                    <button class="rubric-btn green" onclick="setRubric('tone', 'Wall St Authority', 'green', this)">🟢 Authority</button>
+                </div>
+            </div>
+
+            <div class="rubric-group">
+                <div class="rubric-lbl">
+                    <span>2. Deflection Handling:</span>
+                    <span id="score-deflect-lbl">--</span>
+                </div>
+                <div class="rubric-toggles">
+                    <button class="rubric-btn red" onclick="setRubric('deflect', 'Caved to Email', 'red', this)">🔴 Caved</button>
+                    <button class="rubric-btn amber" onclick="setRubric('deflect', 'Soft Push', 'amber', this)">🟡 Soft</button>
+                    <button class="rubric-btn green" onclick="setRubric('deflect', '45s Download Lock', 'green', this)">🟢 45s Lock</button>
+                </div>
+            </div>
+
+            <div class="rubric-group">
+                <div class="rubric-lbl">
+                    <span>3. Statement Extraction:</span>
+                    <span id="score-stmt-lbl">--</span>
+                </div>
+                <div class="rubric-toggles">
+                    <button class="rubric-btn red" onclick="setRubric('stmt', 'No Ask / Blank', 'red', this)">🔴 No Ask</button>
+                    <button class="rubric-btn amber" onclick="setRubric('stmt', 'Vague Email Ask', 'amber', this)">🟡 Vague</button>
+                    <button class="rubric-btn green" onclick="setRubric('stmt', 'Redaction + 4PM Lock', 'green', this)">🟢 Redact+Lock</button>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                📝 William's Live Coaching Notes:
+            </div>
+            <textarea id="sparring-notes" class="notes-box" placeholder="e.g. Good recovery on the 'why statements' objection, but don't apologize when opening..."></textarea>
+
+            <button class="btn-debrief" onclick="copySparringDebrief()">
+                📋 Copy Sparring Debrief to Clipboard
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="toast" class="toast">Debrief copied to clipboard</div>
+
+<script>
+const TELEMETRY_TOPIC = "ccs_michael_qin_telemetry_wh_2026";
+const SSE_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/sse";
+const POLL_URL = "https://ntfy.sh/" + TELEMETRY_TOPIC + "/json?poll=1&since=all";
+const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
+
+/* =========================================================================
+   6 DEEP MERCHANT PERSONAS
+   ========================================================================= */
+const PERSONAS = {{
+    "contractor": {{
+        name: "Frank Miller (Owner)",
+        company: "Apex Roofing & Commercial Contracting LLC",
+        vertical: "Commercial Roofing & Construction",
+        location: "Dallas, TX",
+        revenue: "$140,000 / month",
+        debtStack: "2 Stacked MCAs: OnDeck ($85k bal, $1,150/day) + Rapid Finance ($45k bal, $700/day). Total = $1,850/day.",
+        mood: "Stressed, on a loud windy jobsite. Waiting on a $65k GC draw that is 45 days late.",
+        opener: '"Yeah Frank here, make it quick, I\'m up on a commercial roof right now."',
+        secret: "He is terrified he won't make next Friday's payroll ($22k) because of the $1,850 daily debit drain, but he's too proud to ask for a loan.",
+        winTrigger: 'If Michael specifically says: "I\'m calling to stop daily debits while you wait on 60-day GC progress draws, without taking new debt," and asks for the 45-second bank app download.'
+    }},
+    "trucking": {{
+        name: "Big Bob Kowalski (Fleet Owner)",
+        company: "Ironclad Freight & Logistics",
+        vertical: "Long-Haul Freight & Dry Van (8 Trucks)",
+        location: "Chicago, IL",
+        revenue: "$185,000 / month",
+        debtStack: "Fundbox ($65k bal, $1,400/day) + Apex fuel card factoring taking 5% off every rate con. Total = $2,400/day.",
+        mood: "Gruff, cynical. Burned by an offshore broker last year who took an upfront fee and vanished.",
+        opener: '"Who is this, and what scam list did you buy my cell number from?"',
+        secret: "His diesel fuel bill is $35k/month and two freight brokers are 45 days late on paying $40k in invoices. He desperately needs a clean monthly credit line.",
+        winTrigger: 'If Michael assures him: "We never charge upfront fees and we don\'t shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms."'
+    }},
+    "restaurant": {{
+        name: "Tony DeMarco (Chef & Owner)",
+        company: "Harbor Bistro & Tavern",
+        vertical: "Full-Service Restaurant & Bar",
+        location: "Boston, MA",
+        revenue: "$95,000 / month",
+        debtStack: "Toast Capital holding 15% of daily POS credit card batches ($950/day) + Square advance ($35k bal).",
+        mood: "Chaotic lunch prep in the kitchen. Tickets printing, pots clattering, zero patience.",
+        opener: '"I\'m in the middle of kitchen prep, I don\'t have time for sales calls, just email me."',
+        secret: "He hates seeing 15% sliced off his weekend dinner receipts before the money hits his checking account.",
+        winTrigger: 'If Michael says: "Stay on with me for 45 seconds on your phone while the water boils so you can keep 100% of your weekend credit card receipts."'
+    }},
+    "cfo": {{
+        name: "Brenda Vance (CFO / Controller)",
+        company: "Precision Aerospace Machining",
+        vertical: "Contract Manufacturing & CNC Tooling",
+        location: "Cleveland, OH",
+        revenue: "$260,000 / month",
+        debtStack: "Kapitus mezzanine note ($120k bal, $3,600/day) + 3 CNC equipment leases.",
+        mood: "Cold, highly analytical MBA. Hates sales fluff, tests reps on basis points and effective APR.",
+        opener: '"This is Brenda. What is your firm\'s effective cost of capital and are you an institutional syndicate or a broker?"',
+        secret: "The board ordered her to reduce debt service by 300 basis points this quarter before an upcoming audit.",
+        winTrigger: 'If Michael uses the Wall Street tone, cites basis points, senior debt consolidation, and non-dilutive balance-sheet recapitalization.'
+    }},
+    "complacent": {{
+        name: "Dave Harrison (Owner)",
+        company: "Sunshine State HVAC & Mechanical",
+        vertical: "Commercial & Residential HVAC",
+        location: "Tampa, FL",
+        revenue: "$120,000 / month",
+        debtStack: "Zero active loans. $85k sitting in operating checking.",
+        mood: "Relaxed, confident. Convinced he doesn't need to speak to any finance person.",
+        opener: '"Appreciate the call man, but business is booming, I got plenty of cash in the bank, I don\'t need a loan."',
+        secret: "He is paying 3.8% on credit card processing fees and overpaying merchant vendor surcharges without knowing it.",
+        winTrigger: 'If Michael pivots: "We don\'t sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you\'re losing $2,500/mo in fee leakage."'
+    }},
+    "gatekeeper": {{
+        name: "Rick (Hostile Gatekeeper / Co-Owner)",
+        company: "Titan Heavy Excavation",
+        vertical: "Excavation & Site Preparation",
+        location: "Pittsburgh, PA",
+        revenue: "$300,000 / month",
+        debtStack: "Cat Financial heavy equipment notes ($18k/mo) + Yellow Iron lease.",
+        mood: "Aggressive, furious. Already received 8 telemarketer calls today.",
+        opener: '"Stop calling me! Take my damn number off your list! Every day you guys spam my phone!"',
+        secret: "He respects people who don\'t get rattled or apologize. If you match his energy with steady confidence, he will listen.",
+        winTrigger: 'If Michael uses Chris Voss tactical empathy: "Sounds like you\'re getting slammed by 15 telemarketers today and you\'re sick of it... I\'ll be off your phone in 10 seconds."'
+    }}
+}};
+
+/* =========================================================================
+   8 CURATED OPPONENT CURVEBALLS
+   ========================================================================= */
+const CURVEBALLS = [
+    {{
+        id: "q_who_is_this",
+        q: '📞 "Who is this and how did you get my cell number?"',
+        cue: "Testing Michael's composure and 5-second disarm.",
+        win: 'Winning Move: "Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but we\'re actively restructuring high daily debits for [Industry] operators..."',
+        trap: 'Rookie Trap: Apologizing ("Sorry to bother you") or sounding like a telemarketer reading a script.'
+    }},
+    {{
+        id: "q_dont_need_money",
+        q: '🚫 "We don\'t need any money right now, business is good."',
+        cue: "The classic brush-off. Tests if he pivots to an audit or gives up.",
+        win: 'Winning Move: "Glad cash flow is strong. We actually don\'t place speculative debt—we audit incumbent lenders to stop $2k/mo in fee leakage and keep lenders honest at zero cost."',
+        trap: 'Rookie Trap: Trying to force a loan on them or asking "Are you sure you don\'t need capital for expansion?"'
+    }},
+    {{
+        id: "q_just_email",
+        q: '📧 "Just email me whatever you have and I\'ll look at it."',
+        cue: "The 90% death trap. Tests if he executes the 45-second live download ask.",
+        win: 'Winning Move: "Happy to route that over. Rather than sending generic decks you\'ll never read, are you looking at your phone right now? Pull up your banking app for 45 seconds while I confirm receipt..."',
+        trap: 'Rookie Trap: Saying "Sure, what\'s your email?" and hanging up without locking the live on-call download.'
+    }},
+    {{
+        id: "q_what_rates",
+        q: '🏷️ "What are your exact rates? Give me a percentage."',
+        cue: "Price pressure trap. Tests if he quotes a blind rate or trades for statements.",
+        win: 'Winning Move: "Rates depend entirely on monthly deposits, but we consistently cut daily debit payments in half. Rather than quoting a misleading ballpark, send 3 statements and I\'ll have your exact rate card in 3 hours."',
+        trap: 'Rookie Trap: Quoting a random number like "8% to 15%" which destroys credibility.'
+    }},
+    {{
+        id: "q_why_statements",
+        q: '🔒 "Why do you need bank statements? I\'m not sending docs to a stranger."',
+        cue: "Security friction. Tests if he offers account number redaction.",
+        win: 'Winning Move: "Totally understand—your numbers are sensitive. We don\'t shop your file to 20 brokers. You can redact your account numbers. We just need the deposit volume to calculate your term sheet."',
+        trap: 'Rookie Trap: Getting defensive or arguing "That\'s just our policy."'
+    }},
+    {{
+        id: "q_already_have_debt",
+        q: '💸 "I already have 2 loans with OnDeck taking $1,800/day and I\'m drowning."',
+        cue: "The golden consolidation lead! Tests if he identifies the consolidation play.",
+        win: 'Winning Move: "That\'s exactly why I called. We specialize in rolling stacked daily ACH positions out of OnDeck into a single clean monthly schedule to cut your debit drain by 40%."',
+        trap: 'Rookie Trap: Treating it as a rejection instead of the highest-converting opportunity.'
+    }},
+    {{
+        id: "q_driving",
+        q: '⏳ "I\'m on a noisy jobsite / driving on the highway right now."',
+        cue: "Time barrier. Tests the 1-click SMS pivot.",
+        win: 'Winning Move: "Understood, drive safe. I am texting my direct upload link to this mobile number right now. Reply with the 3 PDFs when you park and I\'ll run the numbers today."',
+        trap: 'Rookie Trap: Trying to keep talking while they are clearly unable to look at anything.'
+    }},
+    {{
+        id: "q_broker_shopping",
+        q: '🛑 "Are you just another broker who\'s going to shop my credit to 20 lenders?"',
+        cue: "Trust test. Tests CCAP\'s direct private credit positioning.",
+        win: 'Winning Move: "No. We operate a direct syndication desk in New York. We conduct an in-house preliminary audit. Your file is never blasted to public market portals."',
+        trap: 'Rookie Trap: Stuttering or giving a vague answer about "our network of 50 partners."'
+    }}
+];
+
+let currentPersonaKey = "contractor";
+let activeRubric = {{ tone: null, deflect: null, stmt: null }};
+
+function selectPersona(key, btn) {{
+    currentPersonaKey = key;
+    document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const p = PERSONAS[key] || PERSONAS["contractor"];
+    
+    document.getElementById('dossier-content').innerHTML = `
+        <div class="dossier-row">
+            <span class="dossier-lbl">Identity:</span>
+            <span class="dossier-val">${{p.name}}</span>
+        </div>
+        <div class="dossier-row">
+            <span class="dossier-lbl">Company:</span>
+            <span class="dossier-val">${{p.company}}</span>
+        </div>
+        <div class="dossier-row">
+            <span class="dossier-lbl">Vertical / Location:</span>
+            <span class="dossier-val">${{p.vertical}} • ${{p.location}}</span>
+        </div>
+        <div class="dossier-row">
+            <span class="dossier-lbl">Monthly Revenue:</span>
+            <span class="dossier-val" style="color:var(--success);">${{p.revenue}}</span>
+        </div>
+        <div class="dossier-row">
+            <span class="dossier-lbl">Current Debt Stack:</span>
+            <span class="dossier-val" style="color:var(--danger);">${{p.debtStack}}</span>
+        </div>
+        <div class="dossier-row" style="border:none;">
+            <span class="dossier-lbl">Phone Mindset:</span>
+            <span class="dossier-val" style="font-style:italic;">${{p.mood}}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03); border:1px dashed var(--border); padding:6px; border-radius:3px; font-size:11.5px; margin-top:2px;">
+            <strong style="color:var(--warning);">🗣️ Your Phone Opener:</strong><br>
+            <span style="color:#ffffff; font-weight:600;">${{p.opener}}</span>
+        </div>
+    `;
+
+    document.getElementById('secret-intel-box').innerHTML = `
+        <div class="secret-title">🤫 Hidden Reality (Don't reveal unless earned):</div>
+        <div>${{p.secret}}</div>
+    `;
+
+    document.getElementById('win-trigger-box').innerHTML = `
+        <div style="font-weight:800; text-transform:uppercase; font-size:9.5px; margin-bottom:2px;">🏆 Win Condition (When to send statements):</div>
+        <div>${{p.winTrigger}}</div>
+    `;
+}}
+
+function renderCurveballs() {{
+    const container = document.getElementById('curveball-list');
+    container.innerHTML = CURVEBALLS.map((c, idx) => `
+        <div class="curveball-card" onclick="toggleCurveball('${{c.id}}', this)">
+            <div class="curve-q">${{c.q}}</div>
+            <div class="curve-cue">${{c.cue}}</div>
+            <div class="curve-detail-box">
+                <div class="tactical-pill-win">${{c.win}}</div>
+                <div class="tactical-pill-trap">${{c.trap}}</div>
+            </div>
+        </div>
+    `).join('');
+}}
+
+function toggleCurveball(id, el) {{
+    document.querySelectorAll('.curveball-card').forEach(c => {{
+        if (c !== el) c.classList.remove('active');
+    }});
+    el.classList.toggle('active');
+}}
+
+/* =========================================================================
+   TIMER LOGIC
+   ========================================================================= */
+let timerSec = 0;
+let timerInterval = null;
+
+function formatTime(s) {{
+    const m = Math.floor(s / 60).toString().padStart(2, '0');
+    const sec = (s % 60).toString().padStart(2, '0');
+    return `${{m}}:${{sec}}`;
+}}
+
+function startTimer() {{
+    if (timerInterval) return;
+    timerInterval = setInterval(() => {{
+        timerSec++;
+        document.getElementById('timer-display').innerText = formatTime(timerSec);
+    }}, 1000);
+}}
+
+function pauseTimer() {{
+    clearInterval(timerInterval);
+    timerInterval = null;
+}}
+
+function resetTimer() {{
+    pauseTimer();
+    timerSec = 0;
+    document.getElementById('timer-display').innerText = "00:00";
+}}
+
+/* =========================================================================
+   SCORING RUBRIC & DEBRIEF
+   ========================================================================= */
+function setRubric(cat, val, color, btn) {{
+    activeRubric[cat] = val;
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.rubric-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const lbl = document.getElementById(`score-${{cat}}-lbl`);
+    if (lbl) {{
+        lbl.innerText = val;
+        lbl.style.color = color === 'green' ? 'var(--success)' : (color === 'amber' ? 'var(--warning)' : 'var(--danger)');
+    }}
+}}
+
+function copySparringDebrief() {{
+    const p = PERSONAS[currentPersonaKey];
+    const duration = formatTime(timerSec);
+    const notes = document.getElementById('sparring-notes').value || "Solid effort. Keep working the on-call 45-second statement download.";
+    
+    const debrief = `🥊 SPARRING DEBRIEF — MICHAEL QIN (CREATIVE CAPITAL SOLUTIONS)
+Date: ${{new Date().toLocaleDateString()}} | Call Duration: ${{duration}}
+Persona Roleplayed: ${{p.name}} (${{p.company}} — ${{p.vertical}})
+
+🎯 SCORECARD:
+• Tone & Authority: ${{activeRubric.tone || 'Not Graded'}}
+• Deflection Handling: ${{activeRubric.deflect || 'Not Graded'}}
+• Statement Extraction: ${{activeRubric.stmt || 'Not Graded'}}
+
+📝 SUPERVISOR COACHING FEEDBACK:
+${{notes}}
+
+⚡ KEY RECAPITULATION PRINCIPLE:
+Never accept a passive brush-off ("just email me"). Trade rate transparency and account redaction for the immediate 45-second statement PDF forward on the line.`;
+
+    navigator.clipboard.writeText(debrief).then(() => {{
+        showToast("Sparring debrief copied to clipboard!");
+    }}).catch(() => {{
+        const ta = document.createElement('textarea');
+        ta.value = debrief;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast("Sparring debrief copied to clipboard!");
+    }});
+}}
+
+function showToast(msg) {{
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}}
+
+/* =========================================================================
+   LIVE TELEMETRY STREAM LISTENER
+   ========================================================================= */
+function processEventData(data) {{
+    if (!data || !data.action) return;
+    if (data.url?.startsWith('file:')) return;
+
+    // Filter out William's own test pings
+    const isWilliam = (
+        data.isSupervisor === true ||
+        data.rep?.includes('Supervisor') ||
+        data.rep?.includes('William') ||
+        SUPERVISOR_IPS.includes(data.ip)
+    );
+
+    const liveDot = document.getElementById('live-dot');
+    const statusText = document.getElementById('rep-status-text');
+    liveDot.classList.add('online');
+
+    if (isWilliam) {{
+        statusText.innerText = '👤 You Active (Testing) • Michael Qin Idle';
+        return;
+    }}
+
+    // Update Live Rep Tracker
+    statusText.innerText = `🟢 Michael Qin Active (${{data.device || 'Online'}})`;
+    document.getElementById('mirror-time').innerText = data.localTime || new Date().toLocaleTimeString();
+    document.getElementById('mirror-stage').innerText = data.title || data.action;
+
+    if (data.details?.tone) {{
+        document.getElementById('mirror-script').innerText = `Tone: ${{data.details.tone.toUpperCase()}} • Stage: ${{data.details.nextStage || 'Advanced'}}`;
+    }} else if (data.details?.optionClicked) {{
+        document.getElementById('mirror-script').innerText = `Selected Reaction: "${{data.details.optionClicked}}"`;
+    }} else if (data.title) {{
+        document.getElementById('mirror-script').innerText = data.title;
+    }}
+}}
+
+// Historical Poll & SSE
+async function fetchEvents() {{
+    try {{
+        const res = await fetch(POLL_URL + "&_t=" + Date.now());
+        const text = await res.text();
+        const lines = text.trim().split('\\n');
+        lines.forEach(line => {{
+            try {{
+                const msg = JSON.parse(line);
+                if (msg.message) processEventData(JSON.parse(msg.message));
+            }} catch(e) {{}}
+        }});
+    }} catch(e) {{}}
+}}
+
+function connectSSE() {{
+    const es = new EventSource(SSE_URL);
+    es.onmessage = (e) => {{
+        try {{
+            const msg = JSON.parse(e.data);
+            if (msg.message) processEventData(JSON.parse(msg.message));
+        }} catch(err) {{}}
+    }};
+    es.onerror = () => {{
+        setTimeout(connectSSE, 4000);
+    }};
+}}
+
+window.addEventListener('DOMContentLoaded', () => {{
+    selectPersona('contractor');
+    renderCurveballs();
+    fetchEvents();
+    connectSSE();
+    setInterval(fetchEvents, 6000);
+}});
+</script>
+</body>
+</html>"""
+
 
 
 def build_complete_pipeline() -> SalesPipelineSystem:
@@ -3041,7 +4043,14 @@ def main():
         f.write(admin_html_content)
     print(f"[+] Successfully generated Supervisor Cockpit: {admin_html_path}")
 
-    # 3. Generate PDF
+    # 3. William's Merchant Sparring Arena (opponent.html)
+    opponent_html_content = pipeline_sys.render_opponent_html()
+    opponent_html_path = "opponent.html"
+    with open(opponent_html_path, "w", encoding="utf-8") as f:
+        f.write(opponent_html_content)
+    print(f"[+] Successfully generated Merchant Sparring Arena: {opponent_html_path}")
+
+    # 4. Generate PDF
     pdf_out = "michael_qin_sales_pipeline.pdf"
     abs_html = os.path.abspath(portal_html_path)
     abs_pdf = os.path.abspath(pdf_out)

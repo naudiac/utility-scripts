@@ -318,9 +318,12 @@
             <p>Live Real-Time Activity, Dials &amp; Call Telemetry for Michael Qin</p>
         </div>
 
-        <div class="pulse-box">
-            <div class="pulse-dot" id="live-dot"></div>
-            <span class="pulse-status" id="live-status">Connecting to Live Stream...</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <a href="opponent.html" style="background:#dc2626; color:#ffffff; padding:6px 12px; border-radius:4px; text-decoration:none; font-weight:800; font-size:11.5px; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 3px rgba(220,38,38,0.3);">🥊 Sparring Arena</a>
+            <div class="pulse-box">
+                <div class="pulse-dot" id="live-dot"></div>
+                <span class="pulse-status" id="live-status">Connecting to Live Stream...</span>
+            </div>
         </div>
     </div>
 
@@ -652,7 +655,6 @@ async function fetchRecentEvents() {
     }
 }
 
-// Connect to Live SSE Stream
 function connectSSE() {
     const eventSource = new EventSource(SSE_URL);
     
