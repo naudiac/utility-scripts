@@ -2793,25 +2793,25 @@ function processEventData(data, isLive = false) {{
     if (isMock) return;
 
     // Multi-Person Identity Resolver:
-    function getPersonInfo(e) {
+    function getPersonInfo(e) {{
         const ip = e.ip || '';
         const dev = e.device || '';
         const loc = e.location || '';
         
-        if (e.isSupervisor === true || ip === '85.115.107.223' || ip === '74.209.76.220' || e.rep?.includes('Supervisor') || e.rep?.includes('William') || dev?.includes('William')) {
-            return { name: 'William', role: 'supervisor', badge: '<span class="device-pill" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-weight:800;">👑 YOU (Supervisor)</span>', cardStyle: 'border-left-color:#64748b; background:#f8fafc;' };
-        }
-        if (ip === '69.203.0.85' || loc.includes('Staten Island') || (dev.includes('iPhone') && e.details?.screen === '428x751')) {
-            return { name: 'Michael Qin', role: 'rep', badge: '<span class="device-pill" style="background:#16a34a; color:#ffffff; border:1px solid #15803d; font-weight:800; letter-spacing:0.3px;">🟢 MICHAEL QIN (Rep — Staten Island)</span>', cardStyle: 'border-left-color:#16a34a; background:#f0fdf4;' };
-        }
-        if (ip === '68.132.69.243' || loc.includes('Huntington') || (dev.includes('Android') && e.details?.screen === '378x656')) {
-            return { name: 'Salvatore', role: 'brother', badge: '<span class="device-pill" style="background:#0284c7; color:#ffffff; border:1px solid #0369a1; font-weight:800; letter-spacing:0.3px;">👤 SALVATORE (Brother — Huntington, NY)</span>', cardStyle: 'border-left-color:#0284c7; background:#f0f9ff;' };
-        }
-        if (ip === '2600:387:15:2911::5' || loc.includes('White Plains') || (dev.includes('iPhone') && e.details?.screen === '393x754')) {
-            return { name: 'David Qin', role: 'father', badge: '<span class="device-pill" style="background:#8b5cf6; color:#ffffff; border:1px solid #7c3aed; font-weight:800; letter-spacing:0.3px;">👨‍👦 DAVID QIN (Father — AT&T Cellular)</span>', cardStyle: 'border-left-color:#8b5cf6; background:#faf5ff;' };
-        }
-        return { name: e.rep || 'Guest', role: 'guest', badge: `<span class="device-pill" style="background:#64748b; color:#ffffff; border:1px solid #475569; font-weight:800;">📱 GUEST (${dev || 'Mobile'})</span>`, cardStyle: 'border-left-color:#64748b; background:#f8fafc;' };
-    }
+        if (e.isSupervisor === true || ip === '85.115.107.223' || ip === '74.209.76.220' || e.rep?.includes('Supervisor') || e.rep?.includes('William') || dev?.includes('William')) {{
+            return {{ name: 'William', role: 'supervisor', badge: '<span class="device-pill" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-weight:800;">👑 YOU (Supervisor)</span>', cardStyle: 'border-left-color:#64748b; background:#f8fafc;' }};
+        }}
+        if (ip === '69.203.0.85' || loc.includes('Staten Island') || (dev.includes('iPhone') && e.details?.screen === '428x751')) {{
+            return {{ name: 'Michael Qin', role: 'rep', badge: '<span class="device-pill" style="background:#16a34a; color:#ffffff; border:1px solid #15803d; font-weight:800; letter-spacing:0.3px;">🟢 MICHAEL QIN (Rep — Staten Island)</span>', cardStyle: 'border-left-color:#16a34a; background:#f0fdf4;' }};
+        }}
+        if (ip === '68.132.69.243' || loc.includes('Huntington') || (dev.includes('Android') && e.details?.screen === '378x656')) {{
+            return {{ name: 'Salvatore', role: 'brother', badge: '<span class="device-pill" style="background:#0284c7; color:#ffffff; border:1px solid #0369a1; font-weight:800; letter-spacing:0.3px;">👤 SALVATORE (Brother — Huntington, NY)</span>', cardStyle: 'border-left-color:#0284c7; background:#f0f9ff;' }};
+        }}
+        if (ip === '2600:387:15:2911::5' || loc.includes('White Plains') || (dev.includes('iPhone') && e.details?.screen === '393x754')) {{
+            return {{ name: 'David Qin', role: 'father', badge: '<span class="device-pill" style="background:#8b5cf6; color:#ffffff; border:1px solid #7c3aed; font-weight:800; letter-spacing:0.3px;">👨‍👦 DAVID QIN (Father — AT&T Cellular)</span>', cardStyle: 'border-left-color:#8b5cf6; background:#faf5ff;' }};
+        }}
+        return {{ name: e.rep || 'Guest', role: 'guest', badge: `<span class="device-pill" style="background:#64748b; color:#ffffff; border:1px solid #475569; font-weight:800;">📱 GUEST (${{dev || 'Mobile'}})</span>`, cardStyle: 'border-left-color:#64748b; background:#f8fafc;' }};
+    }}
 
     // Strict Device & Rep Identification:
     const person = getPersonInfo(data);

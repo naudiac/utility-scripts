@@ -1487,23 +1487,48 @@ function processEventData(data) {
     if (!data || !data.action) return;
     if (data.url?.startsWith('file:')) return;
 
-    const isWilliam = (
-        data.isSupervisor === true ||
-        data.rep?.includes('Supervisor') ||
-        data.rep?.includes('William') ||
-        SUPERVISOR_IPS.includes(data.ip)
-    );
+    const ip = data.ip || '';
+    const dev = data.device || '';
+    const loc = data.location || '';
+    
+    let personRole = 'guest';
+    let personLabel = '📱 Guest Active';
+
+    if (data.isSupervisor === true || ip === '85.115.107.223' || ip === '74.209.76.220' || data.rep?.includes('Supervisor') || data.rep?.includes('William') || dev?.includes('William')) {
+        personRole = 'supervisor';
+        personLabel = '👑 You Active (Testing)';
+    } else if (ip === '69.203.0.85' || loc.includes('Staten Island') || (dev.includes('iPhone') && data.details?.screen === '428x751')) {
+        personRole = 'rep';
+        personLabel = '🟢 Michael Qin Active (Staten Island)';
+    } else if (ip === '68.132.69.243' || loc.includes('Huntington') || (dev.includes('Android') && data.details?.screen === '378x656')) {
+        personRole = 'brother';
+        personLabel = '👤 Salvatore Active (Huntington, NY)';
+    } else if (ip === '2600:387:15:2911::5' || loc.includes('White Plains') || (dev.includes('iPhone') && data.details?.screen === '393x754')) {
+        personRole = 'father';
+        personLabel = '👨‍👦 David Qin Active (Father)';
+    }
 
     const liveDot = document.getElementById('live-dot');
     const statusText = document.getElementById('rep-status-text');
     liveDot.classList.add('online');
 
-    if (isWilliam) {
-        statusText.innerText = '👤 You Active (Testing) • Michael Qin Idle';
+    if (personRole === 'supervisor') {
+        liveDot.style.background = '#3b82f6';
+        statusText.innerText = personLabel + ' • Michael Qin Idle';
         return;
     }
 
-    statusText.innerText = `🟢 Michael Qin Active (${data.device || 'Online'})`;
+    if (personRole === 'rep') {
+        liveDot.style.background = '#22c55e';
+    } else if (personRole === 'brother') {
+        liveDot.style.background = '#0284c7';
+    } else if (personRole === 'father') {
+        liveDot.style.background = '#8b5cf6';
+    } else {
+        liveDot.style.background = '#64748b';
+    }
+
+    statusText.innerText = personLabel;
     document.getElementById('mirror-time').innerText = data.localTime || new Date().toLocaleTimeString();
     document.getElementById('mirror-stage').innerText = data.title || data.action;
 
