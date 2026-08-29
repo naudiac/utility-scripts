@@ -9,78 +9,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
     :root {
-        --navy: #0f172a;
-        --navy-dark: #020617;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #cbd5e1;
+        --border-subtle: #e2e8f0;
+        --navy: #0f2744;
+        --navy-dark: #091728;
         --accent: #dc2626;
         --accent-hover: #b91c1c;
-        --blue-accent: #2563eb;
-        --bg: #0b0f19;
-        --card: #1e293b;
-        --card-subtle: #0f172a;
-        --border: #334155;
-        --border-subtle: #1e293b;
-        --text: #f8fafc;
-        --text-muted: #94a3b8;
-        --success: #22c55e;
-        --success-bg: rgba(34, 197, 94, 0.15);
-        --danger: #ef4444;
-        --danger-bg: rgba(239, 68, 68, 0.15);
-        --warning: #f59e0b;
-        --warning-bg: rgba(245, 158, 11, 0.15);
+        --blue: #2563eb;
+        --blue-hover: #1d4ed8;
+        --text: #0f172a;
+        --muted: #64748b;
+        --success: #15803d;
+        --success-bg: #dcfce7;
+        --success-border: #86efac;
+        --danger: #b91c1c;
+        --danger-bg: #fee2e2;
+        --danger-border: #fca5a5;
+        --warning: #b45309;
+        --warning-bg: #fef3c7;
+        --warning-border: #fde68a;
+        --purple: #6d28d9;
+        --purple-bg: #f5f3ff;
+        --purple-border: #ddd6fe;
+        --font: 'Plus Jakarta Sans', sans-serif;
         --mono: 'JetBrains Mono', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background: var(--bg);
+        background-color: var(--bg);
         color: var(--text);
-        padding: 12px;
-        min-height: 100vh;
+        font-family: var(--font);
+        line-height: 1.4;
+        font-size: 13px;
+        padding: 10px;
     }
 
-    .arena-container {
-        max-width: 1440px;
+    .arena-wrap {
+        max-width: 1360px;
         margin: 0 auto;
     }
 
     /* Header */
     .arena-header {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background: var(--card);
         border: 1px solid var(--border);
         border-top: 4px solid var(--accent);
-        border-radius: 6px;
-        padding: 12px 16px;
-        margin-bottom: 12px;
+        padding: 10px 14px;
+        border-radius: 4px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
-    .arena-title-block h1 {
-        font-size: 16px;
-        font-weight: 800;
-        color: #ffffff;
+    .brand-block {
         display: flex;
         align-items: center;
         gap: 6px;
+        flex-wrap: wrap;
     }
-    .arena-title-block p {
-        font-size: 11.5px;
-        color: var(--text-muted);
-        margin-top: 2px;
+    .brand-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--navy);
+        letter-spacing: -0.2px;
+    }
+    .status-tag {
+        background: #fee2e2;
+        color: var(--accent);
+        font-size: 9.5px;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 3px;
+        text-transform: uppercase;
+    }
+    .rep-tag {
+        background: #f1f5f9;
+        color: var(--navy);
+        font-size: 9.5px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid var(--border-subtle);
     }
 
-    .live-status-pill {
-        background: #020617;
-        border: 1px solid var(--border);
-        padding: 6px 12px;
-        border-radius: 20px;
+    .header-right {
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 11px;
+    }
+    .pulse-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        padding: 5px 10px;
+        border-radius: 20px;
     }
     .pulse-dot {
         width: 9px;
@@ -89,8 +119,8 @@
         background: #94a3b8;
     }
     .pulse-dot.online {
-        background: var(--success);
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
         animation: pulseAnim 1.8s infinite;
     }
     @keyframes pulseAnim {
@@ -98,337 +128,373 @@
         70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
     }
-
-    .header-nav-btns {
-        display: flex;
-        gap: 6px;
+    .pulse-status {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--navy);
     }
+
     .btn-nav {
-        background: #334155;
-        color: #ffffff;
+        background: #ffffff;
+        color: var(--navy);
+        border: 1px solid var(--border);
         text-decoration: none;
-        padding: 5px 10px;
-        border-radius: 4px;
+        padding: 4px 8px;
+        border-radius: 3px;
         font-size: 11px;
         font-weight: 700;
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        transition: background 0.1s;
+        transition: all 0.1s;
     }
-    .btn-nav:hover { background: #475569; }
-    .btn-nav.primary { background: var(--blue-accent); }
-    .btn-nav.primary:hover { background: #1d4ed8; }
+    .btn-nav:hover { background: #f1f5f9; border-color: var(--navy); }
+    .btn-nav.primary { background: var(--navy); color: #ffffff; border-color: var(--navy); }
+    .btn-nav.primary:hover { background: var(--navy-dark); }
 
     /* 3-Column Arena Grid */
     .arena-grid {
         display: grid;
-        grid-template-columns: 1.15fr 1.35fr 1fr;
-        gap: 12px;
+        grid-template-columns: 1.1fr 1.4fr 0.95fr;
+        gap: 10px;
     }
     @media (max-width: 1024px) {
         .arena-grid { grid-template-columns: 1fr; }
     }
 
-    .arena-panel {
+    .arena-card {
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 6px;
+        border-radius: 4px;
         padding: 12px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
 
-    .panel-head {
-        font-size: 12px;
+    .card-head {
+        font-size: 11.5px;
         font-weight: 800;
         text-transform: uppercase;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid var(--border);
+        color: var(--navy);
+        letter-spacing: 0.3px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--border-subtle);
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    /* Persona Selector */
+    /* Persona Selector Chips */
     .persona-chips {
         display: flex;
-        gap: 4px;
+        gap: 3px;
         flex-wrap: wrap;
     }
     .persona-btn {
-        background: #0f172a;
-        border: 1px solid var(--border);
-        color: var(--text-muted);
-        padding: 5px 8px;
-        border-radius: 4px;
-        font-size: 11px;
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        color: var(--navy);
+        padding: 3px 6px;
+        border-radius: 3px;
+        font-size: 10.5px;
         font-weight: 700;
         cursor: pointer;
         transition: all 0.1s;
     }
-    .persona-btn:hover { color: #ffffff; border-color: var(--blue-accent); }
+    .persona-btn:hover { background: #e2e8f0; }
     .persona-btn.active {
-        background: var(--blue-accent);
-        border-color: var(--blue-accent);
+        background: var(--navy);
+        border-color: var(--navy);
         color: #ffffff;
     }
 
-    /* Dossier Card */
-    .dossier-card {
-        background: #0f172a;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 10px;
+    /* Difficulty Setting */
+    .diff-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        padding: 4px 6px;
+        border-radius: 3px;
+        font-size: 10.5px;
+    }
+    .diff-btns {
+        display: flex;
+        gap: 2px;
+    }
+    .diff-btn {
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        padding: 2px 6px;
+        border-radius: 2px;
+        font-size: 9.5px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .diff-btn.active.easy { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
+    .diff-btn.active.med { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+    .diff-btn.active.hard { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
+
+    /* Dossier Table */
+    .dossier-box {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        border-radius: 3px;
+        padding: 8px 10px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
     .dossier-row {
         display: flex;
         justify-content: space-between;
-        font-size: 11.5px;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        padding-bottom: 4px;
+        font-size: 11px;
+        border-bottom: 1px dashed var(--border-subtle);
+        padding-bottom: 3px;
     }
-    .dossier-lbl { color: var(--text-muted); font-weight: 600; }
-    .dossier-val { color: #ffffff; font-weight: 700; text-align: right; }
+    .dossier-lbl { color: var(--muted); font-weight: 600; }
+    .dossier-val { color: var(--navy); font-weight: 700; text-align: right; }
+
+    .opener-box {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-left: 3.5px solid var(--navy);
+        padding: 6px 8px;
+        border-radius: 2px;
+        font-size: 11.5px;
+    }
 
     .secret-box {
-        background: rgba(220, 38, 38, 0.1);
-        border: 1px solid rgba(220, 38, 38, 0.3);
-        border-left: 3px solid var(--accent);
-        padding: 8px;
-        border-radius: 3px;
+        background: var(--danger-bg);
+        border: 1px solid var(--danger-border);
+        border-left: 3.5px solid var(--danger);
+        padding: 6px 8px;
+        border-radius: 2px;
         font-size: 11px;
-        color: #fca5a5;
-    }
-    .secret-title {
-        font-weight: 800;
-        text-transform: uppercase;
-        font-size: 9.5px;
-        margin-bottom: 2px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        color: var(--danger);
     }
 
     .win-trigger-box {
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        border-left: 3px solid var(--success);
-        padding: 8px;
-        border-radius: 3px;
+        background: var(--success-bg);
+        border: 1px solid var(--success-border);
+        border-left: 3.5px solid var(--success);
+        padding: 6px 8px;
+        border-radius: 2px;
         font-size: 11px;
-        color: #86efac;
+        color: var(--success);
     }
 
-    /* Live Teleprompter & Curveballs (Col 2) */
-    .live-mirror-box {
-        background: #020617;
-        border: 1px solid #1e3a8a;
-        border-left: 4px solid var(--blue-accent);
-        padding: 10px;
-        border-radius: 4px;
+    /* Live Teleprompter (Col 2) */
+    .live-mirror-card {
+        background: #f8fafc;
+        border: 1px solid #bfdbfe;
+        border-left: 4px solid var(--blue);
+        padding: 8px 10px;
+        border-radius: 3px;
     }
-    .live-mirror-header {
+    .live-mirror-head {
         display: flex;
         justify-content: space-between;
-        font-size: 10px;
+        font-size: 9.5px;
         font-weight: 800;
         text-transform: uppercase;
-        color: #93c5fd;
-        margin-bottom: 4px;
+        color: var(--blue);
+        margin-bottom: 3px;
     }
-    .live-stage-name {
-        font-size: 13px;
+    .live-stage-title {
+        font-size: 12.5px;
         font-weight: 800;
-        color: #ffffff;
+        color: var(--navy);
         margin-bottom: 2px;
     }
-    .live-stage-script {
-        font-size: 12px;
-        color: #cbd5e1;
-        font-style: italic;
-        background: rgba(255,255,255,0.03);
-        padding: 6px;
-        border-radius: 3px;
-        border: 1px dashed var(--border);
+    .live-stage-desc {
+        font-size: 11px;
+        color: var(--muted);
+        background: #ffffff;
+        padding: 4px 6px;
+        border-radius: 2px;
+        border: 1px solid var(--border-subtle);
+        font-family: var(--mono);
     }
 
     /* Curveball Soundboard */
     .curveball-list {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 5px;
     }
-    .curveball-card {
-        background: #0f172a;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 8px 10px;
+    .curve-card {
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        border-radius: 3px;
+        padding: 6px 8px;
         cursor: pointer;
         transition: all 0.1s;
     }
-    .curveball-card:hover {
-        border-color: var(--accent);
-        background: #1e293b;
+    .curve-card:hover {
+        border-color: var(--navy);
+        background: #f8fafc;
     }
-    .curveball-card.active {
+    .curve-card.active {
         border-color: var(--accent);
-        background: #1e293b;
+        background: #fffafa;
         box-shadow: 0 0 0 1px var(--accent);
     }
     .curve-q {
-        font-size: 12px;
+        font-size: 11.5px;
         font-weight: 800;
-        color: #f87171;
-        margin-bottom: 3px;
+        color: var(--navy);
+        margin-bottom: 2px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
+    .curve-card.active .curve-q { color: var(--accent); }
     .curve-cue {
-        font-size: 11px;
-        color: var(--text-muted);
+        font-size: 10.5px;
+        color: var(--muted);
     }
 
-    .curve-detail-box {
+    .curve-detail {
         margin-top: 6px;
         padding-top: 6px;
-        border-top: 1px dashed var(--border);
+        border-top: 1px dashed var(--border-subtle);
         display: none;
+        flex-direction: column;
+        gap: 4px;
     }
-    .curveball-card.active .curve-detail-box { display: block; }
-    
-    .tactical-pill-win {
+    .curve-card.active .curve-detail { display: flex; }
+
+    .pill-win {
         background: var(--success-bg);
-        border: 1px solid var(--success);
-        color: #86efac;
+        border: 1px solid var(--success-border);
+        color: var(--success);
         padding: 4px 6px;
-        border-radius: 3px;
+        border-radius: 2px;
         font-size: 11px;
-        margin-bottom: 4px;
     }
-    .tactical-pill-trap {
+    .pill-trap {
         background: var(--danger-bg);
-        border: 1px solid var(--danger);
-        color: #fca5a5;
+        border: 1px solid var(--danger-border);
+        color: var(--danger);
         padding: 4px 6px;
-        border-radius: 3px;
+        border-radius: 2px;
         font-size: 11px;
     }
 
     /* Stopwatch & Scorecard (Col 3) */
-    .timer-card {
-        background: #020617;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 12px;
+    .timer-block {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        border-radius: 3px;
+        padding: 10px;
         text-align: center;
     }
-    .timer-display {
+    .timer-num {
         font-family: var(--mono);
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 800;
-        color: var(--text);
-        margin-bottom: 6px;
-        letter-spacing: 2px;
+        color: var(--navy);
+        margin-bottom: 4px;
+        letter-spacing: 1.5px;
     }
-    .timer-btns {
+    .timer-ctrls {
         display: flex;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
     }
-    .btn-timer {
-        background: #334155;
+    .btn-t {
+        background: var(--navy);
+        color: #ffffff;
         border: none;
-        color: #fff;
-        padding: 5px 12px;
-        border-radius: 3px;
+        padding: 3px 8px;
+        border-radius: 2px;
         font-weight: 700;
-        font-size: 11px;
+        font-size: 10.5px;
         cursor: pointer;
     }
-    .btn-timer.start { background: var(--success); color: #020617; }
-    .btn-timer.pause { background: var(--warning); color: #020617; }
-    .btn-timer.reset { background: #475569; }
+    .btn-t.start { background: #16a34a; }
+    .btn-t.pause { background: #ca8a04; }
+    .btn-t.reset { background: #64748b; }
 
-    /* Scoring Rubric */
-    .rubric-group {
+    /* Rubrics */
+    .rubric-row {
         display: flex;
         flex-direction: column;
-        gap: 4px;
-        margin-bottom: 6px;
+        gap: 3px;
+        margin-bottom: 5px;
     }
     .rubric-lbl {
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 700;
-        color: var(--text-muted);
+        color: var(--muted);
         display: flex;
         justify-content: space-between;
     }
-    .rubric-toggles {
+    .rubric-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 3px;
     }
-    .rubric-btn {
-        background: #0f172a;
-        border: 1px solid var(--border);
-        color: var(--text-muted);
-        padding: 4px 6px;
-        border-radius: 3px;
-        font-size: 10px;
+    .rubric-pill {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        color: var(--muted);
+        padding: 3px 4px;
+        border-radius: 2px;
+        font-size: 9.5px;
         font-weight: 700;
         cursor: pointer;
         text-align: center;
         transition: all 0.1s;
     }
-    .rubric-btn:hover { color: #ffffff; border-color: #64748b; }
-    .rubric-btn.red.active { background: var(--danger); color: #ffffff; border-color: var(--danger); }
-    .rubric-btn.amber.active { background: var(--warning); color: #020617; border-color: var(--warning); }
-    .rubric-btn.green.active { background: var(--success); color: #020617; border-color: var(--success); }
+    .rubric-pill:hover { color: var(--navy); border-color: var(--navy); }
+    .rubric-pill.red.active { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); font-weight: 800; }
+    .rubric-pill.amber.active { background: var(--warning-bg); color: var(--warning); border-color: var(--warning); font-weight: 800; }
+    .rubric-pill.green.active { background: var(--success-bg); color: var(--success); border-color: var(--success); font-weight: 800; }
 
-    .notes-box {
+    .notes-input {
         width: 100%;
-        min-height: 70px;
-        background: #0f172a;
-        border: 1px solid var(--border);
-        color: #ffffff;
-        padding: 6px 8px;
+        min-height: 60px;
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        color: var(--navy);
+        padding: 5px 6px;
         font-size: 11px;
-        border-radius: 3px;
+        border-radius: 2px;
         resize: vertical;
         font-family: inherit;
     }
 
-    .btn-debrief {
-        background: var(--accent);
+    .btn-debrief-copy {
+        background: var(--navy);
         color: #ffffff;
         border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
+        padding: 7px 10px;
+        border-radius: 3px;
+        font-size: 11.5px;
         font-weight: 800;
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         transition: background 0.1s;
     }
-    .btn-debrief:hover { background: var(--accent-hover); }
+    .btn-debrief-copy:hover { background: var(--navy-dark); }
 
     .toast {
         position: fixed;
         bottom: 12px;
         right: 12px;
-        background: var(--accent);
+        background: var(--navy);
         color: #ffffff;
         font-weight: 700;
         font-size: 11px;
-        padding: 6px 12px;
+        padding: 5px 10px;
         border-radius: 3px;
         opacity: 0;
         pointer-events: none;
@@ -440,22 +506,23 @@
 </head>
 <body>
 
-<div class="arena-container">
+<div class="arena-wrap">
 
     <!-- Header -->
     <div class="arena-header">
-        <div class="arena-title-block">
-            <h1>🥊 Merchant Sparring Arena &amp; Roleplay Trainer</h1>
-            <p>Live Practice Co-Pilot for William Hanusiewicz (Supervisor / Opponent Role)</p>
+        <div class="brand-block">
+            <span class="brand-title">Creative Capital Solutions</span>
+            <span class="status-tag">🥊 Roleplay Arena</span>
+            <span class="rep-tag">Opponent: William (Supervisor)</span>
+            <span class="rep-tag">Rep: Michael Qin</span>
         </div>
 
-        <div class="live-status-pill">
-            <div class="pulse-dot" id="live-dot"></div>
-            <span id="rep-status-text">Listening for Michael Qin...</span>
-        </div>
-
-        <div class="header-nav-btns">
-            <a href="admin.html" class="btn-nav">📡 Supervisor Cockpit</a>
+        <div class="header-right">
+            <div class="pulse-box">
+                <div class="pulse-dot" id="live-dot"></div>
+                <span class="pulse-status" id="rep-status-text">Listening for Michael Qin...</span>
+            </div>
+            <a href="admin.html" class="btn-nav">📡 Cockpit</a>
             <a href="index.html" class="btn-nav primary" target="_blank">📱 Rep Flight Deck</a>
         </div>
     </div>
@@ -464,10 +531,10 @@
     <div class="arena-grid">
 
         <!-- COLUMN 1: MERCHANT PERSONA & FACTS -->
-        <div class="arena-panel">
-            <div class="panel-head">
+        <div class="arena-card">
+            <div class="card-head">
                 <span>🎭 Merchant Persona Dossier</span>
-                <span style="font-size: 10px; color: var(--text-muted);">Who you are playing</span>
+                <span style="font-size: 9.5px; color: var(--muted);">Who you are playing</span>
             </div>
 
             <!-- Persona Selector Chips -->
@@ -480,111 +547,113 @@
                 <button class="persona-btn" onclick="selectPersona('gatekeeper', this)">🥊 Hostile</button>
             </div>
 
+            <!-- Difficulty Settings -->
+            <div class="diff-row">
+                <span style="font-weight: 700; color: var(--muted);">Resistance Level:</span>
+                <div class="diff-btns">
+                    <button class="diff-btn easy active" onclick="setDifficulty('easy', this)">🟢 Warm</button>
+                    <button class="diff-btn med" onclick="setDifficulty('med', this)">🟡 Realistic</button>
+                    <button class="diff-btn hard" onclick="setDifficulty('hard', this)">🔴 Hardcore</button>
+                </div>
+            </div>
+
             <!-- Detailed Dossier -->
-            <div class="dossier-card" id="dossier-content">
-                <!-- Dynamically Rendered -->
-            </div>
+            <div class="dossier-box" id="dossier-content"></div>
 
-            <!-- Secret Intel (What William knows but won't volunteer) -->
-            <div class="secret-box" id="secret-intel-box">
-                <!-- Dynamically Rendered -->
-            </div>
+            <!-- Secret Intel Box -->
+            <div class="secret-box" id="secret-intel-box"></div>
 
-            <!-- Win Trigger (How Michael wins your statements) -->
-            <div class="win-trigger-box" id="win-trigger-box">
-                <!-- Dynamically Rendered -->
-            </div>
+            <!-- Win Trigger Box -->
+            <div class="win-trigger-box" id="win-trigger-box"></div>
         </div>
 
         <!-- COLUMN 2: LIVE TELEPROMPTER & CURVEBALL SOUNDBOARD -->
-        <div class="arena-panel">
-            <div class="panel-head">
+        <div class="arena-card">
+            <div class="card-head">
                 <span>⚡ Live Stage Tracker &amp; Pushbacks</span>
-                <span id="live-actor-tag" style="font-size: 10px; color: var(--blue-accent); font-family: var(--mono);">Sync Active</span>
+                <span id="live-actor-tag" style="font-size: 10px; color: var(--blue); font-family: var(--mono);">Sync Active</span>
             </div>
 
             <!-- Live Mirror Box (What Michael is doing right now) -->
-            <div class="live-mirror-box">
-                <div class="live-mirror-header">
-                    <span>🔴 Michael Qin Current Position:</span>
+            <div class="live-mirror-card">
+                <div class="live-mirror-head">
+                    <span>📡 Michael Qin Live Position:</span>
                     <span id="mirror-time">--</span>
                 </div>
-                <div class="live-stage-name" id="mirror-stage">Stage 1: Opening (0-5s)</div>
-                <div class="live-stage-script" id="mirror-script">Waiting for dial telemetry...</div>
+                <div class="live-stage-title" id="mirror-stage">Stage 1: Opening (0-5s)</div>
+                <div class="live-stage-desc" id="mirror-script">Waiting for dial telemetry...</div>
             </div>
 
-            <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">
+            <div style="font-size: 11px; font-weight: 800; color: var(--navy); text-transform: uppercase; margin-top: 2px;">
                 🎯 Opponent Curveballs (Say These Aloud to Test Him):
             </div>
 
             <!-- Curveball Soundboard -->
-            <div class="curveball-list" id="curveball-list">
-                <!-- Injected Dynamically -->
-            </div>
+            <div class="curveball-list" id="curveball-list"></div>
         </div>
 
         <!-- COLUMN 3: TIMER, SCORING & DEBRIEF -->
-        <div class="arena-panel">
-            <div class="panel-head">
+        <div class="arena-card">
+            <div class="card-head">
                 <span>⏱️ Round Scorecard &amp; Debrief</span>
-                <span style="font-size: 10px; color: var(--text-muted);">Instant Feedback</span>
+                <span style="font-size: 9.5px; color: var(--muted);">Live Coaching</span>
             </div>
 
             <!-- Stopwatch -->
-            <div class="timer-card">
-                <div class="timer-display" id="timer-display">00:00</div>
-                <div class="timer-btns">
-                    <button class="btn-timer start" onclick="startTimer()">▶ Start</button>
-                    <button class="btn-timer pause" onclick="pauseTimer()">⏸ Pause</button>
-                    <button class="btn-timer reset" onclick="resetTimer()">↺ Reset</button>
+            <div class="timer-block">
+                <div class="timer-num" id="timer-display">00:00</div>
+                <div class="timer-ctrls">
+                    <button class="btn-t start" onclick="startTimer()">▶ Start</button>
+                    <button class="btn-t pause" onclick="pauseTimer()">⏸ Pause</button>
+                    <button class="btn-t reset" onclick="resetTimer()">↺ Reset</button>
                 </div>
             </div>
 
             <!-- Scoring Rubrics -->
-            <div class="rubric-group">
+            <div class="rubric-row">
                 <div class="rubric-lbl">
-                    <span>1. Tone &amp; Authority:</span>
+                    <span>1. Tone &amp; Frame Authority:</span>
                     <span id="score-tone-lbl">--</span>
                 </div>
-                <div class="rubric-toggles">
-                    <button class="rubric-btn red" onclick="setRubric('tone', 'Rushed / Timid', 'red', this)">🔴 Timid</button>
-                    <button class="rubric-btn amber" onclick="setRubric('tone', 'Conversational', 'amber', this)">🟡 Casual</button>
-                    <button class="rubric-btn green" onclick="setRubric('tone', 'Wall St Authority', 'green', this)">🟢 Authority</button>
+                <div class="rubric-grid">
+                    <button class="rubric-pill red" onclick="setRubric('tone', 'Rushed / Timid', 'red', this)">🔴 Timid</button>
+                    <button class="rubric-pill amber" onclick="setRubric('tone', 'Conversational', 'amber', this)">🟡 Casual</button>
+                    <button class="rubric-pill green" onclick="setRubric('tone', 'Wall St Authority', 'green', this)">🟢 Authority</button>
                 </div>
             </div>
 
-            <div class="rubric-group">
+            <div class="rubric-row">
                 <div class="rubric-lbl">
                     <span>2. Deflection Handling:</span>
                     <span id="score-deflect-lbl">--</span>
                 </div>
-                <div class="rubric-toggles">
-                    <button class="rubric-btn red" onclick="setRubric('deflect', 'Caved to Email', 'red', this)">🔴 Caved</button>
-                    <button class="rubric-btn amber" onclick="setRubric('deflect', 'Soft Push', 'amber', this)">🟡 Soft</button>
-                    <button class="rubric-btn green" onclick="setRubric('deflect', '45s Download Lock', 'green', this)">🟢 45s Lock</button>
+                <div class="rubric-grid">
+                    <button class="rubric-pill red" onclick="setRubric('deflect', 'Caved to Email', 'red', this)">🔴 Caved</button>
+                    <button class="rubric-pill amber" onclick="setRubric('deflect', 'Soft Push', 'amber', this)">🟡 Soft</button>
+                    <button class="rubric-pill green" onclick="setRubric('deflect', '45s Download Lock', 'green', this)">🟢 45s Lock</button>
                 </div>
             </div>
 
-            <div class="rubric-group">
+            <div class="rubric-row">
                 <div class="rubric-lbl">
                     <span>3. Statement Extraction:</span>
                     <span id="score-stmt-lbl">--</span>
                 </div>
-                <div class="rubric-toggles">
-                    <button class="rubric-btn red" onclick="setRubric('stmt', 'No Ask / Blank', 'red', this)">🔴 No Ask</button>
-                    <button class="rubric-btn amber" onclick="setRubric('stmt', 'Vague Email Ask', 'amber', this)">🟡 Vague</button>
-                    <button class="rubric-btn green" onclick="setRubric('stmt', 'Redaction + 4PM Lock', 'green', this)">🟢 Redact+Lock</button>
+                <div class="rubric-grid">
+                    <button class="rubric-pill red" onclick="setRubric('stmt', 'No Ask / Blank', 'red', this)">🔴 No Ask</button>
+                    <button class="rubric-pill amber" onclick="setRubric('stmt', 'Vague Email Ask', 'amber', this)">🟡 Vague</button>
+                    <button class="rubric-pill green" onclick="setRubric('stmt', 'Redaction + 4PM Lock', 'green', this)">🟢 Redact+Lock</button>
                 </div>
             </div>
 
             <!-- Notes -->
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            <div style="font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase;">
                 📝 William's Live Coaching Notes:
             </div>
-            <textarea id="sparring-notes" class="notes-box" placeholder="e.g. Good recovery on the 'why statements' objection, but don't apologize when opening..."></textarea>
+            <textarea id="sparring-notes" class="notes-input" placeholder="e.g. Great pivot to the 45s download. Don't rush through the opening greeting..."></textarea>
 
-            <button class="btn-debrief" onclick="copySparringDebrief()">
-                📋 Copy Sparring Debrief to Clipboard
+            <button class="btn-debrief-copy" onclick="copySparringDebrief()">
+                📋 Copy Sparring Debrief Card
             </button>
         </div>
 
@@ -606,26 +675,34 @@ const SUPERVISOR_IPS = ['85.115.107.223', '74.209.76.220'];
 const PERSONAS = {
     "contractor": {
         name: "Frank Miller (Owner)",
-        company: "Apex Roofing & Commercial Contracting LLC",
-        vertical: "Commercial Roofing & Construction",
+        company: "Apex Roofing & Commercial Contracting",
+        vertical: "Commercial Roofing & Trades",
         location: "Dallas, TX",
         revenue: "$140,000 / month",
-        debtStack: "2 Stacked MCAs: OnDeck ($85k bal, $1,150/day) + Rapid Finance ($45k bal, $700/day). Total = $1,850/day.",
-        mood: "Stressed, on a loud windy jobsite. Waiting on a $65k GC draw that is 45 days late.",
-        opener: '"Yeah Frank here, make it quick, I'm up on a commercial roof right now."',
+        debtStack: "OnDeck ($85k bal, $1,150/day) + Rapid ($45k bal, $700/day) = $1,850/day",
+        mood: "Stressed, on a noisy rooftop jobsite. Waiting on a $65k GC draw that is 45 days late.",
+        openers: {
+            easy: '"Yeah Frank here, what can I do for you?"',
+            med: '"Yeah Frank here, make it quick, I'm up on a commercial roof right now."',
+            hard: '"I'm on a loud jobsite in the middle of a crane lift. Why are you calling my personal cell?"'
+        },
         secret: "He is terrified he won't make next Friday's payroll ($22k) because of the $1,850 daily debit drain, but he's too proud to ask for a loan.",
-        winTrigger: 'If Michael specifically says: "I'm calling to stop daily debits while you wait on 60-day GC progress draws, without taking new debt," and asks for the 45-second bank app download.'
+        winTrigger: 'If Michael says: "I'm calling to stop daily debits while you wait on 60-day GC progress draws, without adding debt," and locks the 45-second bank app download.'
     },
     "trucking": {
         name: "Big Bob Kowalski (Fleet Owner)",
         company: "Ironclad Freight & Logistics",
-        vertical: "Long-Haul Freight & Dry Van (8 Trucks)",
+        vertical: "Long-Haul Freight (8 Trucks)",
         location: "Chicago, IL",
         revenue: "$185,000 / month",
-        debtStack: "Fundbox ($65k bal, $1,400/day) + Apex fuel card factoring taking 5% off every rate con. Total = $2,400/day.",
-        mood: "Gruff, cynical. Burned by an offshore broker last year who took an upfront fee and vanished.",
-        opener: '"Who is this, and what scam list did you buy my cell number from?"',
-        secret: "His diesel fuel bill is $35k/month and two freight brokers are 45 days late on paying $40k in invoices. He desperately needs a clean monthly credit line.",
+        debtStack: "Fundbox ($65k bal, $1,400/day) + Apex fuel card factoring taking 5% = $2,400/day",
+        mood: "Gruff, cynical. Burned by an offshore broker last year who charged upfront fees.",
+        openers: {
+            easy: '"Bob speaking, who is this?"',
+            med: '"Who is this, and what scam list did you buy my cell number from?"',
+            hard: '"Look buddy, I get 10 spam calls a day from brokers. What makes you any different?"'
+        },
+        secret: "His diesel fuel bill is $35k/month and two brokers are 45 days late on $40k in invoices. He desperately needs a clean monthly credit line.",
         winTrigger: 'If Michael assures him: "We never charge upfront fees and we don't shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms."'
     },
     "restaurant": {
@@ -634,21 +711,29 @@ const PERSONAS = {
         vertical: "Full-Service Restaurant & Bar",
         location: "Boston, MA",
         revenue: "$95,000 / month",
-        debtStack: "Toast Capital holding 15% of daily POS credit card batches ($950/day) + Square advance ($35k bal).",
-        mood: "Chaotic lunch prep in the kitchen. Tickets printing, pots clattering, zero patience.",
-        opener: '"I'm in the middle of kitchen prep, I don't have time for sales calls, just email me."',
-        secret: "He hates seeing 15% sliced off his weekend dinner receipts before the money hits his checking account.",
+        debtStack: "Toast holding 15% of daily credit card batches ($950/day) + Square ($35k bal)",
+        mood: "Chaotic lunch prep in the kitchen. Tickets printing, pans clattering, zero patience.",
+        openers: {
+            easy: '"Harbor Bistro, Tony speaking."',
+            med: '"I'm in the middle of kitchen prep, I don't have time for sales calls, just email me."',
+            hard: '"I'm prepping lunch rush with 4 pans on the fire! Why are you calling during service hours?"'
+        },
+        secret: "He hates seeing 15% sliced off his weekend dinner receipts before the cash hits his bank.",
         winTrigger: 'If Michael says: "Stay on with me for 45 seconds on your phone while the water boils so you can keep 100% of your weekend credit card receipts."'
     },
     "cfo": {
         name: "Brenda Vance (CFO / Controller)",
         company: "Precision Aerospace Machining",
-        vertical: "Contract Manufacturing & CNC Tooling",
+        vertical: "Contract CNC Machining",
         location: "Cleveland, OH",
         revenue: "$260,000 / month",
-        debtStack: "Kapitus mezzanine note ($120k bal, $3,600/day) + 3 CNC equipment leases.",
-        mood: "Cold, highly analytical MBA. Hates sales fluff, tests reps on basis points and effective APR.",
-        opener: '"This is Brenda. What is your firm's effective cost of capital and are you an institutional syndicate or a broker?"',
+        debtStack: "Kapitus mezzanine note ($120k bal, $3,600/day) + 3 CNC equipment leases",
+        mood: "Cold, analytical MBA. Hates sales fluff, tests reps on basis points and effective APR.",
+        openers: {
+            easy: '"This is Brenda Vance, how may I direct your call?"',
+            med: '"This is Brenda. What is your firm's effective cost of capital and are you an institutional syndicate or a broker?"',
+            hard: '"We do not take unvetted capital solicitations. Transmit your firm's FINRA/SEC credentials and rate card to my assistant."'
+        },
         secret: "The board ordered her to reduce debt service by 300 basis points this quarter before an upcoming audit.",
         winTrigger: 'If Michael uses the Wall Street tone, cites basis points, senior debt consolidation, and non-dilutive balance-sheet recapitalization.'
     },
@@ -660,19 +745,27 @@ const PERSONAS = {
         revenue: "$120,000 / month",
         debtStack: "Zero active loans. $85k sitting in operating checking.",
         mood: "Relaxed, confident. Convinced he doesn't need to speak to any finance person.",
-        opener: '"Appreciate the call man, but business is booming, I got plenty of cash in the bank, I don't need a loan."',
+        openers: {
+            easy: '"Dave here, how can I help you today?"',
+            med: '"Appreciate the call man, but business is booming, I got plenty of cash in the bank, I don't need a loan."',
+            hard: '"Look, I don't borrow money, never have, never will. Remove me from your database."'
+        },
         secret: "He is paying 3.8% on credit card processing fees and overpaying merchant vendor surcharges without knowing it.",
         winTrigger: 'If Michael pivots: "We don't sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you're losing $2,500/mo in fee leakage."'
     },
     "gatekeeper": {
-        name: "Rick (Hostile Gatekeeper / Co-Owner)",
+        name: "Rick (Hostile Co-Owner / Gatekeeper)",
         company: "Titan Heavy Excavation",
-        vertical: "Excavation & Site Preparation",
+        vertical: "Excavation & Earthmoving",
         location: "Pittsburgh, PA",
         revenue: "$300,000 / month",
-        debtStack: "Cat Financial heavy equipment notes ($18k/mo) + Yellow Iron lease.",
+        debtStack: "Cat Financial heavy equipment notes ($18k/mo) + Yellow Iron lease",
         mood: "Aggressive, furious. Already received 8 telemarketer calls today.",
-        opener: '"Stop calling me! Take my damn number off your list! Every day you guys spam my phone!"',
+        openers: {
+            easy: '"Titan Excavation, what do you want?"',
+            med: '"Stop calling me! Take my damn number off your list! Every day you guys spam my phone!"',
+            hard: '"If you call this number one more time I am filing an FTC harassment complaint against your company!"'
+        },
         secret: "He respects people who don't get rattled or apologize. If you match his energy with steady confidence, he will listen.",
         winTrigger: 'If Michael uses Chris Voss tactical empathy: "Sounds like you're getting slammed by 15 telemarketers today and you're sick of it... I'll be off your phone in 10 seconds."'
     }
@@ -684,24 +777,24 @@ const PERSONAS = {
 const CURVEBALLS = [
     {
         id: "q_who_is_this",
-        q: '📞 "Who is this and how did you get my cell number?"',
-        cue: "Testing Michael's composure and 5-second disarm.",
-        win: 'Winning Move: "Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but we're actively restructuring high daily debits for [Industry] operators..."',
-        trap: 'Rookie Trap: Apologizing ("Sorry to bother you") or sounding like a telemarketer reading a script.'
+        q: '📞 "Who is this & why are you calling my cell?"',
+        cue: "Testing Michael's 5-second composure and value hook.",
+        win: 'Winning Move: "Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but our desk is actively restructuring high daily debits for [Industry] operators..."',
+        trap: 'Rookie Trap: Apologizing ("Sorry to bother you") or sounding like a robotic telemarketer reading a script.'
     },
     {
         id: "q_dont_need_money",
         q: '🚫 "We don't need any money right now, business is good."',
-        cue: "The classic brush-off. Tests if he pivots to an audit or gives up.",
+        cue: "The classic brush-off. Tests if he pivots to an audit or folds.",
         win: 'Winning Move: "Glad cash flow is strong. We actually don't place speculative debt—we audit incumbent lenders to stop $2k/mo in fee leakage and keep lenders honest at zero cost."',
-        trap: 'Rookie Trap: Trying to force a loan on them or asking "Are you sure you don't need capital for expansion?"'
+        trap: 'Rookie Trap: Trying to force a loan or asking "Are you sure you don't need capital for expansion?"'
     },
     {
         id: "q_just_email",
-        q: '📧 "Just email me whatever you have and I'll look at it."',
-        cue: "The 90% death trap. Tests if he executes the 45-second live download ask.",
+        q: '📧 "Just email me your rate sheet, I'm busy."',
+        cue: "The 90% death trap. Tests the 45-second on-call download ask.",
         win: 'Winning Move: "Happy to route that over. Rather than sending generic decks you'll never read, are you looking at your phone right now? Pull up your banking app for 45 seconds while I confirm receipt..."',
-        trap: 'Rookie Trap: Saying "Sure, what's your email?" and hanging up without locking the live on-call download.'
+        trap: 'Rookie Trap: Saying "Sure, what's your email?" and hanging up with 0% chance of closing.'
     },
     {
         id: "q_what_rates",
@@ -712,28 +805,28 @@ const CURVEBALLS = [
     },
     {
         id: "q_why_statements",
-        q: '🔒 "Why do you need bank statements? I'm not sending docs to a stranger."',
+        q: '🔒 "Why do you need bank statements? I'm not sending docs."',
         cue: "Security friction. Tests if he offers account number redaction.",
         win: 'Winning Move: "Totally understand—your numbers are sensitive. We don't shop your file to 20 brokers. You can redact your account numbers. We just need the deposit volume to calculate your term sheet."',
-        trap: 'Rookie Trap: Getting defensive or arguing "That's just our policy."'
+        trap: 'Rookie Trap: Getting defensive or arguing "That's just company policy."'
     },
     {
         id: "q_already_have_debt",
-        q: '💸 "I already have 2 loans with OnDeck taking $1,800/day and I'm drowning."',
+        q: '💸 "I already have 2 loans with OnDeck taking $1,800/day."',
         cue: "The golden consolidation lead! Tests if he identifies the consolidation play.",
         win: 'Winning Move: "That's exactly why I called. We specialize in rolling stacked daily ACH positions out of OnDeck into a single clean monthly schedule to cut your debit drain by 40%."',
         trap: 'Rookie Trap: Treating it as a rejection instead of the highest-converting opportunity.'
     },
     {
         id: "q_driving",
-        q: '⏳ "I'm on a noisy jobsite / driving on the highway right now."',
+        q: '⏳ "I'm on a noisy roof / driving on the highway right now."',
         cue: "Time barrier. Tests the 1-click SMS pivot.",
         win: 'Winning Move: "Understood, drive safe. I am texting my direct upload link to this mobile number right now. Reply with the 3 PDFs when you park and I'll run the numbers today."',
         trap: 'Rookie Trap: Trying to keep talking while they are clearly unable to look at anything.'
     },
     {
         id: "q_broker_shopping",
-        q: '🛑 "Are you just another broker who's going to shop my credit to 20 lenders?"',
+        q: '🛑 "Are you just another broker who's gonna blast my credit?"',
         cue: "Trust test. Tests CCAP's direct private credit positioning.",
         win: 'Winning Move: "No. We operate a direct syndication desk in New York. We conduct an in-house preliminary audit. Your file is never blasted to public market portals."',
         trap: 'Rookie Trap: Stuttering or giving a vague answer about "our network of 50 partners."'
@@ -741,15 +834,27 @@ const CURVEBALLS = [
 ];
 
 let currentPersonaKey = "contractor";
+let currentDiff = "easy";
 let activeRubric = { tone: null, deflect: null, stmt: null };
 
 function selectPersona(key, btn) {
     currentPersonaKey = key;
     document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
+    renderPersonaDossier();
+}
 
-    const p = PERSONAS[key] || PERSONAS["contractor"];
-    
+function setDifficulty(diff, btn) {
+    currentDiff = diff;
+    document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderPersonaDossier();
+}
+
+function renderPersonaDossier() {
+    const p = PERSONAS[currentPersonaKey] || PERSONAS["contractor"];
+    const opener = p.openers[currentDiff] || p.openers.med;
+
     document.getElementById('dossier-content').innerHTML = `
         <div class="dossier-row">
             <span class="dossier-lbl">Identity:</span>
@@ -775,19 +880,19 @@ function selectPersona(key, btn) {
             <span class="dossier-lbl">Phone Mindset:</span>
             <span class="dossier-val" style="font-style:italic;">${p.mood}</span>
         </div>
-        <div style="background:rgba(255,255,255,0.03); border:1px dashed var(--border); padding:6px; border-radius:3px; font-size:11.5px; margin-top:2px;">
-            <strong style="color:var(--warning);">🗣️ Your Phone Opener:</strong><br>
-            <span style="color:#ffffff; font-weight:600;">${p.opener}</span>
+        <div class="opener-box">
+            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:var(--navy); margin-bottom:2px;">🗣️ Your Spoken Opener (Say This):</div>
+            <div style="font-weight:700; color:var(--navy);">${opener}</div>
         </div>
     `;
 
     document.getElementById('secret-intel-box').innerHTML = `
-        <div class="secret-title">🤫 Hidden Reality (Don't reveal unless earned):</div>
+        <div style="font-weight:800; text-transform:uppercase; font-size:9.5px; margin-bottom:2px;">🤫 Hidden Reality (Only reveal if earned):</div>
         <div>${p.secret}</div>
     `;
 
     document.getElementById('win-trigger-box').innerHTML = `
-        <div style="font-weight:800; text-transform:uppercase; font-size:9.5px; margin-bottom:2px;">🏆 Win Condition (When to send statements):</div>
+        <div style="font-weight:800; text-transform:uppercase; font-size:9.5px; margin-bottom:2px;">🏆 Win Condition (When to yield 3 statements):</div>
         <div>${p.winTrigger}</div>
     `;
 }
@@ -795,19 +900,22 @@ function selectPersona(key, btn) {
 function renderCurveballs() {
     const container = document.getElementById('curveball-list');
     container.innerHTML = CURVEBALLS.map((c, idx) => `
-        <div class="curveball-card" onclick="toggleCurveball('${c.id}', this)">
-            <div class="curve-q">${c.q}</div>
+        <div class="curve-card" onclick="toggleCurveball('${c.id}', this)">
+            <div class="curve-q">
+                <span>${c.q}</span>
+                <span style="font-size:9px; color:var(--muted); font-family:var(--mono);">[Click to Expand]</span>
+            </div>
             <div class="curve-cue">${c.cue}</div>
-            <div class="curve-detail-box">
-                <div class="tactical-pill-win">${c.win}</div>
-                <div class="tactical-pill-trap">${c.trap}</div>
+            <div class="curve-detail">
+                <div class="pill-win">✅ <strong>Winning Move:</strong> ${c.win}</div>
+                <div class="pill-trap">❌ <strong>Rookie Trap:</strong> ${c.trap}</div>
             </div>
         </div>
     `).join('');
 }
 
 function toggleCurveball(id, el) {
-    document.querySelectorAll('.curveball-card').forEach(c => {
+    document.querySelectorAll('.curve-card').forEach(c => {
         if (c !== el) c.classList.remove('active');
     });
     el.classList.toggle('active');
@@ -850,7 +958,7 @@ function resetTimer() {
 function setRubric(cat, val, color, btn) {
     activeRubric[cat] = val;
     const parent = btn.parentElement;
-    parent.querySelectorAll('.rubric-btn').forEach(b => b.classList.remove('active'));
+    parent.querySelectorAll('.rubric-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     const lbl = document.getElementById(`score-${cat}-lbl`);
@@ -863,14 +971,15 @@ function setRubric(cat, val, color, btn) {
 function copySparringDebrief() {
     const p = PERSONAS[currentPersonaKey];
     const duration = formatTime(timerSec);
-    const notes = document.getElementById('sparring-notes').value || "Solid effort. Keep working the on-call 45-second statement download.";
+    const notes = document.getElementById('sparring-notes').value || "Solid effort on the call. Remember to always execute the 45-second on-call statement download ask.";
     
     const debrief = `🥊 SPARRING DEBRIEF — MICHAEL QIN (CREATIVE CAPITAL SOLUTIONS)
 Date: ${new Date().toLocaleDateString()} | Call Duration: ${duration}
 Persona Roleplayed: ${p.name} (${p.company} — ${p.vertical})
+Resistance Level: ${currentDiff.toUpperCase()}
 
 🎯 SCORECARD:
-• Tone & Authority: ${activeRubric.tone || 'Not Graded'}
+• Tone & Frame Control: ${activeRubric.tone || 'Not Graded'}
 • Deflection Handling: ${activeRubric.deflect || 'Not Graded'}
 • Statement Extraction: ${activeRubric.stmt || 'Not Graded'}
 
@@ -878,7 +987,7 @@ Persona Roleplayed: ${p.name} (${p.company} — ${p.vertical})
 ${notes}
 
 ⚡ KEY RECAPITULATION PRINCIPLE:
-Never accept a passive brush-off ("just email me"). Trade rate transparency and account redaction for the immediate 45-second statement PDF forward on the line.`;
+Never accept a passive brush-off ("just email me"). Trade rate transparency and account number redaction for the immediate 45-second statement PDF download while still on the line.`;
 
     navigator.clipboard.writeText(debrief).then(() => {
         showToast("Sparring debrief copied to clipboard!");
@@ -907,7 +1016,6 @@ function processEventData(data) {
     if (!data || !data.action) return;
     if (data.url?.startsWith('file:')) return;
 
-    // Filter out William's own test pings
     const isWilliam = (
         data.isSupervisor === true ||
         data.rep?.includes('Supervisor') ||
@@ -924,7 +1032,6 @@ function processEventData(data) {
         return;
     }
 
-    // Update Live Rep Tracker
     statusText.innerText = `🟢 Michael Qin Active (${data.device || 'Online'})`;
     document.getElementById('mirror-time').innerText = data.localTime || new Date().toLocaleTimeString();
     document.getElementById('mirror-stage').innerText = data.title || data.action;
@@ -938,7 +1045,6 @@ function processEventData(data) {
     }
 }
 
-// Historical Poll & SSE
 async function fetchEvents() {
     try {
         const res = await fetch(POLL_URL + "&_t=" + Date.now());
