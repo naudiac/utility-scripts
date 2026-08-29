@@ -2898,7 +2898,7 @@ window.addEventListener('DOMContentLoaded', () => {{
                     "hard": "I'm on a loud jobsite in the middle of a crane lift. Why are you calling my personal cell?"
                 },
                 "secret": "He is terrified he won't make next Friday's payroll ($22k) because of the $1,850 daily debit drain, but he's too proud to ask for a loan.",
-                "winTrigger": "If Michael says: 'I\\'m calling to stop daily debits while you wait on 60-day GC progress draws, without adding debt,' and locks the 45-second bank app download."
+                "winTrigger": "If Michael says: 'I am calling to stop daily debits while you wait on 60-day GC progress draws, without adding debt,' and locks the 45-second bank app download."
             },
             "trucking": {
                 "name": "Big Bob Kowalski (Fleet Owner)",
@@ -2914,7 +2914,7 @@ window.addEventListener('DOMContentLoaded', () => {{
                     "hard": "Look buddy, I get 10 spam calls a day from brokers. What makes you any different?"
                 },
                 "secret": "His diesel fuel bill is $35k/month and two brokers are 45 days late on $40k in invoices. He desperately needs a clean monthly credit line.",
-                "winTrigger": "If Michael assures him: 'We never charge upfront fees and we don\\'t shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms.'"
+                "winTrigger": "If Michael assures him: 'We never charge upfront fees and we don't shop your file to 20 brokers—we consolidate fuel debt into clean monthly terms.'"
             },
             "restaurant": {
                 "name": "Tony DeMarco (Chef & Owner)",
@@ -2962,7 +2962,7 @@ window.addEventListener('DOMContentLoaded', () => {{
                     "hard": "Look, I don't borrow money, never have, never will. Remove me from your database."
                 },
                 "secret": "He is paying 3.8% on credit card processing fees and overpaying merchant vendor surcharges without knowing it.",
-                "winTrigger": "If Michael pivots: 'We don\\'t sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you\\'re losing $2,500/mo in fee leakage.'"
+                "winTrigger": "If Michael pivots: 'We don't sell speculative debt—we run a 5-minute honesty check against your bank statements to benchmark whether you are losing $2,500/mo in fee leakage.'"
             },
             "gatekeeper": {
                 "name": "Rick (Hostile Co-Owner / Gatekeeper)",
@@ -2978,7 +2978,7 @@ window.addEventListener('DOMContentLoaded', () => {{
                     "hard": "If you call this number one more time I am filing an FTC harassment complaint against your company!"
                 },
                 "secret": "He respects people who don't get rattled or apologize. If you match his energy with steady confidence, he will listen.",
-                "winTrigger": "If Michael uses Chris Voss tactical empathy: 'Sounds like you\\'re getting slammed by 15 telemarketers today and you\\'re sick of it... I\\'ll be off your phone in 10 seconds.'"
+                "winTrigger": "If Michael uses Chris Voss tactical empathy: 'Sounds like you are getting slammed by 15 telemarketers today and you are sick of it... I will be off your phone in 10 seconds.'"
             }
         }
 
@@ -3705,6 +3705,204 @@ window.addEventListener('DOMContentLoaded', () => {{
         align-items: center;
     }}
 
+    /* Mobile Navigation Sticky Tab Bar (Screens <= 768px) */
+    .mobile-tab-bar {{
+        display: none;
+    }}
+
+    @media (max-width: 768px) {{
+        body {{
+            padding: 4px;
+        }}
+        .arena-wrap {{
+            max-width: 100%;
+            padding: 2px;
+            gap: 6px;
+        }}
+        .arena-header {{
+            padding: 8px 10px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+        }}
+        .brand-block {{
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 4px;
+        }}
+        .header-right {{
+            justify-content: space-between;
+            width: 100%;
+            border-top: 1px dashed var(--border-subtle);
+            padding-top: 5px;
+        }}
+        .pulse-box {{
+            padding: 2px 6px;
+        }}
+        .pulse-status {{
+            font-size: 10px;
+        }}
+
+        /* Mobile Sticky Navigation Tabs */
+        .mobile-tab-bar {{
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 4px;
+            position: sticky;
+            top: 0px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            padding: 6px 2px;
+            margin-bottom: 2px;
+            border-bottom: 1px solid var(--border-subtle);
+        }}
+        .m-tab-btn {{
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            color: var(--navy);
+            padding: 7px 4px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            transition: all 0.15s;
+        }}
+        .m-tab-btn.active {{
+            background: var(--navy);
+            color: #ffffff;
+            border-color: var(--navy);
+        }}
+
+        /* Column 1 Mobile Improvements */
+        .persona-chips {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }}
+        .persona-btn {{
+            padding: 7px 2px;
+            font-size: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        .diff-row {{
+            flex-direction: column;
+            align-items: stretch;
+            gap: 4px;
+            padding: 6px 8px;
+        }}
+        .diff-btns {{
+            display: flex;
+            width: 100%;
+            gap: 4px;
+        }}
+        .diff-btn {{
+            flex: 1;
+            padding: 6px 0;
+            font-size: 10.5px;
+            text-align: center;
+        }}
+        .dossier-box {{
+            padding: 8px 10px;
+        }}
+        .dossier-row {{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 4px 0;
+        }}
+        .dossier-lbl {{
+            font-size: 10px;
+            text-transform: uppercase;
+        }}
+        .dossier-val {{
+            text-align: left;
+            font-size: 11.5px;
+            line-height: 1.3;
+        }}
+        .opener-box, .secret-box, .win-trigger-box {{
+            padding: 7px 9px;
+            font-size: 11.5px;
+            line-height: 1.35;
+        }}
+
+        /* Column 2 Curveballs Mobile Improvements */
+        .curve-q-row {{
+            align-items: flex-start;
+            gap: 6px;
+        }}
+        .curve-q {{
+            font-size: 12px;
+            line-height: 1.3;
+        }}
+        .curve-actions-row {{
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            margin-top: 6px;
+        }}
+        .btn-action-sm {{
+            flex: 1;
+            padding: 7px 4px;
+            font-size: 10.5px;
+            justify-content: center;
+        }}
+
+        /* Column 3 Scorecard Mobile Improvements */
+        .timer-ctrls {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }}
+        .timer-presets-row {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+            margin-top: 4px;
+        }}
+        .btn-t {{
+            padding: 7px 4px;
+            font-size: 11px;
+            text-align: center;
+        }}
+        .rubric-row {{
+            margin-bottom: 6px;
+        }}
+        .rubric-grid {{
+            gap: 4px;
+        }}
+        .rubric-pill {{
+            padding: 7px 2px;
+            font-size: 9.5px;
+            line-height: 1.2;
+        }}
+        .quick-tags-row {{
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin: 4px 0;
+        }}
+        .btn-quick-tag {{
+            padding: 4px 6px;
+            font-size: 9.5px;
+        }}
+        .action-btns-row {{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }}
+        .btn-debrief-copy, .btn-reset-round {{
+            width: 100%;
+            padding: 9px 10px;
+            font-size: 12px;
+        }}
+    }}
+
     .toast {{
         position: fixed;
         bottom: 12px;
@@ -3746,11 +3944,18 @@ window.addEventListener('DOMContentLoaded', () => {{
         </div>
     </div>
 
+    <!-- Mobile Sticky Jump Tabs (Screens <= 768px) -->
+    <div class="mobile-tab-bar">
+        <button class="m-tab-btn active" onclick="jumpToSection('sec-persona', this)">🎭 Persona</button>
+        <button class="m-tab-btn" onclick="jumpToSection('sec-curveballs', this)">🎯 Curveballs (8)</button>
+        <button class="m-tab-btn" onclick="jumpToSection('sec-scorecard', this)">⏱️ Scorecard</button>
+    </div>
+
     <!-- 3-Column Arena Grid -->
     <div class="arena-grid">
 
         <!-- COLUMN 1: MERCHANT PERSONA & FACTS -->
-        <div class="arena-card">
+        <div class="arena-card" id="sec-persona">
             <div class="card-head">
                 <span>🎭 Merchant Persona Dossier</span>
                 <span style="font-size: 9.5px; color: var(--muted);">Who you are playing</span>
@@ -3787,7 +3992,7 @@ window.addEventListener('DOMContentLoaded', () => {{
         </div>
 
         <!-- COLUMN 2: LIVE TELEPROMPTER & CURVEBALL SOUNDBOARD -->
-        <div class="arena-card">
+        <div class="arena-card" id="sec-curveballs">
             <div class="card-head">
                 <span>⚡ Live Stage Tracker &amp; Pushbacks</span>
                 <span id="live-actor-tag" style="font-size: 10px; color: var(--blue); font-family: var(--mono);">Sync Active</span>
@@ -3812,7 +4017,7 @@ window.addEventListener('DOMContentLoaded', () => {{
         </div>
 
         <!-- COLUMN 3: TIMER, SCORING & DEBRIEF -->
-        <div class="arena-card">
+        <div class="arena-card" id="sec-scorecard">
             <div class="card-head">
                 <span>⏱️ Round Scorecard</span>
                 <span id="score-grade-pill" class="score-grade-badge">Score: --/100</span>
@@ -3828,9 +4033,11 @@ window.addEventListener('DOMContentLoaded', () => {{
                 <div class="timer-ctrls">
                     <button id="btn-timer-start" class="btn-t start" onclick="startTimer()">▶ Start</button>
                     <button id="btn-timer-pause" class="btn-t pause" onclick="pauseTimer()">⏸ Pause</button>
-                    <button class="btn-t reset-timer" onclick="resetTimer()">↺ Reset Timer</button>
-                    <button class="btn-t preset" onclick="addTimer(30)">+30s</button>
-                    <button class="btn-t preset" onclick="addTimer(60)">+1m</button>
+                    <button class="btn-t reset-timer" onclick="resetTimer()">↺ Reset</button>
+                </div>
+                <div class="timer-presets-row">
+                    <button class="btn-t preset" onclick="addTimer(30)">+30s Preset</button>
+                    <button class="btn-t preset" onclick="addTimer(60)">+1m Preset</button>
                 </div>
             </div>
 
@@ -3938,6 +4145,15 @@ let currentDiff = "easy";
 let activeRubric = {{ tone: null, deflect: null, stmt: null, voss: null }};
 let rubricPoints = {{ tone: 0, deflect: 0, stmt: 0, voss: 0 }};
 let sessionRounds = [];
+
+function jumpToSection(sectionId, btn) {{
+    document.querySelectorAll('.m-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    const el = document.getElementById(sectionId);
+    if (el) {{
+        el.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+    }}
+}}
 
 function selectPersona(key, btn) {{
     currentPersonaKey = key;
