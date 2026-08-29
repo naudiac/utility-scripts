@@ -825,6 +825,127 @@ class SalesPipelineSystem:
     }}
     .toast.show {{ opacity: 1; }}
 
+    @media (max-width: 768px) {{
+        .app-container {{
+            padding: 4px 2px;
+        }}
+        .top-header {{
+            padding: 6px 8px;
+            margin-bottom: 4px;
+        }}
+        .header-row-1 {{
+            margin-bottom: 4px;
+        }}
+        
+        /* Vertical Presets: 3x2 Grid on Mobile */
+        .industry-presets-row {{
+            flex-direction: column;
+            align-items: stretch;
+            gap: 2px;
+            margin-bottom: 4px;
+        }}
+        .industry-chips {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 100%;
+        }}
+        .industry-chip {{
+            text-align: center;
+            padding: 5px 2px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+
+        /* Lead Inputs: 2x2 Grid on Mobile */
+        .lead-inputs-grid {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 4px;
+        }}
+        .lead-input-compact {{
+            padding: 6px 8px;
+            font-size: 11.5px;
+        }}
+        .btn-clear-compact {{
+            padding: 6px 8px;
+            font-size: 11px;
+            font-weight: 700;
+        }}
+
+        /* Tone Chips: 3x2 Grid on Mobile */
+        .tone-row {{
+            flex-direction: column;
+            align-items: stretch;
+            gap: 3px;
+            padding-top: 4px;
+            margin-top: 4px;
+        }}
+        .tone-chips {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 100%;
+        }}
+        .tone-chip {{
+            text-align: center;
+            padding: 5px 2px;
+            font-size: 9.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        .extra-intel-btn {{
+            align-self: flex-end;
+            margin-top: -2px;
+            padding: 2px 4px;
+        }}
+
+        /* Navigation Tabs: 2x2 compact grid */
+        .tabs-nav {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3px;
+            border-bottom: none;
+            margin-bottom: 6px;
+        }}
+        .tab-item {{
+            text-align: center;
+            padding: 6px 4px;
+            border-radius: 3px;
+            border: 1px solid var(--border-main);
+            font-size: 10.5px;
+            white-space: normal;
+        }}
+        .tab-item.active {{
+            background: var(--corporate-navy);
+            color: #ffffff;
+            border-color: var(--corporate-navy);
+            margin-bottom: 0;
+        }}
+
+        /* Reaction Buttons on Mobile */
+        .options-stack {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }}
+        .opt-btn {{
+            padding: 7px 6px;
+            font-size: 11px;
+            line-height: 1.25;
+            min-height: 42px;
+        }}
+
+        .say-text {{
+            font-size: 13.5px;
+            line-height: 1.35;
+        }}
+    }}
+
     @media print {{
         .tabs-nav, .btn-ctrl, .btn-copy, .btn-clear-compact, .btn-share-top, .modal-overlay, .tone-row {{ display: none !important; }}
         body {{ background: #fff; color: #000; }}
