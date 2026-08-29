@@ -409,47 +409,106 @@
         font-size: 11px;
     }
 
-    /* Stopwatch & Scorecard (Col 3) */
+    /* Enhanced Stopwatch & Scorecard (Col 3) */
     .timer-block {
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
         border-radius: 3px;
-        padding: 10px;
+        padding: 8px 10px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .timer-status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--muted);
+    }
+    .timer-status-badge {
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        border-radius: 3px;
+        background: #e2e8f0;
+        color: var(--muted);
+    }
+    .timer-status-badge.running {
+        background: var(--success-bg);
+        color: var(--success);
+        border: 1px solid var(--success-border);
+    }
+    .timer-status-badge.paused {
+        background: var(--warning-bg);
+        color: var(--warning);
+        border: 1px solid var(--warning-border);
+    }
+    .timer-status-badge.overtime {
+        background: var(--danger-bg);
+        color: var(--danger);
+        border: 1px solid var(--danger-border);
     }
     .timer-num {
         font-family: var(--mono);
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 800;
         color: var(--navy);
-        margin-bottom: 4px;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+    .timer-num.overtime {
+        color: var(--danger);
     }
     .timer-ctrls {
         display: flex;
         justify-content: center;
         gap: 4px;
+        flex-wrap: wrap;
     }
     .btn-t {
         background: var(--navy);
         color: #ffffff;
         border: none;
-        padding: 3px 8px;
+        padding: 4px 8px;
         border-radius: 2px;
         font-weight: 700;
-        font-size: 10.5px;
+        font-size: 10px;
         cursor: pointer;
+        transition: all 0.1s;
     }
+    .btn-t:hover { opacity: 0.9; }
     .btn-t.start { background: #16a34a; }
     .btn-t.pause { background: #ca8a04; }
-    .btn-t.reset { background: #64748b; }
+    .btn-t.reset-timer { background: #64748b; }
+    .btn-t.preset { background: #ffffff; color: var(--navy); border: 1px solid var(--border-subtle); font-size: 9px; padding: 2px 6px; }
+    .btn-t.preset:hover { background: #f1f5f9; }
+
+    /* Score Header Badge */
+    .score-grade-badge {
+        font-size: 10px;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 3px;
+        background: #f1f5f9;
+        color: var(--navy);
+        border: 1px solid var(--border-subtle);
+    }
+    .score-grade-badge.grade-a { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
+    .score-grade-badge.grade-b { background: #dbeafe; color: var(--blue); border-color: #bfdbfe; }
+    .score-grade-badge.grade-c { background: var(--warning-bg); color: var(--warning); border-color: var(--warning-border); }
+    .score-grade-badge.grade-f { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
 
     /* Rubrics */
     .rubric-row {
         display: flex;
         flex-direction: column;
         gap: 3px;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
     }
     .rubric-lbl {
         font-size: 10.5px;
@@ -469,7 +528,7 @@
         color: var(--muted);
         padding: 3px 4px;
         border-radius: 2px;
-        font-size: 9.5px;
+        font-size: 9px;
         font-weight: 700;
         cursor: pointer;
         text-align: center;
@@ -480,9 +539,33 @@
     .rubric-pill.amber.active { background: var(--warning-bg); color: var(--warning); border-color: var(--warning); font-weight: 800; }
     .rubric-pill.green.active { background: var(--success-bg); color: var(--success); border-color: var(--success); font-weight: 800; }
 
+    /* Quick Coaching Tags */
+    .quick-tags-row {
+        display: flex;
+        gap: 3px;
+        flex-wrap: wrap;
+        margin-top: 2px;
+        margin-bottom: 3px;
+    }
+    .btn-quick-tag {
+        background: #ffffff;
+        border: 1px solid var(--border-subtle);
+        color: var(--navy);
+        font-size: 9px;
+        font-weight: 700;
+        padding: 2px 5px;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.1s;
+    }
+    .btn-quick-tag:hover {
+        background: #f1f5f9;
+        border-color: var(--navy);
+    }
+
     .notes-input {
         width: 100%;
-        min-height: 60px;
+        min-height: 55px;
         background: #f8fafc;
         border: 1px solid var(--border-subtle);
         color: var(--navy);
@@ -493,13 +576,18 @@
         font-family: inherit;
     }
 
+    .action-btns-row {
+        display: flex;
+        gap: 4px;
+    }
     .btn-debrief-copy {
+        flex: 1.3;
         background: var(--navy);
         color: #ffffff;
         border: none;
-        padding: 7px 10px;
+        padding: 6px 8px;
         border-radius: 3px;
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 800;
         cursor: pointer;
         display: flex;
@@ -509,6 +597,59 @@
         transition: background 0.1s;
     }
     .btn-debrief-copy:hover { background: var(--navy-dark); }
+
+    .btn-reset-round {
+        flex: 0.9;
+        background: #f1f5f9;
+        color: var(--navy);
+        border: 1px solid var(--border);
+        padding: 6px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.1s;
+    }
+    .btn-reset-round:hover { background: #e2e8f0; border-color: var(--navy); }
+
+    /* History Drawer */
+    .rounds-history-box {
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px dashed var(--border-subtle);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .history-head {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9.5px;
+        font-weight: 800;
+        color: var(--muted);
+        text-transform: uppercase;
+    }
+    .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        max-height: 110px;
+        overflow-y: auto;
+    }
+    .history-item {
+        background: #f8fafc;
+        border: 1px solid var(--border-subtle);
+        padding: 4px 6px;
+        border-radius: 2px;
+        font-size: 9.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     .toast {
         position: fixed;
@@ -619,30 +760,36 @@
         <!-- COLUMN 3: TIMER, SCORING & DEBRIEF -->
         <div class="arena-card">
             <div class="card-head">
-                <span>⏱️ Round Scorecard &amp; Debrief</span>
-                <span style="font-size: 9.5px; color: var(--muted);">Live Coaching</span>
+                <span>⏱️ Round Scorecard</span>
+                <span id="score-grade-pill" class="score-grade-badge">Score: --/100</span>
             </div>
 
-            <!-- Stopwatch -->
+            <!-- Stopwatch Block -->
             <div class="timer-block">
+                <div class="timer-status-row">
+                    <span id="timer-status-text" class="timer-status-badge">⚪ READY</span>
+                    <span style="font-size:9.5px; color:var(--muted);">Target: &lt; 3:00 min</span>
+                </div>
                 <div class="timer-num" id="timer-display">00:00</div>
                 <div class="timer-ctrls">
-                    <button class="btn-t start" onclick="startTimer()">▶ Start</button>
-                    <button class="btn-t pause" onclick="pauseTimer()">⏸ Pause</button>
-                    <button class="btn-t reset" onclick="resetTimer()">↺ Reset</button>
+                    <button id="btn-timer-start" class="btn-t start" onclick="startTimer()">▶ Start</button>
+                    <button id="btn-timer-pause" class="btn-t pause" onclick="pauseTimer()">⏸ Pause</button>
+                    <button class="btn-t reset-timer" onclick="resetTimer()">↺ Reset Timer</button>
+                    <button class="btn-t preset" onclick="addTimer(30)">+30s</button>
+                    <button class="btn-t preset" onclick="addTimer(60)">+1m</button>
                 </div>
             </div>
 
-            <!-- Scoring Rubrics -->
+            <!-- 4-Point Rubrics -->
             <div class="rubric-row">
                 <div class="rubric-lbl">
                     <span>1. Tone &amp; Frame Authority:</span>
                     <span id="score-tone-lbl">--</span>
                 </div>
                 <div class="rubric-grid">
-                    <button class="rubric-pill red" onclick="setRubric('tone', 'Rushed / Timid', 'red', this)">🔴 Timid</button>
-                    <button class="rubric-pill amber" onclick="setRubric('tone', 'Conversational', 'amber', this)">🟡 Casual</button>
-                    <button class="rubric-pill green" onclick="setRubric('tone', 'Wall St Authority', 'green', this)">🟢 Authority</button>
+                    <button class="rubric-pill red" onclick="setRubric('tone', 'Rushed / Timid', 'red', 5, this)">🔴 Timid (5p)</button>
+                    <button class="rubric-pill amber" onclick="setRubric('tone', 'Conversational', 'amber', 15, this)">🟡 Casual (15p)</button>
+                    <button class="rubric-pill green" onclick="setRubric('tone', 'Wall St Authority', 'green', 25, this)">🟢 Authority (25p)</button>
                 </div>
             </div>
 
@@ -652,33 +799,68 @@
                     <span id="score-deflect-lbl">--</span>
                 </div>
                 <div class="rubric-grid">
-                    <button class="rubric-pill red" onclick="setRubric('deflect', 'Caved to Email', 'red', this)">🔴 Caved</button>
-                    <button class="rubric-pill amber" onclick="setRubric('deflect', 'Soft Push', 'amber', this)">🟡 Soft</button>
-                    <button class="rubric-pill green" onclick="setRubric('deflect', '45s Download Lock', 'green', this)">🟢 45s Lock</button>
+                    <button class="rubric-pill red" onclick="setRubric('deflect', 'Caved to Email', 'red', 5, this)">🔴 Caved (5p)</button>
+                    <button class="rubric-pill amber" onclick="setRubric('deflect', 'Soft Push', 'amber', 15, this)">🟡 Soft (15p)</button>
+                    <button class="rubric-pill green" onclick="setRubric('deflect', '45s Download Lock', 'green', 25, this)">🟢 45s Lock (25p)</button>
                 </div>
             </div>
 
             <div class="rubric-row">
                 <div class="rubric-lbl">
-                    <span>3. Statement Extraction:</span>
+                    <span>3. Statement Extraction Ask:</span>
                     <span id="score-stmt-lbl">--</span>
                 </div>
                 <div class="rubric-grid">
-                    <button class="rubric-pill red" onclick="setRubric('stmt', 'No Ask / Blank', 'red', this)">🔴 No Ask</button>
-                    <button class="rubric-pill amber" onclick="setRubric('stmt', 'Vague Email Ask', 'amber', this)">🟡 Vague</button>
-                    <button class="rubric-pill green" onclick="setRubric('stmt', 'Redaction + 4PM Lock', 'green', this)">🟢 Redact+Lock</button>
+                    <button class="rubric-pill red" onclick="setRubric('stmt', 'No Ask / Blank', 'red', 0, this)">🔴 No Ask (0p)</button>
+                    <button class="rubric-pill amber" onclick="setRubric('stmt', 'Vague Email Ask', 'amber', 15, this)">🟡 Vague (15p)</button>
+                    <button class="rubric-pill green" onclick="setRubric('stmt', 'Redaction + 4PM Lock', 'green', 25, this)">🟢 Redact+Lock (25p)</button>
                 </div>
             </div>
 
-            <!-- Notes -->
-            <div style="font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase;">
-                📝 William's Live Coaching Notes:
+            <div class="rubric-row">
+                <div class="rubric-lbl">
+                    <span>4. Voss Audit &amp; Loss Aversion:</span>
+                    <span id="score-voss-lbl">--</span>
+                </div>
+                <div class="rubric-grid">
+                    <button class="rubric-pill red" onclick="setRubric('voss', 'Pitching Speculative Debt', 'red', 5, this)">🔴 Debt Pitch (5p)</button>
+                    <button class="rubric-pill amber" onclick="setRubric('voss', 'Standard Loan Pivot', 'amber', 15, this)">🟡 Loan Pitch (15p)</button>
+                    <button class="rubric-pill green" onclick="setRubric('voss', 'Fee Audit / Zero Cost', 'green', 25, this)">🟢 Audit Lock (25p)</button>
+                </div>
+            </div>
+
+            <!-- Notes & Quick Tags -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+                <span style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase;">📝 Coaching Notes:</span>
+                <span style="font-size: 9px; color: var(--muted);">Click tag to insert:</span>
+            </div>
+            <div class="quick-tags-row">
+                <button class="btn-quick-tag" onclick="insertTag('Great 45s app download lock!')">+45s Lock</button>
+                <button class="btn-quick-tag" onclick="insertTag('Offered account # redaction.')">+Redact Acct #</button>
+                <button class="btn-quick-tag" onclick="insertTag('Don't apologize for calling.')">+No Apologies</button>
+                <button class="btn-quick-tag" onclick="insertTag('Strong Wall St authority tone.')">+Authority</button>
+                <button class="btn-quick-tag" onclick="insertTag('Pivoted to stopping daily debits.')">+Stop Debits</button>
             </div>
             <textarea id="sparring-notes" class="notes-input" placeholder="e.g. Great pivot to the 45s download. Don't rush through the opening greeting..."></textarea>
 
-            <button class="btn-debrief-copy" onclick="copySparringDebrief()">
-                📋 Copy Sparring Debrief Card
-            </button>
+            <!-- Action Buttons -->
+            <div class="action-btns-row">
+                <button class="btn-debrief-copy" onclick="copySparringDebrief()">
+                    📋 Copy &amp; Save Debrief
+                </button>
+                <button class="btn-reset-round" onclick="resetRoundAndScorecard()">
+                    🔄 Reset Round
+                </button>
+            </div>
+
+            <!-- Saved Rounds Session History -->
+            <div class="rounds-history-box" id="rounds-history-box" style="display:none;">
+                <div class="history-head">
+                    <span>📜 Session Rounds History:</span>
+                    <span id="rounds-count-tag" style="color:var(--navy);">0 Rounds</span>
+                </div>
+                <div class="history-list" id="rounds-history-list"></div>
+            </div>
         </div>
 
     </div>
@@ -699,7 +881,9 @@ const CURVEBALLS = [{"id": "q_who_is_this", "q": "\ud83d\udcde \"Who is this & w
 
 let currentPersonaKey = "contractor";
 let currentDiff = "easy";
-let activeRubric = { tone: null, deflect: null, stmt: null };
+let activeRubric = { tone: null, deflect: null, stmt: null, voss: null };
+let rubricPoints = { tone: 0, deflect: 0, stmt: 0, voss: 0 };
+let sessionRounds = [];
 
 function selectPersona(key, btn) {
     currentPersonaKey = key;
@@ -831,10 +1015,11 @@ function toggleCurveball(id) {
 }
 
 /* =========================================================================
-   TIMER LOGIC
+   TIMER LOGIC & STATUS
    ========================================================================= */
 let timerSec = 0;
 let timerInterval = null;
+let timerStatus = 'ready'; // 'ready', 'running', 'paused'
 
 function formatTime(s) {
     const m = Math.floor(s / 60).toString().padStart(2, '0');
@@ -842,55 +1027,193 @@ function formatTime(s) {
     return `${m}:${sec}`;
 }
 
+function updateTimerDisplay() {
+    const display = document.getElementById('timer-display');
+    const statusBadge = document.getElementById('timer-status-text');
+    if (!display || !statusBadge) return;
+    
+    display.innerText = formatTime(timerSec);
+    
+    if (timerSec >= 180) {
+        display.classList.add('overtime');
+        if (timerStatus === 'running') {
+            statusBadge.className = 'timer-status-badge overtime';
+            statusBadge.innerText = '⚠️ OVERTIME';
+        }
+    } else {
+        display.classList.remove('overtime');
+    }
+}
+
 function startTimer() {
     if (timerInterval) return;
+    timerStatus = 'running';
+    const statusBadge = document.getElementById('timer-status-text');
+    if (statusBadge) {
+        statusBadge.className = timerSec >= 180 ? 'timer-status-badge overtime' : 'timer-status-badge running';
+        statusBadge.innerText = timerSec >= 180 ? '⚠️ OVERTIME' : '🟢 RUNNING';
+    }
     timerInterval = setInterval(() => {
         timerSec++;
-        document.getElementById('timer-display').innerText = formatTime(timerSec);
+        updateTimerDisplay();
     }, 1000);
 }
 
 function pauseTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timerStatus = 'paused';
+    const statusBadge = document.getElementById('timer-status-text');
+    if (statusBadge) {
+        statusBadge.className = 'timer-status-badge paused';
+        statusBadge.innerText = '⏸ PAUSED';
+    }
 }
 
 function resetTimer() {
-    pauseTimer();
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
     timerSec = 0;
-    document.getElementById('timer-display').innerText = "00:00";
+    timerStatus = 'ready';
+    updateTimerDisplay();
+    const statusBadge = document.getElementById('timer-status-text');
+    if (statusBadge) {
+        statusBadge.className = 'timer-status-badge';
+        statusBadge.innerText = '⚪ READY';
+    }
+}
+
+function addTimer(sec) {
+    timerSec += sec;
+    updateTimerDisplay();
 }
 
 /* =========================================================================
    SCORING RUBRIC & DEBRIEF
    ========================================================================= */
-function setRubric(cat, val, color, btn) {
+function setRubric(cat, val, color, pts, btn) {
     activeRubric[cat] = val;
+    rubricPoints[cat] = pts;
     const parent = btn.parentElement;
     parent.querySelectorAll('.rubric-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     const lbl = document.getElementById(`score-${cat}-lbl`);
     if (lbl) {
-        lbl.innerText = val;
+        lbl.innerText = `${val} (${pts}p)`;
         lbl.style.color = color === 'green' ? 'var(--success)' : (color === 'amber' ? 'var(--warning)' : 'var(--danger)');
+    }
+    calculateCompositeScore();
+}
+
+function calculateCompositeScore() {
+    let total = 0;
+    let gradedCount = 0;
+    for (let k in rubricPoints) {
+        if (activeRubric[k] !== null) {
+            total += rubricPoints[k];
+            gradedCount++;
+        }
+    }
+    
+    const pill = document.getElementById('score-grade-pill');
+    if (!pill) return { total, grade: '--' };
+    
+    if (gradedCount === 0) {
+        pill.className = 'score-grade-badge';
+        pill.innerText = 'Score: --/100';
+        return { total: 0, grade: '--' };
+    }
+    
+    let grade = 'Needs Work';
+    let gradeClass = 'grade-f';
+    if (total >= 90) {
+        grade = 'A+ (Elite)';
+        gradeClass = 'grade-a';
+    } else if (total >= 75) {
+        grade = 'B (Proficient)';
+        gradeClass = 'grade-b';
+    } else if (total >= 60) {
+        grade = 'C (Passing)';
+        gradeClass = 'grade-c';
+    }
+    
+    pill.className = `score-grade-badge ${gradeClass}`;
+    pill.innerText = `Score: ${total}/100 • ${grade}`;
+    return { total, grade };
+}
+
+function insertTag(tag) {
+    const ta = document.getElementById('sparring-notes');
+    if (!ta) return;
+    if (ta.value.trim().length > 0) {
+        ta.value += ' ' + tag;
+    } else {
+        ta.value = tag;
     }
 }
 
+function resetRoundAndScorecard() {
+    resetTimer();
+    activeRubric = { tone: null, deflect: null, stmt: null, voss: null };
+    rubricPoints = { tone: 0, deflect: 0, stmt: 0, voss: 0 };
+    
+    document.querySelectorAll('.rubric-pill').forEach(b => b.classList.remove('active'));
+    ['tone', 'deflect', 'stmt', 'voss'].forEach(cat => {
+        const lbl = document.getElementById(`score-${cat}-lbl`);
+        if (lbl) {
+            lbl.innerText = '--';
+            lbl.style.color = 'var(--muted)';
+        }
+    });
+    
+    const pill = document.getElementById('score-grade-pill');
+    if (pill) {
+        pill.className = 'score-grade-badge';
+        pill.innerText = 'Score: --/100';
+    }
+    
+    const notes = document.getElementById('sparring-notes');
+    if (notes) notes.value = '';
+    
+    showToast("🔄 Round scorecard & timer reset!");
+}
+
 function copySparringDebrief() {
-    const p = PERSONAS[currentPersonaKey];
+    const p = PERSONAS[currentPersonaKey] || PERSONAS['contractor'];
     const duration = formatTime(timerSec);
+    const scoreObj = calculateCompositeScore();
+    const total = scoreObj.total;
+    const grade = scoreObj.grade;
     const notes = document.getElementById('sparring-notes').value || "Solid effort on the call. Remember to always execute the 45-second on-call statement download ask.";
     
-    const debrief = `🥊 SPARRING DEBRIEF — MICHAEL QIN (CREATIVE CAPITAL SOLUTIONS)
+    const roundNum = sessionRounds.length + 1;
+    const roundEntry = {
+        num: roundNum,
+        persona: `${p.name} (${p.company})`,
+        diff: currentDiff.toUpperCase(),
+        duration: duration,
+        score: `${total}/100 (${grade})`,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    sessionRounds.unshift(roundEntry);
+    renderRoundsHistory();
+    
+    const debrief = `🥊 SPARRING DEBRIEF — ROUND ${roundNum} | MICHAEL QIN (CREATIVE CAPITAL SOLUTIONS)
 Date: ${new Date().toLocaleDateString()} | Call Duration: ${duration}
 Persona Roleplayed: ${p.name} (${p.company} — ${p.vertical})
 Resistance Level: ${currentDiff.toUpperCase()}
 
-🎯 SCORECARD:
-• Tone & Frame Control: ${activeRubric.tone || 'Not Graded'}
-• Deflection Handling: ${activeRubric.deflect || 'Not Graded'}
-• Statement Extraction: ${activeRubric.stmt || 'Not Graded'}
+🎯 SCORECARD & GRADE:
+• Total Score: ${total}/100 (${grade})
+• 1. Tone & Frame Control: ${activeRubric.tone || 'Not Graded'}
+• 2. Deflection Handling: ${activeRubric.deflect || 'Not Graded'}
+• 3. Statement Extraction: ${activeRubric.stmt || 'Not Graded'}
+• 4. Voss Loss Aversion Framing: ${activeRubric.voss || 'Not Graded'}
 
 📝 SUPERVISOR COACHING FEEDBACK:
 ${notes}
@@ -899,7 +1222,7 @@ ${notes}
 Never accept a passive brush-off ("just email me"). Trade rate transparency and account number redaction for the immediate 45-second statement PDF download while still on the line.`;
 
     navigator.clipboard.writeText(debrief).then(() => {
-        showToast("Sparring debrief copied to clipboard!");
+        showToast(`📋 Round ${roundNum} debrief copied & saved!`);
     }).catch(() => {
         const ta = document.createElement('textarea');
         ta.value = debrief;
@@ -907,8 +1230,31 @@ Never accept a passive brush-off ("just email me"). Trade rate transparency and 
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        showToast("Sparring debrief copied to clipboard!");
+        showToast(`📋 Round ${roundNum} debrief copied & saved!`);
     });
+}
+
+function renderRoundsHistory() {
+    const box = document.getElementById('rounds-history-box');
+    const list = document.getElementById('rounds-history-list');
+    const countTag = document.getElementById('rounds-count-tag');
+    if (!box || !list) return;
+    
+    if (sessionRounds.length === 0) {
+        box.style.display = 'none';
+        return;
+    }
+    box.style.display = 'flex';
+    countTag.innerText = `${sessionRounds.length} Round${sessionRounds.length > 1 ? 's' : ''}`;
+    
+    list.innerHTML = sessionRounds.map(r => `
+        <div class="history-item">
+            <div>
+                <strong>R${r.num}: ${r.persona}</strong> • <span>${r.duration}</span> • <span style="font-weight:700;color:var(--navy);">${r.score}</span>
+            </div>
+            <span style="color:var(--muted); font-size:9px;">${r.time}</span>
+        </div>
+    `).join('');
 }
 
 function showToast(msg) {
