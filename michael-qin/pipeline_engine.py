@@ -3716,6 +3716,31 @@ window.addEventListener('DOMContentLoaded', () => {{
     }}
     .curve-card.active .curve-detail {{ display: flex; }}
 
+    .pill-tone {{
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 11.5px;
+    color: #1e40af;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}}
+.opp-tone-chip {{
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #f1f5f9;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}}
+.opp-tone-chip.active {{
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+}}
     .pill-win {{
         background: var(--success-bg);
         border: 1px solid var(--success-border);
@@ -4280,6 +4305,18 @@ window.addEventListener('DOMContentLoaded', () => {{
 
             <div style="font-size: 11px; font-weight: 800; color: var(--navy); text-transform: uppercase; margin-top: 2px;">
                 🎯 Opponent Curveballs (Say These Aloud to Test Him):
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px 0; align-items:center;">
+                        <span style="font-size:10px; font-weight:800; color:var(--navy);">🎭 Michael's Tone:</span>
+                        <button class="opp-tone-chip active" onclick="setOpponentTone('belfort_straight_line',this)">🐺 Belfort</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('voss_empathy',this)">🕵️ Voss</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('klaff_frame',this)">🧠 Klaff</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('cardone_10x',this)">⚡ Cardone</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('challenger_sale',this)">📊 Challenger</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('cialdini_authority',this)">👑 Cialdini</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('ziglar_relational',this)">🤠 Ziglar</button>
+                    </div>
+                    <div style="display:none;">
             </div>
 
             <!-- Curveball Soundboard -->
@@ -4411,6 +4448,27 @@ const PERSONAS = {personas_json};
 const CURVEBALLS = {curveballs_json};
 
 let currentPersonaKey = "contractor";
+let currentOpponentTone = "belfort_straight_line";
+
+// Map curveball ID -> which profile key to show as the tone-aware Winning Move
+const CURVE_PROFILE_MAP = {{
+    "q_who_is_this":      (p) => p.who_is_this,
+    "q_dont_need_money":  (p) => p.dont_need_money,
+    "q_just_email":       (p) => p.just_email_me,
+    "q_what_rates":       (p) => p.what_rates,
+    "q_why_statements":   (p) => p.statement_pushback,
+    "q_already_have_debt":(p) => null,
+    "q_driving":          (p) => null,
+    "q_broker_shopping":  (p) => null,
+}};
+
+function setOpponentTone(key, btn) {{
+    currentOpponentTone = key;
+    document.querySelectorAll('.opp-tone-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderCurveballs();
+}}
+
 let currentDiff = "easy";
 let activeRubric = {{ tone: null, deflect: null, stmt: null, voss: null }};
 let rubricPoints = {{ tone: 0, deflect: 0, stmt: 0, voss: 0 }};
@@ -4524,7 +4582,17 @@ function renderPersonaDossier() {{
 
 function renderCurveballs() {{
     const container = document.getElementById('curveball-list');
-    container.innerHTML = CURVEBALLS.map((c, idx) => `
+    const profile = TONE_PROFILES[currentOpponentTone] || TONE_PROFILES["belfort_straight_line"];
+    container.innerHTML = CURVEBALLS.map((c, idx) => {{
+        const mapper = CURVE_PROFILE_MAP[c.id];
+        const toneScript = mapper ? mapper(profile) : null;
+        const winText = toneScript
+            ? toneScript.replace(/"/g, '').substring(0, 220) + '...'
+            : c.win;
+        const toneLabel = toneScript
+            ? `<div class="pill-tone">🎭 <strong>${{profile.name}}:</strong> ${{winText}}</div>`
+            : '';
+        return `
         <div class="curve-card" id="card-${{c.id}}">
             <div class="curve-q-row" onclick="toggleCurveball('${{c.id}}')">
                 <span class="curve-q">${{c.q}}</span>
@@ -4536,11 +4604,12 @@ function renderCurveballs() {{
                 <button class="btn-action-sm fire" onclick="broadcastPushback('${{c.id}}')">📡 Fire at Michael</button>
             </div>
             <div class="curve-detail">
-                <div class="pill-win">✅ <strong>Winning Move:</strong> ${{c.win}}</div>
+                ${{toneLabel}}
+                <div class="pill-win">✅ <strong>Generic Win:</strong> ${{c.win}}</div>
                 <div class="pill-trap">❌ <strong>Rookie Trap:</strong> ${{c.trap}}</div>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }}).join('');
 }}
 
 function toggleCurveball(id) {{

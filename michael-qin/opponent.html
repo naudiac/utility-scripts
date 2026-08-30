@@ -392,6 +392,31 @@
     }
     .curve-card.active .curve-detail { display: flex; }
 
+    .pill-tone {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 11.5px;
+    color: #1e40af;
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+.opp-tone-chip {
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #f1f5f9;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.opp-tone-chip.active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+}
     .pill-win {
         background: var(--success-bg);
         border: 1px solid var(--success-border);
@@ -956,6 +981,18 @@
 
             <div style="font-size: 11px; font-weight: 800; color: var(--navy); text-transform: uppercase; margin-top: 2px;">
                 🎯 Opponent Curveballs (Say These Aloud to Test Him):
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px 0; align-items:center;">
+                        <span style="font-size:10px; font-weight:800; color:var(--navy);">🎭 Michael's Tone:</span>
+                        <button class="opp-tone-chip active" onclick="setOpponentTone('belfort_straight_line',this)">🐺 Belfort</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('voss_empathy',this)">🕵️ Voss</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('klaff_frame',this)">🧠 Klaff</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('cardone_10x',this)">⚡ Cardone</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('challenger_sale',this)">📊 Challenger</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('cialdini_authority',this)">👑 Cialdini</button>
+                        <button class="opp-tone-chip" onclick="setOpponentTone('ziglar_relational',this)">🤠 Ziglar</button>
+                    </div>
+                    <div style="display:none;">
             </div>
 
             <!-- Curveball Soundboard -->
@@ -1087,6 +1124,27 @@ const PERSONAS = {"contractor": {"name": "Frank Miller (Owner)", "company": "Ape
 const CURVEBALLS = [{"id": "q_who_is_this", "q": "\ud83d\udcde \"Who is this & why are you calling my cell?\"", "cue": "Testing Michael's 5-second composure and value hook.", "spokenLine": "Who is this, and why are you calling my personal cell phone right now?", "win": "Winning Move: \"Michael Qin with Creative Capital Solutions. I know I caught you out of the blue, but our desk is actively restructuring high daily debits for [Industry] operators...\"", "trap": "Rookie Trap: Apologizing ('Sorry to bother you') or sounding like a robotic telemarketer reading a script."}, {"id": "q_dont_need_money", "q": "\ud83d\udeab \"We don't need any money right now, business is good.\"", "cue": "The classic brush-off. Tests if he pivots to an audit or folds.", "spokenLine": "Look, we're doing great, revenue is strong, and I don't need to borrow any money right now.", "win": "Winning Move: \"Glad cash flow is strong. We actually don't place speculative debt\u2014we audit incumbent lenders to stop $2k/mo in fee leakage and keep lenders honest at zero cost.\"", "trap": "Rookie Trap: Trying to force a loan or asking 'Are you sure you don't need capital for expansion?'"}, {"id": "q_just_email", "q": "\ud83d\udce7 \"Just email me your rate sheet, I'm busy.\"", "cue": "The 90% death trap. Tests the 45-second on-call download ask.", "spokenLine": "I'm right in the middle of something. Just send whatever you have to my email and I'll look at it later.", "win": "Winning Move: \"Happy to route that over. Rather than sending generic decks you'll never read, are you looking at your phone right now? Pull up your banking app for 45 seconds while I confirm receipt...\"", "trap": "Rookie Trap: Saying 'Sure, what's your email?' and hanging up with 0% chance of closing."}, {"id": "q_what_rates", "q": "\ud83c\udff7\ufe0f \"What are your exact rates? Give me a percentage.\"", "cue": "Price pressure trap. Tests if he quotes a blind rate or trades for statements.", "spokenLine": "Before we talk about anything, what are your exact rates? Give me a percentage or APR.", "win": "Winning Move: \"Rates depend entirely on monthly deposits, but we consistently cut daily debit payments in half. Rather than quoting a misleading ballpark, send 3 statements and I'll have your exact rate card in 3 hours.\"", "trap": "Rookie Trap: Quoting a random number like '8% to 15%' which destroys credibility."}, {"id": "q_why_statements", "q": "\ud83d\udd12 \"Why do you need bank statements? I'm not sending docs.\"", "cue": "Security friction. Tests if he offers account number redaction.", "spokenLine": "Why do you need my bank statements right away? I'm not emailing my company financials to a stranger.", "win": "Winning Move: \"Totally understand\u2014your numbers are sensitive. We don't shop your file to 20 brokers. You can redact your account numbers. We just need the deposit volume to calculate your term sheet.\"", "trap": "Rookie Trap: Getting defensive or arguing 'That's just company policy.'"}, {"id": "q_already_have_debt", "q": "\ud83d\udcb8 \"I already have 2 loans with OnDeck taking $1,800/day.\"", "cue": "The golden consolidation lead! Tests if he identifies the consolidation play.", "spokenLine": "I already have two MCA advances with OnDeck and Rapid taking $1,800 out of my account every single day, so I can't take any more debt.", "win": "Winning Move: \"That's exactly why I called. We specialize in rolling stacked daily ACH positions out of OnDeck into a single clean monthly schedule to cut your debit drain by 40%.\"", "trap": "Rookie Trap: Treating it as a rejection instead of the highest-converting opportunity."}, {"id": "q_driving", "q": "\u23f3 \"I'm on a noisy roof / driving on the highway right now.\"", "cue": "Time barrier. Tests the 1-click SMS pivot.", "spokenLine": "I can barely hear you, I'm driving 70 on the highway / up on a crane lift right now.", "win": "Winning Move: \"Understood, drive safe. I am texting my direct upload link to this mobile number right now. Reply with the 3 PDFs when you park and I'll run the numbers today.\"", "trap": "Rookie Trap: Trying to keep talking while they are clearly unable to look at anything."}, {"id": "q_broker_shopping", "q": "\ud83d\uded1 \"Are you just another broker who's gonna blast my credit?\"", "cue": "Trust test. Tests CCAP's direct private credit positioning.", "spokenLine": "Are you just another middleman broker who's gonna take my file and blast it to 30 lenders across the country?", "win": "Winning Move: \"No. We operate a direct syndication desk in New York. We conduct an in-house preliminary audit. Your file is never blasted to public market portals.\"", "trap": "Rookie Trap: Stuttering or giving a vague answer about 'our network of 50 partners.'"}];
 
 let currentPersonaKey = "contractor";
+let currentOpponentTone = "belfort_straight_line";
+
+// Map curveball ID -> which profile key to show as the tone-aware Winning Move
+const CURVE_PROFILE_MAP = {
+    "q_who_is_this":      (p) => p.who_is_this,
+    "q_dont_need_money":  (p) => p.dont_need_money,
+    "q_just_email":       (p) => p.just_email_me,
+    "q_what_rates":       (p) => p.what_rates,
+    "q_why_statements":   (p) => p.statement_pushback,
+    "q_already_have_debt":(p) => null,
+    "q_driving":          (p) => null,
+    "q_broker_shopping":  (p) => null,
+};
+
+function setOpponentTone(key, btn) {
+    currentOpponentTone = key;
+    document.querySelectorAll('.opp-tone-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderCurveballs();
+}
+
 let currentDiff = "easy";
 let activeRubric = { tone: null, deflect: null, stmt: null, voss: null };
 let rubricPoints = { tone: 0, deflect: 0, stmt: 0, voss: 0 };
@@ -1200,7 +1258,17 @@ function renderPersonaDossier() {
 
 function renderCurveballs() {
     const container = document.getElementById('curveball-list');
-    container.innerHTML = CURVEBALLS.map((c, idx) => `
+    const profile = TONE_PROFILES[currentOpponentTone] || TONE_PROFILES["belfort_straight_line"];
+    container.innerHTML = CURVEBALLS.map((c, idx) => {
+        const mapper = CURVE_PROFILE_MAP[c.id];
+        const toneScript = mapper ? mapper(profile) : null;
+        const winText = toneScript
+            ? toneScript.replace(/"/g, '').substring(0, 220) + '...'
+            : c.win;
+        const toneLabel = toneScript
+            ? `<div class="pill-tone">🎭 <strong>${profile.name}:</strong> ${winText}</div>`
+            : '';
+        return `
         <div class="curve-card" id="card-${c.id}">
             <div class="curve-q-row" onclick="toggleCurveball('${c.id}')">
                 <span class="curve-q">${c.q}</span>
@@ -1212,11 +1280,12 @@ function renderCurveballs() {
                 <button class="btn-action-sm fire" onclick="broadcastPushback('${c.id}')">📡 Fire at Michael</button>
             </div>
             <div class="curve-detail">
-                <div class="pill-win">✅ <strong>Winning Move:</strong> ${c.win}</div>
+                ${toneLabel}
+                <div class="pill-win">✅ <strong>Generic Win:</strong> ${c.win}</div>
                 <div class="pill-trap">❌ <strong>Rookie Trap:</strong> ${c.trap}</div>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 }
 
 function toggleCurveball(id) {
