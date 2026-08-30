@@ -963,6 +963,24 @@
                 </div>
             </div>
         </div>
+                    <div class="intel-card" id="ic-manufacturing">
+                        <div class="intel-card-header" onclick="toggleIntelCard('ic-manufacturing')">
+                            Manufacturing
+                        </div>
+                        <div class="intel-card-body">
+                            <div class="intel-pain">Pain: Equipment ACH debits + net-60/90 invoice lag create daily cash gaps even with strong revenue.</div>
+                            <div class="intel-hook">Hook: We bridge the gap between your invoice cycle and daily ACH — no payroll risk waiting on Net-90 terms.</div>
+                        </div>
+                    </div>
+                    <div class="intel-card" id="ic-auto">
+                        <div class="intel-card-header" onclick="toggleIntelCard('ic-auto')">
+                            Auto and Retail
+                        </div>
+                        <div class="intel-card-body">
+                            <div class="intel-pain">Pain: Floorplan interest + daily MCA debits compound during slow months (Jan-Feb, Aug).</div>
+                            <div class="intel-hook">Hook: We consolidate floor-plan and working capital into one clean monthly payment — no more daily drain in the slow season.</div>
+                        </div>
+                    </div>
     </div>
 
     <!-- Navigation Tabs -->
@@ -1453,7 +1471,7 @@ What if you just black out the account numbers before you send it? We only need 
 
     "klaff_frame": {
         name: "🧠 Frame Control (Klaff)",
-        opener: `"John, Michael Qin from the private credit desk at Creative Capital. I have a hard stop in exactly two minutes for a committee meeting, but I wanted to drop a quick metric on your desk.
+        opener: `"[Name], Michael Qin from the private credit desk at Creative Capital. I have a hard stop in exactly two minutes for a committee meeting, but I wanted to drop a quick metric on your desk.
 
 We're seeing mid-market operators in [Industry] hemorrhage cash to [Lender_Or_Default]. We just restructured a deal to cut their daily debt service by 40%."`,
         who_is_this: `"We're the senior underwriting desk at Creative Capital Solutions.
@@ -1466,23 +1484,23 @@ I don't know if [Company] qualifies for our senior tier yet, but if you want me 
 You send the last 3 bank statements. We run the underwriting. We present you with the savings. The numbers will do the talking, and if they don't, we part as friends.
 
 I need to jump on this next call in 60 seconds. Where should I send the secure upload link?"`,
-        dont_need_money: `"John, the guys who 'need money' are exactly the guys we reject. We don't lend to distressed operators.
+        dont_need_money: `"[Name], the guys who 'need money' are exactly the guys we reject. We don't lend to distressed operators.
 
 We only work with prime companies who want to optimize their capital stack and stop paying premium retail rates for their debt.
 
 If you're happy paying retail rates to your current lender, keep doing it. But if you want to know what institutional pricing looks like for [Company], let's run the audit. What email?"`,
-        just_email_me: `"John, I don't send out blind marketing decks. They're a waste of your time and mine.
+        just_email_me: `"[Name], I don't send out blind marketing decks. They're a waste of your time and mine.
 
 If you don't have 45 seconds to pull your 3 bank statements right now so we can run a real, numbers-based analysis, we're probably not a fit for each other.
 
 Are you in front of your computer or should we just part ways here?"`,
-        what_rates: `"John, my desk doesn't throw darts at a dartboard. Our institutional rates are tied directly to your operating revenue. 
+        what_rates: `"[Name], my desk doesn't throw darts at a dartboard. Our institutional rates are tied directly to your operating revenue. 
 
 I'm not going to quote you a retail number. If you want access to the senior tier, you have to show us the 3 statements. 
 
 Are we doing this or should I move on to my next call?"`,
         what_rates_tactical: "Establish high status. You don't guess rates. They must qualify for YOUR institutional rates.",
-        statement_pushback: `"John, we evaluate $50M a month in commercial paper. Your financials are completely secure with my underwriters. 
+        statement_pushback: `"[Name], we evaluate $50M a month in commercial paper. Your financials are completely secure with my underwriters. 
 
 But if you're not comfortable sharing redacted statements so we can do our job, we can't do business together. 
 
@@ -1497,20 +1515,20 @@ I'm sending the secure portal link now, what's your email?"`,
 
     "cardone_10x": {
         name: "⚡ 10X Assumptive (Cardone)",
-        opener: `"John! Michael Qin, Creative Capital Solutions. We are slashing daily loan debits for [Industry] operators right now, moving guys out of expensive [Lender_Or_Default] positions and cutting payments by 40%.
+        opener: `"[Name]! Michael Qin, Creative Capital Solutions. We are slashing daily loan debits for [Industry] operators right now, moving guys out of expensive [Lender_Or_Default] positions and cutting payments by 40%.
 
 Are you looking at your financials today?"`,
         who_is_this: `"Michael Qin, Creative Capital Solutions! We're the guys who come in and fix broken commercial debt structures.
 
 We just took a company doing [Revenue_Or_Default] in [Industry] and freed up 8 grand a month in cash flow.
 
-I'm going to send you a quick email right now so you have my contact info. What's the best email for you, John?"`,
-        hook: `"Great. Look John, I know you're busy, I'm busy too, that's exactly why I called.
+I'm going to send you a quick email right now so you have my contact info. What's the best email for you, [Name]?"`,
+        hook: `"Great. Look [Name], I know you're busy, I'm busy too, that's exactly why I called.
 
 Send me your last 3 bank statements right now. I'm going to have my team run the numbers, and I'm going to show you exactly how much money we can put back in your pocket by tomorrow.
 
 Shoot those over to me while we're on the phone, what email are you sending from?"`,
-        dont_need_money: `"I agree with you completely John, you don't need money, you need to KEEP your money!
+        dont_need_money: `"I agree with you completely [Name], you don't need money, you need to KEEP your money!
 
 I'm not trying to put you in debt, I'm trying to get you out of the expensive debt you're already in. Every day you wait, you're overpaying.
 
@@ -1541,7 +1559,7 @@ What email?"`,
 
     "challenger_sale": {
         name: "📊 Challenger Tension",
-        opener: `"John, Michael Qin with the private credit desk at Creative Capital.
+        opener: `"[Name], Michael Qin with the private credit desk at Creative Capital.
 
 We're tracking a disturbing trend in the [Industry] sector right now. Mid-market operators are losing upwards of 12% of their operating margin to hidden fees and compounding daily debits from lenders like [Lender_Or_Default].
 
@@ -1551,19 +1569,19 @@ Have you audited your effective annual rate this quarter?"`,
 What we're finding is that operators doing [Revenue_Or_Default] think they're paying 15% on their capital, but because of daily debit factoring, their true cost of capital is closer to 45%.
 
 I'd like to send you our recent white-paper analysis on this, along with a secure link to run a free audit on your last 3 statements. What's your direct email?"`,
-        hook: `"John, the biggest risk to [Company] right now isn't lack of capital, it's the cost of the capital you already deployed.
+        hook: `"[Name], the biggest risk to [Company] right now isn't lack of capital, it's the cost of the capital you already deployed.
 
 If you provide your last 3 bank statements, our analysts will map out your exact cost-of-capital curve.
 
 We typically uncover $3k to $5k a month in margin leakage. Where should I send the audit framework?"`,
-        dont_need_money: `"Most operators think they're all set, John—until we show them how their current lender is front-loading the interest and bleeding their daily cash flow.
+        dont_need_money: `"Most operators think they're all set, [Name]—until we show them how their current lender is front-loading the interest and bleeding their daily cash flow.
 
 How certain are you that your current effective rate with your incumbent lender is actually under 18%?
 
 [Wait for answer]
 
 Send me the 3 statements. Let us prove it mathematically. What email?"`,
-        just_email_me: `"I can send the email, John. But let's be pragmatic.
+        just_email_me: `"I can send the email, [Name]. But let's be pragmatic.
 
 If you don't take 45 seconds right now to pull those 3 statements from your banking portal, tomorrow morning you're going to get hit with another expensive daily debit that you didn't need to pay.
 
@@ -1595,17 +1613,17 @@ The reason I'm calling you directly is that we just finished restructuring comme
 We are the premier debt restructuring desk for the [Industry] sector. Over 80% of the companies we talk to doing [Revenue_Or_Default] are currently overpaying on their short-term debt.
 
 I want to send you the exact case study of how we just saved a competitor of yours $7,500 a month. What's the best email to send that to?"`,
-        hook: `"John, right now we have an exclusive block of institutional capital specifically earmarked to refinance operators in your industry, but it closes at the end of the month.
+        hook: `"[Name], right now we have an exclusive block of institutional capital specifically earmarked to refinance operators in [Industry], but it closes at the end of the month.
 
 To see if you qualify for these top-tier rates, I just need your last 3 bank statements. The top firms we work with run this audit quarterly.
 
 What email should I use?"`,
-        dont_need_money: `"I'm glad to hear that John, because the operators who get approved for our lowest rates are exactly the ones who don't *need* the money.
+        dont_need_money: `"I'm glad to hear that [Name], because the operators who get approved for our lowest rates are exactly the ones who don't *need* the money.
 
 Because your profile is strong, you're exactly who the tier-1 banks want to lend to right now. You shouldn't be paying retail rates.
 
 Let's run the 3-statement audit to see what rate tier you actually qualify for. What's your email?"`,
-        just_email_me: `"I can email you John, but the operators who secure these rates don't wait on emails—they run the 45-second audit with me live on the phone so we can get them into underwriting today.
+        just_email_me: `"I can email you [Name], but the operators who secure these rates don't wait on emails—they run the 45-second audit with me live on the phone so we can get them into underwriting today.
 
 Let's get your 3 statements pulled right now while you have me on the line. It'll take less than a minute.
 
@@ -1616,7 +1634,7 @@ The three [Industry] companies we just funded sent their statements, we ran the 
 
 What email?"`,
         what_rates_tactical: "Leverage social proof (the three other companies did this, so you should too).",
-        statement_pushback: `"I completely understand the caution. That's why the top firms in your industry trust us—we run a completely secure, in-house audit. 
+        statement_pushback: `"I completely understand the caution. That's why the top firms in [Industry] trust us—we run a completely secure, in-house audit. 
 
 You can even black out your account numbers. Let's get this moving so you don't miss this funding block. 
 
@@ -1631,7 +1649,7 @@ What's the best email?"`,
 
     "ziglar_relational": {
         name: "🤠 Relational (Ziglar)",
-        opener: `"Hey John, I hope you're having a good day. It's Michael Qin with Creative Capital Solutions.
+        opener: `"Hey [Name], I hope you're having a good day. It's Michael Qin with Creative Capital Solutions.
 
 I know you weren't expecting my call, and I appreciate you picking up. We're reaching out to hardworking [Industry] owners today to help them get out from under those heavy daily payments to lenders like [Lender_Or_Default]."`,
         who_is_this: `"It's Michael Qin with Creative Capital Solutions. We help honest business owners like you keep more of the money you earn.
@@ -1639,22 +1657,22 @@ I know you weren't expecting my call, and I appreciate you picking up. We're rea
 We just worked with a great guy running a [Industry] business doing [Revenue_Or_Default], and we were able to free up enough cash flow for him to hire two new guys.
 
 I'd love to just send you a quick note with my contact info so you know I'm a real person. What's the best email for you?"`,
-        hook: `"John, I treat my clients the way I'd want my own family treated. If you share your last 3 bank statements with me, I will personally look them over.
+        hook: `"[Name], I treat my clients the way I'd want my own family treated. If you share your last 3 bank statements with me, I will personally look them over.
 
 If your current lender is taking good care of you, I'll be the first to tell you to stay with them. But if they're charging you too much, I'd love to show you a better way.
 
 What email works best for you?"`,
-        dont_need_money: `"I completely understand how you feel, John. A lot of our best clients felt the exact same way when I first called them.
+        dont_need_money: `"I completely understand how you feel, [Name]. A lot of our best clients felt the exact same way when I first called them.
 
 But what they found was that they were actually losing thousands of dollars a month to hidden fees they didn't even know about. I just want to make sure you're protected.
 
 Let me do a quick, free check on your last 3 statements. What email should I use?"`,
-        just_email_me: `"I'd be happy to send you an email John. But you know how it is—we all get busy, and things just pile up on the desk.
+        just_email_me: `"I'd be happy to send you an email [Name]. But you know how it is—we all get busy, and things just pile up on the desk.
 
 Since we're on the phone right now, if you could just take 45 seconds to pull those 3 statements from your banking app, we can get this completely off your plate today.
 
 Who do you guys bank with down there, Chase or Wells Fargo?"`,
-        what_rates: `"John, I'd love to give you a number right now, but I want to be completely honest with you—if I guess, I might be wrong, and I don't want to make a promise I can't keep. 
+        what_rates: `"[Name], I'd love to give you a number right now, but I want to be completely honest with you—if I guess, I might be wrong, and I don't want to make a promise I can't keep. 
 
 If you share your last 3 statements with me, I will personally make sure you get the absolute best rate we have. 
 
