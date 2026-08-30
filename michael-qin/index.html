@@ -1781,43 +1781,73 @@ const INDUSTRY_PRESETS = {
         industry: "Commercial Construction & Roofing",
         lender: "OnDeck / Rapid Finance",
         revenue: "$140,000/mo",
-        debitStr: "$1,850/day",
-        notes: "Pain: 60-90 day GC progress draw delay & upfront material supply."
+        debitStr: "$1,850/day ($40K/mo)",
+        notes: "Pain: 60-90 day GC progress draw lag while daily debits drain payroll.",
+        painHook: "stop daily debits while waiting on 60-day GC progress draws",
+        calcRev: 140000,
+        calcDebit: 40000,
+        calcNewPay: 14500,
+        calcAdvance: 175000
     },
     "trucking": {
         industry: "Freight Logistics & Trucking",
         lender: "Fundbox / Apex Capital",
         revenue: "$185,000/mo",
-        debitStr: "$2,400/day",
-        notes: "Pain: Diesel fuel card debits & 45-day freight broker payables lag."
+        debitStr: "$2,400/day ($52K/mo)",
+        notes: "Pain: Diesel fuel card debits & 45-day freight broker payables lag.",
+        painHook: "bridge slow freight broker payables without predatory factoring cuts",
+        calcRev: 185000,
+        calcDebit: 52000,
+        calcNewPay: 18000,
+        calcAdvance: 225000
     },
     "restaurant": {
         industry: "Restaurant & Hospitality",
         lender: "Square Capital / Toast",
         revenue: "$95,000/mo",
-        debitStr: "$950/day",
-        notes: "Pain: POS credit card batch holds; wants to keep 100% of weekend receipts."
+        debitStr: "$950/day ($21K/mo)",
+        notes: "Pain: POS credit card batch holds; wants to keep 100% of weekend receipts.",
+        painHook: "keep 100% of your busy weekend credit card receipts",
+        calcRev: 95000,
+        calcDebit: 21000,
+        calcNewPay: 8500,
+        calcAdvance: 110000
     },
     "medical": {
         industry: "Private Dental & Medical Practice",
         lender: "Lendio / Fora Financial",
         revenue: "$130,000/mo",
-        debitStr: "$1,200/day",
-        notes: "Pain: 60-day Medicare & private insurer reimbursement lag."
+        debitStr: "$1,200/day ($26K/mo)",
+        notes: "Pain: 60-day Medicare & private insurer reimbursement lag.",
+        painHook: "smooth out 60-day insurance reimbursement float with zero personal collateral",
+        calcRev: 130000,
+        calcDebit: 26000,
+        calcNewPay: 11000,
+        calcAdvance: 160000
     },
     "manufacturing": {
         industry: "Machining & Manufacturing",
         lender: "Kapitus / National Funding",
         revenue: "$260,000/mo",
-        debitStr: "$3,600/day",
-        notes: "Pain: High raw material prepayments & CNC equipment lease debt."
+        debitStr: "$3,600/day ($78K/mo)",
+        notes: "Pain: High raw material prepayments & CNC equipment lease debt.",
+        painHook: "bridge the invoice cycle gap without payroll risk on Net-90 terms",
+        calcRev: 260000,
+        calcDebit: 78000,
+        calcNewPay: 26000,
+        calcAdvance: 320000
     },
     "retail": {
         industry: "Auto Repair & Retail Supply",
         lender: "Libertas / Fundraise",
         revenue: "$110,000/mo",
-        debitStr: "$1,350/day",
-        notes: "Pain: Seasonal inventory buildup & parts supplier invoices."
+        debitStr: "$1,350/day ($29K/mo)",
+        notes: "Pain: Seasonal inventory buildup & parts supplier invoices.",
+        painHook: "consolidate floorplan interest and slow-season daily MCA drain into one payment",
+        calcRev: 110000,
+        calcDebit: 29000,
+        calcNewPay: 10500,
+        calcAdvance: 135000
     }
 };
 
@@ -1834,6 +1864,13 @@ function applyIndustryPreset(key) {
     const revEl = document.getElementById('lead-rev'); if (revEl) revEl.value = p.revenue;
     const debitEl = document.getElementById('lead-debit-str'); if (debitEl) debitEl.value = p.debitStr;
     const notesEl = document.getElementById('lead-notes'); if (notesEl) notesEl.value = p.notes;
+
+    // Auto-sync Savings Calculator with Vertical Benchmarks
+    if (p.calcRev && document.getElementById('calc-rev')) document.getElementById('calc-rev').value = p.calcRev;
+    if (p.calcDebit && document.getElementById('calc-debit')) document.getElementById('calc-debit').value = p.calcDebit;
+    if (p.calcNewPay && document.getElementById('calc-new-pay')) document.getElementById('calc-new-pay').value = p.calcNewPay;
+    if (p.calcAdvance && document.getElementById('calc-advance')) document.getElementById('calc-advance').value = p.calcAdvance;
+    runCalc();
 
     updatePersonalization();
     trackTelemetry('INDUSTRY_PRESET', `Applied Vertical Preset: ${p.industry}`, { vertical: key });
@@ -1889,9 +1926,9 @@ function formatWithTokens(templateStr, highlight = false) {
 
     if (leadState.lender.trim()) {
         const lenderToken = highlight ? `<span class="token-highlight">${t.lender}</span>` : t.lender;
-        res = res.replaceAll("[Lender_Or_Default]", `${lenderToken} or other daily MCA positions`);
+        res = res.replaceAll("[Lender_Or_Default]", `${lenderToken} or high-factor daily positions`);
     } else {
-        res = res.replaceAll("[Lender_Or_Default]", "OnDeck, Rapid, or high-factor MCA advances");
+        res = res.replaceAll("[Lender_Or_Default]", "OnDeck, Rapid, or other high-factor daily MCA positions");
     }
 
     if (leadState.revenue.trim()) {
@@ -1899,6 +1936,13 @@ function formatWithTokens(templateStr, highlight = false) {
         res = res.replaceAll("[Revenue_Or_Default]", `businesses generating ${revToken} in volume`);
     } else {
         res = res.replaceAll("[Revenue_Or_Default]", "mid-market operators in your sector");
+    }
+
+    if (leadState.notes.trim()) {
+        const painClean = leadState.notes.replace(/^Pain:\s*/i, '');
+        res = res.replaceAll("[Vertical_Pain]", painClean);
+    } else {
+        res = res.replaceAll("[Vertical_Pain]", "high daily debits and compounding factor fees");
     }
 
     return res;
@@ -1926,6 +1970,8 @@ function updatePersonalization() {
     }
 
     renderCurrentNode();
+    renderObjections();
+    renderPipeline();
     updateCadenceSnippets();
 }
 
@@ -2439,8 +2485,11 @@ function renderObjections() {
 
     container.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:6px 10px;">
-            <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🎭 Active Methodology: ${profile.name}</span>
-            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Auto-Synced to Tone</span>
+            <div>
+                <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🎭 Active Methodology: ${profile.name}</span>
+                <span style="font-size:11px; color:#2563eb; margin-left:8px; font-weight:700;">• Vertical: ${formatWithTokens("[Industry]")}</span>
+            </div>
+            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono); font-weight:700;">⚡ Live Synced</span>
         </div>
         <div class="objections-grid">` + objectionsData.map(o => `
         <div style="margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
@@ -2548,8 +2597,11 @@ function renderPipeline() {
 
     container.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:6px 10px;">
-            <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🚀 7-Stage Pipeline — Methodology: ${profile.name}</span>
-            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Dynamic Flow</span>
+            <div>
+                <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🚀 7-Stage Pipeline — Methodology: ${profile.name}</span>
+                <span style="font-size:11px; color:#2563eb; margin-left:8px; font-weight:700;">• Target: ${formatWithTokens("[Industry]")}</span>
+            </div>
+            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono); font-weight:700;">⚡ Live Synced</span>
         </div>
         <div class="pipeline-grid">` + stagesData.map(s => `
         <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
