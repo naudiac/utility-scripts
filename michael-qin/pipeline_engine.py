@@ -134,9 +134,9 @@ class SalesPipelineSystem:
 
     .app-container {{
         width: 100%;
-        max-width: 1280px;
+        max-width: 1440px;
         margin: 0 auto;
-        padding: 6px 8px;
+        padding: 8px 16px;
         display: flex;
         flex-direction: column;
     }}
@@ -443,6 +443,38 @@ class SalesPipelineSystem:
         grid-template-columns: 1.15fr 1fr;
         gap: 8px;
     }}
+    
+    /* Responsive Desktop Grids */
+    .objections-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }}
+    .pipeline-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }}
+    .cadence-grid {{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }}
+    .statement-grid {{
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 12px;
+    }}
+
+    @media (max-width: 900px) {{
+        .cadence-grid {{ grid-template-columns: 1fr; }}
+        .statement-grid {{ grid-template-columns: 1fr; }}
+    }}
+    @media (max-width: 768px) {{
+        .objections-grid {{ grid-template-columns: 1fr; }}
+        .pipeline-grid {{ grid-template-columns: 1fr; }}
+    }}
+
     @media (max-width: 768px) {{
         .cockpit-grid {{
             grid-template-columns: 1fr;
@@ -1146,31 +1178,32 @@ class SalesPipelineSystem:
             <div class="section-header-row">
                 <span>🚀 45-Second On-Call Statement Extraction</span>
             </div>
-            <div class="copy-block green-box">
-                <div style="font-size: 9.5px; font-weight: 700; color: var(--color-success); text-transform: uppercase; margin-bottom: 2px;">Live Walkthrough Script</div>
-                <div class="copy-text" id="stmt-walkthrough-text"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-
-            <div style="font-size: 9.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 5px 0 2px;">Bank 2-Click Guides:</div>
-            <div class="bank-chips">
-                <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
-                <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
-                <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
-                <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile</button>
-            </div>
-
-            <div class="copy-block">
-                <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."
-2. "Click 'Statements & Documents' right below the balance."
-3. "Download the last 3 monthly PDFs and forward directly to my email."</div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-
-            <div class="copy-block yellow-box">
-                <div style="font-size: 9.5px; font-weight: 700; color: var(--color-warning); text-transform: uppercase; margin-bottom: 2px;">Chris Voss Loss-Aversion Rebuttal</div>
-                <div class="copy-text" id="loss-aversion-text"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+            <div class="statement-grid">
+                <div>
+                    <div class="copy-block green-box" style="margin-top:0;">
+                        <div style="font-size: 10px; font-weight: 800; color: var(--color-success); text-transform: uppercase; margin-bottom: 3px;">Live On-Call Walkthrough Script</div>
+                        <div class="copy-text" id="stmt-walkthrough-text"></div>
+                        <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    </div>
+                    <div class="copy-block yellow-box">
+                        <div style="font-size: 10px; font-weight: 800; color: var(--color-warning); text-transform: uppercase; margin-bottom: 3px;" id="loss-aversion-header">Statement Hesitation Rebuttal</div>
+                        <div class="copy-text" id="loss-aversion-text"></div>
+                        <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 10px; font-weight: 800; color: var(--corporate-navy); text-transform: uppercase; margin-bottom: 4px;">Bank 2-Click Navigation Guides:</div>
+                    <div class="bank-chips" style="margin-bottom:6px;">
+                        <button class="bank-chip active" onclick="selectBank('chase', this)">Chase Business</button>
+                        <button class="bank-chip" onclick="selectBank('boa', this)">Bank of America</button>
+                        <button class="bank-chip" onclick="selectBank('wells', this)">Wells Fargo</button>
+                        <button class="bank-chip" onclick="selectBank('universal', this)">Universal Mobile</button>
+                    </div>
+                    <div class="copy-block" style="margin-top:0;">
+                        <div class="copy-text" id="bank-guide-text">1. Tell merchant: "Log into Chase.com and click your business checking account."\n2. "Click 'Statements & Documents' right below the balance."\n3. "Download the last 3 monthly PDFs and forward directly to my email."</div>
+                        <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1231,22 +1264,24 @@ class SalesPipelineSystem:
     <div id="tab-cadence" class="tab-pane">
         <div class="section-block">
             <div class="section-header-row">
-                <span>📬 Multi-Touch SMS &amp; Email Cadence</span>
+                <span>📬 Multi-Touch SMS &amp; Email Cadence (Personalized to Lead)</span>
             </div>
-            <div class="copy-block green-box">
-                <div style="font-size: 9px; font-weight: 700; color: var(--color-success); text-transform: uppercase;">Day 1: Instant Post-Call SMS</div>
-                <div class="copy-text" id="cadence-sms1"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-            <div class="copy-block yellow-box">
-                <div style="font-size: 9px; font-weight: 700; color: var(--color-warning); text-transform: uppercase;">Day 3: Midday Leakage Check-In</div>
-                <div class="copy-text" id="cadence-email1"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
-            </div>
-            <div class="copy-block red-box">
-                <div style="font-size: 9px; font-weight: 700; color: var(--color-danger); text-transform: uppercase;">Day 8: Permission-to-Close Breakup</div>
-                <div class="copy-text" id="cadence-email2"></div>
-                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+            <div class="cadence-grid">
+                <div class="copy-block green-box">
+                    <div style="font-size: 10px; font-weight: 800; color: var(--color-success); text-transform: uppercase; margin-bottom:4px;">Day 1: Instant Post-Call SMS</div>
+                    <div class="copy-text" id="cadence-sms1"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+                <div class="copy-block yellow-box">
+                    <div style="font-size: 10px; font-weight: 800; color: var(--color-warning); text-transform: uppercase; margin-bottom:4px;">Day 3: Midday Leakage Check-In</div>
+                    <div class="copy-text" id="cadence-email1"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+                <div class="copy-block red-box">
+                    <div style="font-size: 10px; font-weight: 800; color: var(--color-danger); text-transform: uppercase; margin-bottom:4px;">Day 8: Permission-to-Close Breakup</div>
+                    <div class="copy-text" id="cadence-email2"></div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2313,7 +2348,7 @@ function renderCustomDeckList() {{
                 <button class="btn-ctrl" style="color:var(--color-danger);" onclick="deleteCustomDeck('${{d.id}}', event)">🗑️</button>
             </div>
         </div>
-    `).join('');
+    `).join('') + `</div>`;
 }}
 
 function renderToneChips() {{
@@ -2447,7 +2482,7 @@ function renderObjections() {{
             <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🎭 Active Methodology: ${{profile.name}}</span>
             <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Auto-Synced to Tone</span>
         </div>
-    ` + objectionsData.map(o => `
+        <div class="objections-grid">` + objectionsData.map(o => `
         <div style="margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
             <div style="font-size: 11.5px; font-weight: 700; color: var(--color-danger); margin-bottom: 2px;">${{o.title}}</div>
             <div class="copy-block red-box">
@@ -2556,7 +2591,7 @@ function renderPipeline() {{
             <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🚀 7-Stage Pipeline — Methodology: ${{profile.name}}</span>
             <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Dynamic Flow</span>
         </div>
-    ` + stagesData.map(s => `
+        <div class="pipeline-grid">` + stagesData.map(s => `
         <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
             <div style="font-size: 12px; font-weight: 800; color: var(--corporate-navy); margin-bottom: 2px;">Stage ${{s.num}}: ${{s.title}}</div>
             <div style="font-size: 11px; color: var(--text-main); margin-bottom: 4px;"><strong>Goal:</strong> ${{formatWithTokens(s.goal)}}</div>
