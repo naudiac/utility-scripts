@@ -1408,11 +1408,22 @@ window.addEventListener('load', () => {{
     trackTelemetry('OPEN', 'Opened Flight Deck', {{
         screen: `${{window.innerWidth}}x${{window.innerHeight}}`,
         referrer: document.referrer || 'direct'
+    }});
+}});
+
+// Heartbeat every 2 minutes
+setInterval(() => {{
+    trackTelemetry('HEARTBEAT', 'Active Session Heartbeat', {{
+        currentStage: historyStack[historyStack.length - 1],
+        currentTone: currentToneKey
+    }});
+}}, 120000);
+
 /* =========================================================================
    7 INSTANT PERSONA TONE PROFILES (PSYCHOLOGICAL OVERHAUL)
    ========================================================================= */
-const TONE_PROFILES = {
-    "belfort_straight_line": {
+const TONE_PROFILES = {{
+    "belfort_straight_line": {{
         name: "🐺 Straight Line (Belfort)",
         opener: `"Hey [Name], Michael Qin calling from the private credit desk at Creative Capital Solutions in New York. Look, the reason for the call today is very specific:
 
@@ -1445,6 +1456,189 @@ You're on your phone or near your laptop right now. Give me literally 45 seconds
 I'll confirm receipt right now, my desk runs the underwriting today, and you don't have this lingering on your desk tonight.
 
 Are you banking with Chase, Bank of America, or Wells Fargo?"`,
+        tactical: "Hyper-confident, urgent, sharp as a tack, enthusiastic as hell. Use straight-line anchors ('Fair enough?', 'You follow me on that?', 'You don't know me from Adam') and lock the 45-second on-call statement download."
+    }},
+
+    "voss_empathy": {{
+        name: "🕵️ Tactical Empathy (Voss)",
+        opener: `"Hey [Name]. [Pause 2 seconds] I'm sorry to call you out of the blue, did I catch you at a bad time?
+
+[Wait for answer]
+
+I appreciate that. I'm Michael with Creative Capital. We're reaching out to folks in [Industry] because it seems like [Lender_Or_Default] and the other daily-debit lenders are pulling a lot of operating cash out of the market right now."`,
+        who_is_this: `"I'm Michael Qin. We're a private credit advisory firm.
+
+It sounds like you get a lot of calls from aggressive brokers trying to jam you into high-interest loans you don't need. 
+
+We actually do the opposite. We run a diagnostic on your last 3 bank statements to see if you're overpaying on your current debt service.
+
+Would it be ridiculous for me to send you an email showing how we did this for another [Industry] company doing [Revenue_Or_Default]?"`,
+        hook: `"It seems like you're skeptical of anyone promising to save you money without a catch.
+
+How about this: you send over your last 3 monthly statements. We run a blind audit on our dime. If we can't legitimately cut your daily debits by at least 30%, I'll be the first to tell you to stick with what you have.
+
+How does that sound?"`,
+        dont_need_money: `"It sounds like you have your cash flow completely dialed in and you're running a very tight ship over there.
+
+[Pause]
+
+Just to be sure, when you say you're all set... you mean you have absolutely zero outstanding commercial debt? Or just that you're comfortable with the daily debits you're currently paying?"`,
+        just_email_me: `"I can definitely send an email. But it sounds like you're incredibly busy, and an email from me is just going to create another task on your to-do list.
+
+How am I supposed to run a real analysis for [Company] if I just send you a generic brochure?
+
+If you're near your computer, it takes about 45 seconds to download the last 3 PDFs from your bank portal. I'll wait on the line."`,
+        tactical: "Late-night FM DJ voice. Slow, calm, downward inflection. Use labeling ('It sounds like...') and calibrated 'How/What' questions to let them talk themselves into it."
+    }},
+
+    "klaff_frame": {{
+        name: "🧠 Frame Control (Klaff)",
+        opener: `"John, Michael Qin from the private credit desk at Creative Capital. I have a hard stop in exactly two minutes for a committee meeting, but I wanted to drop a quick metric on your desk.
+
+We're seeing mid-market operators in [Industry] hemorrhage cash to [Lender_Or_Default]. We just restructured a deal to cut their daily debt service by 40%."`,
+        who_is_this: `"We're the senior underwriting desk at Creative Capital Solutions.
+
+Look, my desk evaluates about 50 commercial debt schedules a week for companies doing [Revenue_Or_Default]. We only take on clients where we can mathematically prove a massive reduction in their cost of capital.
+
+I don't know if [Company] qualifies for our senior tier yet, but if you want me to run the diagnostic on your last 3 statements, I'll carve out 10 minutes for my analysts to review it. What's your direct email?"`,
+        hook: `"I'm not here to pitch you. My analysts just need the data to run the math.
+
+You send the last 3 bank statements. We run the underwriting. We present you with the savings. The numbers will do the talking, and if they don't, we part as friends.
+
+I need to jump on this next call in 60 seconds. Where should I send the secure upload link?"`,
+        dont_need_money: `"John, the guys who 'need money' are exactly the guys we reject. We don't lend to distressed operators.
+
+We only work with prime companies who want to optimize their capital stack and stop paying premium retail rates for their debt.
+
+If you're happy paying retail rates to your current lender, keep doing it. But if you want to know what institutional pricing looks like for [Company], let's run the audit. What email?"`,
+        just_email_me: `"John, I don't send out blind marketing decks. They're a waste of your time and mine.
+
+If you don't have 45 seconds to pull your 3 bank statements right now so we can run a real, numbers-based analysis, we're probably not a fit for each other.
+
+Are you in front of your computer or should we just part ways here?"`,
+        tactical: "High status, slight arrogance. Establish a time constraint immediately. Make THEM qualify for YOUR time. Pull away if they hesitate (Prizing)."
+    }},
+
+    "cardone_10x": {{
+        name: "⚡ 10X Assumptive (Cardone)",
+        opener: `"John! Michael Qin, Creative Capital Solutions. We are slashing daily loan debits for [Industry] operators right now, moving guys out of expensive [Lender_Or_Default] positions and cutting payments by 40%.
+
+Are you looking at your financials today?"`,
+        who_is_this: `"Michael Qin, Creative Capital Solutions! We're the guys who come in and fix broken commercial debt structures.
+
+We just took a company doing [Revenue_Or_Default] in [Industry] and freed up 8 grand a month in cash flow.
+
+I'm going to send you a quick email right now so you have my contact info. What's the best email for you, John?"`,
+        hook: `"Great. Look John, I know you're busy, I'm busy too, that's exactly why I called.
+
+Send me your last 3 bank statements right now. I'm going to have my team run the numbers, and I'm going to show you exactly how much money we can put back in your pocket by tomorrow.
+
+Shoot those over to me while we're on the phone, what email are you sending from?"`,
+        dont_need_money: `"I agree with you completely John, you don't need money, you need to KEEP your money!
+
+I'm not trying to put you in debt, I'm trying to get you out of the expensive debt you're already in. Every day you wait, you're overpaying.
+
+Send me the 3 statements, let me do the heavy lifting, and I'll prove it to you. What email?"`,
+        just_email_me: `"I agree you're busy, and I'm going to email you right now, but do me a favor.
+
+You're on your phone anyway. Log into your banking app, hit download on the last 3 months, and forward it to me before we hang up. It takes exactly 45 seconds.
+
+Let's get this done so I can go to work for you today. Chase or Bank of America?"`,
+        tactical: "Relentless, high energy, 100% certainty. Always agree with their objection first ('I agree!'), then immediately pivot back to the pitch and push the close."
+    }},
+
+    "challenger_sale": {{
+        name: "📊 Challenger Tension",
+        opener: `"John, Michael Qin with the private credit desk at Creative Capital.
+
+We're tracking a disturbing trend in the [Industry] sector right now. Mid-market operators are losing upwards of 12% of their operating margin to hidden fees and compounding daily debits from lenders like [Lender_Or_Default].
+
+Have you audited your effective annual rate this quarter?"`,
+        who_is_this: `"Creative Capital Solutions. We run commercial debt forensics and institutional refinancing.
+
+What we're finding is that operators doing [Revenue_Or_Default] think they're paying 15% on their capital, but because of daily debit factoring, their true cost of capital is closer to 45%.
+
+I'd like to send you our recent white-paper analysis on this, along with a secure link to run a free audit on your last 3 statements. What's your direct email?"`,
+        hook: `"John, the biggest risk to [Company] right now isn't lack of capital, it's the cost of the capital you already deployed.
+
+If you provide your last 3 bank statements, our analysts will map out your exact cost-of-capital curve.
+
+We typically uncover $3k to $5k a month in margin leakage. Where should I send the audit framework?"`,
+        dont_need_money: `"Most operators think they're all set, John—until we show them how their current lender is front-loading the interest and bleeding their daily cash flow.
+
+How certain are you that your current effective rate with your incumbent lender is actually under 18%?
+
+[Wait for answer]
+
+Send me the 3 statements. Let us prove it mathematically. What email?"`,
+        just_email_me: `"I can send the email, John. But let's be pragmatic.
+
+If you don't take 45 seconds right now to pull those 3 statements from your banking portal, tomorrow morning you're going to get hit with another expensive daily debit that you didn't need to pay.
+
+Log into the portal now. I'll stay on the line to confirm receipt."`,
+        tactical: "Lead with insight and disruption. Challenge their assumptions. Create constructive tension by implying they don't actually know their true cost of capital."
+    }},
+
+    "cialdini_authority": {{
+        name: "👑 Authority (Cialdini)",
+        opener: `"Hey [Name], Michael Qin on the private credit desk at Creative Capital Solutions.
+
+The reason I'm calling you directly is that we just finished restructuring commercial debt for three other [Industry] firms right in your exact area, moving them out of [Lender_Or_Default] and cutting their payments by 40%."`,
+        who_is_this: `"Michael Qin, Creative Capital Solutions.
+
+We are the premier debt restructuring desk for the [Industry] sector. Over 80% of the companies we talk to doing [Revenue_Or_Default] are currently overpaying on their short-term debt.
+
+I want to send you the exact case study of how we just saved a competitor of yours $7,500 a month. What's the best email to send that to?"`,
+        hook: `"John, right now we have an exclusive block of institutional capital specifically earmarked to refinance operators in your industry, but it closes at the end of the month.
+
+To see if you qualify for these top-tier rates, I just need your last 3 bank statements. The top firms we work with run this audit quarterly.
+
+What email should I use?"`,
+        dont_need_money: `"I'm glad to hear that John, because the operators who get approved for our lowest rates are exactly the ones who don't *need* the money.
+
+Because your profile is strong, you're exactly who the tier-1 banks want to lend to right now. You shouldn't be paying retail rates.
+
+Let's run the 3-statement audit to see what rate tier you actually qualify for. What's your email?"`,
+        just_email_me: `"I can email you John, but the operators who secure these rates don't wait on emails—they run the 45-second audit with me live on the phone so we can get them into underwriting today.
+
+Let's get your 3 statements pulled right now while you have me on the line. It'll take less than a minute.
+
+Do you use Chase or Bank of America?"`,
+        tactical: "Leverage Social Proof ('three other firms in your area'), Authority ('premier desk'), Scarcity ('closes at the end of the month'), and Consensus ('the top firms do this')."
+    }},
+
+    "ziglar_relational": {{
+        name: "🤠 Relational (Ziglar)",
+        opener: `"Hey John, I hope you're having a good day. It's Michael Qin with Creative Capital Solutions.
+
+I know you weren't expecting my call, and I appreciate you picking up. We're reaching out to hardworking [Industry] owners today to help them get out from under those heavy daily payments to lenders like [Lender_Or_Default]."`,
+        who_is_this: `"It's Michael Qin with Creative Capital Solutions. We help honest business owners like you keep more of the money you earn.
+
+We just worked with a great guy running a [Industry] business doing [Revenue_Or_Default], and we were able to free up enough cash flow for him to hire two new guys.
+
+I'd love to just send you a quick note with my contact info so you know I'm a real person. What's the best email for you?"`,
+        hook: `"John, I treat my clients the way I'd want my own family treated. If you share your last 3 bank statements with me, I will personally look them over.
+
+If your current lender is taking good care of you, I'll be the first to tell you to stay with them. But if they're charging you too much, I'd love to show you a better way.
+
+What email works best for you?"`,
+        dont_need_money: `"I completely understand how you feel, John. A lot of our best clients felt the exact same way when I first called them.
+
+But what they found was that they were actually losing thousands of dollars a month to hidden fees they didn't even know about. I just want to make sure you're protected.
+
+Let me do a quick, free check on your last 3 statements. What email should I use?"`,
+        just_email_me: `"I'd be happy to send you an email John. But you know how it is—we all get busy, and things just pile up on the desk.
+
+Since we're on the phone right now, if you could just take 45 seconds to pull those 3 statements from your banking app, we can get this completely off your plate today.
+
+Who do you guys bank with down there, Chase or Wells Fargo?"`,
+        tactical: "Warm, empathetic, trustworthy. Use the 'Feel, Felt, Found' framework. Focus on protecting them and treating them like family."
+    }}
+}};
+
+let currentToneKey = "belfort_straight_line";
+
+
 function setTone(toneKey, btn) {{
     currentToneKey = toneKey;
     document.querySelectorAll('.tone-chip').forEach(c => c.classList.remove('active'));
