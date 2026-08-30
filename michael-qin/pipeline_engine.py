@@ -886,7 +886,7 @@ class SalesPipelineSystem:
         }}
         .tone-chips {{
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             gap: 3px;
             width: 100%;
         }}
@@ -994,6 +994,7 @@ class SalesPipelineSystem:
             <span class="tone-lbl">🎭 Tone:</span>
             <div class="tone-chips" id="tone-chips-container">
                 <button class="tone-chip active" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
+                <button class="tone-chip" onclick="setTone('belfort_straight_line', this)">🐺 Straight Line</button>
                 <button class="tone-chip" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
                 <button class="tone-chip" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
                 <button class="tone-chip" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
@@ -1419,9 +1420,45 @@ setInterval(() => {{
 }}, 120000);
 
 /* =========================================================================
-   6 INSTANT PERSONA TONE PROFILES
+   7 INSTANT PERSONA TONE PROFILES (INCL. BELFORT STRAIGHT LINE)
    ========================================================================= */
 const TONE_PROFILES = {{
+    "belfort_straight_line": {{
+        name: "Straight Line (Belfort)",
+        opener: `"Hey [Name], Michael Qin calling from the institutional syndicate desk at Creative Capital Solutions in New York. Look, the reason for the call today is very specific:
+
+Our credit committee is actively restructuring secondary tier debt for mid-market operators in [Industry], moving companies out of expensive daily positions like [Lender_Or_Default] to cut monthly debit debt service by 40%."`,
+        who_is_this: `"I'm Michael Qin with Creative Capital Solutions, New York. We specialize in senior debt recapitalization and balance-sheet restructuring for mid-market operators like [Company].
+
+We literally just structured a placement for [Revenue_Or_Default] in [Industry], slashing their daily debit outflow in half and saving them over \$7,500 a month in hard cash flow.
+
+Now [Name], I'm not asking for your business today—you don't know me from Adam. All I'm asking for is a shot to prove my value to you on paper. Give me 45 seconds to review your last 3 bank statements. If the numbers blow you away, we talk. If they don't, we never speak again.
+
+Fair enough? What's your direct email?"`,
+        hook: `"Look [Name], you're a sharp business operator and I know you get twenty garbage calls a week from amateur brokers blasting your credit. That's not what this is.
+
+Our desk operates on a strictly contingent model—we only earn an advisory fee if we deliver binding senior terms that put hard cash back in [Company]'s operating account.
+
+All I need is the last 3 monthly statement PDFs. Black out the account numbers, black out anything you're uncomfortable with. Let my desk run the numbers today.
+
+Where should I route the breakdown?"`,
+        dont_need_money: `"I hear you loud and clear [Name], and frankly, I wouldn't expect you to be sitting by the phone waiting for a loan! The best companies we work with NEVER need speculative debt.
+
+I'm not calling to borrow—I'm calling to conduct a cost-of-capital audit on the money you've already taken out.
+
+If our numbers show your capital structure is already in the top 1% tier of private credit, fantastic—you keep your incumbent lenders honest for free. But if we find \$3,000/month in predatory fee leakage, that cash goes straight back into your pocket.
+
+You'd at least want to know, wouldn't you? What's your best email?"`,
+        just_email_me: `"I can certainly do that [Name], but let's be totally honest with each other: you're busy running [Company], and if I send an email right now, it's going to sit under 50 other unread messages until next week.
+
+You're on your phone or near your laptop right now. Give me literally 45 seconds. Pull up your banking app, hit 'Download PDF' for the last 3 months, and forward them over while I hold the line.
+
+I'll confirm receipt right now, my desk runs the underwriting today, and you don't have this lingering on your desk tonight.
+
+Are you banking with Chase, Bank of America, or Wells Fargo?"`,
+        tactical: "Hyper-confident, urgent, sharp as a tack, enthusiastic as hell, and an expert in the field. Use straight-line anchors ('Fair enough?', 'You follow me on that?', 'You don't know me from Adam') and lock the 45-second on-call statement download."
+    }},
+
     "wall_street": {{
         name: "Wall Street",
         opener: `"Hey [Name], Michael Qin on the institutional syndication desk at Creative Capital Solutions. Look, I'll be direct—I know this call wasn't on your calendar today.
@@ -2162,6 +2199,7 @@ function renderToneChips() {{
 
     const baseChips = `
         <button class="tone-chip ${{currentToneKey === 'wall_street' ? 'active' : ''}}" onclick="setTone('wall_street', this)">🏛️ Wall Street</button>
+        <button class="tone-chip ${{currentToneKey === 'belfort_straight_line' ? 'active' : ''}}" onclick="setTone('belfort_straight_line', this)">🐺 Straight Line</button>
         <button class="tone-chip ${{currentToneKey === 'high_tempo' ? 'active' : ''}}" onclick="setTone('high_tempo', this)">⚡ High-Tempo</button>
         <button class="tone-chip ${{currentToneKey === 'southern_direct' ? 'active' : ''}}" onclick="setTone('southern_direct', this)">🤠 Straight-Shooter</button>
         <button class="tone-chip ${{currentToneKey === 'cfo_analytical' ? 'active' : ''}}" onclick="setTone('cfo_analytical', this)">📊 CFO</button>
