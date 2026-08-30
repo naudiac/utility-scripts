@@ -1422,8 +1422,8 @@ setInterval(() => {{
 /* =========================================================================
    7 INSTANT PERSONA TONE PROFILES (PSYCHOLOGICAL OVERHAUL)
    ========================================================================= */
-const TONE_PROFILES = {
-    "belfort_straight_line": {
+const TONE_PROFILES = {{
+    "belfort_straight_line": {{
         name: "🐺 Straight Line (Belfort)",
         opener: `"Hey [Name], Michael Qin calling from the private credit desk at Creative Capital Solutions in New York. Look, the reason for the call today is very specific:
 
@@ -1469,9 +1469,9 @@ If you're uncomfortable, black out the account numbers! All my underwriters care
 Send it over now, what's your best email?"`,
         statement_pushback_tactical: "Address the fear directly, then re-assert the command to redact and send.",
         tactical: "Hyper-confident, urgent, sharp as a tack, enthusiastic as hell. Use straight-line anchors ('Fair enough?', 'You follow me on that?', 'You don't know me from Adam') and lock the 45-second on-call statement download."
-    },
+    }},
 
-    "voss_empathy": {
+    "voss_empathy": {{
         name: "🕵️ Tactical Empathy (Voss)",
         opener: `"Hey [Name]. [Pause 2 seconds] I'm sorry to call you out of the blue, did I catch you at a bad time?
 
@@ -1513,9 +1513,9 @@ How am I supposed to give you a fair, accurate rate without seeing how your cash
 What if you just black out the account numbers before you send it? We only need to see the deposits and debits to run the math. Would it be impossible to send that over to a secure link?"`,
         statement_pushback_tactical: "Label the fear of exposure. Offer a safe out (redaction) and ask a 'No-oriented' question.",
         tactical: "Late-night FM DJ voice. Slow, calm, downward inflection. Use labeling ('It sounds like...') and calibrated 'How/What' questions to let them talk themselves into it."
-    },
+    }},
 
-    "klaff_frame": {
+    "klaff_frame": {{
         name: "🧠 Frame Control (Klaff)",
         opener: `"John, Michael Qin from the private credit desk at Creative Capital. I have a hard stop in exactly two minutes for a committee meeting, but I wanted to drop a quick metric on your desk.
 
@@ -1553,9 +1553,9 @@ But if you're not comfortable sharing redacted statements so we can do our job, 
 I'm sending the secure portal link now, what's your email?"`,
         statement_pushback_tactical: "Hold the frame. Display willingness to walk away if they don't comply. (Prizing).",
         tactical: "High status, slight arrogance. Establish a time constraint immediately. Make THEM qualify for YOUR time. Pull away if they hesitate (Prizing)."
-    },
+    }},
 
-    "cardone_10x": {
+    "cardone_10x": {{
         name: "⚡ 10X Assumptive (Cardone)",
         opener: `"John! Michael Qin, Creative Capital Solutions. We are slashing daily loan debits for [Industry] operators right now, moving guys out of expensive [Lender_Or_Default] positions and cutting payments by 40%.
 
@@ -1593,9 +1593,9 @@ Redact the account numbers, block out the routing numbers, whatever you need to 
 What email?"`,
         statement_pushback_tactical: "Agree, offer the immediate solution (redact), and tie it directly to saving them money.",
         tactical: "Relentless, high energy, 100% certainty. Always agree with their objection first ('I agree!'), then immediately pivot back to the pitch and push the close."
-    },
+    }},
 
-    "challenger_sale": {
+    "challenger_sale": {{
         name: "📊 Challenger Tension",
         opener: `"John, Michael Qin with the private credit desk at Creative Capital.
 
@@ -1635,9 +1635,9 @@ Where should I send the upload link?"`,
 You can redact the account numbers. We just need the raw data to prove they're overcharging you. What email?"`,
         statement_pushback_tactical: "Use commercial teaching to reframe their fear as a trap set by their current lender.",
         tactical: "Lead with insight and disruption. Challenge their assumptions. Create constructive tension by implying they don't actually know their true cost of capital."
-    },
+    }},
 
-    "cialdini_authority": {
+    "cialdini_authority": {{
         name: "👑 Authority (Cialdini)",
         opener: `"Hey [Name], Michael Qin on the private credit desk at Creative Capital Solutions.
 
@@ -1675,9 +1675,9 @@ You can even black out your account numbers. Let's get this moving so you don't 
 What's the best email?"`,
         statement_pushback_tactical: "Leverage Authority (top firms trust us) and Scarcity (miss this funding block).",
         tactical: "Leverage Social Proof ('three other firms in your area'), Authority ('premier desk'), Scarcity ('closes at the end of the month'), and Consensus ('the top firms do this')."
-    },
+    }},
 
-    "ziglar_relational": {
+    "ziglar_relational": {{
         name: "🤠 Relational (Ziglar)",
         opener: `"Hey John, I hope you're having a good day. It's Michael Qin with Creative Capital Solutions.
 
@@ -1715,8 +1715,8 @@ They found that once they blacked out their account numbers and saw how securely
 Let's start small. What's your email?"`,
         statement_pushback_tactical: "Use 'Feel, Felt, Found' to overcome objection naturally.",
         tactical: "Warm, empathetic, trustworthy. Use the 'Feel, Felt, Found' framework. Focus on protecting them and treating them like family."
-    }
-}
+    }}
+}}
 
 let currentToneKey = "belfort_straight_line";
 
