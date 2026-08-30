@@ -835,23 +835,31 @@
         /* Navigation Tabs: 2x2 compact grid */
         .tabs-nav {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3px;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
             border-bottom: none;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .tab-item {
             text-align: center;
-            padding: 6px 4px;
-            border-radius: 3px;
+            padding: 7px 4px;
+            border-radius: 4px;
             border: 1px solid var(--border-main);
-            font-size: 10.5px;
+            font-size: 11px;
+            font-weight: 600;
             white-space: normal;
+        }
+        .tab-item:first-child {
+            grid-column: 1 / -1;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 8px 6px;
         }
         .tab-item.active {
             background: var(--corporate-navy);
             color: #ffffff;
             border-color: var(--corporate-navy);
+            box-shadow: 0 1px 3px rgba(15, 39, 68, 0.2);
             margin-bottom: 0;
         }
 
@@ -958,29 +966,21 @@
                 </div>
                 <div class="intel-cheat-card" onclick="applyIndustryPreset('medical')">
                     <span class="cheat-title">🏥 Healthcare &amp; Dental</span>
-                    <span class="cheat-cue">Pain: 60-day insurance reimbursement float</span>
+                    <span class="cheat-cue">Pain: 60-90 day insurance reimbursement float</span>
                     <span class="cheat-hook">Hook: "Smooth out insurance claim delays with zero personal collateral."</span>
+                </div>
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('manufacturing')">
+                    <span class="cheat-title">🏭 Manufacturing &amp; Fab</span>
+                    <span class="cheat-cue">Pain: Equipment financing ACH + net-60/90 invoice lag</span>
+                    <span class="cheat-hook">Hook: "Bridge the invoice cycle gap without payroll risk."</span>
+                </div>
+                <div class="intel-cheat-card" onclick="applyIndustryPreset('retail')">
+                    <span class="cheat-title">🚗 Auto Dealers &amp; Retail</span>
+                    <span class="cheat-cue">Pain: Floorplan interest &amp; slow-season daily MCA drain</span>
+                    <span class="cheat-hook">Hook: "Consolidate floorplan &amp; working capital into one payment."</span>
                 </div>
             </div>
         </div>
-                    <div class="intel-card" id="ic-manufacturing">
-                        <div class="intel-card-header" onclick="toggleIntelCard('ic-manufacturing')">
-                            Manufacturing
-                        </div>
-                        <div class="intel-card-body">
-                            <div class="intel-pain">Pain: Equipment ACH debits + net-60/90 invoice lag create daily cash gaps even with strong revenue.</div>
-                            <div class="intel-hook">Hook: We bridge the gap between your invoice cycle and daily ACH — no payroll risk waiting on Net-90 terms.</div>
-                        </div>
-                    </div>
-                    <div class="intel-card" id="ic-auto">
-                        <div class="intel-card-header" onclick="toggleIntelCard('ic-auto')">
-                            Auto and Retail
-                        </div>
-                        <div class="intel-card-body">
-                            <div class="intel-pain">Pain: Floorplan interest + daily MCA debits compound during slow months (Jan-Feb, Aug).</div>
-                            <div class="intel-hook">Hook: We consolidate floor-plan and working capital into one clean monthly payment — no more daily drain in the slow season.</div>
-                        </div>
-                    </div>
     </div>
 
     <!-- Navigation Tabs -->
@@ -1828,6 +1828,7 @@ function getEffectiveTokens() {
 }
 
 function formatWithTokens(templateStr, highlight = false) {
+    if (!templateStr) return "";
     const t = getEffectiveTokens();
     let res = templateStr;
 
@@ -1851,16 +1852,16 @@ function formatWithTokens(templateStr, highlight = false) {
 
     if (leadState.lender.trim()) {
         const lenderToken = highlight ? `<span class="token-highlight">${t.lender}</span>` : t.lender;
-        res = res.replaceAll("[Lender_Or_Default]", `positions out of lenders like ${lenderToken}`);
+        res = res.replaceAll("[Lender_Or_Default]", `${lenderToken} or other daily MCA positions`);
     } else {
-        res = res.replaceAll("[Lender_Or_Default]", "expensive daily debt positions in your space");
+        res = res.replaceAll("[Lender_Or_Default]", "OnDeck, Rapid, or high-factor MCA advances");
     }
 
     if (leadState.revenue.trim()) {
         const revToken = highlight ? `<span class="token-highlight">${t.revenue}</span>` : t.revenue;
         res = res.replaceAll("[Revenue_Or_Default]", `businesses generating ${revToken} in volume`);
     } else {
-        res = res.replaceAll("[Revenue_Or_Default]", "commercial operators in your sector");
+        res = res.replaceAll("[Revenue_Or_Default]", "mid-market operators in your sector");
     }
 
     return res;
@@ -2363,30 +2364,194 @@ function runCalc() {
 
 function renderObjections() {
     const container = document.getElementById('objections-list');
-    container.innerHTML = OBJECTIONS.map(o => `
-        <div style="margin-bottom: 6px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 4px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--color-danger); margin-bottom: 1px;">⚠️ "${o.objection}"</div>
+    if (!container) return;
+    const profile = TONE_PROFILES[currentToneKey] || TONE_PROFILES["belfort_straight_line"];
+
+        const objectionsData = [
+        {
+            title: `🚫 "We don't need money / We're all set"`,
+            rebuttal: profile.dont_need_money,
+            principle: profile.dont_need_money_tactical || "Reframe from borrowing to expense reduction and cash recovery."
+        },
+        {
+            title: `📧 "Just email me info / I'm busy"`,
+            rebuttal: profile.just_email_me,
+            principle: profile.just_email_me_tactical || "Never let them off the phone without asking for the 45-second on-call download."
+        },
+        {
+            title: `🏷️ "What are your rates / factor rates?"`,
+            rebuttal: profile.what_rates,
+            principle: profile.what_rates_tactical || "Never quote a blind number; trade rate clarity for statements."
+        },
+        {
+            title: `🔒 "Why do you need bank statements? / I don't send docs"`,
+            rebuttal: profile.statement_pushback,
+            principle: profile.statement_pushback_tactical || "Offer account number redaction to instantly eliminate security friction."
+        },
+        {
+            title: `❓ "Who is this / What company?"`,
+            rebuttal: profile.who_is_this,
+            principle: profile.who_is_this_tactical || "State your niche, reference peer results, and close for their direct email."
+        },
+        {
+            title: `💸 "I already have 2 loans with OnDeck taking $1,800/day"`,
+            rebuttal: `"That is exactly why I am calling [Name]. We specialize in taking high-factor daily positions out of [Lender_Or_Default] and rolling them into a single, clean monthly facility that cuts your debt drain by 40%. All I need is your trailing 3 months of business statements to model the exact monthly cash we put back in [Company]'s operating account."`,
+            principle: "The golden consolidation lead! Never treat existing debt as a rejection — treat it as your highest-converting opportunity."
+        }
+    ];
+
+    container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:6px 10px;">
+            <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🎭 Active Methodology: ${profile.name}</span>
+            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Auto-Synced to Tone</span>
+        </div>
+    ` + objectionsData.map(o => `
+        <div style="margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+            <div style="font-size: 11.5px; font-weight: 700; color: var(--color-danger); margin-bottom: 2px;">${o.title}</div>
             <div class="copy-block red-box">
-                <div class="copy-text">"${o.rebuttal}"</div>
+                <div class="copy-text">${formatWithTokens(o.rebuttal, true)}</div>
                 <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
-            <div style="font-size: 10px; color: var(--text-muted); margin-top: 1px;"><strong>Principle:</strong> ${o.principle}</div>
+            <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.35;">
+                <strong style="color:var(--corporate-navy);">🎯 Principle (${profile.name}):</strong> ${o.principle}
+            </div>
         </div>
     `).join('');
 }
 
 function renderPipeline() {
     const container = document.getElementById('pipeline-list');
-    container.innerHTML = STAGES.map(s => `
-        <div style="margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 4px;">
-            <div style="font-size: 11.5px; font-weight: 700; color: var(--corporate-navy); margin-bottom: 1px;">Stage ${s.number}: ${s.title}</div>
-            <div style="font-size: 10.5px; color: var(--text-main); margin-bottom: 2px;"><strong>Goal:</strong> ${s.objective}</div>
-            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 2px;"><strong>Key Actions:</strong></div>
-            <ul style="padding-left: 12px; font-size: 10.5px; color: var(--text-main);">
-                ${s.actions.map(a => `<li>${a}</li>`).join('')}
+    if (!container) return;
+    const profile = TONE_PROFILES[currentToneKey] || TONE_PROFILES["belfort_straight_line"];
+
+    const stagesData = [
+        {
+            num: 1,
+            title: "Lead Sourcing & Merchant Discovery",
+            goal: "Identify active commercial operators in [Industry] with daily/weekly MCA positions, high processing volume, or upcoming refinancing events.",
+            script: "Always verify business name, state of filing, and approximate monthly volume before dialing.",
+            actions: [
+                "Target merchants doing $50K+/month in revenue with active daily debits or merchant processing statements.",
+                "Verify direct owner cell number to bypass gatekeeper loops.",
+                "Score leads on 3 points: Monthly Volume ($50K+), Active Debt/Debits present, Owner reachability."
+            ]
+        },
+        {
+            num: 2,
+            title: `The 30-Second Disarm & Hook (${profile.name})`,
+            goal: "Disarm the merchant in 5 seconds, frame call as expense reduction, and establish high-status authority.",
+            script: profile.opener,
+            tactical: profile.tactical,
+            actions: [
+                "Execute the tone-specific opening verbatim.",
+                "Pitch debt expense reduction, not new borrowing.",
+                "Position yourself as an institutional diagnostic auditor."
+            ]
+        },
+        {
+            num: 3,
+            title: `45-Second On-Call Statement Extraction (${profile.name})`,
+            goal: "Keep merchant on the line and walk them through downloading 3 months of bank statements right now.",
+            script: profile.just_email_me,
+            tactical: profile.just_email_me_tactical,
+            actions: [
+                "Ask: 'Are you in front of your computer or looking at your phone right now?'",
+                "Walk them step-by-step through their bank portal (Chase/BoA/Wells).",
+                "Confirm receipt in your inbox while they are still on the line."
+            ]
+        },
+        {
+            num: 4,
+            title: "Cash Flow Underwriting & Consolidation Modeling",
+            goal: "Model the consolidated cash flow savings showing exact monthly dollars freed up for [Company].",
+            script: `"We completed the preliminary debt audit for [Company]. By consolidating your daily positions out of [Lender_Or_Default], we free up +$10,500/month in net cash flow, saving $126,000 this year."`,
+            actions: [
+                "Calculate total daily/weekly debits vs proposed single monthly payment.",
+                "Calculate net annual cash flow savings.",
+                "Format into a clean 1-page executive benchmark sheet."
+            ]
+        },
+        {
+            num: 5,
+            title: "Term Sheet Presentation & Agreement Lock-In",
+            goal: "Walk through the numbers on a 10-minute call, address prepayment/fee questions, and get signed acceptance.",
+            script: `"1. Recap merchant's stated cash crunch
+2. Show the net monthly savings delta (+$10,500/mo)
+3. Outline the 48-hour funding timeline
+4. Ask: 'Based on these numbers, does it make sense to lock this in today?'"`,
+            actions: [
+                "Lead with net monthly cash freed up.",
+                "Highlight contingent success representation.",
+                "Secure signed placement agreement."
+            ]
+        },
+        {
+            num: 6,
+            title: "Final Verification & Closing Disbursement",
+            goal: "Clear stipulations, coordinate closing call, and confirm wire disbursement into merchant account.",
+            script: `"All stipulations cleared for [Company]. Wire has been released and will reflect in your checking account within 2 hours."`,
+            actions: [
+                "Verify driver's license, voided check, and landlord/utility verification.",
+                "Conduct closing verification call with lender underwriting.",
+                "Track wire confirmation and confirm receipt with merchant."
+            ]
+        },
+        {
+            num: 7,
+            title: "Post-Funding Celebration & Referral Engine",
+            goal: "Solidify lifetime advisory relationship and collect 2 peer merchant introductions in [Industry].",
+            script: `"Hey [Name], congratulations again on funding! We freed up +$10,500/month in operating cash for [Company]. Who are 1 or 2 other business owners in [Industry] who are getting squeezed by high daily fees and could use a quick cash flow check like this?"`,
+            actions: [
+                "Call merchant 30 minutes after wire lands to celebrate.",
+                "Schedule 6-month debt review on calendar.",
+                "Ask for 2 business owner introductions while gratitude is at peak."
+            ]
+        }
+    ];
+
+    container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:6px 10px;">
+            <span style="font-size:11.5px; font-weight:800; color:#1e40af;">🚀 7-Stage Pipeline — Methodology: ${profile.name}</span>
+            <span style="font-size:10px; color:#3b82f6; font-family:var(--mono);">Dynamic Flow</span>
+        </div>
+    ` + stagesData.map(s => `
+        <div style="margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--corporate-navy); margin-bottom: 2px;">Stage ${s.num}: ${s.title}</div>
+            <div style="font-size: 11px; color: var(--text-main); margin-bottom: 4px;"><strong>Goal:</strong> ${formatWithTokens(s.goal)}</div>
+            ${s.script ? `
+                <div class="copy-block green-box" style="margin-bottom:4px;">
+                    <div style="font-size:9.5px; font-weight:700; color:var(--color-success); text-transform:uppercase; margin-bottom:2px;">Verbatim Script</div>
+                    <div class="copy-text">${formatWithTokens(s.script, true)}</div>
+                    <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+                </div>
+            ` : ''}
+            ${s.tactical ? `
+                <div style="font-size:10.5px; color:var(--text-muted); margin-bottom:4px;">
+                    <strong style="color:var(--corporate-navy);">🎯 Tactical Focus:</strong> ${s.tactical}
+                </div>
+            ` : ''}
+            <div style="font-size: 10.5px; color: var(--text-muted); margin-bottom: 2px;"><strong>Key Actions:</strong></div>
+            <ul style="padding-left: 14px; font-size: 10.5px; color: var(--text-main); line-height:1.4;">
+                ${s.actions.map(a => `<li>${formatWithTokens(a)}</li>`).join('')}
             </ul>
         </div>
     `).join('');
+}
+
+function setTone(toneKey, btn) {
+    currentToneKey = toneKey;
+    document.querySelectorAll('.tone-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    
+    const profile = TONE_PROFILES[toneKey] || TONE_PROFILES["belfort_straight_line"];
+    const labelEl = document.getElementById('active-tone-label');
+    if (labelEl) labelEl.innerText = profile.name;
+
+    trackTelemetry('TONE_CHANGE', `Switched Tone`, { toneName: profile.name, toneKey: toneKey });
+    renderCurrentNode();
+    renderObjections();
+    renderPipeline();
+    updateCadenceSnippets();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
