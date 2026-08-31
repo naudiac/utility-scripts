@@ -846,17 +846,35 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 const res = await fetch('/api/live');
                 const data = await res.json();
                 
+                const statusEl = document.getElementById('auto-status');
                 if(data.is_connected) {{
-                    document.getElementById('auto-status').innerText = 'LIVE';
-                    document.getElementById('val-rpm').innerHTML = Math.round(data.rpm) + '<span class="metric-unit">RPM</span>';
-                    document.getElementById('val-volt').innerHTML = data.volt.toFixed(1) + '<span class="metric-unit">V</span>';
-                    document.getElementById('val-stft').innerHTML = (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '<span class="metric-unit">%</span>';
-                    document.getElementById('val-ltft').innerHTML = (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '<span class="metric-unit">%</span>';
-                    document.getElementById('val-maf').innerHTML = data.maf.toFixed(1) + '<span class="metric-unit">g/s</span>';
-                    document.getElementById('val-temp').innerHTML = data.temp + '<span class="metric-unit">°C</span>';
-                    document.getElementById('val-ltft').style.color = data.ltft > 15 ? '#ef4444' : '#10b981';
+                    if (statusEl) {{
+                        statusEl.innerText = 'LIVE (' + Math.round(data.rpm) + ' RPM)';
+                        statusEl.style.color = '#10b981';
+                    }}
+                    const elRpm = document.getElementById('val-rpm');
+                    if (elRpm) elRpm.innerHTML = Math.round(data.rpm) + '<span class="metric-unit">RPM</span>';
+                    const elVolt = document.getElementById('val-volt');
+                    if (elVolt) elVolt.innerHTML = data.volt.toFixed(1) + '<span class="metric-unit">V</span>';
+                    const elStft = document.getElementById('val-stft');
+                    if (elStft) elStft.innerHTML = (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '<span class="metric-unit">%</span>';
+                    const elLtft = document.getElementById('val-ltft');
+                    if (elLtft) {{
+                        elLtft.innerHTML = (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '<span class="metric-unit">%</span>';
+                        elLtft.style.color = data.ltft > 15 ? '#ef4444' : '#10b981';
+                    }}
+                    const elMaf = document.getElementById('val-maf');
+                    if (elMaf) elMaf.innerHTML = data.maf.toFixed(1) + '<span class="metric-unit">g/s</span>';
+                    const elTemp = document.getElementById('val-temp');
+                    if (elTemp) elTemp.innerHTML = data.temp + '<span class="metric-unit">°C</span>';
+                }} else {{
+                    if (statusEl) {{
+                        statusEl.innerText = 'STANDBY';
+                        statusEl.style.color = 'var(--accent-amber)';
+                    }}
                 }}
-                document.getElementById('log-sample-val').innerHTML = data.samples_logged + '<span class="metric-unit">Samples</span>';
+                const sampleEl = document.getElementById('log-sample-val');
+                if (sampleEl) sampleEl.innerHTML = data.samples_logged + '<span class="metric-unit">Samples</span>';
             }} catch(e) {{}}
 
             try {{
