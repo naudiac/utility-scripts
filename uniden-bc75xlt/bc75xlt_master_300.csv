@@ -1,0 +1,301 @@
+Channel,Bank,Name,Frequency,Mode,Tone,Delay,Lockout,Description
+1,1,JVX CTAF,122.8000,AM,0,2,0,Vidalia Regional Airport CTAF UNICOM
+2,1,JVX AWOS,121.1250,AM,0,2,0,Vidalia Regional Airport AWOS Weather
+3,1,TBR CTAF,122.8000,AM,0,2,0,Statesboro-Bulloch Co Airport UNICOM
+4,1,TBR AWOS,118.8250,AM,0,2,0,Statesboro-Bulloch Co Airport AWOS
+5,1,DBN CTAF,122.8000,AM,0,2,0,Dublin Laurens Co Airport UNICOM
+6,1,DBN AWOS,118.3750,AM,0,2,0,Dublin Laurens Co Airport AWOS
+7,1,SBO CTAF,122.8000,AM,0,2,0,Swainsboro-Emanuel Co Airport UNICOM
+8,1,SBO AWOS,118.5250,AM,0,2,0,Swainsboro-Emanuel Co Airport AWOS
+9,1,SAV TWR,119.1000,AM,0,2,0,Savannah International Tower
+10,1,SAV APP1,120.4000,AM,0,2,0,Savannah Approach Depart East
+11,1,SAV APP2,125.3000,AM,0,2,0,Savannah Approach Depart West
+12,1,SAV GND,121.9000,AM,0,2,0,Savannah International Ground
+13,1,SAV ATIS,124.5500,AM,0,2,0,Savannah International ATIS Weather
+14,1,MCN TWR,124.9500,AM,0,2,0,Macon Middle GA Regional Tower
+15,1,MCN APP,124.2000,AM,0,2,0,Macon Approach Radar Control
+16,1,ZTL SEC1,120.4500,AM,0,2,0,Atlanta ARTCC Center Macon Dublin Sector
+17,1,ZTL SEC2,127.5000,AM,0,2,0,Atlanta ARTCC Center South GA Sector
+18,1,ZJX SEC1,127.5750,AM,0,2,0,Jacksonville ARTCC Coastal GA Sector
+19,1,ZJX SEC2,126.7500,AM,0,2,0,Jacksonville ARTCC SE Georgia Sector
+20,1,AIR-EMRG,121.5000,AM,0,2,0,International Aviation Emergency Guard
+21,1,FSS FLT,122.2000,AM,0,2,0,Flight Service Station Pilot Advisory
+22,1,AIR-MULT,122.7500,AM,0,2,0,Air-to-Air Private Pilot Multicom
+23,1,AIR-AIR,123.4500,AM,0,2,0,Fingers Pilot-to-Pilot Chat Frequency
+24,1,HELI-AIR,123.0500,AM,0,2,0,Helicopter Air-to-Air Flight Coordination
+25,1,HELI-UNI,123.0750,AM,0,2,0,Heliport General Advisory
+26,1,CTRY UN1,122.7000,AM,0,2,0,Rural Uncontrolled Airfields
+27,1,CTRY UN2,122.7250,AM,0,2,0,Rural Airstrips and Crop Dusting
+28,1,CTRY UN3,122.9750,AM,0,2,0,Regional Unicom Alternate
+29,1,SAR AIR,123.1000,AM,0,2,0,Civil Air Patrol Search and Rescue
+30,1,FLIGHT1,122.9000,AM,0,2,0,Flight Instruction Training
+31,2,MED-AIR1,123.0250,AM,0,2,0,National Air Ambulance Medevac Air-to-Air
+32,2,MED-AIR2,123.0500,AM,0,2,0,Air Evac Lifeteam Flight Coordination
+33,2,MED-AIR3,123.0750,AM,0,2,0,Memorial Health Binnicker LZ Advisory
+34,2,SAV-LZ,123.1000,AM,0,2,0,Memorial Univ Medical Center Savannah Helipad
+35,2,MCN-LZ,123.0250,AM,0,2,0,Atrium Health Navicent Macon Trauma Helipad
+36,2,AUG-LZ,123.0500,AM,0,2,0,AU Health Augusta Regional Trauma LZ
+37,2,VMED28,155.3400,NFM,0,2,0,National Medical Emergency Calling
+38,2,VMED29,155.3550,NFM,0,2,0,Statewide GA EMS Mutual Aid
+39,2,VMED30,155.3850,NFM,0,2,0,Hospital Emergency Disaster Net
+40,2,MED-1,463.0000,FM,0,2,0,UHF Med Net Channel 1 ER Telemetry
+41,2,MED-2,463.0250,FM,0,2,0,UHF Med Net Channel 2 Physician Consult
+42,2,MED-3,463.0500,FM,0,2,0,UHF Med Net Channel 3 Trauma Telemetry
+43,2,MED-4,463.0750,FM,0,2,0,UHF Med Net Channel 4 Cardiac Telemetry
+44,2,MED-5,463.1000,FM,0,2,0,UHF Med Net Channel 5 Hospital Triage
+45,2,MED-6,463.1250,FM,0,2,0,UHF Med Net Channel 6 Critical Transfer
+46,2,MED-7,463.1500,FM,0,2,0,UHF Med Net Channel 7 Medical Dispatch
+47,2,MED-8,463.1750,FM,0,2,0,UHF Med Net Channel 8 Trauma Patch
+48,2,MED-9,462.9500,FM,0,2,0,Life Flight Helo Dispatch Patch
+49,2,MED-10,462.9750,FM,0,2,0,Life Flight Landing Zone Ground Patch
+50,2,GA-HEMS1,155.2800,NFM,0,2,0,State EMS Tactical 1 Field Triage
+51,2,GA-HEMS2,155.2200,NFM,0,2,0,State EMS Tactical 2 County Backup
+52,2,GA-HEMS3,155.2050,NFM,0,2,0,State EMS Mass Casualty Evacuation
+53,2,TOOMBSMED,155.1750,NFM,0,2,0,Toombs County EMS Vidalia Lyons Dispatch
+54,2,MONTGMED,155.2950,NFM,0,2,0,Montgomery County EMS Mount Vernon Dispatch
+55,2,LAURNMED,155.2350,NFM,0,2,0,Laurens County EMS Dublin Dispatch
+56,2,CANDLRMED,155.2650,NFM,0,2,0,Candler County EMS Metter Dispatch
+57,2,EMANLMED,155.1600,NFM,0,2,0,Emanuel County EMS Swainsboro Dispatch
+58,2,BULLCHMED,155.2500,NFM,0,2,0,Bulloch County EMS Statesboro Dispatch
+59,2,EVANSMED,155.2200,NFM,0,2,0,Evans County EMS Claxton Dispatch
+60,2,CHATHMMED,155.2800,NFM,0,2,0,Chatham County EMS Savannah Mutual Aid
+61,3,CB 19,27.1850,AM,0,2,0,CB Channel 19 Nationwide Interstate Truckers
+62,3,CB 09,27.0650,AM,0,2,0,CB Channel 9 Official Emergency and Motorist Aid
+63,3,CB 14,27.1250,AM,0,2,0,CB Channel 14 Rural Haulers and Timber Trucks
+64,3,CB 17,27.1650,AM,0,2,0,CB Channel 17 North South I-75 Highway Alternate
+65,3,CB 21,27.2150,AM,0,2,0,CB Channel 21 East West I-16 Highway Alternate
+66,3,CB 06,27.0250,AM,0,2,0,CB Channel 6 Superbowl Long Distance Skip
+67,3,CB 11,27.0850,AM,0,2,0,CB Channel 11 Calling Channel
+68,3,CB 01,26.9650,AM,0,2,0,CB Channel 1 General Road Chatter
+69,3,CB 02,26.9750,AM,0,2,0,CB Channel 2 General Road Chatter
+70,3,CB 03,26.9850,AM,0,2,0,CB Channel 3 Farm and Agricultural Transport
+71,3,CB 04,27.0050,AM,0,2,0,CB Channel 4 4x4 Off-Road Convoy
+72,3,CB 05,27.0150,AM,0,2,0,CB Channel 5 Local Haulers
+73,3,CB 07,27.0350,AM,0,2,0,CB Channel 7 General Road Chatter
+74,3,CB 08,27.0550,AM,0,2,0,CB Channel 8 General Road Chatter
+75,3,CB 10,27.0750,AM,0,2,0,CB Channel 10 Regional Road Traffic
+76,3,CB 12,27.1050,AM,0,2,0,CB Channel 12 General Road Chatter
+77,3,CB 13,27.1150,AM,0,2,0,CB Channel 13 RV Convoy Channel
+78,3,CB 15,27.1350,AM,0,2,0,CB Channel 15 General Road Chatter
+79,3,CB 16,27.1550,AM,0,2,0,CB Channel 16 Trail Riders Channel
+80,3,CB 18,27.1750,AM,0,2,0,CB Channel 18 Highway Alternate
+81,3,CB 20,27.2050,AM,0,2,0,CB Channel 20 General Road Chatter
+82,3,CB 22,27.2250,AM,0,2,0,CB Channel 22 General Road Chatter
+83,3,CB 23,27.2550,AM,0,2,0,CB Channel 23 Shared General Road
+84,3,CB 24,27.2350,AM,0,2,0,CB Channel 24 General Road Chatter
+85,3,CB 25,27.2450,AM,0,2,0,CB Channel 25 General Road Chatter
+86,3,CB 26,27.2650,AM,0,2,0,CB Channel 26 General Road Chatter
+87,3,CB 27,27.2750,AM,0,2,0,CB Channel 27 General Road Chatter
+88,3,CB 28,27.2850,AM,0,2,0,CB Channel 28 Long Range Skip
+89,3,CB 38,27.3850,AM,0,2,0,CB Channel 38 LSB Calling and Long Distance
+90,3,CB 40,27.4050,AM,0,2,0,CB Channel 40 Upper Highway Talk
+91,4,AAR-046,160.8000,NFM,0,2,0,AAR 046 Nationwide Standard Road Main
+92,4,AAR-008,160.2300,NFM,0,2,0,AAR 008 Norfolk Southern Road Dispatcher
+93,4,AAR-096,161.5500,NFM,0,2,0,AAR 096 End-of-Train Brake Telemetry
+94,4,AAR-073,161.2050,NFM,0,2,0,AAR 073 Norfolk Southern Yard Switching
+95,4,AAR-042,160.7400,NFM,0,2,0,AAR 042 Regional Rail Switching Spurs
+96,4,AAR-056,160.9500,NFM,0,2,0,AAR 056 NS Atlanta Division Dispatcher
+97,4,AAR-064,161.0700,NFM,0,2,0,AAR 064 NS Coastal Division Dispatcher
+98,4,AAR-084,161.3700,NFM,0,2,0,AAR 084 CSX Road Channel SE Georgia
+99,4,AAR-032,160.5900,NFM,0,2,0,AAR 032 CSX Dispatcher Channel
+100,4,AAR-020,160.4100,NFM,0,2,0,AAR 020 CSX Yard Operations
+101,4,AAR-014,160.3200,NFM,0,2,0,AAR 014 Maintenance-of-Way Track Crews
+102,4,AAR-072,161.1900,NFM,0,2,0,AAR 072 Defect Detector Hotbox Audio
+103,4,AAR-086,161.4000,NFM,0,2,0,AAR 086 Defect Detector Voice Broadcast
+104,4,AAR-094,161.5200,NFM,0,2,0,AAR 094 Intermodal Facility Ground Crew
+105,4,AAR-022,160.4400,NFM,0,2,0,AAR 022 Shortline Railroad Local Road
+106,4,AAR-038,160.6800,NFM,0,2,0,AAR 038 Rail Bridge Tender River Crossing
+107,4,AAR-050,160.8600,NFM,0,2,0,AAR 050 Secondary Road Channel
+108,4,AAR-058,160.9800,NFM,0,2,0,AAR 058 Secondary Dispatcher Channel
+109,4,AAR-066,161.1000,NFM,0,2,0,AAR 066 Industrial Switching
+110,4,AAR-076,161.2500,NFM,0,2,0,AAR 076 Track Maintenance Crews
+111,4,AAR-080,161.3100,NFM,0,2,0,AAR 080 Rail Safety Inspections
+112,4,AAR-088,161.4300,NFM,0,2,0,AAR 088 Train Yard Hump Operations
+113,4,AAR-090,161.4600,NFM,0,2,0,AAR 090 Yard Office Dispatch
+114,4,AAR-092,161.4900,NFM,0,2,0,AAR 092 Yard Car Inspectors
+115,4,AAR-018,160.3800,NFM,0,2,0,AAR 018 Signal Department Maintenance
+116,4,AAR-026,160.5000,NFM,0,2,0,AAR 026 Railroad Police Patrol
+117,4,AAR-034,160.6200,NFM,0,2,0,AAR 034 Railroad Police Emergency
+118,4,AAR-048,160.8300,NFM,0,2,0,AAR 048 Local Switching
+119,4,AAR-060,161.0100,NFM,0,2,0,AAR 060 Local Switching
+120,4,AAR-070,161.1600,NFM,0,2,0,AAR 070 Local Switching
+121,5,MAR 16,156.8000,FM,0,2,0,Marine Ch 16 International Distress Safety Calling
+122,5,MAR 09,156.4500,FM,0,2,0,Marine Ch 09 Boater Calling Secondary
+123,5,MAR 13,156.6500,FM,0,2,0,Marine Ch 13 Bridge-to-Bridge Navigation
+124,5,MAR 22A,157.1000,FM,0,2,0,Marine Ch 22A US Coast Guard Safety Liaison
+125,5,MAR 06,156.3000,FM,0,2,0,Marine Ch 06 Inter-ship Safety SAR
+126,5,MAR 12,156.6000,FM,0,2,0,Marine Ch 12 Port of Savannah Vessel Traffic
+127,5,MAR 14,156.7000,FM,0,2,0,Marine Ch 14 Port Operations Commercial
+128,5,MAR 21A,157.0500,FM,0,2,0,Marine Ch 21A US Coast Guard Working
+129,5,MAR 23A,157.1500,FM,0,2,0,Marine Ch 23A US Coast Guard Working
+130,5,MAR 83A,157.1750,FM,0,2,0,Marine Ch 83A US Coast Guard Auxiliary
+131,5,MAR 68,156.4250,FM,0,2,0,Marine Ch 68 Recreational Ship-to-Ship
+132,5,MAR 69,156.4750,FM,0,2,0,Marine Ch 69 Recreational Ship-to-Ship
+133,5,MAR 71,156.5750,FM,0,2,0,Marine Ch 71 Recreational Ship-to-Ship
+134,5,MAR 72,156.6250,FM,0,2,0,Marine Ch 72 Inter-ship Fishing Working
+135,5,MAR 78A,156.9250,FM,0,2,0,Marine Ch 78A Non-commercial Working
+136,5,MAR 79A,156.9750,FM,0,2,0,Marine Ch 79A Commercial Vessel Operations
+137,5,MAR 80A,157.0250,FM,0,2,0,Marine Ch 80A Commercial Vessel Operations
+138,5,MAR 01A,156.0500,FM,0,2,0,Marine Ch 01A Port Operations
+139,5,MAR 05A,156.2500,FM,0,2,0,Marine Ch 05A Vessel Traffic Service VTS
+140,5,MAR 07A,156.3500,FM,0,2,0,Marine Ch 07A Commercial Ship-to-Ship
+141,5,MAR 08,156.4000,FM,0,2,0,Marine Ch 08 Commercial Fishing Operations
+142,5,MAR 10,156.5000,FM,0,2,0,Marine Ch 10 Commercial Tugboats
+143,5,MAR 11,156.5500,FM,0,2,0,Marine Ch 11 Commercial Vessel Docking
+144,5,MAR 17,156.8500,FM,0,2,0,Marine Ch 17 State Local Maritime Control
+145,5,MAR 18A,156.9000,FM,0,2,0,Marine Ch 18A Commercial Towing Dredging
+146,5,MAR 19A,156.9500,FM,0,2,0,Marine Ch 19A Coast Guard Commercial
+147,5,MAR 20A,157.0000,FM,0,2,0,Marine Ch 20A Port Authority
+148,5,MAR 65A,156.2750,FM,0,2,0,Marine Ch 65A Marine Towing Salvage
+149,5,MAR 66A,156.3250,FM,0,2,0,Marine Ch 66A Marina Fuel Dock
+150,5,MAR 77,156.8750,FM,0,2,0,Marine Ch 77 Pilot Boat Transfer
+151,6,VCALL10,155.7525,NFM,0,2,0,National VHF Interoperability Calling
+152,6,VTAC11,151.1375,NFM,0,2,0,VHF Tactical Interoperability Channel 11
+153,6,VTAC12,154.4525,NFM,0,2,0,VHF Tactical Interoperability Channel 12
+154,6,VTAC13,158.7375,NFM,0,2,0,VHF Tactical Interoperability Channel 13
+155,6,VTAC14,159.4725,NFM,0,2,0,VHF Tactical Interoperability Channel 14
+156,6,VFIRE21,154.2800,NFM,0,2,0,National Fire Mutual Aid Simplex
+157,6,VFIRE22,154.2650,NFM,0,2,0,Regional Fire Ground Tactical 22
+158,6,VFIRE23,154.2950,NFM,0,2,0,Regional Fire Ground Tactical 23
+159,6,VFIRE24,154.2725,NFM,0,2,0,Wildland Fire Incident Command
+160,6,VFIRE25,154.2875,NFM,0,2,0,Wildland Fire Incident Command
+161,6,VFIRE26,154.3025,NFM,0,2,0,Structure Fire Tactical Operations
+162,6,VLAW31,155.4750,NFM,0,2,0,National Law Enforcement Emergency NLEEF
+163,6,VLAW32,155.4825,NFM,0,2,0,Law Enforcement Tactical Pursuit Net
+164,6,SAR-NAT,155.1600,NFM,0,2,0,National Search and Rescue Simplex
+165,6,SAR-SEC,155.1750,NFM,0,2,0,Georgia SAR Ground K9 Team
+166,6,UCALL40,453.2125,NFM,0,2,0,National UHF Interoperability Calling
+167,6,UTAC41,453.4625,NFM,0,2,0,UHF Tactical Interoperability Channel 41
+168,6,UTAC42,453.7125,NFM,0,2,0,UHF Tactical Interoperability Channel 42
+169,6,UTAC43,453.8625,NFM,0,2,0,UHF Tactical Interoperability Channel 43
+170,6,GEMA-1,154.9500,NFM,0,2,0,Georgia Emergency Management Agency
+171,6,GEMA-2,154.9650,NFM,0,2,0,State EOC Emergency Operations Channel
+172,6,GEMA-3,155.0250,NFM,0,2,0,State Disaster Field Coordination
+173,6,GFC-1,159.2250,NFM,0,2,0,GA Forestry Commission Wildfire Dispatch
+174,6,GFC-2,159.2850,NFM,0,2,0,Forestry Commission Air Attack Helitack
+175,6,GFC-3,159.3300,NFM,0,2,0,Forestry Ground Firefighting Crews
+176,6,GFC-4,159.3900,NFM,0,2,0,Forestry Dozers Heavy Equipment
+177,6,GFC-5,159.4350,NFM,0,2,0,Forestry District Repeater
+178,6,GDNR-1,155.4450,NFM,0,2,0,GA DNR Game Wardens Boating Safety
+179,6,GDNR-2,159.3450,NFM,0,2,0,DNR Law Enforcement Tactical
+180,6,GDNR-3,159.4650,NFM,0,2,0,DNR Wildlife Resources
+181,7,K4HAO,146.6250,FM,88.5,2,0,Vidalia Four Rivers ARC Primary Mount Vernon
+182,7,W4VDA,147.2400,FM,100.0,2,0,Vidalia SKYWARN Weather Net
+183,7,W4MTR,444.8000,FM,141.3,2,0,Metter Candler County ARES RACES
+184,7,K4GAS,146.9400,FM,100.0,2,0,Statesboro ARES SKYWARN Linked
+185,7,KF4DG,147.3900,FM,100.0,2,0,Statesboro STARS Club 2m Local
+186,7,NC4D,147.0500,FM,100.0,2,0,Statesboro STARS Club Net
+187,7,WR4A,145.4500,FM,107.2,2,0,Swainsboro Emanuel County ARC
+188,7,K4EMN,147.0000,FM,100.0,2,0,Swainsboro Emanuel County ARES
+189,7,W4CLA,147.0750,FM,82.5,2,0,Claxton Evans County ARES
+190,7,KF4DG-W,147.1050,FM,100.0,2,0,Pembroke WVAN Tower 40-mile Footprint
+191,7,W4LHS-1,146.9700,FM,123.0,2,0,Savannah Chatham County ARES Primary
+192,7,W4LHS-2,442.7000,FM,123.0,2,0,Savannah CARS Flagship UHF 850ft Tower
+193,7,W4LHS-3,147.2100,FM,210.7,2,0,Savannah CARS Talmadge Bridge Repeater
+194,7,W4LHS-4,147.3300,FM,203.5,2,0,Savannah CARS East EchoLink
+195,7,W4LHS-5,147.1050,FM,100.0,2,0,Savannah CARS Dual-Mode Analog Fusion
+196,7,K4DBN-1,147.1500,FM,123.0,2,0,Dublin Peach State Intertie SKYWARN Linked
+197,7,WA4HZX,147.3600,FM,123.0,2,0,Dublin Amateur Radio Club
+198,7,K4GSO,146.8800,FM,100.0,2,0,Dublin Laurens County ARES Net
+199,7,KD4IEZ,443.0250,FM,156.7,2,0,Dublin Laurens County UHF Repeater
+200,7,CALL-2M,146.5200,FM,0,2,0,National 2m FM Simplex Calling
+201,7,CALL-70,446.0000,FM,0,2,0,National 70cm FM Simplex Calling
+202,7,2MSIMP1,146.5500,FM,0,2,0,2m Simplex Secondary Chat
+203,7,2MSIMP2,146.5800,FM,0,2,0,2m Simplex Secondary Chat
+204,7,2MSIMP3,147.5250,FM,0,2,0,2m Upper Simplex
+205,7,2MSIMP4,147.5550,FM,0,2,0,2m Upper Simplex
+206,7,70SIMP1,446.1000,FM,0,2,0,70cm Secondary Simplex
+207,7,70SIMP2,446.5000,FM,0,2,0,70cm Secondary Simplex
+208,7,TYBEE-L,146.4450,FM,91.5,2,0,Tybee Island Crossband Link
+209,7,HAGANS,147.3900,FM,131.8,2,0,Evans County Rural Repeater
+210,7,W4NAS,146.8350,FM,127.3,2,0,Glennville Tattnall County ARES
+211,8,KC4YNB,145.2100,FM,103.5,2,0,Eastman Peach State Intertie Mega-Hub
+212,8,K4DBN-2,145.4900,FM,77.0,2,0,Cochran Southeastern Linked SKYWARN
+213,8,WR4MG-1,146.8950,FM,107.2,2,0,Hawkinsville Middle GA Radio Assn
+214,8,WR4MG-2,146.9550,FM,107.2,2,0,Perry Hospital MGRA EchoLink
+215,8,WR4MG-3,147.1950,FM,107.2,2,0,Perry West Wide Footprint
+216,8,WM4B-1,146.6700,FM,82.5,2,0,Warner Robins Houston Co ARES PSI Linked
+217,8,WM4B-2,443.1500,FM,82.5,2,0,Warner Robins Houston Co ARES UHF
+218,8,WX4PCH,145.2900,FM,82.5,2,0,Byron Peach State Intertie Backbone
+219,8,WR4MG-4,147.3000,FM,107.2,2,0,Centerville MGRA Club Net
+220,8,KD4UTQ,146.8950,FM,88.5,2,0,Macon Peach State Intertie Primary Hub
+221,8,AA4RI,145.4300,FM,88.5,2,0,Macon ARC Cherry Blossom Intertie
+222,8,WX4EMA,147.0150,FM,88.5,2,0,Macon-Bibb EMA ARES Linked
+223,8,KK4JPG,146.8350,FM,77.0,2,0,Forsyth Monroe Co ARS PSI Linked
+224,8,WX4BCA,147.2850,FM,131.8,2,0,Jackson Butts Co ARES Sylvan Grove
+225,8,WB4GWA,145.3900,FM,110.9,2,0,Griffin Spalding Co ARES Primary
+226,8,KI4FVI,146.7150,FM,146.2,2,0,McDonough Henry Link System Hub AllStar
+227,8,KJ4KPY,145.1700,FM,146.2,2,0,Stockbridge Piedmont Henry Hospital
+228,8,W9KLS,442.1250,FM,103.5,2,0,McDonough Henry Linked UHF
+229,8,KE4UAS,444.8750,FM,100.0,2,0,McDonough Henry County Fire Dept
+230,8,KK4GQ,145.2100,FM,131.8,2,0,Fayetteville Fayette Co ARC EchoLink
+231,8,WX4PTC1,444.6750,FM,77.0,2,0,Peachtree City NWS HQ State SKYWARN Hub
+232,8,WX4PTC2,444.6000,FM,77.0,2,0,Fayetteville NWS SKYWARN Secondary
+233,8,W4DOC-1,146.8200,FM,146.2,2,0,Downtown Atlanta ARC Bank of America Plaza
+234,8,W4BOC-1,146.7600,FM,107.2,2,0,Stone Mountain Alford ARC The 76
+235,8,NF4GA-1,145.4700,FM,100.0,2,0,Sweat Mountain North Fulton Umbrella
+236,8,W4BTI,146.8800,FM,100.0,2,0,Sweat Mountain Kennehoochee Cobb ARES
+237,8,W4GR-1,147.0750,FM,82.5,2,0,Snellville Gwinnett ARS ARES Hub
+238,8,W4AQL,145.1500,FM,167.9,2,0,Midtown Atlanta Georgia Tech ARC
+239,8,W4BOC-2,145.4500,FM,107.2,2,0,Stone Mountain Alford ARC Secondary
+240,8,W4DOC-2,443.1000,FM,100.0,2,0,Downtown Atlanta ARC UHF
+241,9,GMRS 1,462.5625,NFM,0,2,0,GMRS FRS Channel 1
+242,9,GMRS 2,462.5875,NFM,0,2,0,GMRS FRS Channel 2
+243,9,GMRS 3,462.6125,NFM,0,2,0,GMRS FRS Channel 3
+244,9,GMRS 4,462.6375,NFM,0,2,0,GMRS FRS Channel 4
+245,9,GMRS 5,462.6625,NFM,0,2,0,GMRS FRS Channel 5
+246,9,GMRS 6,462.6875,NFM,0,2,0,GMRS FRS Channel 6
+247,9,GMRS 7,462.7125,NFM,0,2,0,GMRS FRS Channel 7
+248,9,GMRS 15,462.5500,FM,0,2,0,GMRS Main Channel 15
+249,9,GMRS 16,462.5750,FM,0,2,0,GMRS Main Channel 16
+250,9,GMRS 17,462.6000,FM,0,2,0,GMRS Main Channel 17
+251,9,GMRS 18,462.6250,FM,0,2,0,GMRS Main Channel 18
+252,9,GMRS 19,462.6500,FM,0,2,0,GMRS Main Channel 19
+253,9,GMRS 20,462.6750,FM,0,2,0,GMRS Main Channel 20 Emergency Traveler
+254,9,GMRS 21,462.7000,FM,0,2,0,GMRS Main Channel 21
+255,9,GMRS 22,462.7250,FM,0,2,0,GMRS Main Channel 22
+256,9,GM20-RPT,462.6750,FM,141.3,2,0,GMRS 20 Open Travel Repeater Output
+257,9,MURS 1,151.8200,NFM,0,2,0,MURS Channel 1 VHF License-Free
+258,9,MURS 2,151.8800,NFM,0,2,0,MURS Channel 2 VHF License-Free
+259,9,MURS 3,151.9400,NFM,0,2,0,MURS Channel 3 VHF License-Free
+260,9,MURS 4,154.5700,FM,0,2,0,MURS Channel 4 Blue Dot Walmart Home Depot
+261,9,MURS 5,154.6000,FM,0,2,0,MURS Channel 5 Green Dot Store Operations
+262,9,RED-DOT,151.6250,NFM,0,2,0,Business Red Dot Home Depot Lowes
+263,9,PURP-DT,151.9550,NFM,0,2,0,Business Purple Dot Warehouse Plant
+264,9,BLU-STR,467.8500,NFM,0,2,0,Business Blue Star Lowes Target
+265,9,YEL-STR,467.8750,NFM,0,2,0,Business Yellow Star Supermarkets
+266,9,RED-STR,467.9000,NFM,0,2,0,Business Red Star Hardware Centers
+267,9,BRN-STR,467.9250,NFM,0,2,0,Business Brown Star Facilities Security
+268,9,FRS 08,467.5625,NFM,0,2,0,FRS Channel 8 Handheld Walkie
+269,9,FRS 11,467.6375,NFM,0,2,0,FRS Channel 11 Handheld Walkie
+270,9,FRS 14,467.7125,NFM,0,2,0,FRS Channel 14 Handheld Walkie
+271,10,WX 1,162.5500,FM,0,2,0,NOAA WXN22 Dublin GA Laurens Treutlen
+272,10,WX 2,162.4000,FM,0,2,0,NOAA KHB40 Savannah GA Coastal Chatham
+273,10,WX 3,162.4750,FM,0,2,0,NOAA WXJ76 Statesboro GA Bulloch Evans
+274,10,WX 4,162.4250,FM,0,2,0,NOAA WXJ36 Baxley Vidalia Strongest Mount Vernon
+275,10,WX 5,162.4500,FM,0,2,0,NOAA KEC84 Augusta GA East Central Weather
+276,10,WX 6,162.5000,FM,0,2,0,NOAA WXK90 Macon GA Middle Georgia Weather
+277,10,WX 7,162.5250,FM,0,2,0,NOAA WXJ33 Waycross GA South Central Weather
+278,10,ISS-VC,145.8000,FM,0,2,0,International Space Station Crew Voice Downlink
+279,10,ISS-PKT,145.8250,FM,0,2,0,International Space Station APRS Packet 1200
+280,10,SO-50,436.7950,FM,0,2,0,SaudiSat-1C SO-50 FM Voice Satellite
+281,10,AO-91,145.9600,FM,0,2,0,RadFxSat AO-91 FM Voice Satellite
+282,10,PO-101,145.9000,FM,0,2,0,Diwata-2 PO-101 FM Voice Satellite
+283,10,APRS-NAT,144.3900,FM,0,2,0,North America 2m APRS Packet Digipeater
+284,10,WX-ALRT1,162.4000,FM,0,2,0,NOAA Severe Weather Alert Standby
+285,10,WX-ALRT2,162.4250,FM,0,2,0,NOAA Severe Weather Alert Standby Mount Vernon
+286,10,WX-ALRT3,162.4750,FM,0,2,0,NOAA Severe Weather Alert Standby Statesboro
+287,10,WX-ALRT4,162.5500,FM,0,2,0,NOAA Severe Weather Alert Standby Dublin
+288,10,WX-SWAT,162.5000,FM,0,2,0,Middle GA Severe Weather Emergency Relay
+289,10,SPACE-1,145.8000,FM,0,2,0,Orbital Satellite Voice Relay
+290,10,SPACE-2,145.8250,FM,0,2,0,Orbital Satellite APRS Relay
+291,10,RES-01,146.5200,FM,0,2,0,Spare Reserve Simplex Channel
+292,10,RES-02,146.5500,FM,0,2,0,Spare Reserve Simplex Channel
+293,10,RES-03,146.5800,FM,0,2,0,Spare Reserve Simplex Channel
+294,10,RES-04,446.0000,FM,0,2,0,Spare Reserve Simplex Channel
+295,10,RES-05,446.1000,FM,0,2,0,Spare Reserve Simplex Channel
+296,10,RES-06,151.8200,NFM,0,2,0,Spare Reserve MURS Channel
+297,10,RES-07,154.5700,FM,0,2,0,Spare Reserve Business Channel
+298,10,RES-08,462.5625,NFM,0,2,0,Spare Reserve GMRS Channel
+299,10,RES-09,462.6750,FM,0,2,0,Spare Reserve GMRS Travel Channel
+300,10,RES-10,27.1850,AM,0,2,0,Spare Reserve CB Highway Channel
