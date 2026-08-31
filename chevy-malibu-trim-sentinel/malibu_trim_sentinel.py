@@ -639,6 +639,9 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
             <button type="button" class="btn-robot-toggle btn-robot-arm" id="btn-robot-arm" onclick="toggleRobotMode()">
                 🛡️ ARM ROBOT AUTO-TRIM HEALER
             </button>
+            <button type="button" onclick="speakPhone('Voice audio active on your cell! Live telemetry connected at 750 RPM.')" style="margin-top:8px; width:100%; padding:10px; background:rgba(0, 242, 254, 0.15); border:1px solid var(--accent-cyan); color:var(--accent-cyan); border-radius:10px; font-weight:bold; font-size:13px; cursor:pointer;">
+                🔊 TAP TO UNMUTE & TEST CELL VOICE
+            </button>
 
             <!-- 🎙️ 4-LEVEL SPEECH VERBOSITY SELECTOR -->
             <div class="speech-selector">
