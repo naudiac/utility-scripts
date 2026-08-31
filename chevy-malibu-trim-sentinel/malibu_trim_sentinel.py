@@ -940,58 +940,77 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         setInterval(updateData, 400);
         setInterval(drawChart, 600);
 
-        async function toggleRobotMode() {{
-            try {{
-                const res = await fetch('/api/robot/toggle', {{ method: 'POST' }});
+        function speakPhone(text) {
+            try {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const u = new SpeechSynthesisUtterance(text);
+                    u.rate = 1.0;
+                    u.pitch = 1.0;
+                    u.volume = 1.0;
+                    window.speechSynthesis.speak(u);
+                }
+            } catch(e) {}
+        }
+
+        async function toggleRobotMode() {
+            try {
+                const res = await fetch('/api/robot/toggle', { method: 'POST' });
                 const data = await res.json();
                 updateData();
-            }} catch(e) {{ alert('Error toggling robot mode: ' + e); }}
-        }}
+                speakPhone(data.armed ? 'Robot Mode armed. Malibu fuel trim watchdog active.' : 'Robot Mode disarmed. Watchdog stopped.');
+            } catch(e) { alert('Error toggling robot mode: ' + e); }
+        }
 
-        async function setSpeechLevel(lvl) {{
-            try {{
-                const res = await fetch('/api/robot/speech_level', {{
+        async function setSpeechLevel(lvl) {
+            try {
+                const res = await fetch('/api/robot/speech_level', {
                     method: 'POST',
-                    headers: {{ 'Content-Type': 'application/json' }},
-                    body: JSON.stringify({{ level: lvl }})
-                }});
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ level: lvl })
+                });
                 updateData();
-            }} catch(e) {{ alert('Error setting speech level: ' + e); }}
-        }}
+                speakPhone('Voice level set to ' + lvl);
+            } catch(e) { alert('Error setting speech level: ' + e); }
+        }
 
-        async function syncGitLogs() {{
-            logToTerm('\\n🔄 [GIT SYNC]: Syncing reset events to GitHub naudiac/utility-scripts...');
-            try {{
-                const res = await fetch('/api/git/sync', {{ method: 'POST' }});
+        async function syncGitLogs() {
+            logToTerm('\n🔄 [GIT SYNC]: Syncing reset events to GitHub naudiac/utility-scripts...');
+            speakPhone('Syncing reset logs to GitHub.');
+            try {
+                const res = await fetch('/api/git/sync', { method: 'POST' });
                 const data = await res.json();
                 alert(data.message || 'Git sync dispatched!');
                 logToTerm('✓ [GIT SYNC COMPLETE]: ' + (data.message || 'Updated'));
-            }} catch(e) {{ alert('Git sync error: ' + e); }}
-        }}
+            } catch(e) { alert('Git sync error: ' + e); }
+        }
 
-        async function readFuelTrims() {{
-            try {{
+        async function readFuelTrims() {
+            try {
                 const res = await fetch('/api/live');
                 const data = await res.json();
                 const total = (data.stft + data.ltft).toFixed(1);
-                const health = data.ltft > 20 ? '🔴 High Idle Trim (Post-MAF Leak Detected)' : '🟢 Normal Fuel Delivery';
-                alert('📊 LIVE FUEL TRIMS:\\n• STFT: ' + (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '%\\n• LTFT: ' + (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '%\\n• Total: ' + (total > 0 ? '+' : '') + total + '%\\n• Health: ' + health);
-            }} catch(e) {{ alert('Error: ' + e); }}
-        }}
+                const health = data.ltft > 20 ? 'High Idle Trim, Post MAF Leak Detected' : 'Normal Fuel Delivery';
+                speakPhone('Short term trim is ' + data.stft.toFixed(1) + ' percent. Long term trim is ' + data.ltft.toFixed(1) + ' percent.');
+                alert('📊 LIVE FUEL TRIMS:\n• STFT: ' + (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '%\n• LTFT: ' + (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '%\n• Total: ' + (total > 0 ? '+' : '') + total + '%\n• Health: ' + health);
+            } catch(e) { alert('Error: ' + e); }
+        }
 
-        async function resetFuelTrims() {{
+        async function resetFuelTrims() {
             if(!confirm('Wipe learned Fuel Trim adaptation tables & clear DTCs?')) return;
-            const res = await fetch('/obd/clear', {{method: 'POST'}});
+            speakPhone('Wiping fuel trim adaptation tables to zero percent.');
+            const res = await fetch('/obd/clear', {method: 'POST'});
             const data = await res.json();
             alert('Fuel Trims Cleared to 0.0% (Mode 04 Dispatched)');
-        }}
+        }
 
-        async function clearCodes() {{
+        async function clearCodes() {
             if(!confirm('Send Mode 04 to Clear Diagnostic Trouble Codes?')) return;
-            const res = await fetch('/obd/clear', {{method: 'POST'}});
+            speakPhone('Sending Mode 04 to clear diagnostic trouble codes.');
+            const res = await fetch('/obd/clear', {method: 'POST'});
             const data = await res.json();
             alert('Mode 04 Dispatched: ' + (data.response || 'Success'));
-        }}
+        }
 
         async function engageHiveMindRun() {{
             logToTerm('\\n🚀 [HIVE MIND]: Relaying to Node Alpha Master over Tailscale...');
