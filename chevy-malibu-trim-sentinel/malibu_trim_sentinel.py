@@ -975,9 +975,23 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
             }} catch(e) {{}}
         }}
 
+        async function pollSpeech() {{
+            try {{
+                const res = await fetch('/api/speech_poll');
+                const items = await res.json();
+                if (items && items.length > 0) {{
+                    for (let msg of items) {{
+                        speakPhone(msg);
+                    }}
+                }}
+            }} catch(e) {{}}
+        }}
+
         updateData();
+        pollSpeech();
         setInterval(updateData, 400);
         setInterval(drawChart, 600);
+        setInterval(pollSpeech, 400);
 
         let btDevice = null;
         let btServer = null;
