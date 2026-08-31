@@ -830,8 +830,14 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
     </div>
 
     <script>
-        const canvas = document.getElementById('liveChart');
-        const ctx = canvas.getContext('2d');
+        let canvas = null;
+        let ctx = null;
+
+        function getChartCtx() {{
+            if (!canvas) canvas = document.getElementById('liveChart');
+            if (canvas && !ctx) ctx = canvas.getContext('2d');
+            return ctx;
+        }}
 
         function logToTerm(text) {{
             const term = document.getElementById('swarm-term');
@@ -890,7 +896,6 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 if (rCount) rCount.innerText = rData.resets_today;
                 if (spLabel) spLabel.innerText = (rData.speech_level || 'medium').toUpperCase();
 
-                // Update Speech Pills
                 const levels = ['mute', 'low', 'medium', 'high'];
                 levels.forEach(lvl => {{
                     const el = document.getElementById('sp-' + lvl);
@@ -901,19 +906,27 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 }});
 
                 if(rData.armed) {{
-                    hero.classList.add('armed');
-                    badge.className = 'robot-badge badge-armed';
-                    badge.innerText = 'ARMED • ACTIVE';
-                    subtext.innerHTML = '<span style="color:var(--accent-cyan); font-weight:bold;">⚡ WATCHDOG ACTIVE:</span> ' + rData.status_message;
-                    btn.className = 'btn-robot-toggle btn-robot-disarm';
-                    btn.innerHTML = '🛑 DISARM ROBOT SENTINEL';
+                    if (hero) hero.classList.add('armed');
+                    if (badge) {{
+                        badge.className = 'robot-badge badge-armed';
+                        badge.innerText = 'ARMED • ACTIVE';
+                    }}
+                    if (subtext) subtext.innerHTML = '<span style="color:var(--accent-cyan); font-weight:bold;">⚡ WATCHDOG ACTIVE:</span> ' + rData.status_message;
+                    if (btn) {{
+                        btn.className = 'btn-robot-toggle btn-robot-disarm';
+                        btn.innerHTML = '🛑 DISARM ROBOT SENTINEL';
+                    }}
                 }} else {{
-                    hero.classList.remove('armed');
-                    badge.className = 'robot-badge badge-disarmed';
-                    badge.innerText = 'DISARMED';
-                    subtext.innerText = 'Monitors LTFT & resets adaptation when lean spikes occur. Zero AI credits.';
-                    btn.className = 'btn-robot-toggle btn-robot-arm';
-                    btn.innerHTML = '🛡️ ARM ROBOT AUTO-TRIM HEALER';
+                    if (hero) hero.classList.remove('armed');
+                    if (badge) {{
+                        badge.className = 'robot-badge badge-disarmed';
+                        badge.innerText = 'DISARMED';
+                    }}
+                    if (subtext) subtext.innerText = 'Monitors LTFT & resets adaptation when lean spikes occur. Zero AI credits.';
+                    if (btn) {{
+                        btn.className = 'btn-robot-toggle btn-robot-arm';
+                        btn.innerHTML = '🛡️ ARM ROBOT AUTO-TRIM HEALER';
+                    }}
                 }}
 
                 if (rData.recent_events && rData.recent_events.length > 0) {{
@@ -922,7 +935,8 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                         html += `<tr><td>${{ev.timestamp.split(' ')[1]}}</td><td style="color:var(--accent-amber);">${{ev.trigger_reason.split(' ')[0]}}</td><td style="color:var(--accent-red);">+${{ev.ltft_pct}}%</td><td>${{Math.round(ev.rpm)}}</td></tr>`;
                     }});
                     html += '</table>';
-                    document.getElementById('robot-events-container').innerHTML = html;
+                    const evCont = document.getElementById('robot-events-container');
+                    if (evCont) evCont.innerHTML = html;
                 }}
             }} catch(e) {{}}
         }}
@@ -932,32 +946,36 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 const secHud = document.getElementById('sec-hud');
                 if (secHud && secHud.style.display === 'none') return;
 
+                const c = getChartCtx();
+                if (!c) return;
+
                 const res = await fetch('/api/history');
                 const history = await res.json();
                 if(!history || history.length < 2) return;
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                c.clearRect(0, 0, canvas.width, canvas.height);
                 const midY = canvas.height / 2;
-                ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1; ctx.beginPath();
-                ctx.moveTo(0, midY); ctx.lineTo(canvas.width, midY); ctx.stroke();
+                c.strokeStyle = '#1e293b'; c.lineWidth = 1; c.beginPath();
+                c.moveTo(0, midY); c.lineTo(canvas.width, midY); c.stroke();
 
                 const step = canvas.width / (history.length - 1);
-                ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2; ctx.beginPath();
+                c.strokeStyle = '#ef4444'; c.lineWidth = 2; c.beginPath();
                 history.forEach((pt, i) => {{
                     const y = midY - (pt.ltft * 1.5);
-                    if(i === 0) ctx.moveTo(0, y); else ctx.lineTo(i * step, y);
+                    if(i === 0) c.moveTo(0, y); else c.lineTo(i * step, y);
                 }});
-                ctx.stroke();
+                c.stroke();
 
-                ctx.strokeStyle = '#00f2fe'; ctx.lineWidth = 1.5; ctx.beginPath();
+                c.strokeStyle = '#00f2fe'; c.lineWidth = 1.5; c.beginPath();
                 history.forEach((pt, i) => {{
                     const y = midY - (pt.stft * 1.5);
-                    if(i === 0) ctx.moveTo(0, y); else ctx.lineTo(i * step, y);
+                    if(i === 0) c.moveTo(0, y); else c.lineTo(i * step, y);
                 }});
-                ctx.stroke();
+                c.stroke();
             }} catch(e) {{}}
         }}
 
+        updateData();
         setInterval(updateData, 400);
         setInterval(drawChart, 600);
 
