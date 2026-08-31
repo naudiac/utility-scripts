@@ -948,17 +948,17 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         let btCharacteristic = null;
         let btRxBuffer = '';
 
-        async function connectWebBluetooth() {
+        async function connectWebBluetooth() {{
             const btn = document.getElementById('btn-bt-connect');
-            try {
-                if (!navigator.bluetooth) {
+            try {{
+                if (!navigator.bluetooth) {{
                     alert('Web Bluetooth is not supported in this browser. Please open in Google Chrome on your Android phone.');
                     return;
-                }
+                }}
                 btn.innerHTML = '🔄 SCANNING BLUETOOTH...';
                 speakPhone('Scanning for OBDLink Bluetooth adapter.');
 
-                btDevice = await navigator.bluetooth.requestDevice({
+                btDevice = await navigator.bluetooth.requestDevice({{
                     acceptAllDevices: true,
                     optionalServices: [
                         '0000ffe0-0000-1000-8000-00805f9b34fb',
@@ -967,30 +967,30 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                         '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
                         '49535343-fe7d-4ae5-8fa9-9fafd205e455'
                     ]
-                });
+                }});
 
                 btn.innerHTML = '🔄 CONNECTING TO ' + btDevice.name + '...';
                 btServer = await btDevice.gatt.connect();
 
                 const services = await btServer.getPrimaryServices();
-                for (let s of services) {
-                    try {
+                for (let s of services) {{
+                    try {{
                         const chars = await s.getCharacteristics();
-                        for (let c of chars) {
-                            if (c.properties.write || c.properties.writeWithoutResponse) {
+                        for (let c of chars) {{
+                            if (c.properties.write || c.properties.writeWithoutResponse) {{
                                 btCharacteristic = c;
-                            }
-                            if (c.properties.notify || c.properties.indicate) {
+                            }}
+                            if (c.properties.notify || c.properties.indicate) {{
                                 await c.startNotifications();
-                                c.addEventListener('characteristicvaluechanged', (e) => {
+                                c.addEventListener('characteristicvaluechanged', (e) => {{
                                     const val = new TextDecoder().decode(e.target.value);
                                     btRxBuffer += val;
-                                });
-                            }
-                        }
-                    } catch(e) {}
+                                }});
+                            }}
+                        }}
+                    }} catch(e) {{}}
                     if (btCharacteristic) break;
-                }
+                }}
 
                 btn.innerHTML = '🟢 CONNECTED DIRECT TO ' + (btDevice.name || 'OBDLink');
                 btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
@@ -1003,150 +1003,150 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 await sendBtCmd('ATE0');
 
                 startBtPollingLoop();
-            } catch(err) {
+            }} catch(err) {{
                 btn.innerHTML = '🔵 CONNECT TO OBDLINK VIA BLUETOOTH (PHONE DIRECT)';
                 alert('Bluetooth Connection Notice: ' + err);
-            }
-        }
+            }}
+        }}
 
-        async function sendBtCmd(cmd) {
+        async function sendBtCmd(cmd) {{
             if (!btCharacteristic) return '';
             btRxBuffer = '';
             const enc = new TextEncoder().encode(cmd + '\r');
             await btCharacteristic.writeValue(enc);
             const start = Date.now();
-            while (Date.now() - start < 1000) {
+            while (Date.now() - start < 1000) {{
                 if (btRxBuffer.includes('>')) break;
                 await new Promise(r => setTimeout(r, 25));
-            }
+            }}
             return btRxBuffer.replace('>', '').trim();
-        }
+        }}
 
-        async function startBtPollingLoop() {
-            while (btDevice && btDevice.gatt.connected) {
-                try {
+        async function startBtPollingLoop() {{
+            while (btDevice && btDevice.gatt.connected) {{
+                try {{
                     const r_rpm = await sendBtCmd('010C');
                     const r_stft = await sendBtCmd('0106');
                     const r_ltft = await sendBtCmd('0107');
                     const r_volt = await sendBtCmd('ATRV');
 
-                    if (r_rpm.includes('0C')) {
+                    if (r_rpm.includes('0C')) {{
                         const parts = r_rpm.split(' ').filter(x => x.length === 2);
                         const idx = parts.indexOf('0C');
-                        if (idx !== -1 && parts[idx+2]) {
+                        if (idx !== -1 && parts[idx+2]) {{
                             const a = parseInt(parts[idx+1], 16);
                             const b = parseInt(parts[idx+2], 16);
                             const rpm = Math.round(((a * 256) + b) / 4);
                             document.getElementById('val-rpm').innerHTML = rpm + '<span class="metric-unit">RPM</span>';
-                        }
-                    }
+                        }}
+                    }}
 
                     let ltftVal = 0;
-                    if (r_ltft.includes('07')) {
+                    if (r_ltft.includes('07')) {{
                         const parts = r_ltft.split(' ').filter(x => x.length === 2);
                         const idx = parts.indexOf('07');
-                        if (idx !== -1 && parts[idx+1]) {
+                        if (idx !== -1 && parts[idx+1]) {{
                             const a = parseInt(parts[idx+1], 16);
                             ltftVal = ((a - 128) * 100 / 128);
                             document.getElementById('val-ltft').innerHTML = (ltftVal > 0 ? '+' : '') + ltftVal.toFixed(1) + '<span class="metric-unit">%</span>';
                             document.getElementById('val-ltft').style.color = ltftVal > 15 ? '#ef4444' : '#10b981';
-                        }
-                    }
+                        }}
+                    }}
 
-                    if (r_stft.includes('06')) {
+                    if (r_stft.includes('06')) {{
                         const parts = r_stft.split(' ').filter(x => x.length === 2);
                         const idx = parts.indexOf('06');
-                        if (idx !== -1 && parts[idx+1]) {
+                        if (idx !== -1 && parts[idx+1]) {{
                             const a = parseInt(parts[idx+1], 16);
                             const stftVal = ((a - 128) * 100 / 128);
                             document.getElementById('val-stft').innerHTML = (stftVal > 0 ? '+' : '') + stftVal.toFixed(1) + '<span class="metric-unit">%</span>';
-                        }
-                    }
+                        }}
+                    }}
 
                     const badge = document.getElementById('robot-badge');
-                    if (badge && badge.innerText.includes('ARMED') && ltftVal >= 22.0) {
+                    if (badge && badge.innerText.includes('ARMED') && ltftVal >= 22.0) {{
                         speakPhone('Robot Mode: Fuel trim reached plus ' + Math.round(ltftVal) + ' percent. Resetting learned tables to zero.');
                         await sendBtCmd('04');
-                    }
+                    }}
 
                     await new Promise(r => setTimeout(r, 350));
-                } catch(e) {
+                }} catch(e) {{
                     await new Promise(r => setTimeout(r, 1000));
-                }
-            }
-        }
+                }}
+            }}
+        }}
 
-        function speakPhone(text) {
-            try {
-                if ('speechSynthesis' in window) {
+        function speakPhone(text) {{
+            try {{
+                if ('speechSynthesis' in window) {{
                     window.speechSynthesis.cancel();
                     const u = new SpeechSynthesisUtterance(text);
                     u.rate = 1.0;
                     u.pitch = 1.0;
                     u.volume = 1.0;
                     window.speechSynthesis.speak(u);
-                }
-            } catch(e) {}
-        }
+                }}
+            }} catch(e) {{}}
+        }}
 
-        async function toggleRobotMode() {
-            try {
-                const res = await fetch('/api/robot/toggle', { method: 'POST' });
+        async function toggleRobotMode() {{
+            try {{
+                const res = await fetch('/api/robot/toggle', {{ method: 'POST' }});
                 const data = await res.json();
                 updateData();
                 speakPhone(data.armed ? 'Robot Mode armed. Malibu fuel trim watchdog active.' : 'Robot Mode disarmed. Watchdog stopped.');
-            } catch(e) { alert('Error toggling robot mode: ' + e); }
-        }
+            }} catch(e) {{ alert('Error toggling robot mode: ' + e); }}
+        }}
 
-        async function setSpeechLevel(lvl) {
-            try {
-                const res = await fetch('/api/robot/speech_level', {
+        async function setSpeechLevel(lvl) {{
+            try {{
+                const res = await fetch('/api/robot/speech_level', {{
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ level: lvl })
-                });
+                    headers: {{ 'Content-Type': 'application/json' }},
+                    body: JSON.stringify({{ level: lvl }})
+                }});
                 updateData();
                 speakPhone('Voice level set to ' + lvl);
-            } catch(e) { alert('Error setting speech level: ' + e); }
-        }
+            }} catch(e) {{ alert('Error setting speech level: ' + e); }}
+        }}
 
-        async function syncGitLogs() {
+        async function syncGitLogs() {{
             logToTerm('\n🔄 [GIT SYNC]: Syncing reset events to GitHub naudiac/utility-scripts...');
             speakPhone('Syncing reset logs to GitHub.');
-            try {
-                const res = await fetch('/api/git/sync', { method: 'POST' });
+            try {{
+                const res = await fetch('/api/git/sync', {{ method: 'POST' }});
                 const data = await res.json();
                 alert(data.message || 'Git sync dispatched!');
                 logToTerm('✓ [GIT SYNC COMPLETE]: ' + (data.message || 'Updated'));
-            } catch(e) { alert('Git sync error: ' + e); }
-        }
+            }} catch(e) {{ alert('Git sync error: ' + e); }}
+        }}
 
-        async function readFuelTrims() {
-            try {
+        async function readFuelTrims() {{
+            try {{
                 const res = await fetch('/api/live');
                 const data = await res.json();
                 const total = (data.stft + data.ltft).toFixed(1);
                 const health = data.ltft > 20 ? 'High Idle Trim, Post MAF Leak Detected' : 'Normal Fuel Delivery';
                 speakPhone('Short term trim is ' + data.stft.toFixed(1) + ' percent. Long term trim is ' + data.ltft.toFixed(1) + ' percent.');
                 alert('📊 LIVE FUEL TRIMS:\n• STFT: ' + (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '%\n• LTFT: ' + (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '%\n• Total: ' + (total > 0 ? '+' : '') + total + '%\n• Health: ' + health);
-            } catch(e) { alert('Error: ' + e); }
-        }
+            }} catch(e) {{ alert('Error: ' + e); }}
+        }}
 
-        async function resetFuelTrims() {
+        async function resetFuelTrims() {{
             if(!confirm('Wipe learned Fuel Trim adaptation tables & clear DTCs?')) return;
             speakPhone('Wiping fuel trim adaptation tables to zero percent.');
-            const res = await fetch('/obd/clear', {method: 'POST'});
+            const res = await fetch('/obd/clear', {{method: 'POST'}});
             const data = await res.json();
             alert('Fuel Trims Cleared to 0.0% (Mode 04 Dispatched)');
-        }
+        }}
 
-        async function clearCodes() {
+        async function clearCodes() {{
             if(!confirm('Send Mode 04 to Clear Diagnostic Trouble Codes?')) return;
             speakPhone('Sending Mode 04 to clear diagnostic trouble codes.');
-            const res = await fetch('/obd/clear', {method: 'POST'});
+            const res = await fetch('/obd/clear', {{method: 'POST'}});
             const data = await res.json();
             alert('Mode 04 Dispatched: ' + (data.response || 'Success'));
-        }
+        }}
 
         async function engageHiveMindRun() {{
             logToTerm('\\n🚀 [HIVE MIND]: Relaying to Node Alpha Master over Tailscale...');
