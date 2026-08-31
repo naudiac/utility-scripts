@@ -20,8 +20,10 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
+        h1, h2, h3 {
             color: var(--lcd-green);
+        }
+        h1 {
             text-align: center;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
@@ -58,7 +60,7 @@
         .btn-print:hover {
             background-color: #27ae60;
         }
-        .category {
+        .category, .content-section {
             margin-bottom: 20px;
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -117,22 +119,24 @@
             border-left: 4px solid #e74c3c;
             opacity: 0.6;
         }
-        .tips-section {
-            background-color: var(--panel-bg);
+        .content-section {
             padding: 20px;
-            border-radius: 5px;
-            margin-top: 30px;
             border: 1px solid var(--lcd-amber);
         }
-        .tips-section h3 {
-            color: var(--lcd-amber);
-            margin-top: 0;
+        .content-section a {
+            color: var(--lcd-green);
         }
         .hidden {
             display: none !important;
         }
         .print-header {
             display: none;
+        }
+        .guide-table {
+            margin-top: 15px;
+        }
+        .guide-table th {
+            background-color: #2c3e50;
         }
         @media print {
             body {
@@ -153,7 +157,7 @@
                 font-weight: bold;
                 font-size: 1.2em;
             }
-            .category {
+            .category, .content-section {
                 border: none;
                 margin-bottom: 10px;
                 page-break-inside: avoid;
@@ -204,9 +208,10 @@
         <div>Last Updated: <span id="last-updated"></span></div>
     </div>
 
+    <h2>📡 Channel List</h2>
     <div id="channels-container"></div>
 
-    <div class="tips-section">
+    <div class="content-section tips-section">
         <h3>💡 Scanning Tips</h3>
         <ul>
             <li>ISS passes over GA several times daily - check heavens-above.com for pass times</li>
@@ -214,6 +219,69 @@
             <li>Marine Ch 16 picks up Coast Guard traffic near Savannah</li>
             <li>NOAA WX channels broadcast 24/7 - tune to whichever has the strongest signal</li>
             <li>Business dot/star frequencies are where store employees talk on walkies</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>🚗 Travel Route Guides</h3>
+        <p>Checkpoint-by-checkpoint channel recommendations for popular routes.</p>
+        
+        <div class="category">
+            <div class="category-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                <span>🛣️ I-16 East: Mount Vernon → Savannah</span>
+                <span>▼</span>
+            </div>
+            <div class="category-content">
+                <table class="guide-table">
+                    <tr><th>Checkpoint</th><th>Mile</th><th>Best Channels</th><th>Notes</th></tr>
+                    <tr><td>Mount Vernon (Start)</td><td>0</td><td>CH 43 K4HAO (146.625), CH 44 W4VDA (147.240)</td><td>Your local repeaters, strongest signal</td></tr>
+                    <tr><td>Vidalia / Lyons</td><td>12</td><td>CH 43 K4HAO, CH 44 W4VDA</td><td>Still in range of Vidalia towers</td></tr>
+                    <tr><td>Metter (I-16 Exit 104)</td><td>40</td><td>CH 45 W4MTR (444.800)</td><td>Candler County ARES</td></tr>
+                    <tr><td>Swainsboro (US-1)</td><td>30N</td><td>CH 47 WR4A (145.450), CH 48 K4EMN (147.000)</td><td>Emanuel County</td></tr>
+                    <tr><td>Statesboro (I-16 Exit 116)</td><td>65</td><td>CH 46 K4GAS (146.940), CH 49 KF4DG (147.390)</td><td>Georgia Southern area, ARES/SKYWARN</td></tr>
+                    <tr><td>Pembroke (I-16 Exit 137)</td><td>85</td><td>CH 52 KF4DG (147.105)</td><td>WVAN Tower — covers 40 miles of I-16</td></tr>
+                    <tr><td>Savannah (I-16 Terminal)</td><td>110</td><td>CH 53 W4LHS (146.970), CH 54 W4LHS (442.700)</td><td>CARS flagship, plus Marine CH 20-22 near coast</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="category">
+            <div class="category-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                <span>🛣️ I-16/I-75 North: Mount Vernon → Atlanta</span>
+                <span>▼</span>
+            </div>
+            <div class="category-content">
+                <table class="guide-table">
+                    <tr><th>Checkpoint</th><th>Mile</th><th>Best Channels</th><th>Notes</th></tr>
+                    <tr><td>Mount Vernon (Start)</td><td>0</td><td>CH 43 K4HAO, CH 44 W4VDA</td><td>Local</td></tr>
+                    <tr><td>Dublin (I-16 MP 50)</td><td>35</td><td>CH 58 K4DBN (147.150), CH 60 K4GSO (146.880)</td><td>Peach State Intertie / SKYWARN</td></tr>
+                    <tr><td>Eastman (Hwy 341)</td><td>55</td><td>CH 62 KC4YNB (145.210)</td><td>PSI Hub — massive regional footprint</td></tr>
+                    <tr><td>Warner Robins (I-75 MP 146)</td><td>80</td><td>CH 67 WM4B (146.670), CH 69 WX4PCH (145.290)</td><td>Houston County ARES, PSI backbone</td></tr>
+                    <tr><td>Macon (I-16/I-75 Junction)</td><td>100</td><td>CH 73 KD4UTQ (146.895), CH 75 WX4EMA (147.015)</td><td>PSI Hub, Bibb County EMA</td></tr>
+                    <tr><td>Forsyth (I-75 MP 186)</td><td>130</td><td>CH 77 KK4JPG (146.835)</td><td>Monroe County, PSI linked</td></tr>
+                    <tr><td>Griffin (Hwy 19/41)</td><td>155</td><td>CH 79 WB4GWA (145.390)</td><td>Spalding County ARES</td></tr>
+                    <tr><td>McDonough (I-75 MP 218)</td><td>175</td><td>CH 82 KI4FVI (146.715)</td><td>Henry Link System Hub / AllStar</td></tr>
+                    <tr><td>Atlanta (I-75 Terminal)</td><td>200</td><td>CH 89 W4DOC (146.820), CH 90 W4BOC (146.760)</td><td>Bank of America Plaza & Stone Mountain — metro-wide</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h3>🛰️ ISS Overhead Alerts — Tune to CH 26 (145.800 MHz)</h3>
+        <p>The International Space Station passes over Georgia several times daily. When it's overhead, tune to Channel 26 and you may hear crew voice communications or the onboard FM repeater.</p>
+        <p><strong>Tip:</strong> Best passes are at dawn and dusk when the ISS is sunlit but the ground is dark — that's when you can see it as a bright moving star AND listen on 145.8 MHz simultaneously.</p>
+        <p><a href="https://heavens-above.com/PassSummary.aspx?satid=25544&lat=32.1785&lng=-82.5957&alt=64" target="_blank" rel="noopener noreferrer">Check ISS Pass Times for Mount Vernon, GA</a></p>
+    </div>
+
+    <div class="content-section">
+        <h3>⌚ What's Active Right Now? Quick Tips</h3>
+        <ul>
+            <li><strong>Morning (6-9 AM):</strong> Railroad dispatchers most active (CH 23-26). NOAA weather updates on the hour.</li>
+            <li><strong>Daytime (9 AM-5 PM):</strong> Business bands busiest (CH 32-34) — hear store/warehouse workers. Ham repeater nets run various scheduled times.</li>
+            <li><strong>Evening (5-10 PM):</strong> Ham radio nets are most active. Many clubs run weekly nets (check repeater descriptions).</li>
+            <li><strong>Overnight:</strong> Marine Ch 16 can pick up distant signals via atmospheric ducting. Railroad never sleeps.</li>
+            <li><strong>Severe Weather:</strong> Switch to NOAA WX channels (CH 5-11) and SKYWARN repeaters (CH 46 K4GAS, CH 69 WX4PCH, CH 87 WX4PTC).</li>
         </ul>
     </div>
 
@@ -270,7 +338,7 @@
                 header.innerHTML = `<span>📻 ${cat.name}</span> <span>${catChannels.length} Channels ▼</span>`;
                 header.onclick = () => {
                     const content = catDiv.querySelector('.category-content');
-                    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                    content.classList.toggle('hidden');
                 };
                 
                 const content = document.createElement('div');
