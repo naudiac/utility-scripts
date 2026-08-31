@@ -182,8 +182,16 @@ def background_telemetry_poller():
 
     while True:
         try:
-            s = socket.create_connection((OBD_BRIDGE_HOST, OBD_BRIDGE_PORT), timeout=2.0)
-            s.settimeout(2.0)
+            s = None
+            for p in [35000, 35001, 35002, 35003]:
+                try:
+                    s = socket.create_connection((OBD_BRIDGE_HOST, p), timeout=0.8)
+                    s.settimeout(2.0)
+                    break
+                except Exception:
+                    pass
+            if s is None:
+                raise ConnectionError("Waiting for BT/TCP Bridge server on ports 35000-35003")
             
             def send_raw(cmd):
                 s.sendall((cmd.strip() + "\r").encode("utf-8"))
