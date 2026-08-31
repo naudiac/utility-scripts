@@ -187,14 +187,22 @@ def background_telemetry_poller():
             
             def send_raw(cmd):
                 s.sendall((cmd.strip() + "\r").encode("utf-8"))
+                time.sleep(0.08)
                 buf = bytearray()
-                while True:
-                    chunk = s.recv(128)
-                    if not chunk: break
-                    buf.extend(chunk)
-                    if b">" in chunk: break
+                start = time.time()
+                while time.time() - start < 1.2:
+                    try:
+                        chunk = s.recv(256)
+                        if chunk:
+                            buf.extend(chunk)
+                            if b">" in chunk: break
+                    except Exception:
+                        break
+                    time.sleep(0.02)
                 return buf.decode("utf-8", errors="ignore").replace(">", "").strip()
 
+            send_raw("ATZ")
+            time.sleep(0.2)
             send_raw("ATSP6")
             send_raw("ATSH 7DF")
             send_raw("ATE0")
