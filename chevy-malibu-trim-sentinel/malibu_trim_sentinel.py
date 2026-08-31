@@ -1048,7 +1048,7 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         async function sendBtCmd(cmd) {{
             if (!btCharacteristic) return '';
             btRxBuffer = '';
-            const enc = new TextEncoder().encode(cmd + '\r');
+            const enc = new TextEncoder().encode(cmd + '\\r');
             await btCharacteristic.writeValue(enc);
             const start = Date.now();
             while (Date.now() - start < 1000) {{
@@ -1147,7 +1147,7 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         }}
 
         async function syncGitLogs() {{
-            logToTerm('\n🔄 [GIT SYNC]: Syncing reset events to GitHub naudiac/utility-scripts...');
+            logToTerm('\\n🔄 [GIT SYNC]: Syncing reset events to GitHub naudiac/utility-scripts...');
             speakPhone('Syncing reset logs to GitHub.');
             try {{
                 const res = await fetch('/api/git/sync', {{ method: 'POST' }});
@@ -1164,7 +1164,7 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
                 const total = (data.stft + data.ltft).toFixed(1);
                 const health = data.ltft > 20 ? 'High Idle Trim, Post MAF Leak Detected' : 'Normal Fuel Delivery';
                 speakPhone('Short term trim is ' + data.stft.toFixed(1) + ' percent. Long term trim is ' + data.ltft.toFixed(1) + ' percent.');
-                alert('📊 LIVE FUEL TRIMS:\n• STFT: ' + (data.stft > 0 ? '+' : '') + data.stft.toFixed(1) + '%\n• LTFT: ' + (data.ltft > 0 ? '+' : '') + data.ltft.toFixed(1) + '%\n• Total: ' + (total > 0 ? '+' : '') + total + '%\n• Health: ' + health);
+                alert('LIVE FUEL TRIMS: STFT ' + data.stft + '%, LTFT ' + data.ltft + '%');
             }} catch(e) {{ alert('Error: ' + e); }}
         }}
 
