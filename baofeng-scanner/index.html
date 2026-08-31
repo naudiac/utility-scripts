@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baofeng BF-F8HP Channel Reference</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --lcd-green: #2ecc71;
+            --lcd-amber: #f39c12;
+            --border-color: #333;
+            --panel-bg: #1e1e1e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: var(--lcd-green);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn {
+            background-color: var(--panel-bg);
+            color: var(--lcd-amber);
+            border: 1px solid var(--lcd-amber);
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: var(--lcd-amber);
+            color: #000;
+        }
+        .btn-print {
+            background-color: var(--lcd-green);
+            color: #000;
+            border: none;
+            font-size: 1.1em;
+            padding: 15px 30px;
+        }
+        .btn-print:hover {
+            background-color: #27ae60;
+        }
+        .category {
+            margin-bottom: 20px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .category-header {
+            background-color: #2c3e50;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--lcd-green);
+        }
+        .category-header:hover {
+            background-color: #34495e;
+        }
+        .category-content {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #1a1a1a;
+            color: var(--lcd-amber);
+        }
+        tr:nth-child(even) {
+            background-color: #161616;
+        }
+        .rating-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            opacity: 0.5;
+        }
+        .rating-btn.active-up {
+            opacity: 1;
+        }
+        .rating-btn.active-down {
+            opacity: 1;
+        }
+        tr.liked {
+            border-left: 4px solid var(--lcd-green);
+        }
+        tr.disliked {
+            border-left: 4px solid #e74c3c;
+            opacity: 0.6;
+        }
+        .tips-section {
+            background-color: var(--panel-bg);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+            border: 1px solid var(--lcd-amber);
+        }
+        .tips-section h3 {
+            color: var(--lcd-amber);
+            margin-top: 0;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .print-header {
+            display: none;
+        }
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                padding: 0;
+            }
+            .header-controls, .tips-section, .rating-col, .rating-btn, button, .category-header span:last-child {
+                display: none !important;
+            }
+            h1 {
+                display: none;
+            }
+            .print-header {
+                display: block;
+                text-align: center;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+            .category {
+                border: none;
+                margin-bottom: 10px;
+                page-break-inside: avoid;
+            }
+            .category-header {
+                background-color: #eee !important;
+                color: black;
+                border: 1px solid #ccc;
+                padding: 5px;
+                font-size: 0.9em;
+            }
+            table {
+                font-size: 0.7em;
+            }
+            th, td {
+                padding: 3px;
+                border: 1px solid #ccc;
+            }
+            th {
+                background-color: #ddd;
+                color: black;
+            }
+            tr {
+                background-color: white !important;
+                border: none !important;
+            }
+            @page {
+                size: landscape;
+                margin: 0.5cm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-header">
+        Baofeng BF-F8HP - Mount Vernon GA | Updated: <span id="print-date"></span>
+    </div>
+
+    <h1>📻 Baofeng Scanner Reference</h1>
+
+    <div class="header-controls">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print Channel List</button>
+        <div>
+            <button class="btn" id="filter-btn">Show Favorites Only</button>
+            <button class="btn" id="dl-csv-btn">Download CSV</button>
+        </div>
+        <div>Last Updated: <span id="last-updated"></span></div>
+    </div>
+
+    <div id="channels-container"></div>
+
+    <div class="tips-section">
+        <h3>💡 Scanning Tips</h3>
+        <ul>
+            <li>ISS passes over GA several times daily - check heavens-above.com for pass times</li>
+            <li>Railroad AAR channels are most active near crossings and yards</li>
+            <li>Marine Ch 16 picks up Coast Guard traffic near Savannah</li>
+            <li>NOAA WX channels broadcast 24/7 - tune to whichever has the strongest signal</li>
+            <li>Business dot/star frequencies are where store employees talk on walkies</li>
+        </ul>
+    </div>
+
+    <script>
+        const csvData = [{"Location": "0", "Name": "CALL2M", "Frequency": "146.520000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "National 2m FM Simplex Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "1", "Name": "CALL70", "Frequency": "446.000000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "National 70cm FM Simplex Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "2", "Name": "2MSIMP1", "Frequency": "146.550000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "2m Simplex Secondary", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "3", "Name": "2MSIMP2", "Frequency": "146.580000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "2m Simplex Secondary", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "4", "Name": "70SIMP", "Frequency": "446.100000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "70cm Simplex Secondary", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "5", "Name": "WX 1", "Frequency": "162.550000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 1", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "6", "Name": "WX 2", "Frequency": "162.400000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 2", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "7", "Name": "WX 3", "Frequency": "162.475000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 3", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "8", "Name": "WX 4", "Frequency": "162.425000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 4", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "9", "Name": "WX 5", "Frequency": "162.450000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 5", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "10", "Name": "WX 6", "Frequency": "162.500000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 6", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "11", "Name": "WX 7", "Frequency": "162.525000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "NOAA Weather Ch 7", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "12", "Name": "VCALL", "Frequency": "155.752500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National VHF Interop Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "13", "Name": "VTAC11", "Frequency": "151.137500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "VHF Tactical Interop 11", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "14", "Name": "VTAC12", "Frequency": "154.452500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "VHF Tactical Interop 12", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "15", "Name": "VFIRE", "Frequency": "154.280000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National Fire Mutual Aid", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "16", "Name": "VMED", "Frequency": "155.340000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National EMS/Hospital Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "17", "Name": "VLAW", "Frequency": "155.475000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National Law Enforcement", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "18", "Name": "SAR", "Frequency": "155.160000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National Search and Rescue", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "19", "Name": "UCALL", "Frequency": "453.212500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "National UHF Interop Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "20", "Name": "MAR 16", "Frequency": "156.800000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Marine Distress and Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "21", "Name": "MAR 09", "Frequency": "156.450000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Marine Boater Calling", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "22", "Name": "MAR 13", "Frequency": "156.650000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Marine Bridge-to-Bridge", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "23", "Name": "AAR046", "Frequency": "160.800000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Railroad Nationwide Road Ch", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "24", "Name": "AAR096", "Frequency": "161.550000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Railroad End-of-Train", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "25", "Name": "AAR008", "Frequency": "160.230000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Railroad Dispatcher", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "26", "Name": "ISS", "Frequency": "145.800000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "ISS Crew Voice Downlink", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "27", "Name": "MURS 1", "Frequency": "151.820000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "MURS License-Free Ch 1", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "28", "Name": "MURS 2", "Frequency": "151.880000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "MURS License-Free Ch 2", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "29", "Name": "MURS 3", "Frequency": "151.940000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "MURS License-Free Ch 3", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "30", "Name": "MURS 4", "Frequency": "154.570000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "MURS License-Free Ch 4", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "31", "Name": "MURS 5", "Frequency": "154.600000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "MURS License-Free Ch 5", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "32", "Name": "REDDOT", "Frequency": "151.625000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Itinerant Red Dot", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "33", "Name": "BLUSTR", "Frequency": "467.850000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Itinerant Blue Star", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "34", "Name": "REDSTR", "Frequency": "467.900000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Itinerant Red Star", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "35", "Name": "GMRS 1", "Frequency": "462.562500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 1", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "36", "Name": "GMRS 5", "Frequency": "462.662500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 5", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "37", "Name": "GMRS 7", "Frequency": "462.712500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 7", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "38", "Name": "GMRS15", "Frequency": "462.550000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 15", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "39", "Name": "GMRS19", "Frequency": "462.650000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 19", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "40", "Name": "GMRS20", "Frequency": "462.675000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Emergency/Traveler Ch 20", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "41", "Name": "GMRS22", "Frequency": "462.725000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 22", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "42", "Name": "GM20R", "Frequency": "462.675000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "141.3", "cToneFreq": "141.3", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Repeater 20 Travel Tone", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "43", "Name": "K4HAO", "Frequency": "146.625000", "Duplex": "-", "Offset": "0.600000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Vidalia 4 Rivers ARC LOCAL", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "44", "Name": "W4VDA", "Frequency": "147.240000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Vidalia SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "45", "Name": "W4MTR", "Frequency": "444.800000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "141.3", "cToneFreq": "141.3", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Metter ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "46", "Name": "K4GAS", "Frequency": "146.940000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Statesboro ARES/SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "47", "Name": "WR4A", "Frequency": "145.450000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Swainsboro Emanuel Co", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "48", "Name": "K4EMN", "Frequency": "147.000000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Swainsboro ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "49", "Name": "KF4DG", "Frequency": "147.390000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Statesboro STARS Club", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "50", "Name": "NC4D", "Frequency": "147.050000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Statesboro STARS 2m", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "51", "Name": "W4CLA", "Frequency": "147.075000", "Duplex": "+", "Offset": "0.600000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Claxton Evans Co ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "52", "Name": "KF4DG", "Frequency": "147.105000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Pembroke WVAN Tower Wide", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "53", "Name": "W4LHS", "Frequency": "146.970000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "123.0", "cToneFreq": "123.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Savannah ARES/SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "54", "Name": "W4LHS7", "Frequency": "442.700000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "123.0", "cToneFreq": "123.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Savannah CARS Flagship UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "55", "Name": "W4LHS2", "Frequency": "147.210000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "210.7", "cToneFreq": "210.7", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Savannah Bridge Repeater", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "56", "Name": "W4LHS3", "Frequency": "147.330000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "203.5", "cToneFreq": "203.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Savannah East/EchoLink", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "57", "Name": "W4LHS4", "Frequency": "147.105000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Savannah Fusion/Analog", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "58", "Name": "K4DBN", "Frequency": "147.150000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "123.0", "cToneFreq": "123.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Dublin PSI/SKYWARN Linked", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "59", "Name": "WA4HZX", "Frequency": "147.360000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "123.0", "cToneFreq": "123.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Dublin ARC", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "60", "Name": "K4GSO", "Frequency": "146.880000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Dublin ARES Net", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "61", "Name": "KD4IEZ", "Frequency": "443.025000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "156.7", "cToneFreq": "156.7", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Dublin Laurens UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "62", "Name": "KC4YNB", "Frequency": "145.210000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "103.5", "cToneFreq": "103.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Eastman PSI Hub Wide", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "63", "Name": "K4DBN2", "Frequency": "145.490000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "77.0", "cToneFreq": "77.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Cochran SE Linked/SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "64", "Name": "WR4MG", "Frequency": "146.895000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Hawkinsville MGRA", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "65", "Name": "WR4MG2", "Frequency": "146.955000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Perry Hospital/EchoLink", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "66", "Name": "WR4MG3", "Frequency": "147.195000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Perry West Wide Area", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "67", "Name": "WM4B", "Frequency": "146.670000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "82.5", "cToneFreq": "82.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Warner Robins ARES/PSI", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "68", "Name": "WM4B-U", "Frequency": "443.150000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "82.5", "cToneFreq": "82.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Warner Robins UHF ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "69", "Name": "WX4PCH", "Frequency": "145.290000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "82.5", "cToneFreq": "82.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Byron PSI Backbone/SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "70", "Name": "WR4MG4", "Frequency": "147.300000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Centerville MGRA Net", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "71", "Name": "WA4ORT", "Frequency": "146.850000", "Duplex": "-", "Offset": "0.600000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Warner Robins Central GA", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "72", "Name": "WR4MG5", "Frequency": "442.900000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Warner Robins MGRA UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "73", "Name": "KD4UTQ", "Frequency": "146.895000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Macon PSI Hub/SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "74", "Name": "AA4RI", "Frequency": "145.430000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Macon ARC Intertie", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "75", "Name": "WX4EMA", "Frequency": "147.015000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Macon-Bibb EMA ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "76", "Name": "WX4EM2", "Frequency": "443.075000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Macon-Bibb EMA UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "77", "Name": "KK4JPG", "Frequency": "146.835000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "77.0", "cToneFreq": "77.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Forsyth Monroe Co PSI", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "78", "Name": "WX4BCA", "Frequency": "147.285000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "131.8", "cToneFreq": "131.8", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Jackson Butts Co SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "79", "Name": "WB4GWA", "Frequency": "145.390000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "110.9", "cToneFreq": "110.9", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Griffin Spalding ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "80", "Name": "K4HYB", "Frequency": "146.910000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Griffin Spalding ARC", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "81", "Name": "KF4QLF", "Frequency": "441.850000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Griffin UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "82", "Name": "KI4FVI", "Frequency": "146.715000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "146.2", "cToneFreq": "146.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "McDonough Henry Link Hub", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "83", "Name": "KJ4KPY", "Frequency": "145.170000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "146.2", "cToneFreq": "146.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Stockbridge Henry Co", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "84", "Name": "W9KLS", "Frequency": "442.125000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "103.5", "cToneFreq": "103.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "McDonough Henry UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "85", "Name": "KE4UAS", "Frequency": "444.875000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "McDonough Henry Fire", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "86", "Name": "KK4GQ", "Frequency": "145.210000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "131.8", "cToneFreq": "131.8", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Fayetteville Fayette ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "87", "Name": "WX4PTC", "Frequency": "444.675000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "77.0", "cToneFreq": "77.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "NWS Peachtree SKYWARN Hub", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "88", "Name": "WX4PT2", "Frequency": "444.600000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "77.0", "cToneFreq": "77.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "NWS Fayetteville SKYWARN", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "89", "Name": "W4DOC", "Frequency": "146.820000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "146.2", "cToneFreq": "146.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Atlanta Radio Club BofA", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "90", "Name": "W4BOC", "Frequency": "146.760000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Stone Mountain DeKalb", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "91", "Name": "NF4GA", "Frequency": "145.470000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Sweat Mtn NFARL North", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "92", "Name": "W4BTI", "Frequency": "146.880000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Sweat Mtn Cobb ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "93", "Name": "W4GR", "Frequency": "147.075000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "82.5", "cToneFreq": "82.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Snellville Gwinnett ARES", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "94", "Name": "W4AQL", "Frequency": "145.150000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "167.9", "cToneFreq": "167.9", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GA Tech Midtown Atlanta", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "95", "Name": "W4BOC2", "Frequency": "145.450000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Stone Mtn Secondary", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "96", "Name": "N4CLA", "Frequency": "147.060000", "Duplex": "+", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Roswell North Fulton", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "97", "Name": "NF4GA2", "Frequency": "444.475000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Sweat Mtn NFARL UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "98", "Name": "W4DOC2", "Frequency": "443.100000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Atlanta Radio Club UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "99", "Name": "W4GR-U", "Frequency": "442.100000", "Duplex": "+", "Offset": "5.000000", "Tone": "Tone", "rToneFreq": "100.0", "cToneFreq": "100.0", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Gwinnett GARS UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "100", "Name": "MAR22", "Frequency": "157.100000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Coast Guard Liaison", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "101", "Name": "MAR 06", "Frequency": "156.300000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Marine SAR Coordination", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "102", "Name": "VTAC13", "Frequency": "158.737500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "VHF Tactical Interop 13", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "103", "Name": "UTAC41", "Frequency": "453.462500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "UHF Tactical Interop 41", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "104", "Name": "UTAC42", "Frequency": "453.712500", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "UHF Tactical Interop 42", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "105", "Name": "AAR073", "Frequency": "161.205000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Railroad Yard Switching", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "106", "Name": "AAR042", "Frequency": "160.740000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Railroad Yard Operations", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "107", "Name": "GMRS 2", "Frequency": "462.587500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 2", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "108", "Name": "GMRS 3", "Frequency": "462.612500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 3", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "109", "Name": "GMRS 4", "Frequency": "462.637500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 4", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "110", "Name": "GMRS 6", "Frequency": "462.687500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS/FRS Ch 6", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "111", "Name": "GMRS16", "Frequency": "462.575000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 16", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "112", "Name": "GMRS17", "Frequency": "462.600000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 17", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "113", "Name": "GMRS18", "Frequency": "462.625000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 18", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "114", "Name": "GMRS21", "Frequency": "462.700000", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "GMRS Main Ch 21", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "115", "Name": "FRS 8", "Frequency": "467.562500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 8", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "116", "Name": "FRS 9", "Frequency": "467.587500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 9", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "117", "Name": "FRS 10", "Frequency": "467.612500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 10", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "118", "Name": "FRS 11", "Frequency": "467.637500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 11", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "119", "Name": "FRS 12", "Frequency": "467.662500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 12", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "120", "Name": "FRS 13", "Frequency": "467.687500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 13", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "121", "Name": "FRS 14", "Frequency": "467.712500", "Duplex": "", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "FRS Only Ch 14", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "122", "Name": "PURPDT", "Frequency": "151.955000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Purple Dot", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "123", "Name": "YELSTR", "Frequency": "467.875000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Yellow Star", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "124", "Name": "BRNSTR", "Frequency": "467.925000", "Duplex": "off", "Offset": "0.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "NFM", "TStep": "5.00", "Skip": "", "Power": "Low", "Comment": "Business Brown Star", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "125", "Name": "N4MXC", "Frequency": "145.110000", "Duplex": "-", "Offset": "0.600000", "Tone": "Tone", "rToneFreq": "107.2", "cToneFreq": "107.2", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Cochran Mid GA ARC", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "126", "Name": "W8JI", "Frequency": "147.225000", "Duplex": "+", "Offset": "0.600000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Barnesville Lamar Co", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}, {"Location": "127", "Name": "NQ4AE", "Frequency": "443.550000", "Duplex": "+", "Offset": "5.000000", "Tone": "", "rToneFreq": "88.5", "cToneFreq": "88.5", "DtcsCode": "023", "DtcsPolarity": "NN", "Mode": "FM", "TStep": "5.00", "Skip": "", "Power": "High", "Comment": "Griffin Open UHF", "URCALL": "", "RPT1CALL": "", "RPT2CALL": "", "DVCODE": ""}];
+        
+        const categories = [
+            { id: 'national', name: 'National Calling', range: [0, 4] },
+            { id: 'noaa', name: 'NOAA Weather', range: [5, 11] },
+            { id: 'public-safety', name: 'Public Safety Interop', range: [12, 19] },
+            { id: 'marine', name: 'Marine & Railroad', range: [20, 26] },
+            { id: 'murs', name: 'MURS & Business', range: [27, 34] },
+            { id: 'gmrs', name: 'GMRS/FRS', range: [[35, 42], [107, 121]] },
+            { id: 'rep-mtv', name: 'Local Repeaters: Mount Vernon / Vidalia', range: [43, 48] },
+            { id: 'rep-sav', name: 'Local Repeaters: Statesboro / Savannah Corridor', range: [49, 57] },
+            { id: 'rep-dub', name: 'Local Repeaters: Dublin to Macon', range: [58, 76] },
+            { id: 'rep-mac', name: 'Local Repeaters: Macon to Atlanta', range: [77, 99] },
+            { id: 'util', name: 'Additional Utility', range: [[100, 106], [122, 127]] }
+        ];
+
+        function isInCategory(chNum, rangeDef) {
+            if (Array.isArray(rangeDef[0])) {
+                return rangeDef.some(r => chNum >= r[0] && chNum <= r[1]);
+            }
+            return chNum >= rangeDef[0] && chNum <= rangeDef[1];
+        }
+
+        const ratings = JSON.parse(localStorage.getItem('baofengRatings') || '{}');
+        let showFavorites = false;
+
+        function render() {
+            const container = document.getElementById('channels-container');
+            container.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const catChannels = csvData.filter(ch => {
+                    const chNum = parseInt(ch.Location, 10);
+                    return isInCategory(chNum, cat.range);
+                });
+
+                if (catChannels.length === 0) return;
+
+                const filteredChannels = showFavorites 
+                    ? catChannels.filter(ch => ratings[ch.Location] === 'up')
+                    : catChannels;
+
+                if (showFavorites && filteredChannels.length === 0) return;
+
+                const catDiv = document.createElement('div');
+                catDiv.className = 'category';
+                
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `<span>📻 ${cat.name}</span> <span>${catChannels.length} Channels ▼</span>`;
+                header.onclick = () => {
+                    const content = catDiv.querySelector('.category-content');
+                    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                };
+                
+                const content = document.createElement('div');
+                content.className = 'category-content';
+                
+                let tableHtml = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CH</th>
+                                <th>Name</th>
+                                <th>Freq</th>
+                                <th>Offset</th>
+                                <th>Tone</th>
+                                <th>Mode</th>
+                                <th>Pwr</th>
+                                <th>Comment</th>
+                                <th class="rating-col">Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                filteredChannels.forEach(ch => {
+                    const rating = ratings[ch.Location];
+                    const rowClass = rating === 'up' ? 'liked' : (rating === 'down' ? 'disliked' : '');
+                    
+                    tableHtml += `
+                        <tr class="${rowClass}" data-ch="${ch.Location}">
+                            <td>${ch.Location}</td>
+                            <td>${ch.Name}</td>
+                            <td>${ch.Frequency}</td>
+                            <td>${ch.Duplex || ''} ${ch.Offset !== '0.000000' ? ch.Offset : ''}</td>
+                            <td>${ch.Tone === 'Tone' ? ch.rToneFreq : (ch.cToneFreq !== '88.5' ? ch.cToneFreq : '')}</td>
+                            <td>${ch.Mode}</td>
+                            <td>${ch.Power}</td>
+                            <td>${ch.Comment}</td>
+                            <td class="rating-col">
+                                <button class="rating-btn ${rating==='up'?'active-up':''}" onclick="rate('${ch.Location}', 'up')">👍</button>
+                                <button class="rating-btn ${rating==='down'?'active-down':''}" onclick="rate('${ch.Location}', 'down')">👎</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                tableHtml += `</tbody></table>`;
+                content.innerHTML = tableHtml;
+                
+                catDiv.appendChild(header);
+                catDiv.appendChild(content);
+                container.appendChild(catDiv);
+            });
+        }
+
+        window.rate = function(chNum, type) {
+            if (ratings[chNum] === type) {
+                delete ratings[chNum]; // Toggle off
+            } else {
+                ratings[chNum] = type;
+            }
+            localStorage.setItem('baofengRatings', JSON.stringify(ratings));
+            render();
+        };
+
+        document.getElementById('filter-btn').addEventListener('click', (e) => {
+            showFavorites = !showFavorites;
+            e.target.textContent = showFavorites ? 'Show All Channels' : 'Show Favorites Only';
+            render();
+        });
+
+        document.getElementById('dl-csv-btn').addEventListener('click', () => {
+            const headers = Object.keys(csvData[0]).join(',');
+            const rows = csvData.map(obj => Object.values(obj).map(v => `"${(v||'').replace(/"/g, '""')}"`).join(','));
+            const csvStr = [headers, ...rows].join('\n');
+            const blob = new Blob([csvStr], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'baofeng_channels.csv';
+            a.click();
+        });
+
+        const d = new Date();
+        document.getElementById('last-updated').textContent = d.toLocaleDateString();
+        document.getElementById('print-date').textContent = d.toLocaleDateString();
+
+        render();
+    </script>
+</body>
+</html>
