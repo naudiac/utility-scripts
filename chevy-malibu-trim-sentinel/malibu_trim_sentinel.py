@@ -1,32 +1,16 @@
 """
 malibu_trim_sentinel.py
 =======================
-Antigravity Nexus OS & Malibu Robot Mode Daemon.
-Zero-Token Autonomous In-Car Co-Pilot & Universal Swarm Controller.
+Antigravity Nexus OS & Malibu Robot Mode Daemon (v23 - Home Screen PWA Package).
+Zero-Token Autonomous In-Car Co-Pilot & Universal Swarm Controller with 4-Level Speech Verbosity.
 
-Author: William Hanusiewicz (naudiac) & Antigravity
-Repository: naudiac/utility-scripts/chevy-malibu-trim-sentinel
-
-Features:
-  1. 🤖 Autonomous Robot Mode (User-Controlled ARM/DISARM):
-     - Monitors LTFT / STFT / DTCs at 2.5 Hz over Bluetooth OBDLink MX+ (Port 35000).
-     - Auto-resets learned trims (Mode 04) when trim exceeds threshold (LTFT > 22%).
-     - Zero AI credits (100% deterministic pure Python socket & offline Android TTS).
-     - 🎙️ 4-Level Speech Verbosity Selector:
-         • 🔇 Mute: 100% silent background execution.
-         • 🔉 Low: Only announces critical reset events.
-         • 🔊 Medium (Default): Announces arm/disarm + resets + significant excursions.
-         • 📢 High: Verbose diagnostic narration & periodic status briefings.
-     - Captures freeze frames & auto-logs every reset event.
-     - Autonomous Git synchronization with naudiac/utility-scripts repository.
-  2. 🚗 Complete Automotive HUD:
-     - 6 Live Gauges (RPM, Volts, STFT, LTFT, MAF, Coolant Temp).
-     - 60 FPS HTML5 Canvas Real-Time Trim Waveform Graph.
-     - Manual Diagnostic Actions (Read Trims, Clear Adaptation, Mode 03 DTC Scan, Mode 04 CEL Wipe).
-  3. 📁 Blackbox Flight Recorder:
-     - CSV log recorder with 1-tap browser download endpoint.
-  4. 🎙️ Local Zero-Credit Voice Co-Pilot + Dual-Node Swarm Duplex:
-     - Web Speech voice controls + PC Master Hub RPC link over Tailscale (100.104.120.44:8090).
+PWA Package Features:
+  - 📱 1-Tap Android Home Screen App Installation (Web App Manifest + Service Worker).
+  - 🎨 Cyberpunk Maskable App Icon & Fullscreen Standalone App Container (No browser address bar).
+  - 🤖 Autonomous Robot Mode (User-Controlled ARM/DISARM).
+  - 🎙️ 4-Level Speech Verbosity Selector (Mute, Low, Medium, High).
+  - 🚗 6-Gauge Live HUD & 60 FPS Canvas Oscilloscope.
+  - 📁 Blackbox CSV Flight Recorder & 1-Tap GitHub Auto-Sync.
 """
 
 import os
@@ -336,14 +320,72 @@ def background_telemetry_poller():
                 live_state["is_connected"] = False
             time.sleep(1.5)
 
+# PWA Assets: Manifest & SVG Icon
+MANIFEST_JSON = {
+    "name": "Malibu Robot Sentinel",
+    "short_name": "Malibu Robot",
+    "description": "Autonomous Zero-Token Trim Sentinel & Live Automotive HUD for 2013 Chevy Malibu ECO",
+    "start_url": "/?source=pwa",
+    "display": "standalone",
+    "background_color": "#070a12",
+    "theme_color": "#00f2fe",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "192x192 512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
+
+ICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070a12"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)" stroke="#1e293b" stroke-width="12"/>
+  <path d="M256 60 L410 120 L410 270 C410 370 256 450 256 450 C256 450 102 370 102 270 L102 120 Z" fill="none" stroke="url(#accent)" stroke-width="18" stroke-linejoin="round"/>
+  <circle cx="256" cy="240" r="70" fill="none" stroke="#00f2fe" stroke-width="14"/>
+  <circle cx="256" cy="240" r="30" fill="#00f2fe"/>
+  <path d="M190 320 Q256 370 322 320" fill="none" stroke="#a855f7" stroke-width="12" stroke-linecap="round"/>
+  <text x="256" y="420" font-family="-apple-system, sans-serif" font-size="34" font-weight="900" fill="#f8fafc" text-anchor="middle" letter-spacing="4">MALIBU ROBOT</text>
+</svg>"""
+
+SERVICE_WORKER_JS = """
+self.addEventListener('install', (e) => {
+  self.skipWaiting();
+});
+self.addEventListener('activate', (e) => {
+  return self.clients.claim();
+});
+self.addEventListener('fetch', (e) => {
+  e.respondWith(fetch(e.request).catch(() => new Response('Offline')));
+});
+"""
+
 def generate_dashboard_html(active_tab: str = "hud") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>Antigravity Nexus OS & Robot Mode</title>
+    <meta name="theme-color" content="#070a12">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Malibu Robot">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="apple-touch-icon" href="/icon.svg">
+    <title>Malibu Robot Sentinel</title>
     <style>
         :root {{
             --bg-color: #070a12;
@@ -373,9 +415,10 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         }}
         .header-title h1 {{ margin: 0; font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
         .header-title p {{ margin: 2px 0 0 0; color: var(--text-dim); font-size: 11px; }}
-        .btn-reload {{
+        .header-buttons {{ display: flex; gap: 6px; }}
+        .btn-header {{
             background: #1e293b; border: 1px solid #334155; color: var(--accent-cyan);
-            border-radius: 8px; padding: 7px 12px; font-size: 11px; font-weight: bold; cursor: pointer;
+            border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: bold; cursor: pointer;
         }}
 
         /* 🤖 ROBOT MODE HERO BANNER */
@@ -519,6 +562,33 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
         .dock-item span.icon {{ font-size: 18px; margin-bottom: 2px; }}
     </style>
     <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {{
+            navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err));
+        }}
+
+        let deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {{
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('btn-pwa-install');
+            if (btn) btn.style.display = 'block';
+        }});
+
+        function installPWA() {{
+            if (deferredPrompt) {{
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {{
+                    if (choiceResult.outcome === 'accepted') {{
+                        console.log('User installed Malibu Robot PWA');
+                    }}
+                    deferredPrompt = null;
+                }});
+            }} else {{
+                alert('To add to Home Screen:\\n1. Tap Chrome 3-dots menu (⋮) at top-right\\n2. Tap \"Add to Home screen\" or \"Install app\"');
+            }}
+        }}
+
         window.switchTab = function(tab, e) {{
             if (e) e.preventDefault();
             try {{ if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(20); }} catch(err) {{}}
@@ -547,10 +617,13 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
     <div class="container">
         <div class="header">
             <div class="header-title">
-                <h1>🧠 Nexus OS & Malibu Robot</h1>
+                <h1>🧠 Malibu Robot Sentinel</h1>
                 <p>Autonomous Zero-Token Trim Sentinel</p>
             </div>
-            <button type="button" class="btn-reload" onclick="window.location.reload(true)">🔄 RELOAD</button>
+            <div class="header-buttons">
+                <button type="button" class="btn-header" id="btn-pwa-install" onclick="installPWA()" style="color:var(--accent-green); border-color:rgba(16,185,129,0.5);">📲 INSTALL</button>
+                <button type="button" class="btn-header" onclick="window.location.reload(true)">🔄</button>
+            </div>
         </div>
 
         <!-- 🤖 PERMANENT ROBOT MODE QUICK-ARM HERO CARD -->
@@ -728,7 +801,7 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
 • Autonomous Trim Sentinel ready.
 • Tap "ARM ROBOT AUTO-TRIM HEALER" to enable protection during your drive.
 • Speech Selector: MUTE, LOW, MEDIUM, or HIGH.
-• Zero AI credits consumed during driving.</div>
+• Tap "INSTALL" at top right to add to your phone's Home Screen!</div>
             </div>
         </div>
     </div>
@@ -1002,6 +1075,22 @@ class RobotNexusHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(html.encode("utf-8"))
 
+    def _send_svg(self, status_code: int, svg_content: str):
+        self.send_response(status_code)
+        self.send_header("Content-Type", "image/svg+xml")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "public, max-age=86400")
+        self.end_headers()
+        self.wfile.write(svg_content.encode("utf-8"))
+
+    def _send_js(self, status_code: int, js_content: str):
+        self.send_response(status_code)
+        self.send_header("Content-Type", "application/javascript")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "public, max-age=86400")
+        self.end_headers()
+        self.wfile.write(js_content.encode("utf-8"))
+
     def do_HEAD(self):
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -1019,7 +1108,16 @@ class RobotNexusHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
         
-        if parsed.path == "/" or parsed.path == "/hud" or parsed.path == "/dashboard":
+        if parsed.path == "/manifest.json":
+            self._send_json(200, MANIFEST_JSON)
+
+        elif parsed.path == "/icon.svg":
+            self._send_svg(200, ICON_SVG)
+
+        elif parsed.path == "/sw.js":
+            self._send_js(200, SERVICE_WORKER_JS)
+
+        elif parsed.path == "/" or parsed.path == "/hud" or parsed.path == "/dashboard":
             self._send_html(200, generate_dashboard_html("hud"))
 
         elif parsed.path == "/robot":
@@ -1181,7 +1279,7 @@ def run_server():
     poller.start()
 
     server = HTTPServer((HOST, HTTP_PORT), RobotNexusHandler)
-    print(f"🚀 [ANTIGRAVITY MALIBU ROBOT & NEXUS OS V22 ONLINE]: http://{HOST}:{HTTP_PORT}")
+    print(f"🚀 [ANTIGRAVITY MALIBU ROBOT PWA V23 ONLINE]: http://{HOST}:{HTTP_PORT}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
