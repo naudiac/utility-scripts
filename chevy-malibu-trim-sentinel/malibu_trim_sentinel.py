@@ -705,6 +705,9 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
             </div>
 
             <div class="btn-group">
+                <button type="button" class="btn" id="btn-bt-connect" onclick="connectWebBluetooth()" style="background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 4px 14px rgba(2,132,199,0.4); font-size:14px; padding:15px;">
+                    🔵 CONNECT TO OBDLINK VIA BLUETOOTH (PHONE DIRECT)
+                </button>
                 <button type="button" class="btn btn-action" onclick="readFuelTrims()">
                     📊 READ FUEL TRIMS (STFT & LTFT)
                 </button>
@@ -939,6 +942,139 @@ def generate_dashboard_html(active_tab: str = "hud") -> str:
 
         setInterval(updateData, 400);
         setInterval(drawChart, 600);
+
+        let btDevice = null;
+        let btServer = null;
+        let btCharacteristic = null;
+        let btRxBuffer = '';
+
+        async function connectWebBluetooth() {
+            const btn = document.getElementById('btn-bt-connect');
+            try {
+                if (!navigator.bluetooth) {
+                    alert('Web Bluetooth is not supported in this browser. Please open in Google Chrome on your Android phone.');
+                    return;
+                }
+                btn.innerHTML = '🔄 SCANNING BLUETOOTH...';
+                speakPhone('Scanning for OBDLink Bluetooth adapter.');
+
+                btDevice = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true,
+                    optionalServices: [
+                        '0000ffe0-0000-1000-8000-00805f9b34fb',
+                        '0000fff0-0000-1000-8000-00805f9b34fb',
+                        'e7810a71-73ae-499d-8c15-faa9aef0c3f2',
+                        '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+                        '49535343-fe7d-4ae5-8fa9-9fafd205e455'
+                    ]
+                });
+
+                btn.innerHTML = '🔄 CONNECTING TO ' + btDevice.name + '...';
+                btServer = await btDevice.gatt.connect();
+
+                const services = await btServer.getPrimaryServices();
+                for (let s of services) {
+                    try {
+                        const chars = await s.getCharacteristics();
+                        for (let c of chars) {
+                            if (c.properties.write || c.properties.writeWithoutResponse) {
+                                btCharacteristic = c;
+                            }
+                            if (c.properties.notify || c.properties.indicate) {
+                                await c.startNotifications();
+                                c.addEventListener('characteristicvaluechanged', (e) => {
+                                    const val = new TextDecoder().decode(e.target.value);
+                                    btRxBuffer += val;
+                                });
+                            }
+                        }
+                    } catch(e) {}
+                    if (btCharacteristic) break;
+                }
+
+                btn.innerHTML = '🟢 CONNECTED DIRECT TO ' + (btDevice.name || 'OBDLink');
+                btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                document.getElementById('auto-status').innerText = 'BT LIVE';
+                speakPhone('OBDLink connected directly to your phone. Live telemetry active.');
+
+                await sendBtCmd('ATZ');
+                await sendBtCmd('ATSP6');
+                await sendBtCmd('ATSH 7DF');
+                await sendBtCmd('ATE0');
+
+                startBtPollingLoop();
+            } catch(err) {
+                btn.innerHTML = '🔵 CONNECT TO OBDLINK VIA BLUETOOTH (PHONE DIRECT)';
+                alert('Bluetooth Connection Notice: ' + err);
+            }
+        }
+
+        async function sendBtCmd(cmd) {
+            if (!btCharacteristic) return '';
+            btRxBuffer = '';
+            const enc = new TextEncoder().encode(cmd + '\r');
+            await btCharacteristic.writeValue(enc);
+            const start = Date.now();
+            while (Date.now() - start < 1000) {
+                if (btRxBuffer.includes('>')) break;
+                await new Promise(r => setTimeout(r, 25));
+            }
+            return btRxBuffer.replace('>', '').trim();
+        }
+
+        async function startBtPollingLoop() {
+            while (btDevice && btDevice.gatt.connected) {
+                try {
+                    const r_rpm = await sendBtCmd('010C');
+                    const r_stft = await sendBtCmd('0106');
+                    const r_ltft = await sendBtCmd('0107');
+                    const r_volt = await sendBtCmd('ATRV');
+
+                    if (r_rpm.includes('0C')) {
+                        const parts = r_rpm.split(' ').filter(x => x.length === 2);
+                        const idx = parts.indexOf('0C');
+                        if (idx !== -1 && parts[idx+2]) {
+                            const a = parseInt(parts[idx+1], 16);
+                            const b = parseInt(parts[idx+2], 16);
+                            const rpm = Math.round(((a * 256) + b) / 4);
+                            document.getElementById('val-rpm').innerHTML = rpm + '<span class="metric-unit">RPM</span>';
+                        }
+                    }
+
+                    let ltftVal = 0;
+                    if (r_ltft.includes('07')) {
+                        const parts = r_ltft.split(' ').filter(x => x.length === 2);
+                        const idx = parts.indexOf('07');
+                        if (idx !== -1 && parts[idx+1]) {
+                            const a = parseInt(parts[idx+1], 16);
+                            ltftVal = ((a - 128) * 100 / 128);
+                            document.getElementById('val-ltft').innerHTML = (ltftVal > 0 ? '+' : '') + ltftVal.toFixed(1) + '<span class="metric-unit">%</span>';
+                            document.getElementById('val-ltft').style.color = ltftVal > 15 ? '#ef4444' : '#10b981';
+                        }
+                    }
+
+                    if (r_stft.includes('06')) {
+                        const parts = r_stft.split(' ').filter(x => x.length === 2);
+                        const idx = parts.indexOf('06');
+                        if (idx !== -1 && parts[idx+1]) {
+                            const a = parseInt(parts[idx+1], 16);
+                            const stftVal = ((a - 128) * 100 / 128);
+                            document.getElementById('val-stft').innerHTML = (stftVal > 0 ? '+' : '') + stftVal.toFixed(1) + '<span class="metric-unit">%</span>';
+                        }
+                    }
+
+                    const badge = document.getElementById('robot-badge');
+                    if (badge && badge.innerText.includes('ARMED') && ltftVal >= 22.0) {
+                        speakPhone('Robot Mode: Fuel trim reached plus ' + Math.round(ltftVal) + ' percent. Resetting learned tables to zero.');
+                        await sendBtCmd('04');
+                    }
+
+                    await new Promise(r => setTimeout(r, 350));
+                } catch(e) {
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+            }
+        }
 
         function speakPhone(text) {
             try {
